@@ -24,12 +24,12 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
   const titleOpacity = interpolate(titleProgress, [0, 1], [0, 1]);
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})` }}>
-      <div style={{ transform: `translateY(${titleY + useAliveMotion(10, 25, 5)}px)`, opacity: titleOpacity, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginBottom: '50px' }}>
-        <div style={{ backgroundColor: color, color: '#000', fontWeight: '900', fontSize: '28px', padding: '12px 32px', borderRadius: '9999px', textTransform: 'uppercase', boxShadow: `0 0 30px ${color}88` }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})`, width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ transform: `translateY(${titleY + useAliveMotion(10, 25, 5)}px)`, opacity: titleOpacity, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginBottom: '50px', width: '100%' }}>
+        <div style={{ backgroundColor: color, color: '#000', fontWeight: '900', fontSize: '28px', padding: '12px 32px', borderRadius: '9999px', textTransform: 'uppercase', boxShadow: `0 0 30px ${color}88`, textAlign: 'center' }}>
           <span style={{ marginRight: '10px' }}>🔴</span> {data.tag}
         </div>
-        <div style={{ fontSize: '50px', fontWeight: '900', color: '#fff', textAlign: 'center', backgroundColor: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(20px)', padding: '28px 40px', borderRadius: '32px', border: `1px solid rgba(255,255,255,0.15)`, borderBottom: `6px solid ${color}`, boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+        <div style={{ fontSize: '46px', fontWeight: '900', color: '#fff', textAlign: 'center', backgroundColor: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(20px)', padding: '28px 40px', borderRadius: '32px', border: `1px solid rgba(255,255,255,0.15)`, borderBottom: `6px solid ${color}`, boxShadow: '0 20px 40px rgba(0,0,0,0.5)', width: '100%', wordWrap: 'break-word', boxSizing: 'border-box' }}>
           {data.headline}
         </div>
       </div>
@@ -41,9 +41,9 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
           const cardFloat = useAliveMotion(idx * 20, 20, 4);
 
           return (
-            <div key={idx} style={{ transform: `translateY(${cardY + cardFloat}px)`, opacity: cardOpacity, display: 'flex', alignItems: 'center', gap: '28px', backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.05)', borderLeft: `8px solid ${color}`, padding: '32px 36px', borderRadius: '0 28px 28px 0', boxShadow: '0 15px 30px rgba(0,0,0,0.4)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: `${color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: color, fontSize: '24px', fontWeight: 'bold' }}>{idx + 1}</div>
-              <div style={{ fontSize: '32px', color: '#f8fafc', lineHeight: '1.5', fontWeight: '600' }}>{takeaway}</div>
+            <div key={idx} style={{ transform: `translateY(${cardY + cardFloat}px)`, opacity: cardOpacity, display: 'flex', alignItems: 'center', gap: '28px', backgroundColor: 'rgba(30, 41, 59, 0.7)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.05)', borderLeft: `8px solid ${color}`, padding: '32px 36px', borderRadius: '0 28px 28px 0', boxShadow: '0 15px 30px rgba(0,0,0,0.4)', width: '100%', boxSizing: 'border-box' }}>
+              <div style={{ width: '48px', height: '48px', minWidth: '48px', borderRadius: '50%', backgroundColor: `${color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: color, fontSize: '24px', fontWeight: 'bold' }}>{idx + 1}</div>
+              <div style={{ fontSize: '32px', color: '#f8fafc', lineHeight: '1.5', fontWeight: '600', wordWrap: 'break-word' }}>{takeaway}</div>
             </div>
           );
         })}
@@ -66,30 +66,36 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
   const statProgress = spring({ frame: frame - (takeawayStarts[0] || 40), fps, config: { damping: 10, stiffness: 90 } });
   const labelProgress = spring({ frame: frame - (takeawayStarts[1] || 80), fps, config: { damping: 12, stiffness: 120 } });
 
+  // Tự động thu nhỏ cỡ chữ nếu số liệu quá dài (tránh tràn viền)
+  const statText = data.statNumber || "100%";
+  const statFontSize = statText.length > 10 ? '100px' : statText.length > 6 ? '130px' : '180px';
+
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})` }}>
-      <div style={{ transform: `translateY(${interpolate(titleProgress, [0, 1], [50, 0])}px)`, opacity: titleProgress, marginBottom: '70px', textAlign: 'center' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})`, width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ transform: `translateY(${interpolate(titleProgress, [0, 1], [50, 0])}px)`, opacity: titleProgress, marginBottom: '70px', textAlign: 'center', width: '100%' }}>
         <div style={{ display: 'inline-block', backgroundColor: 'rgba(255,255,255,0.1)', padding: '10px 24px', borderRadius: '99px', color: color, fontWeight: '900', fontSize: '28px', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '24px', border: `1px solid ${color}44` }}>
           ✨ {data.tag}
         </div>
-        <div style={{ fontSize: '50px', fontWeight: '800', lineHeight: 1.4, textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>{data.headline}</div>
+        <div style={{ fontSize: '46px', fontWeight: '800', lineHeight: 1.4, textShadow: '0 4px 20px rgba(0,0,0,0.8)', wordWrap: 'break-word' }}>{data.headline}</div>
       </div>
 
       <div style={{ transform: `scale(${statProgress}) translateY(${floatStat}px)`, width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '50px' }}>
         <div style={{
-          fontSize: '180px', fontWeight: '900', color: '#fff',
+          fontSize: statFontSize, fontWeight: '900', color: '#fff',
           textShadow: `0 0 80px ${color}, 0 20px 40px rgba(0,0,0,0.5)`,
           fontFamily: 'Space Grotesk, sans-serif',
           background: `linear-gradient(180deg, #ffffff 0%, ${color} 100%)`,
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          lineHeight: 1
+          lineHeight: 1,
+          wordWrap: 'break-word',
+          textAlign: 'center'
         }}>
-          {data.statNumber || "100%"}
+          {statText}
         </div>
       </div>
 
-      <div style={{ transform: `translateY(${interpolate(labelProgress, [0, 1], [40, 0])}px)`, opacity: labelProgress, backgroundColor: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(20px)', padding: '28px 48px', borderRadius: '30px', borderTop: `4px solid ${color}`, boxShadow: `0 20px 50px rgba(0,0,0,0.6)`, fontSize: '38px', fontWeight: '700', textAlign: 'center' }}>
+      <div style={{ transform: `translateY(${interpolate(labelProgress, [0, 1], [40, 0])}px)`, opacity: labelProgress, backgroundColor: 'rgba(15,23,42,0.85)', backdropFilter: 'blur(20px)', padding: '28px 48px', borderRadius: '30px', borderTop: `4px solid ${color}`, boxShadow: `0 20px 50px rgba(0,0,0,0.6)`, fontSize: '38px', fontWeight: '700', textAlign: 'center', width: '90%', wordWrap: 'break-word' }}>
         {data.statLabel || data.keyTakeaways?.[0] || "Số liệu đáng chú ý"}
       </div>
     </div>
@@ -109,19 +115,19 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string; takeawaySta
   const quoteProgress = spring({ frame: frame - (takeawayStarts[0] || 50), fps, config: { damping: 12, stiffness: 100 } });
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})` }}>
-      <div style={{ transform: `translateY(${interpolate(badgeProgress, [0, 1], [40, 0])}px)`, opacity: badgeProgress, backgroundColor: color, color: '#000', padding: '14px 32px', borderRadius: '20px', fontSize: '28px', fontWeight: '900', marginBottom: '50px', textTransform: 'uppercase', boxShadow: `0 15px 30px ${color}66` }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 60px', color: 'white', transform: `scale(${slowZoom})`, width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ transform: `translateY(${interpolate(badgeProgress, [0, 1], [40, 0])}px)`, opacity: badgeProgress, backgroundColor: color, color: '#000', padding: '14px 32px', borderRadius: '20px', fontSize: '28px', fontWeight: '900', marginBottom: '50px', textTransform: 'uppercase', boxShadow: `0 15px 30px ${color}66`, textAlign: 'center' }}>
         💬 {data.tag}
       </div>
 
-      <div style={{ transform: `translateY(${interpolate(quoteProgress, [0, 1], [60, 0]) + useAliveMotion(0, 25, 10)}px)`, opacity: quoteProgress, position: 'relative', backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(24px)', padding: '70px 50px', borderRadius: '40px', border: `1px solid rgba(255,255,255,0.1)`, borderLeft: `10px solid ${color}`, boxShadow: `0 40px 80px rgba(0,0,0,0.7)` }}>
+      <div style={{ transform: `translateY(${interpolate(quoteProgress, [0, 1], [60, 0]) + useAliveMotion(0, 25, 10)}px)`, opacity: quoteProgress, position: 'relative', backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(24px)', padding: '70px 50px', borderRadius: '40px', border: `1px solid rgba(255,255,255,0.1)`, borderLeft: `10px solid ${color}`, boxShadow: `0 40px 80px rgba(0,0,0,0.7)`, width: '100%', boxSizing: 'border-box' }}>
         <div style={{ position: 'absolute', top: '-50px', left: '40px', fontSize: '140px', color: color, fontFamily: 'Georgia, serif', lineHeight: 1, textShadow: `0 10px 30px ${color}88` }}>“</div>
-        <div style={{ fontSize: '46px', fontWeight: '700', lineHeight: 1.5, color: '#f8fafc', fontStyle: 'italic', marginBottom: '40px', zIndex: 2, position: 'relative' }}>
+        <div style={{ fontSize: '42px', fontWeight: '700', lineHeight: 1.5, color: '#f8fafc', fontStyle: 'italic', marginBottom: '40px', zIndex: 2, position: 'relative', wordWrap: 'break-word' }}>
           {data.quoteText || data.keyTakeaways?.[0]}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
           <div style={{ width: '80px', height: '6px', backgroundColor: color, borderRadius: '3px', boxShadow: `0 0 15px ${color}` }}></div>
-          <div style={{ fontSize: '32px', fontWeight: '800', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px' }}>
+          <div style={{ fontSize: '32px', fontWeight: '800', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px', wordWrap: 'break-word', flex: 1 }}>
             {data.quoteAuthor || data.headline}
           </div>
         </div>
