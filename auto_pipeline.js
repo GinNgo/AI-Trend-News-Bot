@@ -111,13 +111,38 @@ async function main() {
   } else if (urlArg.endsWith('.txt') && fs.existsSync(urlArg)) {
     console.log(`\n🔍 BƯỚC 1: Đọc nội dung từ file (${urlArg})...`);
     articleText = fs.readFileSync(urlArg, 'utf-8').trim();
-    if (articleText.length > 8000) articleText = articleText.substring(0, 8000);
     console.log(`✅ Lấy thành công ${articleText.length} ký tự từ file.`);
   } else {
-    console.log(`\n🔍 BƯỚC 1: Đã nhận Prompt / Nội dung tự do trực tiếp (Bỏ qua Crawler).`);
+    console.log(`\n🔍 BƯỚC 1: Đã nhận Prompt / Nội dung tự do trực tiếp.`);
     articleText = urlArg;
-    console.log(`✅ Kích thước nội dung: ${articleText.length} ký tự.`);
+    console.log(`✅ Kích thước nội dung ban đầu: ${articleText.length} ký tự.`);
   }
+
+  // TỰ ĐỘNG PHÁT HIỆN LINK TRONG PROMPT & CÀO BỔ SUNG DỮ LIỆU
+  const urlMatch = articleText.match(/https?:\/\/[^\s"'\)]+/);
+  if (urlMatch && !urlArg.startsWith("http")) {
+    const embeddedUrl = urlMatch[0];
+    console.log(`\n🔗 Phát hiện đường link bài viết trong Prompt: ${embeddedUrl}`);
+    console.log(`🌐 Đang tự động cào thêm nội dung chi tiết từ link để bổ sung kịch bản...`);
+    try {
+      const html = await fetchUrl(embeddedUrl);
+      const $ = cheerio.load(html);
+      $('script, style, nav, footer, aside, header').remove();
+      let crawledText = $('body').text().replace(/\s+/g, ' ').trim();
+      if (crawledText.length > 6000) crawledText = crawledText.substring(0, 6000);
+
+      if (crawledText.length > 200) {
+        console.log(`✅ Cào bổ sung thành công ${crawledText.length} ký tự từ link bài báo!`);
+        articleText += `\n\n--- DỮ LIỆU CHI TIẾT TỰ ĐỘNG CÀO TỪ BÀI BÁO GỐC (${embeddedUrl}) ---\n${crawledText}`;
+      } else {
+        console.log(`⚠️ Link bài viết trả về ít dữ liệu hoặc chặn bot, tiếp tục dùng nội dung prompt gốc.`);
+      }
+    } catch (e) {
+      console.log(`⚠️ Không thể cào từ link đính kèm: ${e.message}. Tiếp tục với prompt hiện tại.`);
+    }
+  }
+
+  if (articleText.length > 9000) articleText = articleText.substring(0, 9000);
 
   console.log(`\n🧠 BƯỚC 2: AI đang phân tích & lên kịch bản JSON (co giãn N-Cảnh & Đa dạng Layout)...`);
   const prompt = `
