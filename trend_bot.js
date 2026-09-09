@@ -206,11 +206,39 @@ module.exports = {
   getHistory
 };
 
+const { execSync } = require('child_process');
+const path = require('path');
+
 // Nếu chạy trực tiếp từ dòng lệnh: node trend_bot.js
 if (require.main === module) {
   runTrendCheck().then(result => {
     if (result) {
       console.log('\n🎯 KẾT QUẢ: Sẵn sàng đưa vào Pipeline:', result);
+      console.log(`\n🔗 BẮT ĐẦU KẾT NỐI CHUỖI API (TỰ ĐỘNG LÀM VIDEO & ĐĂNG YOUTUBE)...`);
+      try {
+        // 1. Chạy auto_pipeline để render video
+        console.log(`\n▶️ CHẠY AUTO PIPELINE (Cào chi tiết, Dựng script AI, TTS, Remotion)...`);
+        execSync(`node auto_pipeline.js "${result.link}"`, { stdio: 'inherit' });
+
+        // 2. Ghi metadata cho YouTube
+        console.log(`\n▶️ GHI METADATA CHO YOUTUBE...`);
+        const metaPath = path.join(__dirname, 'youtube_meta.json');
+        fs.writeFileSync(metaPath, JSON.stringify({
+          title: `${result.title.substring(0, 80)} #shorts`,
+          description: `Bản Tin Nóng: ${result.title}\n\n${result.reason}\n\nNguồn: ${result.link}\n\n#shorts #tintuc #xuhuong #vietnam #news`,
+          tags: ['shorts', 'tin tức', 'xu hướng', 'việt nam', 'news'],
+          privacyStatus: 'public'
+        }, null, 2), 'utf-8');
+
+        // 3. Đăng lên YouTube
+        console.log(`\n▶️ GỌI API YOUTUBE (Tải video lên kênh)...`);
+        execSync(`node upload_youtube.js`, { stdio: 'inherit' });
+
+        console.log(`\n✅ TOÀN BỘ CHUỖI API ĐÃ HOÀN TẤT VÀ LIÊN KẾT THÀNH CÔNG!`);
+        recordPublished(result.title, result.link);
+      } catch (err) {
+        console.error(`\n❌ LỖI KHI KẾT NỐI CHUỖI API:`, err.message);
+      }
     } else {
       console.log('\n💤 Không có tin nóng cần làm video.');
     }
