@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Auto Video Pipeline Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --border: #1e293b;
+      --cyan: #00f2fe;
+      --cyan-glow: rgba(0, 242, 254, 0.35);
+      --purple: #9d4edd;
+      --purple-glow: rgba(157, 78, 221, 0.35);
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.4);
+      --text: #f8fafc;
+      --muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at top, rgba(0, 242, 254, 0.08), transparent 60%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* INPUT PANEL */
+    .input-section {
+      max-width: 1200px;
+      margin: 32px auto 10px auto;
+      padding: 0 24px;
+    }
+
+    .input-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .input-control {
+      flex: 1;
+      background: #070a12;
+      border: 1px solid #283548;
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+      resize: vertical;
+    }
+
+    .input-control:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .btn-execute {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #000;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 25px var(--cyan-glow);
+      transition: all 0.25s;
+      white-space: nowrap;
+      height: 52px;
+    }
+
+    .btn-execute:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px var(--cyan-glow);
+    }
+
+    .btn-execute:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* WORKFLOW CANVAS */
+    .canvas-wrapper {
+      position: relative;
+      max-width: 1400px;
+      margin: 30px auto;
+      padding: 30px 24px;
+    }
+
+    .svg-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .wire-bg {
+      stroke: #1e293b;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .wire-flow {
+      stroke: var(--cyan);
+      stroke-width: 3;
+      fill: none;
+      stroke-dasharray: 8, 8;
+      animation: dashFlow 0.6s linear infinite;
+      filter: drop-shadow(0 0 8px var(--cyan));
+      display: none;
+    }
+
+    .wire-complete {
+      stroke: var(--green);
+      stroke-width: 3;
+      fill: none;
+      filter: drop-shadow(0 0 6px var(--green));
+    }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -16; }
+    }
+
+    .nodes-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .node-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+    }
+
+    .node-card.running {
+      border-color: var(--cyan);
+      box-shadow: 0 0 30px var(--cyan-glow);
+      transform: translateY(-4px);
+    }
+
+    .node-card.success {
+      border-color: var(--green);
+      box-shadow: 0 0 20px var(--green-glow);
+    }
+
+    .node-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .node-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .node-card.running .node-badge {
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+      animation: blink 1s infinite alternate;
+    }
+
+    .node-card.success .node-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+    }
+
+    @keyframes blink {
+      from { opacity: 0.7; }
+      to { opacity: 1; }
+    }
+
+    .node-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .node-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .node-log {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #94a3b8;
+      background: #080c14;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      min-height: 44px;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+    }
+
+    /* PORTS */
+    .port-left, .port-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #334155;
+      border: 2px solid var(--bg);
+      z-index: 3;
+    }
+    .port-left { left: -6px; }
+    .port-right { right: -6px; }
+
+    .node-card.running .port-left, .node-card.running .port-right {
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    .node-card.success .port-left, .node-card.success .port-right {
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+
+    /* LOWER TERMINAL & PREVIEW */
+    .dashboard-bottom {
+      max-width: 1400px;
+      margin: 0 auto 50px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 28px;
+    }
+
+    .terminal-container {
+      background: #080c14;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal-titlebar {
+      background: #0e1422;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
+    .terminal-screen {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #cbd5e1;
+      height: 380px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .t-row { display: flex; gap: 12px; }
+    .t-time { color: #64748b; font-size: 12px; }
+    .t-msg { color: #38bdf8; word-break: break-word; }
+
+    .preview-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(12px);
+    }
+
+    .preview-header {
+      font-size: 14px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .player-box {
+      width: 100%;
+      height: 340px;
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1e293b;
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .empty-player {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* YOUTUBE REVIEW BOX */
+    #youtubeReviewBox {
+      display: none;
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 10px;
+    }
+
+    #youtubeReviewBox label {
+      display: block;
+      font-size: 12px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    #youtubeReviewBox input, #youtubeReviewBox textarea, #youtubeReviewBox select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    #youtubeReviewBox textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    #btnConfirmUpload {
+      width: 100%;
+      margin-top: 16px;
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #btnConfirmUpload:hover {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">
+        <h1>AI VIDEO PIPELINE STUDIO</h1>
+        <p>Dynamic N-Scenes • Gemini 3.x Fallback • Neural TTS</p>
+      </div>
+    </div>
+
+    <!-- TREND BOT TOGGLE -->
+    <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 24px; border-radius: 99px; display: flex; align-items: center; gap: 16px;">
+      <div style="display: flex; flex-direction: column;">
+        <span style="font-weight: bold; font-size: 14px; color: #fff;">🤖 Auto-Trend Bot</span>
+        <span id="botStatusText" style="font-size: 11px; color: #94a3b8;">Đang tắt (Kiểm tra tin nóng mỗi 10p)</span>
+      </div>
+      <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+        <input type="checkbox" id="botToggleBtn" onchange="toggleTrendBot()" style="opacity: 0; width: 0; height: 0;">
+        <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 34px;">
+          <span class="slider-dot" style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+        </span>
+      </label>
+    </div>
+  </header>
+
+  <style>
+    /* CSS for toggle switch */
+    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider .slider-dot { transform: translateX(24px); }
+  </style>
+
+  <!-- INPUT SECTION -->
+  <div class="input-section">
+    <div class="input-card">
+      <div class="tabs">
+        <button class="tab-btn active" id="tabUrl" onclick="switchTab('url')">🌐 Dán Link Báo (Web URL)</button>
+        <button class="tab-btn" id="tabPrompt" onclick="switchTab('prompt')">✍️ Nhập Prompt / Nội Dung Tự Do</button>
+      </div>
+
+      <div class="input-row">
+        <input type="text" class="input-control" id="inputUrl" placeholder="Dán link bài báo vào đây (vd: https://anninhthudo.vn/...)" value="https://anninhthudo.vn/cuc-thue-doanh-nghiep-chet-lau-nam-van-phai-hoan-thanh-cac-nghia-vu-tai-chinh-khi-dong-ma-so-thue-post667596.antd">
+        <textarea class="input-control" id="inputPrompt" style="display: none; height: 100px;" placeholder="Dán đoạn văn bản hoặc prompt chứa nhiều thông tin vào đây..."></textarea>
+
+        <button class="btn-execute" id="btnRun" onclick="startWorkflow()">
+          <span>⚡</span> BẮT ĐẦU CHẠY
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW CANVAS -->
+  <div class="canvas-wrapper">
+    <svg class="svg-layer" id="svgLayer">
+      <path id="wire1-bg" class="wire-bg" />
+      <path id="wire1-flow" class="wire-flow" />
+
+      <path id="wire2-bg" class="wire-bg" />
+      <path id="wire2-flow" class="wire-flow" />
+
+      <path id="wire3-bg" class="wire-bg" />
+      <path id="wire3-flow" class="wire-flow" />
+
+      <path id="wire4-bg" class="wire-bg" />
+      <path id="wire4-flow" class="wire-flow" />
+    </svg>
+
+    <div class="nodes-grid">
+      <!-- NODE 1 -->
+      <div class="node-card" id="node-crawler">
+        <div class="port-right"></div>
+        <div class="node-top">
+          <span style="font-size: 24px;">🕷️</span>
+          <span class="node-badge" id="badge-crawler">IDLE</span>
+        </div>
+        <div class="node-title">Web Crawler</div>
+        <div class="node-desc">Cào dữ liệu & trích xuất văn bản sạch.</div>
+        <div class="node-log" id="log-crawler">Chờ đầu vào...</div>
+      </div>
+
+      <!-- NODE 2 -->
+      <div class="node-card" id="node-ai">
+        <div class="port-left"></div>
+        <div class="port-right"></div>
+        <div class="node-top">
+          <span style="font-size: 24px;">🧠</span>
+          <span class="node-badge" id="badge-ai">IDLE</span>
+        </div>
+        <div class="node-title">Gemini 3.x AI</div>
+        <div class="node-desc">Chia N-cảnh động (Fallback 3.8 ➔ 2.5).</div>
+        <div class="node-log" id="log-ai">Chờ văn bản...</div>
+      </div>
+
+      <!-- NODE 3 -->
+      <div class="node-card" id="node-tts">
+        <div class="port-left"></div>
+        <div class="port-right"></div>
+        <div class="node-top">
+          <span style="font-size: 24px;">🎙️</span>
+          <span class="node-badge" id="badge-tts">IDLE</span>
+        </div>
+        <div class="node-title">Neural TTS</div>
+        <div class="node-desc">Sinh giọng đọc tự nhiên & sync timeline.</div>
+        <div class="node-log" id="log-tts">Chờ kịch bản...</div>
+      </div>
+
+      <!-- NODE 4 -->
+      <div class="node-card" id="node-render">
+        <div class="port-left"></div>
+        <div class="port-right"></div>
+        <div class="node-top">
+          <span style="font-size: 24px;">🎬</span>
+          <span class="node-badge" id="badge-render">IDLE</span>
+        </div>
+        <div class="node-title">Remotion Engine</div>
+        <div class="node-desc">Render video MP4 1080x1920 60fps.</div>
+        <div class="node-log" id="log-render">Chờ audio...</div>
+      </div>
+
+      <!-- NODE 5 -->
+      <div class="node-card" id="node-youtube">
+        <div class="port-left"></div>
+        <div class="node-top">
+          <span style="font-size: 24px;">🚀</span>
+          <span class="node-badge" id="badge-youtube">IDLE</span>
+        </div>
+        <div class="node-title">YouTube Shorts</div>
+        <div class="node-desc">Tự động Hẹn giờ phát (Schedule).</div>
+        <div class="node-log" id="log-youtube" style="display: flex; justify-content: space-between; align-items: center;">
+          <span id="yt-status-text">Đang kiểm tra...</span>
+          <button id="btnAuthYt" onclick="authYouTube()" style="display: none; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: bold;">🔑 Đăng Nhập</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOWER MONITOR -->
+  <div class="dashboard-bottom">
+    <div class="terminal-container">
+      <div class="terminal-titlebar">
+        <div class="terminal-dots">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+        <span>TERMINAL MONITOR (LIVE EXECUTION)</span>
+      </div>
+      <div class="terminal-screen" id="termScreen">
+        <div class="t-row">
+          <span class="t-time">[System]</span>
+          <span class="t-msg">Hệ thống đã sẵn sàng. Hãy bấm BẮT ĐẦU CHẠY để kích hoạt đường ống!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-container">
+      <div class="preview-header">📱 Video Thành Phẩm</div>
+      <div class="player-box">
+        <div class="empty-player" id="emptyVideo">
+          Video sẽ xuất hiện tại đây ngay khi quá trình Render kết thúc!
+        </div>
+        <video id="mainVideo" controls style="display: none;"></video>
+      </div>
+
+      <!-- XEM LẠI & DUYỆT ĐĂNG YOUTUBE -->
+      <div id="youtubeReviewBox">
+        <div style="font-weight: bold; color: #fff; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+          <span>🔍</span> Xác Nhận Đăng YouTube Shorts
+        </div>
+
+        <label>Tiêu đề Video (#shorts)</label>
+        <input type="text" id="ytTitle" placeholder="Tiêu đề video..." />
+
+        <label>Mô tả & Hashtags</label>
+        <textarea id="ytDesc" placeholder="Mô tả video..."></textarea>
+
+        <label>Chế độ hiển thị</label>
+        <select id="ytPrivacy">
+          <option value="public" selected>Công khai (Public) - Ai cũng xem được</option>
+          <option value="unlisted">Không công khai (Unlisted) - Chỉ ai có link mới xem được</option>
+          <option value="private">Riêng tư (Private) - Chỉ mình bạn xem được</option>
+        </select>
+
+        <button id="btnConfirmUpload" onclick="submitYouTubeUpload()">
+          <span>🚀</span> Đăng Lên YouTube Shorts Ngay
+        </button>
+
+        <div id="ytResultLink" style="display: none; margin-top: 14px; padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; text-align: center;">
+          <span style="color: #10b981; font-weight: bold;">🎉 Đã đăng thành công!</span><br/>
+          <a id="ytShortLink" href="#" target="_blank" style="color: var(--cyan); text-decoration: underline; font-size: 13px; margin-top: 6px; display: inline-block;">Xem Shorts trên YouTube</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMode = 'url';
+
+    function switchTab(mode) {
+      currentMode = mode;
+      document.getElementById('tabUrl').classList.toggle('active', mode === 'url');
+      document.getElementById('tabPrompt').classList.toggle('active', mode === 'prompt');
+
+      if (mode === 'url') {
+        document.getElementById('inputUrl').style.display = 'block';
+        document.getElementById('inputPrompt').style.display = 'none';
+      } else {
+        document.getElementById('inputUrl').style.display = 'none';
+        document.getElementById('inputPrompt').style.display = 'block';
+      }
+      setTimeout(updateWires, 50);
+    }
+
+    function updateWires() {
+      const nodes = [
+        document.getElementById('node-crawler'),
+        document.getElementById('node-ai'),
+        document.getElementById('node-tts'),
+        document.getElementById('node-render'),
+        document.getElementById('node-youtube')
+      ];
+
+      const wrapper = document.querySelector('.canvas-wrapper').getBoundingClientRect();
+
+      for (let i = 0; i < 4; i++) {
+        const outPort = nodes[i].querySelector('.port-right').getBoundingClientRect();
+        const inPort = nodes[i+1].querySelector('.port-left').getBoundingClientRect();
+
+        const x1 = outPort.left + outPort.width / 2 - wrapper.left;
+        const y1 = outPort.top + outPort.height / 2 - wrapper.top;
+        const x2 = inPort.left + inPort.width / 2 - wrapper.left;
+        const y2 = inPort.top + inPort.height / 2 - wrapper.top;
+
+        const dx = (x2 - x1) / 2;
+        const path = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+        document.getElementById(`wire${i+1}-bg`).setAttribute('d', path);
+        document.getElementById(`wire${i+1}-flow`).setAttribute('d', path);
+      }
+    }
+
+    window.addEventListener('resize', updateWires);
+    window.addEventListener('load', () => {
+      updateWires();
+      checkYouTubeAuth();
+      checkBotStatus();
+      setInterval(checkBotStatus, 10000); // cập nhật trạng thái bot mỗi 10s
+    });
+    setTimeout(updateWires, 200);
+
+    async function checkBotStatus() {
+      try {
+        const res = await fetch('/api/bot/status');
+        const data = await res.json();
+        const toggle = document.getElementById('botToggleBtn');
+        const statusText = document.getElementById('botStatusText');
+        toggle.checked = data.active;
+        if (data.active) {
+          const nextMin = data.nextRun ? Math.max(0, Math.round((new Date(data.nextRun) - new Date()) / 60000)) : 10;
+          statusText.innerHTML = `<span style="color: #10b981; font-weight: bold;">Đang chạy</span> (Quét tiếp sau ~${nextMin} phút)`;
+        } else {
+          statusText.innerHTML = `Đang tắt (Kiểm tra tin nóng mỗi 10p)`;
+        }
+      } catch (e) {}
+    }
+
+    async function toggleTrendBot() {
+      try {
+        const res = await fetch('/api/bot/toggle', { method: 'POST' });
+        const data = await res.json();
+        if (data.active) {
+          log('🤖 Đã BẬT Bot Tự Động Săn Tin (Chu kỳ 10 phút/lần). Hệ thống sẽ tự quét, lọc tin HOT, tạo video và đăng YouTube!');
+        } else {
+          log('🛑 Đã TẮT Bot Tự Động Săn Tin.');
+        }
+        checkBotStatus();
+      } catch (e) {
+        alert('Lỗi: ' + e.message);
+      }
+    }
+
+    async function checkYouTubeAuth() {
+      try {
+        const res = await fetch('/api/check-youtube');
+        const data = await res.json();
+        const textSpan = document.getElementById('yt-status-text');
+        const btn = document.getElementById('btnAuthYt');
+        if (data.authorized) {
+          textSpan.innerHTML = '<span style="color:#10b981;">✅ Đã liên kết kênh</span>';
+          btn.style.display = 'none';
+        } else {
+          textSpan.innerHTML = '<span style="color:#ef4444;">❌ Chưa cấu hình OAuth</span>';
+          btn.style.display = 'block';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function authYouTube() {
+      try {
+        const res = await fetch('/api/auth-youtube', { method: 'POST' });
+        const data = await res.json();
+        alert(data.message);
+        // User needs to login in the popup window, then we check again after 15 seconds
+        setTimeout(checkYouTubeAuth, 15000);
+      } catch (e) {
+        alert('Lỗi: ' + e.message);
+      }
+    }
+
+    function log(msg) {
+      const screen = document.getElementById('termScreen');
+      const row = document.createElement('div');
+      row.className = 't-row';
+      const time = new Date().toLocaleTimeString();
+      row.innerHTML = `<span class="t-time">[${time}]</span> <span class="t-msg">${msg}</span>`;
+      screen.appendChild(row);
+      screen.scrollTop = screen.scrollHeight;
+    }
+
+    function setNode(nodeId, state, logText) {
+      const card = document.getElementById(`node-${nodeId}`);
+      const badge = document.getElementById(`badge-${nodeId}`);
+      const logBox = document.getElementById(`log-${nodeId}`);
+
+      card.classList.remove('running', 'success');
+      if (state === 'running') {
+        card.classList.add('running');
+        badge.innerText = 'RUNNING';
+      } else if (state === 'success') {
+        card.classList.add('success');
+        badge.innerText = 'SUCCESS';
+      } else {
+        badge.innerText = 'IDLE';
+      }
+
+      if (logText) logBox.innerText = logText;
+    }
+
+    function setWire(index, active) {
+      const flow = document.getElementById(`wire${index}-flow`);
+      const bg = document.getElementById(`wire${index}-bg`);
+      if (active) {
+        flow.style.display = 'block';
+      } else {
+        flow.style.display = 'none';
+        bg.classList.add('wire-complete');
+      }
+    }
+
+    async function startWorkflow() {
+      const val = currentMode === 'url'
+        ? document.getElementById('inputUrl').value.trim()
+        : document.getElementById('inputPrompt').value.trim();
+
+      if (!val) return alert('Vui lòng nhập nội dung!');
+
+      const btn = document.getElementById('btnRun');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> ĐANG XỬ LÝ...';
+
+      // Reset states
+      ['crawler', 'ai', 'tts', 'render', 'youtube'].forEach(n => setNode(n, 'idle'));
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`wire${i}-flow`).style.display = 'none';
+        document.getElementById(`wire${i}-bg`).classList.remove('wire-complete');
+      }
+      document.getElementById('mainVideo').style.display = 'none';
+      document.getElementById('emptyVideo').style.display = 'block';
+
+      log('🚀 Khởi động Pipeline tự động...');
+
+      let targetParam = val;
+      // If it's a long prompt or raw text, send via POST /api/prepare first to avoid URL length limit
+      if (currentMode === 'prompt' || val.length > 500) {
+        log('📦 Đang chuẩn bị gói dữ liệu lớn...');
+        try {
+          const res = await fetch('/api/prepare', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: val })
+          });
+          const json = await res.json();
+          targetParam = json.file || 'temp_input.txt';
+        } catch (err) {
+          log('❌ Lỗi chuẩn bị dữ liệu: ' + err.message);
+          btn.disabled = false;
+          btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
+          return;
+        }
+      }
+
+      const evtSource = new EventSource(`/api/run?target=${encodeURIComponent(targetParam)}`);
+
+      evtSource.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        if (data.type === 'log') {
+          log(data.message);
+        } else if (data.type === 'step') {
+          const { step, status, info } = data;
+          setNode(step, status, info);
+
+          if (step === 'crawler' && status === 'running') updateWires();
+          if (step === 'ai' && status === 'running') setWire(1, true);
+          if (step === 'ai' && status === 'success') setWire(1, false);
+
+          if (step === 'tts' && status === 'running') setWire(2, true);
+          if (step === 'tts' && status === 'success') setWire(2, false);
+
+          if (step === 'render' && status === 'running') setWire(3, true);
+          if (step === 'render' && status === 'success') setWire(3, false);
+
+          if (step === 'youtube' && status === 'running') setWire(4, true);
+          if (step === 'youtube' && status === 'success') setWire(4, false);
+        } else if (data.type === 'done') {
+          log('🎉 Toàn bộ quy trình đã kết thúc! Mời bạn duyệt video trước khi đăng.');
+          btn.disabled = false;
+          btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
+
+          if (data.videoUrl) {
+            const player = document.getElementById('mainVideo');
+            player.src = data.videoUrl + '?t=' + Date.now();
+            player.style.display = 'block';
+            document.getElementById('emptyVideo').style.display = 'none';
+            player.play();
+          }
+
+          // Hiển thị form duyệt đăng YouTube
+          document.getElementById('youtubeReviewBox').style.display = 'block';
+          document.getElementById('btnConfirmUpload').style.display = 'flex';
+          document.getElementById('ytResultLink').style.display = 'none';
+          document.getElementById('ytTitle').value = 'Video Mới #shorts';
+          document.getElementById('ytDesc').value = 'Nội dung video...\n#shorts #congnghe';
+
+          if (data.metadata) {
+             const m = data.metadata;
+             document.getElementById('ytTitle').value = `${m.title || 'Bản Tin Số'} #shorts`;
+
+             let desc = `${m.title || 'Bản Tin Số'}\n\n`;
+             if (m.scenes) {
+               m.scenes.forEach((s, i) => {
+                 desc += `${i+1}. ${s.headline}\n`;
+               });
+             }
+             desc += `\nĐừng quên nhấn Like và Đăng ký kênh nhé!\n#shorts #news #congnghe #vietnam`;
+             document.getElementById('ytDesc').value = desc;
+          }
+
+          evtSource.close();
+        } else if (data.type === 'error') {
+          log(`❌ LỖI: ${data.message}`);
+          btn.disabled = false;
+          btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
+          evtSource.close();
+        }
+      };
+
+      evtSource.onerror = function() {
+        evtSource.close();
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
+      };
+    }
+
+    async function submitYouTubeUpload() {
+      const title = document.getElementById('ytTitle').value.trim();
+      const desc = document.getElementById('ytDesc').value.trim();
+      const privacy = document.getElementById('ytPrivacy').value;
+      const btn = document.getElementById('btnConfirmUpload');
+
+      if (!title || !desc) return alert('Vui lòng nhập đủ Tiêu đề và Mô tả!');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Đang tải lên YouTube...';
+
+      try {
+        const res = await fetch('/api/confirm-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            description: desc,
+            tags: ['shorts', 'công nghệ', 'việt nam', 'tin tức'],
+            privacyStatus: privacy
+          })
+        });
+
+        // Đọc SSE từ response (fetch stream) để cập nhật tiến trình
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n\n');
+
+          for (let line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.replace('data: ', ''));
+                if (data.type === 'log') {
+                  log(data.message);
+                }
+                if (data.type === 'step') {
+                  setNode(data.step, data.status, data.info);
+                  if (data.step === 'youtube' && data.status === 'running') setWire(4, true);
+                  if (data.step === 'youtube' && data.status === 'success') setWire(4, false);
+                }
+                if (data.type === 'done' && data.shortUrl) {
+                  btn.style.display = 'none';
+                  const rsBox = document.getElementById('ytResultLink');
+                  rsBox.style.display = 'block';
+                  document.getElementById('ytShortLink').href = data.shortUrl;
+                  log('🎉 Đăng video thành công lên YouTube: ' + data.shortUrl);
+                }
+              } catch(e) {}
+            }
+          }
+        }
+      } catch (err) {
+        alert('Lỗi đăng YouTube: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        if (document.getElementById('ytResultLink').style.display !== 'block') {
+          btn.innerHTML = '<span>🚀</span> Đăng Lên YouTube Shorts Ngay';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

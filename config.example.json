@@ -1,0 +1,7 @@
+{
+  "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY_HERE",
+  "GEMINI_MODEL": "gemini-2.5-flash",
+  "TTS_VOICE": "vi-VN-HoaiMyNeural",
+  "TTS_RATE": "+5%",
+  "TTS_PITCH": "+2Hz"
+}

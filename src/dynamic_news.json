@@ -1,0 +1,79 @@
+{
+  "title": "OpenAI Ra Mắt GPT-6",
+  "themeColor": "#06b6d4",
+  "bgStyle": "hud",
+  "totalDurationInFrames": 1588,
+  "scenes": [
+    {
+      "id": 1,
+      "tag": "TIN NÓNG TOÀN CẦU",
+      "layoutType": "stat",
+      "headline": "OpenAI Ra Mắt GPT-6 Astra",
+      "keyTakeaways": [
+        "Thế hệ AI mới nhất từ OpenAI",
+        "Tập trung vào AI Agent tự hành"
+      ],
+      "statNumber": "10X",
+      "statLabel": "Khả năng xử lý tác vụ dài hạn",
+      "audioFile": "dynamic_1.mp3",
+      "audioFrames": 449,
+      "globalStart": 0,
+      "seqDuration": 489,
+      "color": "#38bdf8",
+      "takeawayStarts": [
+        60,
+        209
+      ]
+    },
+    {
+      "id": 2,
+      "tag": "ĐIỂM NHẤN CÔNG NGHỆ",
+      "layoutType": "list",
+      "headline": "Những Đột Phá Trên GPT-6 Astra",
+      "keyTakeaways": [
+        "Tự động lập trình và thao tác máy tính",
+        "Bộ nhớ đệm thông minh tối ưu chi phí",
+        "Đã hoàn tất đánh giá an toàn nghiêm ngặt"
+      ],
+      "audioFile": "dynamic_2.mp3",
+      "audioFrames": 416,
+      "globalStart": 469,
+      "seqDuration": 456,
+      "color": "#a855f7",
+      "takeawayStarts": [
+        60,
+        164,
+        268
+      ]
+    },
+    {
+      "id": 3,
+      "tag": "TÁC ĐỘNG TƯƠNG LAI",
+      "layoutType": "quote",
+      "headline": "Kỷ Nguyên Của AI Agent",
+      "keyTakeaways": [
+        "Chuyển đổi quy trình lập trình truyền thống",
+        "Cơ hội bứt phá cho doanh nghiệp công nghệ"
+      ],
+      "quoteText": "GPT sáu Astra là bước nhảy vọt đưa AI từ công cụ hỗ trợ trở thành các tác nhân tự vận hành, thay đổi hoàn toàn cách con người làm việc với máy tính.",
+      "quoteAuthor": "Đại diện từ OpenAI",
+      "audioFile": "dynamic_3.mp3",
+      "audioFrames": 418,
+      "globalStart": 905,
+      "seqDuration": 438,
+      "color": "#eab308",
+      "takeawayStarts": [
+        60,
+        199
+      ]
+    }
+  ],
+  "outro": {
+    "title": "OpenAI Ra Mắt GPT-6",
+    "subtitle": "Cập nhật tin tức nhanh và chính xác nhất",
+    "audioFile": "dynamic_outro.mp3",
+    "audioFrames": 225,
+    "globalStart": 1343,
+    "seqDuration": 245
+  }
+}

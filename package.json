@@ -6,14 +6,20 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@remotion/cli": "4.0.522",
+    "@remotion/tailwind-v4": "4.0.522",
+    "@remotion/transitions": "^4.0.522",
     "@remotion/zod-types": "4.0.522",
+    "cheerio": "^1.2.0",
+    "express": "^5.2.1",
+    "googleapis": "^178.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.522",
-    "zod": "4.5.4",
-    "@remotion/tailwind-v4": "4.0.522",
-    "tailwindcss": "4.0.0"
+    "rss-parser": "^3.13.0",
+    "tailwindcss": "4.0.0",
+    "zod": "4.5.4"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.522",
@@ -25,6 +31,7 @@
   },
   "scripts": {
     "dev": "remotion studio",
+    "dashboard": "node dashboard.js",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"

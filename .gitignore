@@ -5,3 +5,20 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+out/
+
+# Claude CLI
+.claude/
+
+# Secret & config files
+config.json
+client_secret*.json
+tokens.json
+youtube_meta.json
+
+# Logs & Temp files
+*.log
+temp_input.txt
+temp_tts.txt
+test_tts.mp3
+*.pyc

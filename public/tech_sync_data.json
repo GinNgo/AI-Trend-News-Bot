@@ -1,0 +1,40 @@
+{
+  "scenes": [
+    {
+      "id": 1,
+      "duration_sec": 14.88,
+      "audio_frames": 446,
+      "global_start": 0,
+      "seq_duration": 486
+    },
+    {
+      "id": 2,
+      "duration_sec": 10.87,
+      "audio_frames": 326,
+      "global_start": 466,
+      "seq_duration": 366
+    },
+    {
+      "id": 3,
+      "duration_sec": 10.22,
+      "audio_frames": 307,
+      "global_start": 812,
+      "seq_duration": 347
+    },
+    {
+      "id": 4,
+      "duration_sec": 10.01,
+      "audio_frames": 300,
+      "global_start": 1139,
+      "seq_duration": 340
+    },
+    {
+      "id": 5,
+      "duration_sec": 10.94,
+      "audio_frames": 328,
+      "global_start": 1459,
+      "seq_duration": 348
+    }
+  ],
+  "total_frames": 1807
+}
