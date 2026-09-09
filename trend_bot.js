@@ -143,9 +143,26 @@ TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json)
   `;
 
   try {
-    const model = genAI.getGenerativeModel({ model: config.GEMINI_MODEL || "gemini-2.5-flash" });
-    const res = await model.generateContent(prompt);
-    let text = res.response.text();
+    let text = "";
+    const modelsToTry = [config.GEMINI_MODEL || "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"];
+    let success = false;
+    for (const m of modelsToTry) {
+      try {
+        const model = genAI.getGenerativeModel({ model: m });
+        const res = await model.generateContent(prompt);
+        text = res.response.text();
+        success = true;
+        break;
+      } catch (e) {
+        logFn(`  ⚠️ Model ${m} lỗi: ${e.message}. Thử model khác...`);
+      }
+    }
+
+    if (!success) {
+      logFn(`  ❌ Tất cả các model đều lỗi!`);
+      return null;
+    }
+
     text = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
     const decision = JSON.parse(text);
