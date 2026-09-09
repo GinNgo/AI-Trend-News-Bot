@@ -1,79 +1,84 @@
 {
-  "title": "OpenAI Ra Mắt GPT-6",
-  "themeColor": "#06b6d4",
+  "title": "Bóc Trần Mạng Tin Giả AI",
+  "themeColor": "#ef4444",
   "bgStyle": "hud",
-  "totalDurationInFrames": 1588,
+  "totalDurationInFrames": 1581,
   "scenes": [
     {
       "id": 1,
-      "tag": "TIN NÓNG TOÀN CẦU",
-      "layoutType": "stat",
-      "headline": "OpenAI Ra Mắt GPT-6 Astra",
+      "tag": "ĐIỀU TRA QUỐC TẾ",
+      "layoutType": "list",
+      "headline": "Đường Dây Tin Giả Xuyên Lục Địa",
       "keyTakeaways": [
-        "Thế hệ AI mới nhất từ OpenAI",
-        "Tập trung vào AI Agent tự hành"
+        "CBC Canada phanh phui đế chế tin rác AI",
+        "Trụ sở vận hành công khai tại Hà Nội"
       ],
-      "statNumber": "10X",
-      "statLabel": "Khả năng xử lý tác vụ dài hạn",
       "audioFile": "dynamic_1.mp3",
-      "audioFrames": 449,
+      "audioFrames": 333,
       "globalStart": 0,
-      "seqDuration": 489,
+      "seqDuration": 373,
       "color": "#38bdf8",
       "takeawayStarts": [
         60,
-        209
+        171
       ]
     },
     {
       "id": 2,
-      "tag": "ĐIỂM NHẤN CÔNG NGHỆ",
-      "layoutType": "list",
-      "headline": "Những Đột Phá Trên GPT-6 Astra",
-      "keyTakeaways": [
-        "Tự động lập trình và thao tác máy tính",
-        "Bộ nhớ đệm thông minh tối ưu chi phí",
-        "Đã hoàn tất đánh giá an toàn nghiêm ngặt"
-      ],
+      "tag": "SỐ LIỆU KHỦNG",
+      "layoutType": "stat",
+      "headline": "Mạng Lưới Thao Túng Người Dùng",
+      "keyTakeaways": [],
+      "statNumber": "55.000.000+",
+      "statLabel": "Lượt người theo dõi toàn cầu",
       "audioFile": "dynamic_2.mp3",
-      "audioFrames": 416,
-      "globalStart": 469,
-      "seqDuration": 456,
+      "audioFrames": 300,
+      "globalStart": 353,
+      "seqDuration": 340,
       "color": "#a855f7",
-      "takeawayStarts": [
-        60,
-        164,
-        268
-      ]
+      "takeawayStarts": []
     },
     {
       "id": 3,
-      "tag": "TÁC ĐỘNG TƯƠNG LAI",
+      "tag": "Ý KIẾN CHUYÊN GIA",
       "layoutType": "quote",
-      "headline": "Kỷ Nguyên Của AI Agent",
-      "keyTakeaways": [
-        "Chuyển đổi quy trình lập trình truyền thống",
-        "Cơ hội bứt phá cho doanh nghiệp công nghệ"
-      ],
-      "quoteText": "GPT sáu Astra là bước nhảy vọt đưa AI từ công cụ hỗ trợ trở thành các tác nhân tự vận hành, thay đổi hoàn toàn cách con người làm việc với máy tính.",
-      "quoteAuthor": "Đại diện từ OpenAI",
+      "headline": "Lời Cảnh Báo Từ Học Giả",
+      "keyTakeaways": [],
+      "quoteText": "Quy mô những gì được thực hiện ở đây thật sự quá kinh ngạc. Hoàn toàn là một sự lừa dối có hệ thống.",
+      "quoteAuthor": "GS. Fenwick McKelvey - ĐH Concordia",
       "audioFile": "dynamic_3.mp3",
-      "audioFrames": 418,
-      "globalStart": 905,
-      "seqDuration": 438,
+      "audioFrames": 312,
+      "globalStart": 673,
+      "seqDuration": 352,
       "color": "#eab308",
+      "takeawayStarts": []
+    },
+    {
+      "id": 4,
+      "tag": "HỆ LỤY NẶNG NỀ",
+      "layoutType": "list",
+      "headline": "Cảnh Báo Giới MMO Việt Nam",
+      "keyTakeaways": [
+        "Gia tăng sức ép kiểm duyệt lên Meta",
+        "Nguy cơ siết tài khoản và thanh toán từ IP Việt"
+      ],
+      "audioFile": "dynamic_4.mp3",
+      "audioFrames": 311,
+      "globalStart": 1005,
+      "seqDuration": 331,
+      "color": "#22c55e",
       "takeawayStarts": [
         60,
-        199
+        163
       ]
     }
   ],
   "outro": {
-    "title": "OpenAI Ra Mắt GPT-6",
+    "title": "Bóc Trần Mạng Tin Giả AI",
     "subtitle": "Cập nhật tin tức nhanh và chính xác nhất",
     "audioFile": "dynamic_outro.mp3",
     "audioFrames": 225,
-    "globalStart": 1343,
+    "globalStart": 1336,
     "seqDuration": 245
   }
 }
