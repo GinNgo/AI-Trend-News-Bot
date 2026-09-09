@@ -107,6 +107,11 @@ async function main() {
     try {
       const $ = cheerio.load(html);
       const images = [];
+      
+      // Bóc meta tags ưu tiên cao (og:image, twitter:image)
+      const ogImage = $('meta[property="og:image"]').attr('content') || $('meta[name="twitter:image"]').attr('content');
+      if (ogImage) images.push(ogImage);
+
       $('img').each((i, el) => {
         let src = $(el).attr('src') || $(el).attr('data-src');
         if (!src) return;
@@ -196,7 +201,15 @@ async function main() {
   console.log(`\n🧠 BƯỚC 2: AI đang phân tích ĐIỀU TRA CHUYÊN SÂU & Lên kịch bản có dẫn chứng, số liệu xác thực...`);
   const prompt = `
 Bạn là một Phóng viên Điều tra kiêm Biên tập viên Thời sự cao cấp.
-Hãy đọc kỹ toàn bộ dữ liệu bài báo dưới đây và xây dựng một kịch bản Video Ngắn (Shorts) thời lượng 45 - 60 giây mang phong cách ĐIỀU TRA SỰ THẬT, CỰC KỲ XÁC THỰC, CÓ DẪN CHỨNG, TÀI LIỆU VÀ SỐ LIỆU RÕ RÀNG.
+Hãy đọc kỹ toàn bộ dữ liệu bài báo dưới đây và xây dựng một kịch bản Video Ngắn (Shorts) thời lượng 45 - 60 giây.
+
+YÊU CẦU QUAN TRỌNG VỀ GIỌNG ĐIỆU (VOICEOVER TỰ THÍCH ỨNG):
+1. Tự phân tích nội dung bài viết thuộc chủ đề gì để điều chỉnh phong cách lời thoại cho phù hợp nhất.
+   - Nếu là tin Công nghệ / AI / Kỹ thuật: Giọng điệu hiện đại, truyền cảm hứng, dùng từ ngữ chuyên ngành chính xác, nhịp độ nhanh.
+   - Nếu là tin Kinh tế / Tội phạm / Lừa đảo: Phong cách ĐIỀU TRA SỰ THẬT, CỰC KỲ XÁC THỰC, giọng đanh thép, cảnh báo, nhấn mạnh số liệu và dẫn chứng.
+   - Nếu là tin Giải trí / Đời sống / Trend mạng xã hội: Giọng điệu gần gũi, giật gân, cuốn hút, hợp gu giới trẻ.
+   
+2. Mỗi phân cảnh (voiceover) phải đủ dài (ít nhất 40-60 chữ) để giải thích cặn kẽ vấn đề, không viết quá ngắn.
 
 YÊU CẦU NỘI DUNG NGHIÊM NGẶT:
 1. KHÔNG NÓI CHUNG CHUNG HOẶC NÓI QUA LOA. Phải chỉ rõ:
@@ -310,7 +323,10 @@ ${articleText}
       id: i + 1,
       tag: s.tag,
       layoutType: s.layoutType || 'list',
-      imageFile: s.imageFile || (downloadedImages.length > 0 ? downloadedImages[i % downloadedImages.length] : undefined),
+      imageFile: (() => {
+        const img = s.imageFile || (downloadedImages.length > 0 ? downloadedImages[i % downloadedImages.length] : undefined);
+        return (img && require('fs').existsSync(require('path').join(__dirname, 'public', img))) ? img : undefined;
+      })(),
       headline: s.headline,
       keyTakeaways: s.keyTakeaways || [],
       statNumber: s.statNumber,
@@ -363,7 +379,7 @@ ${articleText}
   console.log(`✅ Đồng bộ Frame hoàn tất. Tổng thời lượng: ${globalStart} frames (~${Math.round(globalStart/FPS)}s)`);
 
   console.log(`\n🎬 BƯỚC 4: Đang Render Video hoàn chỉnh (Remotion)...`);
-  const renderCmd = `C:/Users/PC/AppData/Roaming/nvm/v22.14.0/npx.cmd remotion render DynamicNews out/auto_news_result.mp4`;
+  const renderCmd = `npx remotion render DynamicNews out/auto_news_result.mp4`;
   console.log(`Đang chạy: ${renderCmd}`);
   execSync(renderCmd, { stdio: 'inherit' });
 

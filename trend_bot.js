@@ -19,6 +19,10 @@ const MAX_VIDEOS_PER_DAY = 6; // Giới hạn số video tự động đăng m�
 
 // Nguồn RSS uy tín cập nhật liên tục từng phút
 const RSS_FEEDS = [
+  { name: 'Hacker News', url: 'https://hnrss.org/front' },
+  { name: 'TechCrunch', url: 'https://techcrunch.com/feed/' },
+  { name: 'The Verge Tech', url: 'https://www.theverge.com/tech/rss/index.xml' },
+  { name: 'VentureBeat AI', url: 'https://venturebeat.com/category/ai/feed/' },
   { name: 'Google News VN (Xu Hướng)', url: 'https://news.google.com/rss?hl=vi&gl=VN&ceid=VN:vi' },
   { name: 'VnExpress Tin Mới', url: 'https://vnexpress.net/rss/tin-moi-nhat.rss' },
   { name: 'Tuổi Trẻ Tin Nóng', url: 'https://tuoitre.vn/rss/tin-moi-nhat.rss' }
@@ -26,7 +30,7 @@ const RSS_FEEDS = [
 
 // Thời gian tối đa của một bản tin (tính bằng giờ)
 // Tin cũ hơn số giờ này sẽ bị tự động loại bỏ để đảm bảo tính thời sự.
-const MAX_NEWS_AGE_HOURS = 3;
+const MAX_NEWS_AGE_HOURS = 24;
 
 function getHistory() {
   if (!fs.existsSync(HISTORY_FILE)) {
@@ -110,6 +114,7 @@ async function fetchLatestNews(logFn = console.log) {
     }
   }
 
+  logFn(`  ✅ Đã quét xong ${RSS_FEEDS.length} nguồn. Tìm thấy ${allItems.length} bài viết tiềm năng (đã lọc tin cũ và trùng lặp).`);
   return allItems;
 }
 

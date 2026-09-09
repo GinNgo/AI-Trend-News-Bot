@@ -728,17 +728,26 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   .absolute {
     position: absolute;
   }
-  .static {
-    position: static;
+  .relative {
+    position: relative;
+  }
+  .start {
+    inset-inline-start: var(--spacing);
   }
   .end {
     inset-inline-end: var(--spacing);
   }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
-  .inline {
-    display: inline;
+  .grid {
+    display: grid;
+  }
+  .hidden {
+    display: none;
   }
   .inline-block {
     display: inline-block;
@@ -746,12 +755,26 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
+  .resize {
+    resize: both;
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
+  }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .backdrop-filter {
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -784,6 +807,100 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   inherits: false;
   initial-value: solid;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-backdrop-sepia {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -793,10 +910,33 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
       --tw-skew-x: initial;
       --tw-skew-y: initial;
       --tw-border-style: solid;
+      --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
+      --tw-backdrop-blur: initial;
+      --tw-backdrop-brightness: initial;
+      --tw-backdrop-contrast: initial;
+      --tw-backdrop-grayscale: initial;
+      --tw-backdrop-hue-rotate: initial;
+      --tw-backdrop-invert: initial;
+      --tw-backdrop-opacity: initial;
+      --tw-backdrop-saturate: initial;
+      --tw-backdrop-sepia: initial;
     }
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gCAAgC;EAClC;EACA;IACE,aAAa;EACf;EACA;IACE,eAAe;EACjB;EACA;IACE,qBAAqB;EACvB;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;IAC1B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .absolute {\n    position: absolute;\n  }\n  .static {\n    position: static;\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .flex {\n    display: flex;\n  }\n  .inline {\n    display: inline;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n    }\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,kBAAkB;EACpB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kCAAkC;EACpC;EACA;IACE,gCAAgC;EAClC;EACA;IACE,cAAc;EAChB;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,qBAAqB;EACvB;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,YAAY;EACd;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,sCAAsC;IACtC,kBAAkB;EACpB;EACA;IACE,0LAA0L;EAC5L;EACA;IACE,wRAAwR;IACxR,gRAAgR;EAClR;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,sBAAsB;EACtB,eAAe;EACf,mBAAmB;AACrB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;MACxB,yBAAyB;MACzB,kBAAkB;MAClB,wBAAwB;MACxB,sBAAsB;MACtB,uBAAuB;MACvB,wBAAwB;MACxB,oBAAoB;MACpB,qBAAqB;MACrB,sBAAsB;MACtB,mBAAmB;MACnB,yBAAyB;MACzB,+BAA+B;MAC/B,4BAA4B;MAC5B,8BAA8B;MAC9B,2BAA2B;MAC3B,iCAAiC;MACjC,+BAA+B;MAC/B,gCAAgC;MAChC,iCAAiC;MACjC,6BAA6B;MAC7B,8BAA8B;MAC9B,+BAA+B;MAC/B,4BAA4B;IAC9B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .absolute {\n    position: absolute;\n  }\n  .relative {\n    position: relative;\n  }\n  .start {\n    inset-inline-start: var(--spacing);\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .block {\n    display: block;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .resize {\n    resize: both;\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* export default */ const __rspack_default_export = (___CSS_LOADER_EXPORT___);
 
@@ -18471,7 +18611,7 @@ function styleTagTransform(css, styleElement) {
 module.exports = styleTagTransform;
 
 },
-5865(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
+589(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/remotion/dist/esm/index.mjs
@@ -18510,15 +18650,15 @@ var index_js_src = __webpack_require__(5291);
       
       
 
-var options = {};
+var src_options = {};
 
-options.styleTagTransform = (styleTagTransform_default());
-options.setAttributes = (setAttributesWithoutAttributes_default());
-options.insert = insertBySelector_default().bind(null, "head");
-options.domAPI = (styleDomAPI_default());
-options.insertStyleElement = (insertStyleElement_default());
+src_options.styleTagTransform = (styleTagTransform_default());
+src_options.setAttributes = (setAttributesWithoutAttributes_default());
+src_options.insert = insertBySelector_default().bind(null, "head");
+src_options.domAPI = (styleDomAPI_default());
+src_options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(index_js_src/* ["default"] */.A, options);
+var update = injectStylesIntoStyleTag_default()(index_js_src/* ["default"] */.A, src_options);
 
 
 
@@ -18713,7 +18853,7 @@ const FONT_FAMILY = "SF Pro Text, Helvetica, Arial, sans-serif";
 
 
 
-const subtitle = {
+const Subtitle_subtitle = {
     fontFamily: FONT_FAMILY,
     fontSize: 40,
     textAlign: "center",
@@ -18735,7 +18875,7 @@ const Subtitle = ()=>{
     ]);
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
         style: {
-            ...subtitle,
+            ...Subtitle_subtitle,
             opacity
         },
         children: [
@@ -18754,7 +18894,7 @@ const Subtitle = ()=>{
 
 
 
-const title = {
+const Title_title = {
     fontFamily: FONT_FAMILY,
     fontWeight: "bold",
     fontSize: 100,
@@ -18773,7 +18913,7 @@ const Title = ({ titleText, titleColor })=>{
     const frame = (0,esm.useCurrentFrame)();
     const words = titleText.split(" ");
     return /*#__PURE__*/ (0,jsx_runtime.jsx)("h1", {
-        style: title,
+        style: Title_title,
         children: words.map((t, i)=>{
             const delay = i * 5;
             const scale = (0,esm.spring)({
@@ -18866,6 +19006,1984 @@ const HelloWorld = ({ titleText: propOne, titleColor: propTwo, logoColor1, logoC
     });
 };
 
+// EXTERNAL MODULE: ./node_modules/remotion/dist/esm/no-react.mjs
+var no_react = __webpack_require__(9382);
+;// CONCATENATED MODULE: ./node_modules/@remotion/transitions/dist/esm/index.mjs
+// src/presentations/slide.tsx
+
+
+
+var epsilon = 0.01;
+var SlidePresentation = ({
+  children,
+  presentationProgress,
+  presentationDirection,
+  passedProps: { direction = "from-left", enterStyle, exitStyle }
+}) => {
+  const directionStyle = (0,react.useMemo)(() => {
+    const presentationProgressWithEpsilonCorrection = presentationProgress === 1 ? presentationProgress * 100 : presentationProgress * 100 - epsilon;
+    if (presentationDirection === "exiting") {
+      switch (direction) {
+        case "from-left":
+          return {
+            transform: `translateX(${presentationProgressWithEpsilonCorrection}%)`
+          };
+        case "from-right":
+          return {
+            transform: `translateX(${-presentationProgress * 100}%)`
+          };
+        case "from-top":
+          return {
+            transform: `translateY(${presentationProgressWithEpsilonCorrection}%)`
+          };
+        case "from-bottom":
+          return {
+            transform: `translateY(${-presentationProgress * 100}%)`
+          };
+        default:
+          throw new Error(`Invalid direction: ${direction}`);
+      }
+    }
+    switch (direction) {
+      case "from-left":
+        return {
+          transform: `translateX(${-100 + presentationProgress * 100}%)`
+        };
+      case "from-right":
+        return {
+          transform: `translateX(${100 - presentationProgressWithEpsilonCorrection}%)`
+        };
+      case "from-top":
+        return {
+          transform: `translateY(${-100 + presentationProgress * 100}%)`
+        };
+      case "from-bottom":
+        return {
+          transform: `translateY(${100 - presentationProgressWithEpsilonCorrection}%)`
+        };
+      default:
+        throw new Error(`Invalid direction: ${direction}`);
+    }
+  }, [presentationDirection, presentationProgress, direction]);
+  const style = (0,react.useMemo)(() => {
+    return {
+      width: "100%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      ...directionStyle,
+      ...presentationDirection === "entering" ? enterStyle : exitStyle
+    };
+  }, [directionStyle, enterStyle, exitStyle, presentationDirection]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+    style,
+    children
+  });
+};
+var slide = (props) => {
+  return {
+    component: SlidePresentation,
+    props: props ?? {}
+  };
+};
+
+// src/html-in-canvas-presentation.tsx
+
+
+
+var HtmlInCanvasPresentation = ({
+  children,
+  onElementImage,
+  onUnmount,
+  presentationProgress,
+  presentationDirection,
+  shader,
+  effects,
+  passedProps,
+  bothEnteringAndExiting
+}) => {
+  if (!esm.HtmlInCanvas.isSupported()) {
+    throw new Error(esm.HTML_IN_CANVAS_UNSUPPORTED_MESSAGE);
+  }
+  const canvasRef = (0,react.useRef)(null);
+  const outputCanvasRef = (0,react.useRef)(null);
+  const canvasSubtreeStyle = (0,react.useMemo)(() => {
+    return {
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    };
+  }, []);
+  const outputCanvasStyle = (0,react.useMemo)(() => {
+    return {
+      width: "100%",
+      height: "100%",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      pointerEvents: "none"
+    };
+  }, []);
+  const captureCanvasRef = (0,react.useRef)(null);
+  const captureContextRef = (0,react.useRef)(null);
+  const [shaderCanvas] = (0,react.useState)(() => new OffscreenCanvas(1, 1));
+  const passedPropsRef = (0,react.useRef)(passedProps);
+  passedPropsRef.current = passedProps;
+  const memoizedEffects = esm.Internals.useMemoizedEffects({
+    effects: effects ?? [],
+    overrideId: null
+  });
+  const effectsRef = (0,react.useRef)(memoizedEffects);
+  effectsRef.current = memoizedEffects;
+  const [instance] = (0,react.useState)(() => shader(shaderCanvas));
+  (0,react.useLayoutEffect)(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return () => {
+        instance.cleanup();
+      };
+    }
+    const captureCanvas = canvas.transferControlToOffscreen();
+    const captureContext = captureCanvas.getContext("2d");
+    if (!captureContext) {
+      throw new Error("Failed to create capture canvas context");
+    }
+    captureCanvasRef.current = captureCanvas;
+    captureContextRef.current = captureContext;
+    return () => {
+      instance.cleanup();
+      captureCanvasRef.current = null;
+      captureContextRef.current = null;
+    };
+  }, [instance]);
+  const chainState = esm.Internals.useEffectChainState();
+  const { delayRender, continueRender, cancelRender } = (0,esm.useDelayRender)();
+  const draw = (0,react.useCallback)(async (prevImage, nextImage, progress) => {
+    const outputCanvas = outputCanvasRef.current;
+    if (!outputCanvas) {
+      throw new Error("Canvas not found");
+    }
+    const handle = delayRender("onPaint");
+    try {
+      const clearOutput = () => {
+        const context = outputCanvas.getContext("2d");
+        if (!context) {
+          throw new Error("Failed to create output canvas context");
+        }
+        context.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+      };
+      if (!prevImage && !nextImage) {
+        instance.clear();
+        clearOutput();
+        continueRender(handle);
+        return;
+      }
+      const width = prevImage?.width ?? nextImage?.width ?? 0;
+      const height = prevImage?.height ?? nextImage?.height ?? 0;
+      if (width === 0 || height === 0) {
+        instance.clear();
+        clearOutput();
+        continueRender(handle);
+        return;
+      }
+      shaderCanvas.width = width;
+      shaderCanvas.height = height;
+      instance.draw({
+        prevImage,
+        nextImage,
+        width,
+        height,
+        time: progress,
+        passedProps: passedPropsRef.current
+      });
+      await esm.Internals.runEffectChain({
+        state: chainState.get(width, height),
+        source: shaderCanvas,
+        effects: effectsRef.current ?? [],
+        width,
+        height,
+        output: outputCanvas
+      });
+      continueRender(handle);
+    } catch (error) {
+      cancelRender(error);
+    }
+  }, [
+    cancelRender,
+    chainState,
+    continueRender,
+    delayRender,
+    instance,
+    shaderCanvas
+  ]);
+  const passThrough = bothEnteringAndExiting && presentationDirection === "exiting";
+  (0,react.useLayoutEffect)(() => {
+    if (passThrough) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      throw new Error("Canvas not found");
+    }
+    canvas.layoutSubtree = true;
+    const onPaint = () => {
+      const firstChild = canvas.firstChild;
+      const captureCanvas = captureCanvasRef.current;
+      const captureContext = captureContextRef.current;
+      if (!firstChild || !captureCanvas || !captureContext) {
+        return;
+      }
+      const elementImage = canvas.captureElementImage(firstChild);
+      try {
+        captureContext.reset();
+        captureContext.drawElementImage(elementImage, 0, 0);
+      } finally {
+        elementImage.close();
+      }
+      onElementImage(captureCanvas, draw);
+    };
+    canvas.addEventListener("paint", onPaint);
+    return () => {
+      canvas.removeEventListener("paint", onPaint);
+    };
+  }, [onElementImage, presentationDirection, draw, passThrough]);
+  (0,react.useLayoutEffect)(() => {
+    if (passThrough) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      throw new Error("Canvas not found");
+    }
+    canvas.requestPaint?.();
+  }, [presentationProgress, passThrough, memoizedEffects]);
+  (0,react.useLayoutEffect)(() => {
+    if (passThrough) {
+      return;
+    }
+    return () => {
+      onUnmount();
+    };
+  }, [onUnmount, passThrough]);
+  (0,react.useLayoutEffect)(() => {
+    if (passThrough) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    const observer = new ResizeObserver(([entry]) => {
+      const outputCanvas = outputCanvasRef.current;
+      const captureCanvas = captureCanvasRef.current;
+      if (!outputCanvas || !captureCanvas) {
+        return;
+      }
+      const width = entry.devicePixelContentBoxSize[0].inlineSize;
+      const height = entry.devicePixelContentBoxSize[0].blockSize;
+      captureCanvas.width = width;
+      captureCanvas.height = height;
+      outputCanvas.width = width;
+      outputCanvas.height = height;
+      canvas.requestPaint?.();
+    });
+    observer.observe(canvas, { box: "device-pixel-content-box" });
+    return () => {
+      observer.disconnect();
+    };
+  }, [passThrough]);
+  if (passThrough) {
+    return children;
+  }
+  return /* @__PURE__ */ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+    children: [
+      /* @__PURE__ */ (0,jsx_runtime.jsx)("canvas", {
+        ref: canvasRef,
+        style: canvasSubtreeStyle,
+        children
+      }),
+      /* @__PURE__ */ (0,jsx_runtime.jsx)("canvas", {
+        ref: outputCanvasRef,
+        style: outputCanvasStyle
+      })
+    ]
+  });
+};
+var makeHtmlInCanvasPresentation = (shader) => {
+  const CompWithShader = (props) => {
+    const { passedProps, ...otherProps } = props;
+    const { effects, ...restPassedProps } = props.passedProps;
+    return /* @__PURE__ */ (0,jsx_runtime.jsx)(HtmlInCanvasPresentation, {
+      shader,
+      passedProps: restPassedProps,
+      effects,
+      ...otherProps
+    });
+  };
+  return (props) => {
+    return {
+      component: CompWithShader,
+      props
+    };
+  };
+};
+
+// src/presentations/upload-element-image.ts
+var uploadElementImage = (gl, elementImage) => {
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, elementImage);
+};
+
+// src/presentations/cross-zoom.tsx
+var DEFAULT_STRENGTH = 0.4;
+var VERTEX_SHADER = `#version 300 es
+in vec2 a_pos;
+out vec2 v_uv;
+void main() {
+	v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
+	gl_Position = vec4(a_pos, 0.0, 1.0);
+}`;
+var FRAGMENT_SHADER = `#version 300 es
+precision highp float;
+
+uniform sampler2D u_prev;
+uniform sampler2D u_next;
+uniform float u_time;
+uniform float u_strength;
+
+in vec2 v_uv;
+out vec4 outColor;
+
+const float PI = 3.141592653589793;
+
+float linearEase(float begin, float change, float duration, float time) {
+	return change * time / duration + begin;
+}
+
+float exponentialEaseInOut(float begin, float change, float duration, float time) {
+	if (time == 0.0) {
+		return begin;
+	}
+
+	if (time == duration) {
+		return begin + change;
+	}
+
+	float t = time / (duration / 2.0);
+	if (t < 1.0) {
+		return change / 2.0 * pow(2.0, 10.0 * (t - 1.0)) + begin;
+	}
+
+	return change / 2.0 * (-pow(2.0, -10.0 * (t - 1.0)) + 2.0) + begin;
+}
+
+float sinusoidalEaseInOut(float begin, float change, float duration, float time) {
+	return -change / 2.0 * (cos(PI * time / duration) - 1.0) + begin;
+}
+
+float random(vec2 co) {
+	return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+vec4 crossFade(vec2 uv, float dissolve) {
+	return mix(texture(u_prev, uv), texture(u_next, uv), dissolve);
+}
+
+vec4 transition(vec2 uv, float progress) {
+	vec2 center = vec2(linearEase(0.25, 0.5, 1.0, progress), 0.5);
+	float dissolve = exponentialEaseInOut(0.0, 1.0, 1.0, progress);
+	float strength = sinusoidalEaseInOut(0.0, u_strength, 0.5, progress);
+
+	vec4 color = vec4(0.0);
+	float total = 0.0;
+	vec2 toCenter = center - uv;
+	float offset = random(uv);
+
+	for (int i = 0; i <= 40; i++) {
+		float percent = (float(i) + offset) / 40.0;
+		float weight = 4.0 * (percent - percent * percent);
+		color += crossFade(uv + toCenter * percent * strength, dissolve) * weight;
+		total += weight;
+	}
+
+	return color / total;
+}
+
+void main() {
+	float progress = 1.0 - u_time;
+	outColor = transition(v_uv, progress);
+}`;
+var compileShader = (gl, source, type) => {
+  const shader = gl.createShader(type);
+  if (!shader) {
+    throw new Error("Failed to create shader");
+  }
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const log = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error(`Failed to compile shader: ${log}`);
+  }
+  return shader;
+};
+var createProgram = (gl) => {
+  const program = gl.createProgram();
+  if (!program) {
+    throw new Error("Failed to create WebGL program");
+  }
+  const vs = compileShader(gl, VERTEX_SHADER, gl.VERTEX_SHADER);
+  const fs = compileShader(gl, FRAGMENT_SHADER, gl.FRAGMENT_SHADER);
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const log = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    throw new Error(`Failed to link program: ${log}`);
+  }
+  return program;
+};
+var createTexture = (gl) => {
+  const tex = gl.createTexture();
+  if (!tex) {
+    throw new Error("Failed to create texture");
+  }
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+  return tex;
+};
+var crossZoomShader = (canvas) => {
+  const gl = canvas.getContext("webgl2", { premultipliedAlpha: true });
+  if (!gl) {
+    throw new Error("Failed to create WebGL2 context");
+  }
+  const program = createProgram(gl);
+  const prevTex = createTexture(gl);
+  const nextTex = createTexture(gl);
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(program, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(program, "u_time");
+  const uPrev = gl.getUniformLocation(program, "u_prev");
+  const uNext = gl.getUniformLocation(program, "u_next");
+  const uStrength = gl.getUniformLocation(program, "u_strength");
+  const cleanup = () => {
+    gl.deleteProgram(program);
+    gl.deleteTexture(prevTex);
+    gl.deleteTexture(nextTex);
+  };
+  const clear = () => {
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  };
+  const draw = ({
+    prevImage,
+    nextImage,
+    width,
+    height,
+    time,
+    passedProps
+  }) => {
+    const { strength = DEFAULT_STRENGTH } = passedProps;
+    if (!prevImage && !nextImage) {
+      return;
+    }
+    if (prevImage && (prevImage.width === 0 || prevImage.height === 0)) {
+      return;
+    }
+    if (nextImage && (nextImage.width === 0 || nextImage.height === 0)) {
+      return;
+    }
+    const effectiveTime = !prevImage ? 0 : !nextImage ? 1 : time;
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, prevTex);
+    if (prevImage) {
+      uploadElementImage(gl, prevImage);
+    }
+    gl.uniform1i(uPrev, 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, nextTex);
+    if (nextImage) {
+      uploadElementImage(gl, nextImage);
+    }
+    gl.uniform1i(uNext, 1);
+    gl.uniform1f(uTime, effectiveTime);
+    gl.uniform1f(uStrength, strength);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  return {
+    clear,
+    cleanup,
+    draw
+  };
+};
+var crossZoom = makeHtmlInCanvasPresentation(crossZoomShader);
+
+// src/presentations/dreamy-zoom.tsx
+var DEFAULT_ROTATION = 6;
+var DEFAULT_SCALE = 1.2;
+var VERTEX_SHADER2 = `#version 300 es
+in vec2 a_pos;
+out vec2 v_uv;
+void main() {
+	v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
+	gl_Position = vec4(a_pos, 0.0, 1.0);
+}`;
+var FRAGMENT_SHADER2 = `#version 300 es
+precision highp float;
+
+uniform sampler2D u_prev;
+uniform sampler2D u_next;
+uniform float u_time;
+uniform float u_rotation;
+uniform float u_scale;
+uniform float u_ratio;
+
+in vec2 v_uv;
+out vec4 outColor;
+
+const float DEG2RAD = 0.03926990816987241548078304229099;
+
+vec4 transition(vec2 uv, float progress) {
+	float phase = progress < 0.5 ? progress * 2.0 : (progress - 0.5) * 2.0;
+	float angleOffset = progress < 0.5 ? mix(0.0, u_rotation * DEG2RAD, phase) : mix(-u_rotation * DEG2RAD, 0.0, phase);
+	float newScale = progress < 0.5 ? mix(1.0, u_scale, phase) : mix(u_scale, 1.0, phase);
+
+	vec2 center = vec2(0.0, 0.0);
+	vec2 p = (uv.xy - vec2(0.5, 0.5)) / newScale * vec2(u_ratio, 1.0);
+	float angle = atan(p.y, p.x) + angleOffset;
+	float dist = distance(center, p);
+
+	p.x = cos(angle) * dist / u_ratio + 0.5;
+	p.y = sin(angle) * dist + 0.5;
+
+	vec4 c = progress < 0.5 ? texture(u_prev, p) : texture(u_next, p);
+	return c + (progress < 0.5 ? mix(0.0, 1.0, phase) : mix(1.0, 0.0, phase));
+}
+
+void main() {
+	float progress = 1.0 - u_time;
+	outColor = transition(v_uv, progress);
+}`;
+var compileShader2 = (gl, source, type) => {
+  const shader = gl.createShader(type);
+  if (!shader) {
+    throw new Error("Failed to create shader");
+  }
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const log = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error(`Failed to compile shader: ${log}`);
+  }
+  return shader;
+};
+var createProgram2 = (gl) => {
+  const program = gl.createProgram();
+  if (!program) {
+    throw new Error("Failed to create WebGL program");
+  }
+  const vs = compileShader2(gl, VERTEX_SHADER2, gl.VERTEX_SHADER);
+  const fs = compileShader2(gl, FRAGMENT_SHADER2, gl.FRAGMENT_SHADER);
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const log = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    throw new Error(`Failed to link program: ${log}`);
+  }
+  return program;
+};
+var createTexture2 = (gl) => {
+  const tex = gl.createTexture();
+  if (!tex) {
+    throw new Error("Failed to create texture");
+  }
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+  return tex;
+};
+var dreamyZoomShader = (canvas) => {
+  const gl = canvas.getContext("webgl2", { premultipliedAlpha: true });
+  if (!gl) {
+    throw new Error("Failed to create WebGL2 context");
+  }
+  const program = createProgram2(gl);
+  const prevTex = createTexture2(gl);
+  const nextTex = createTexture2(gl);
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(program, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(program, "u_time");
+  const uPrev = gl.getUniformLocation(program, "u_prev");
+  const uNext = gl.getUniformLocation(program, "u_next");
+  const uRotation = gl.getUniformLocation(program, "u_rotation");
+  const uScale = gl.getUniformLocation(program, "u_scale");
+  const uRatio = gl.getUniformLocation(program, "u_ratio");
+  const cleanup = () => {
+    gl.deleteProgram(program);
+    gl.deleteTexture(prevTex);
+    gl.deleteTexture(nextTex);
+  };
+  const clear = () => {
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  };
+  const draw = ({
+    prevImage,
+    nextImage,
+    width,
+    height,
+    time,
+    passedProps
+  }) => {
+    const { rotation = DEFAULT_ROTATION, scale = DEFAULT_SCALE } = passedProps;
+    if (!prevImage && !nextImage) {
+      return;
+    }
+    if (prevImage && (prevImage.width === 0 || prevImage.height === 0)) {
+      return;
+    }
+    if (nextImage && (nextImage.width === 0 || nextImage.height === 0)) {
+      return;
+    }
+    const effectiveTime = !prevImage ? 0 : !nextImage ? 1 : time;
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, prevTex);
+    if (prevImage) {
+      uploadElementImage(gl, prevImage);
+    }
+    gl.uniform1i(uPrev, 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, nextTex);
+    if (nextImage) {
+      uploadElementImage(gl, nextImage);
+    }
+    gl.uniform1i(uNext, 1);
+    gl.uniform1f(uTime, effectiveTime);
+    gl.uniform1f(uRotation, rotation);
+    gl.uniform1f(uScale, scale);
+    gl.uniform1f(uRatio, width / height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  return {
+    clear,
+    cleanup,
+    draw
+  };
+};
+var dreamyZoom = makeHtmlInCanvasPresentation(dreamyZoomShader);
+
+// src/presentations/film-burn.tsx
+var DEFAULT_SEED = 2.31;
+var VERTEX_SHADER3 = `#version 300 es
+in vec2 a_pos;
+out vec2 v_uv;
+void main() {
+	v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
+	gl_Position = vec4(a_pos, 0.0, 1.0);
+}`;
+var FRAGMENT_SHADER3 = `#version 300 es
+precision highp float;
+
+uniform sampler2D u_prev;
+uniform sampler2D u_next;
+uniform float u_time;
+uniform float u_seed;
+
+in vec2 v_uv;
+out vec4 outColor;
+
+#define PI 3.14159265358979323
+#define CLAMPS(x) clamp(x, 0.0, 1.0)
+#define REPEATS 50.0
+
+float sigmoid(float x, float a) {
+	float b = pow(x * 2.0, a) / 2.0;
+	if (x > 0.5) {
+		b = 1.0 - pow(2.0 - (x * 2.0), a) / 2.0;
+	}
+	return b;
+}
+
+float rand(float co) {
+	return fract(sin((co * 24.9898) + u_seed) * 43758.5453);
+}
+
+float rand(vec2 co) {
+	return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+float apow(float a, float b) {
+	return pow(abs(a), b) * sign(b);
+}
+
+vec3 pow3(vec3 a, vec3 b) {
+	return vec3(apow(a.r, b.r), apow(a.g, b.g), apow(a.b, b.b));
+}
+
+float smoothMix(float a, float b, float c) {
+	return mix(a, b, sigmoid(c, 2.0));
+}
+
+float random(vec2 co, float shft) {
+	co += 10.0;
+	return smoothMix(
+		fract(
+			sin(
+				dot(
+					co.xy,
+					vec2(12.9898 + (floor(shft) * 0.5), 78.233 + u_seed)
+				)
+			) * 43758.5453
+		),
+		fract(
+			sin(
+				dot(
+					co.xy,
+					vec2(12.9898 + (floor(shft + 1.0) * 0.5), 78.233 + u_seed)
+				)
+			) * 43758.5453
+		),
+		fract(shft)
+	);
+}
+
+float smoothRandom(vec2 co, float shft) {
+	return smoothMix(
+		smoothMix(
+			random(floor(co), shft),
+			random(floor(co + vec2(1.0, 0.0)), shft),
+			fract(co.x)
+		),
+		smoothMix(
+			random(floor(co + vec2(0.0, 1.0)), shft),
+			random(floor(co + vec2(1.0, 1.0)), shft),
+			fract(co.x)
+		),
+		fract(co.y)
+	);
+}
+
+vec4 sampleTexture(vec2 p, float progress) {
+	return mix(texture(u_prev, p), texture(u_next, p), sigmoid(progress, 10.0));
+}
+
+vec4 transition(vec2 p, float progress) {
+	vec3 f = vec3(0.0);
+	for (float i = 0.0; i < 13.0; i++) {
+		f += sin(((p.x * rand(i) * 6.0) + (progress * 8.0)) + rand(i + 1.43)) *
+			sin(
+				((p.y * rand(i + 4.4) * 6.0) + (progress * 6.0)) +
+					rand(i + 2.4)
+			);
+		f += 1.0 - CLAMPS(
+			length(
+				p -
+					vec2(
+						smoothRandom(vec2(progress * 1.3), i + 1.0),
+						smoothRandom(vec2(progress * 0.5), i + 6.25)
+					)
+			) * mix(20.0, 70.0, rand(i))
+		);
+	}
+
+	f += 4.0;
+	f /= 11.0;
+	f = pow3(
+		f * vec3(1.0, 0.7, 0.6),
+		vec3(1.0, 2.0 - sin(progress * PI), 1.3)
+	);
+	f *= sin(progress * PI);
+
+	p -= 0.5;
+	p *= 1.0 + (smoothRandom(vec2(progress * 5.0), 6.3) * sin(progress * PI) * 0.05);
+	p += 0.5;
+
+	vec4 blurredImage = vec4(0.0);
+	float blurAmount = sin(progress * PI) * 0.03;
+	for (float i = 0.0; i < REPEATS; i++) {
+		vec2 q = vec2(
+			cos(degrees((i / REPEATS) * 360.0)),
+			sin(degrees((i / REPEATS) * 360.0))
+		) * (rand(vec2(i, p.x + p.y)) + blurAmount);
+		vec2 uv2 = p + (q * blurAmount);
+		blurredImage += sampleTexture(uv2, progress);
+	}
+
+	blurredImage /= REPEATS;
+	return blurredImage + vec4(f, 0.0);
+}
+
+void main() {
+	float progress = 1.0 - u_time;
+	outColor = transition(v_uv, progress);
+}`;
+var compileShader3 = (gl, source, type) => {
+  const shader = gl.createShader(type);
+  if (!shader) {
+    throw new Error("Failed to create shader");
+  }
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const log = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error(`Failed to compile shader: ${log}`);
+  }
+  return shader;
+};
+var createProgram3 = (gl) => {
+  const program = gl.createProgram();
+  if (!program) {
+    throw new Error("Failed to create WebGL program");
+  }
+  const vs = compileShader3(gl, VERTEX_SHADER3, gl.VERTEX_SHADER);
+  const fs = compileShader3(gl, FRAGMENT_SHADER3, gl.FRAGMENT_SHADER);
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const log = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    throw new Error(`Failed to link program: ${log}`);
+  }
+  return program;
+};
+var createTexture3 = (gl) => {
+  const tex = gl.createTexture();
+  if (!tex) {
+    throw new Error("Failed to create texture");
+  }
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+  return tex;
+};
+var filmBurnShader = (canvas) => {
+  const gl = canvas.getContext("webgl2", { premultipliedAlpha: true });
+  if (!gl) {
+    throw new Error("Failed to create WebGL2 context");
+  }
+  const program = createProgram3(gl);
+  const prevTex = createTexture3(gl);
+  const nextTex = createTexture3(gl);
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(program, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(program, "u_time");
+  const uPrev = gl.getUniformLocation(program, "u_prev");
+  const uNext = gl.getUniformLocation(program, "u_next");
+  const uSeed = gl.getUniformLocation(program, "u_seed");
+  const cleanup = () => {
+    gl.deleteProgram(program);
+    gl.deleteTexture(prevTex);
+    gl.deleteTexture(nextTex);
+  };
+  const clear = () => {
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  };
+  const draw = ({
+    prevImage,
+    nextImage,
+    width,
+    height,
+    time,
+    passedProps
+  }) => {
+    const { seed = DEFAULT_SEED } = passedProps;
+    if (!prevImage && !nextImage) {
+      return;
+    }
+    if (prevImage && (prevImage.width === 0 || prevImage.height === 0)) {
+      return;
+    }
+    if (nextImage && (nextImage.width === 0 || nextImage.height === 0)) {
+      return;
+    }
+    const effectiveTime = !prevImage ? 0 : !nextImage ? 1 : time;
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, prevTex);
+    if (prevImage) {
+      uploadElementImage(gl, prevImage);
+    }
+    gl.uniform1i(uPrev, 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, nextTex);
+    if (nextImage) {
+      uploadElementImage(gl, nextImage);
+    }
+    gl.uniform1i(uNext, 1);
+    gl.uniform1f(uTime, effectiveTime);
+    gl.uniform1f(uSeed, seed);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  return {
+    clear,
+    cleanup,
+    draw
+  };
+};
+var filmBurn = makeHtmlInCanvasPresentation(filmBurnShader);
+
+// src/presentations/linear-blur.tsx
+var VERTEX_SHADER4 = `#version 300 es
+in vec2 a_pos;
+out vec2 v_uv;
+void main() {
+	v_uv = vec2(a_pos.x * 0.5 + 0.5, 0.5 - a_pos.y * 0.5);
+	gl_Position = vec4(a_pos, 0.0, 1.0);
+}`;
+var FRAGMENT_SHADER4 = `#version 300 es
+precision highp float;
+
+uniform sampler2D u_prev;
+uniform sampler2D u_next;
+uniform float u_time;
+uniform float u_intensity;
+
+in vec2 v_uv;
+out vec4 outColor;
+
+const int PASSES = 20;
+
+vec4 transition(vec2 uv, float progress) {
+	vec4 c1 = vec4(0.0);
+	vec4 c2 = vec4(0.0);
+
+	float disp = u_intensity * (0.5 - distance(0.5, progress));
+	for (int xi = 0; xi < PASSES; xi++) {
+		float x = float(xi) / float(PASSES) - 0.5;
+		for (int yi = 0; yi < PASSES; yi++) {
+			float y = float(yi) / float(PASSES) - 0.5;
+			vec2 v = vec2(x, y);
+			c1 += texture(u_prev, uv + disp * v);
+			c2 += texture(u_next, uv + disp * v);
+		}
+	}
+
+	c1 /= float(PASSES * PASSES);
+	c2 /= float(PASSES * PASSES);
+	return mix(c1, c2, progress);
+}
+
+void main() {
+	float progress = 1.0 - u_time;
+	outColor = transition(v_uv, progress);
+}`;
+var compileShader4 = (gl, source, type) => {
+  const shader = gl.createShader(type);
+  if (!shader) {
+    throw new Error("Failed to create shader");
+  }
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const log = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error(`Failed to compile shader: ${log}`);
+  }
+  return shader;
+};
+var createProgram4 = (gl) => {
+  const program = gl.createProgram();
+  if (!program) {
+    throw new Error("Failed to create WebGL program");
+  }
+  const vs = compileShader4(gl, VERTEX_SHADER4, gl.VERTEX_SHADER);
+  const fs = compileShader4(gl, FRAGMENT_SHADER4, gl.FRAGMENT_SHADER);
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    const log = gl.getProgramInfoLog(program);
+    gl.deleteProgram(program);
+    throw new Error(`Failed to link program: ${log}`);
+  }
+  return program;
+};
+var createTexture4 = (gl) => {
+  const tex = gl.createTexture();
+  if (!tex) {
+    throw new Error("Failed to create texture");
+  }
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+  return tex;
+};
+var linearBlurShader = (canvas) => {
+  const gl = canvas.getContext("webgl2", { premultipliedAlpha: true });
+  if (!gl) {
+    throw new Error("Failed to create WebGL2 context");
+  }
+  const program = createProgram4(gl);
+  const prevTex = createTexture4(gl);
+  const nextTex = createTexture4(gl);
+  const vao = gl.createVertexArray();
+  gl.bindVertexArray(vao);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(program, "a_pos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(program, "u_time");
+  const uPrev = gl.getUniformLocation(program, "u_prev");
+  const uNext = gl.getUniformLocation(program, "u_next");
+  const uIntensity = gl.getUniformLocation(program, "u_intensity");
+  const cleanup = () => {
+    gl.deleteProgram(program);
+    gl.deleteTexture(prevTex);
+    gl.deleteTexture(nextTex);
+  };
+  const clear = () => {
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  };
+  const draw = ({
+    prevImage,
+    nextImage,
+    width,
+    height,
+    time,
+    passedProps
+  }) => {
+    const { intensity = 0.1 } = passedProps;
+    if (!prevImage && !nextImage) {
+      return;
+    }
+    if (prevImage && (prevImage.width === 0 || prevImage.height === 0)) {
+      return;
+    }
+    if (nextImage && (nextImage.width === 0 || nextImage.height === 0)) {
+      return;
+    }
+    const effectiveTime = !prevImage ? 0 : !nextImage ? 1 : time;
+    gl.viewport(0, 0, width, height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(program);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, prevTex);
+    if (prevImage) {
+      uploadElementImage(gl, prevImage);
+    }
+    gl.uniform1i(uPrev, 0);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, nextTex);
+    if (nextImage) {
+      uploadElementImage(gl, nextImage);
+    }
+    gl.uniform1i(uNext, 1);
+    gl.uniform1f(uTime, effectiveTime);
+    gl.uniform1f(uIntensity, intensity);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  return {
+    clear,
+    cleanup,
+    draw
+  };
+};
+var linearBlur = makeHtmlInCanvasPresentation(linearBlurShader);
+
+// src/presentations/push-cut.tsx
+
+
+
+var clamp = (/* unused pure expression or super */ null && ({
+  extrapolateLeft: "clamp",
+  extrapolateRight: "clamp"
+}));
+var validateFiniteNumber = (name, value) => {
+  if (!Number.isFinite(value)) {
+    throw new TypeError(`${name} passed to pushCut() must be finite, received ${value}`);
+  }
+};
+var validateProps = (props) => {
+  const cutProgress = props.cutProgress ?? 5 / 11;
+  const outgoingScale = props.outgoingScale ?? 1.04;
+  const incomingStartScale = props.incomingStartScale ?? 1.04;
+  const incomingEndScale = props.incomingEndScale ?? 1.07;
+  const flashOpacity = props.flashOpacity ?? 0.2;
+  const flashFrames = props.flashFrames ?? 2;
+  validateFiniteNumber("cutProgress", cutProgress);
+  if (cutProgress <= 0 || cutProgress >= 1) {
+    throw new TypeError(`cutProgress passed to pushCut() must be greater than 0 and less than 1, received ${cutProgress}`);
+  }
+  for (const [name, value] of [
+    ["outgoingScale", outgoingScale],
+    ["incomingStartScale", incomingStartScale],
+    ["incomingEndScale", incomingEndScale]
+  ]) {
+    validateFiniteNumber(name, value);
+    if (value <= 0) {
+      throw new TypeError(`${name} passed to pushCut() must be greater than 0, received ${value}`);
+    }
+  }
+  validateFiniteNumber("flashOpacity", flashOpacity);
+  if (flashOpacity < 0 || flashOpacity > 1) {
+    throw new TypeError(`flashOpacity passed to pushCut() must be between 0 and 1, received ${flashOpacity}`);
+  }
+  validateFiniteNumber("flashFrames", flashFrames);
+  if (flashFrames < 0) {
+    throw new TypeError(`flashFrames passed to pushCut() must be greater than or equal to 0, received ${flashFrames}`);
+  }
+};
+var PushCutPresentation = ({
+  children,
+  presentationDirection,
+  presentationDurationInFrames,
+  presentationProgress,
+  passedProps
+}) => {
+  const {
+    cutProgress = 5 / 11,
+    outgoingScale = 1.04,
+    incomingStartScale = 1.04,
+    incomingEndScale = 1.07,
+    transformOrigin = "50% 50%",
+    flashColor = "#f5f2ed",
+    flashOpacity: peakFlashOpacity = 0.2,
+    flashFrames = 2,
+    outerEnterStyle,
+    outerExitStyle,
+    innerEnterStyle,
+    innerExitStyle
+  } = passedProps;
+  const isEntering = presentationDirection === "entering";
+  const outgoingProgress = interpolate(presentationProgress, [0, cutProgress], [0, 1], {
+    ...clamp,
+    easing: Easing.in(Easing.quad)
+  });
+  const incomingProgress = interpolate(presentationProgress, [cutProgress, 1], [0, 1], {
+    ...clamp,
+    easing: Easing.out(Easing.quad)
+  });
+  const scale = isEntering ? interpolate(incomingProgress, [0, 1], [incomingStartScale, incomingEndScale]) : interpolate(outgoingProgress, [0, 1], [1, outgoingScale]);
+  const oneFrame = 1 / Math.max(1, presentationDurationInFrames);
+  const flashTail = flashFrames / Math.max(1, presentationDurationInFrames);
+  const flashOpacity = isEntering ? interpolate(presentationProgress, [cutProgress, cutProgress + flashTail], [peakFlashOpacity, 0], clamp) : interpolate(presentationProgress, [cutProgress - oneFrame, cutProgress], [0, peakFlashOpacity], clamp);
+  const outerStyle = useMemo3(() => {
+    return {
+      opacity: isEntering && presentationProgress < cutProgress ? 0 : 1,
+      overflow: "hidden",
+      ...isEntering ? outerEnterStyle : outerExitStyle
+    };
+  }, [
+    cutProgress,
+    isEntering,
+    outerEnterStyle,
+    outerExitStyle,
+    presentationProgress
+  ]);
+  const innerStyle = useMemo3(() => {
+    return {
+      transform: `scale(${scale})`,
+      transformOrigin,
+      willChange: "transform",
+      ...isEntering ? innerEnterStyle : innerExitStyle
+    };
+  }, [innerEnterStyle, innerExitStyle, isEntering, scale, transformOrigin]);
+  return /* @__PURE__ */ jsxs2(AbsoluteFill3, {
+    style: outerStyle,
+    children: [
+      /* @__PURE__ */ jsx3(AbsoluteFill3, {
+        style: innerStyle,
+        children
+      }),
+      flashOpacity > 0 ? /* @__PURE__ */ jsx3(AbsoluteFill3, {
+        style: {
+          backgroundColor: flashColor,
+          opacity: flashOpacity,
+          pointerEvents: "none"
+        }
+      }) : null
+    ]
+  });
+};
+var pushCut = (props) => {
+  const passedProps = props ?? {};
+  validateProps(passedProps);
+  return {
+    component: PushCutPresentation,
+    props: passedProps
+  };
+};
+
+// src/timings/linear-timing.ts
+
+var linearTiming = (options) => {
+  return {
+    getDurationInFrames: () => {
+      return options.durationInFrames;
+    },
+    getProgress: ({ frame }) => {
+      return interpolate2(frame, [0, options.durationInFrames], [0, 1], {
+        easing: options.easing,
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp"
+      });
+    }
+  };
+};
+// src/timings/spring-timing.ts
+
+var springTiming = (options = {}) => {
+  return {
+    getDurationInFrames: ({ fps }) => {
+      if (options.durationInFrames) {
+        return options.durationInFrames;
+      }
+      return (0,esm.measureSpring)({
+        config: options.config,
+        threshold: options.durationRestThreshold,
+        fps
+      });
+    },
+    getProgress: ({ fps, frame }) => {
+      const to = options.reverse ? 0 : 1;
+      const from = options.reverse ? 1 : 0;
+      return (0,esm.spring)({
+        fps,
+        frame,
+        to,
+        from,
+        config: options.config,
+        durationInFrames: options.durationInFrames,
+        durationRestThreshold: options.durationRestThreshold,
+        reverse: options.reverse
+      });
+    }
+  };
+};
+// src/TransitionSeries.tsx
+
+
+
+
+// src/context.tsx
+
+
+var EnteringContext = react.createContext(null);
+var ExitingContext = react.createContext(null);
+var WrapInEnteringProgressContext = ({ presentationProgress, children }) => {
+  const value = (0,react.useMemo)(() => {
+    return {
+      enteringProgress: presentationProgress
+    };
+  }, [presentationProgress]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(EnteringContext.Provider, {
+    value,
+    children
+  });
+};
+var WrapInExitingProgressContext = ({ presentationProgress, children }) => {
+  const value = (0,react.useMemo)(() => {
+    return {
+      exitingProgress: presentationProgress
+    };
+  }, [presentationProgress]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(ExitingContext.Provider, {
+    value,
+    children
+  });
+};
+
+// src/flatten-children.ts
+
+var flattenChildren = (children) => {
+  const childrenArray = react.Children.toArray(children);
+  return childrenArray.reduce((flatChildren, child) => {
+    if (child.type === react.Fragment) {
+      return flatChildren.concat(flattenChildren(child.props.children));
+    }
+    flatChildren.push(child);
+    return flatChildren;
+  }, []);
+};
+
+// src/validate.ts
+
+var validateDurationInFrames = no_react/* .NoReactInternals.validateDurationInFrames */.JC.validateDurationInFrames;
+
+// src/TransitionSeries.tsx
+
+var { SequenceWithoutSchema } = esm.Internals;
+var TransitionSeriesTransitionInner = ({
+  _remotionInternalRender = null,
+  ...props
+}) => {
+  if (_remotionInternalRender) {
+    return _remotionInternalRender(props);
+  }
+  return null;
+};
+var transitionSeriesTransitionSchema = {};
+var TransitionSeriesTransition = esm.Interactive.withSchema({
+  Component: TransitionSeriesTransitionInner,
+  componentName: "<TransitionSeries.Transition>",
+  componentIdentity: "dev.remotion.transitions.TransitionSeries.Transition",
+  schema: transitionSeriesTransitionSchema,
+  supportsEffects: false
+});
+var SeriesOverlayInner = ({
+  _remotionInternalRender = null,
+  ...props
+}) => {
+  if (_remotionInternalRender) {
+    return _remotionInternalRender(props);
+  }
+  return null;
+};
+var transitionSeriesOverlaySchema = {};
+var SeriesOverlay = esm.Interactive.withSchema({
+  Component: SeriesOverlayInner,
+  componentName: "<TransitionSeries.Overlay>",
+  componentIdentity: "dev.remotion.transitions.TransitionSeries.Overlay",
+  schema: transitionSeriesOverlaySchema,
+  supportsEffects: false
+});
+var transitionSeriesSequenceSchema = {
+  durationInFrames: esm.Internals.durationInFramesField,
+  name: esm.Internals.sequenceSchema.name,
+  hidden: esm.Internals.sequenceSchema.hidden,
+  showInTimeline: esm.Internals.sequenceSchema.showInTimeline,
+  freeze: esm.Internals.freezeField,
+  trimBefore: esm.Internals.sequenceSchema.trimBefore,
+  layout: esm.Internals.sequenceSchema.layout
+};
+var SeriesSequenceInner = ({
+  offset = 0,
+  className = "",
+  _remotionInternalRender = null,
+  ...props
+}) => {
+  if (_remotionInternalRender) {
+    return _remotionInternalRender({
+      ...props,
+      offset,
+      className: className || undefined
+    });
+  }
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+    children: props.children
+  });
+};
+var SeriesSequence = esm.Interactive.withSchema({
+  Component: SeriesSequenceInner,
+  componentName: "<TransitionSeries.Sequence>",
+  componentIdentity: "dev.remotion.transitions.TransitionSeries.Sequence",
+  schema: transitionSeriesSequenceSchema,
+  supportsEffects: false
+});
+var transitionSeriesSchema = {
+  name: esm.Internals.sequenceSchema.name,
+  hidden: esm.Internals.sequenceSchema.hidden,
+  showInTimeline: esm.Internals.sequenceSchema.showInTimeline,
+  from: esm.Internals.fromField,
+  freeze: esm.Internals.freezeField,
+  layout: esm.Internals.sequenceSchema.layout
+};
+var TransitionSeriesChildren = ({
+  children
+}) => {
+  const { fps } = (0,esm.useVideoConfig)();
+  const frame = (0,esm.useCurrentFrame)();
+  const prevImageRef = (0,react.useRef)({});
+  const nextImageRef = (0,react.useRef)({});
+  const flattedChildren = (0,react.useMemo)(() => {
+    return flattenChildren(children);
+  }, [children]);
+  const drawIfSynced = (0,react.useCallback)((index) => {
+    const prevImage = prevImageRef?.current?.[index];
+    const nextImage = nextImageRef?.current?.[index];
+    if (!nextImage?.elementImage && prevImage?.elementImage) {
+      nextImage?.draw?.(null, null, 0);
+      prevImage?.draw?.(prevImage?.elementImage ?? null, null, 0);
+      return;
+    }
+    if (!prevImage?.elementImage && nextImage?.elementImage) {
+      prevImage?.draw?.(null, null, 0);
+      nextImage?.draw?.(null, nextImage?.elementImage ?? null, 0);
+      return;
+    }
+    if (prevImage && nextImage && prevImage.progress === nextImage.progress || !prevImage?.elementImage || !nextImage?.elementImage) {
+      prevImage?.draw?.(prevImage?.elementImage ?? null, nextImage?.elementImage ?? null, prevImage?.progress ?? nextImage?.progress ?? 0);
+      nextImage?.draw?.(null, null, 0);
+    }
+  }, []);
+  const onNextElementImage = (0,react.useCallback)((elementImage, progress, draw, index) => {
+    prevImageRef.current[index] = { elementImage, progress, draw };
+    drawIfSynced(index);
+  }, [drawIfSynced]);
+  const onPrevElementImage = (0,react.useCallback)((elementImage, progress, draw, index) => {
+    nextImageRef.current[index] = { elementImage, progress, draw };
+    drawIfSynced(index);
+  }, [drawIfSynced]);
+  const childrenValue = (0,react.useMemo)(() => {
+    const renderChildren = (state) => {
+      const {
+        index: i,
+        transitionOffsets,
+        startFrame,
+        overlayRenders,
+        sequenceDurations,
+        pendingOverlayValidation
+      } = state;
+      if (i === flattedChildren.length) {
+        return overlayRenders.map((info) => /* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+          from: Math.round(info.overlayFrom),
+          durationInFrames: info.durationInFrames,
+          name: "<TS.Overlay>",
+          _remotionInternalDocumentationLink: "https://www.remotion.dev/docs/transitions/transitionseries",
+          controls: info.controls ?? undefined,
+          layout: "absolute-fill",
+          children: info.children
+        }, `overlay-${info.index}`));
+      }
+      const child = flattedChildren[i];
+      const current = child;
+      const renderNext = (overrides = {}) => {
+        return renderChildren({ ...state, ...overrides, index: i + 1 });
+      };
+      if (typeof current === "string") {
+        if (current.trim() === "") {
+          return renderNext();
+        }
+        throw new TypeError(`The <TransitionSeries /> component only accepts a list of <TransitionSeries.Sequence /> components as its children, but you passed a string "${current}"`);
+      }
+      const hasPrev = flattedChildren[i - 1];
+      const nextPrev = flattedChildren[i + 1];
+      const prevIsTransition = typeof hasPrev === "string" || typeof hasPrev === "undefined" ? false : hasPrev.type === TransitionSeriesTransition;
+      const prevIsOverlay = typeof hasPrev === "string" || typeof hasPrev === "undefined" ? false : hasPrev.type === SeriesOverlay;
+      if (current.type === SeriesOverlay) {
+        if (prevIsOverlay) {
+          throw new TypeError(`A <TransitionSeries.Overlay /> component must not be followed by another <TransitionSeries.Overlay /> component (nth children = ${i - 1} and ${i})`);
+        }
+        if (prevIsTransition) {
+          throw new TypeError(`A <TransitionSeries.Transition /> component must not be followed by a <TransitionSeries.Overlay /> component (nth children = ${i - 1} and ${i})`);
+        }
+        const nextIsTransition = typeof nextPrev === "string" || typeof nextPrev === "undefined" ? false : nextPrev.type === TransitionSeriesTransition;
+        if (nextIsTransition) {
+          throw new TypeError(`A <TransitionSeries.Overlay /> component must not be followed by a <TransitionSeries.Transition /> component (nth children = ${i} and ${i + 1})`);
+        }
+        const castedOverlay = current;
+        return react.cloneElement(castedOverlay, {
+          _remotionInternalRender: (overlayProps) => {
+            validateDurationInFrames(overlayProps.durationInFrames, {
+              component: `of a <TransitionSeries.Overlay /> component`,
+              allowFloats: false
+            });
+            const overlayOffset = overlayProps.offset ?? 0;
+            if (Number.isNaN(overlayOffset)) {
+              throw new TypeError(`The "offset" property of a <TransitionSeries.Overlay /> must not be NaN, but got NaN.`);
+            }
+            if (!Number.isFinite(overlayOffset)) {
+              throw new TypeError(`The "offset" property of a <TransitionSeries.Overlay /> must be finite, but got ${overlayOffset}.`);
+            }
+            if (overlayOffset % 1 !== 0) {
+              throw new TypeError(`The "offset" property of a <TransitionSeries.Overlay /> must be an integer, but got ${overlayOffset}.`);
+            }
+            const cutPoint = startFrame + transitionOffsets;
+            const halfDuration = overlayProps.durationInFrames / 2;
+            const overlayFrom = cutPoint - halfDuration + overlayOffset;
+            if (overlayFrom < 0) {
+              throw new TypeError(`A <TransitionSeries.Overlay /> extends before frame 0. The overlay starts at frame ${overlayFrom}. Reduce the duration or adjust the offset.`);
+            }
+            const prevSeqIdx = sequenceDurations.length - 1;
+            if (prevSeqIdx >= 0) {
+              const overlayStartInPrev = halfDuration - overlayOffset;
+              if (overlayStartInPrev > sequenceDurations[prevSeqIdx]) {
+                throw new TypeError(`A <TransitionSeries.Overlay /> extends beyond the previous sequence. The overlay needs ${overlayStartInPrev} frames before the cut, but the previous sequence is only ${sequenceDurations[prevSeqIdx]} frames long.`);
+              }
+            }
+            const overlayRender = {
+              cutPoint,
+              overlayFrom,
+              durationInFrames: overlayProps.durationInFrames,
+              overlayOffset,
+              halfDuration,
+              children: overlayProps.children,
+              index: i,
+              controls: overlayProps.controls
+            };
+            return renderNext({
+              overlayRenders: [...overlayRenders, overlayRender],
+              pendingOverlayValidation: true
+            });
+          }
+        });
+      }
+      if (current.type === TransitionSeriesTransition) {
+        if (prevIsTransition) {
+          throw new TypeError(`A <TransitionSeries.Transition /> component must not be followed by another <TransitionSeries.Transition /> component (nth children = ${i - 1} and ${i})`);
+        }
+        if (prevIsOverlay) {
+          throw new TypeError(`A <TransitionSeries.Overlay /> component must not be followed by a <TransitionSeries.Transition /> component (nth children = ${i - 1} and ${i})`);
+        }
+        const castedTransition = current;
+        return react.cloneElement(castedTransition, {
+          _remotionInternalRender: (transitionProps) => {
+            const transitionDuration = transitionProps.timing.getDurationInFrames({ fps });
+            const transitionFrom = startFrame + transitionOffsets - transitionDuration;
+            return /* @__PURE__ */ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+              children: [
+                transitionDuration > 0 ? /* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+                  from: transitionFrom,
+                  durationInFrames: transitionDuration,
+                  name: "<TS.Transition>",
+                  _remotionInternalDocumentationLink: "https://www.remotion.dev/docs/transitions/transitionseries",
+                  controls: transitionProps.controls ?? undefined,
+                  layout: "none"
+                }) : null,
+                renderNext()
+              ]
+            });
+          }
+        });
+      }
+      if (current.type !== SeriesSequence) {
+        throw new TypeError(`The <TransitionSeries /> component only accepts a list of <TransitionSeries.Sequence />, <TransitionSeries.Transition />, and <TransitionSeries.Overlay /> components as its children, but got ${current} instead`);
+      }
+      const prev = typeof hasPrev === "string" || typeof hasPrev === "undefined" ? null : hasPrev.type === TransitionSeriesTransition ? hasPrev : null;
+      const next = typeof nextPrev === "string" || typeof nextPrev === "undefined" ? null : nextPrev.type === TransitionSeriesTransition ? nextPrev : null;
+      const castedChildAgain = current;
+      return react.cloneElement(castedChildAgain, {
+        _remotionInternalRender: (resolvedProps) => {
+          const durationInFramesProp = resolvedProps.durationInFrames;
+          const debugInfo = `index = ${i}, duration = ${durationInFramesProp}`;
+          const {
+            durationInFrames,
+            children: sequenceChildren,
+            offset: offsetProp,
+            controls,
+            from: _from,
+            ...passedProps
+          } = resolvedProps;
+          const propsForSequence = {
+            ...passedProps,
+            _remotionInternalSingleChildComponent: esm.Internals.getSingleChildComponent(sequenceChildren)
+          };
+          validateDurationInFrames(durationInFramesProp, {
+            component: `of a <TransitionSeries.Sequence /> component`,
+            allowFloats: true
+          });
+          const offset = offsetProp ?? 0;
+          if (Number.isNaN(offset)) {
+            throw new TypeError(`The "offset" property of a <TransitionSeries.Sequence /> must not be NaN, but got NaN (${debugInfo}).`);
+          }
+          if (!Number.isFinite(offset)) {
+            throw new TypeError(`The "offset" property of a <TransitionSeries.Sequence /> must be finite, but got ${offset} (${debugInfo}).`);
+          }
+          if (offset % 1 !== 0) {
+            throw new TypeError(`The "offset" property of a <TransitionSeries.Sequence /> must be finite, but got ${offset} (${debugInfo}).`);
+          }
+          let resolvedTransitionOffsets = transitionOffsets;
+          let resolvedStartFrame = startFrame;
+          let resolvedPendingOverlayValidation = pendingOverlayValidation;
+          const currentStartFrame = resolvedStartFrame + offset;
+          let duration = 0;
+          if (prev) {
+            duration = prev.props.timing.getDurationInFrames({
+              fps
+            });
+            resolvedTransitionOffsets -= duration;
+          }
+          let actualStartFrame = currentStartFrame + resolvedTransitionOffsets;
+          resolvedStartFrame += durationInFramesProp + offset;
+          if (actualStartFrame < 0) {
+            resolvedStartFrame -= actualStartFrame;
+            actualStartFrame = 0;
+          }
+          const nextSequenceDurations = [
+            ...sequenceDurations,
+            durationInFramesProp
+          ];
+          if (resolvedPendingOverlayValidation) {
+            resolvedPendingOverlayValidation = false;
+            const lastOverlay = overlayRenders[overlayRenders.length - 1];
+            if (!lastOverlay) {
+              throw new Error("Expected an overlay to validate");
+            }
+            const framesAfterCut = lastOverlay.halfDuration + lastOverlay.overlayOffset;
+            if (framesAfterCut > durationInFramesProp) {
+              throw new TypeError(`A <TransitionSeries.Overlay /> extends beyond the next sequence. The overlay needs ${framesAfterCut} frames after the cut, but the next sequence is only ${durationInFramesProp} frames long.`);
+            }
+          }
+          const renderSequenceAndRest = (sequence) => {
+            return /* @__PURE__ */ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+              children: [
+                sequence,
+                renderNext({
+                  transitionOffsets: resolvedTransitionOffsets,
+                  startFrame: resolvedStartFrame,
+                  sequenceDurations: nextSequenceDurations,
+                  pendingOverlayValidation: resolvedPendingOverlayValidation
+                })
+              ]
+            });
+          };
+          const nextProgress = next ? next.props.timing.getProgress({
+            frame: frame - actualStartFrame - durationInFrames + next.props.timing.getDurationInFrames({ fps }),
+            fps
+          }) : null;
+          const prevProgress = prev ? prev.props.timing.getProgress({
+            frame: frame - actualStartFrame,
+            fps
+          }) : null;
+          if (next && durationInFramesProp < next.props.timing.getDurationInFrames({ fps })) {
+            throw new Error(`The duration of a <TransitionSeries.Sequence /> must not be shorter than the duration of the next <TransitionSeries.Transition />. The transition is ${next.props.timing.getDurationInFrames({ fps })} frames long, but the sequence is only ${durationInFramesProp} frames long (${debugInfo})`);
+          }
+          if (prev && durationInFramesProp < prev.props.timing.getDurationInFrames({ fps })) {
+            throw new Error(`The duration of a <TransitionSeries.Sequence /> must not be shorter than the duration of the previous <TransitionSeries.Transition />. The transition is ${prev.props.timing.getDurationInFrames({ fps })} frames long, but the sequence is only ${durationInFramesProp} frames long (${debugInfo})`);
+          }
+          if (next && prev && nextProgress !== null && prevProgress !== null) {
+            const nextPresentation = next.props.presentation ?? slide();
+            const prevPresentation = prev.props.presentation ?? slide();
+            const UppercaseNextPresentation = nextPresentation.component;
+            const UppercasePrevPresentation = prevPresentation.component;
+            return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+              from: actualStartFrame,
+              durationInFrames: durationInFramesProp,
+              ...propsForSequence,
+              name: passedProps.name || "<TS.Sequence>",
+              _remotionInternalDocumentationLink: passedProps.name ? undefined : "https://www.remotion.dev/docs/transitions/transitionseries",
+              controls: controls ?? undefined,
+              children: /* @__PURE__ */ (0,jsx_runtime.jsx)(UppercaseNextPresentation, {
+                passedProps: nextPresentation.props ?? {},
+                presentationDirection: "exiting",
+                presentationProgress: nextProgress,
+                presentationDurationInFrames: next.props.timing.getDurationInFrames({ fps }),
+                onElementImage: () => {
+                  throw new Error("Should not call when exiting");
+                },
+                onUnmount: () => {
+                  throw new Error("Should not call when exiting");
+                },
+                bothEnteringAndExiting: true,
+                children: /* @__PURE__ */ (0,jsx_runtime.jsx)(WrapInExitingProgressContext, {
+                  presentationProgress: nextProgress,
+                  children: /* @__PURE__ */ (0,jsx_runtime.jsx)(UppercasePrevPresentation, {
+                    passedProps: prevPresentation.props ?? {},
+                    presentationDirection: "entering",
+                    presentationProgress: prevProgress,
+                    presentationDurationInFrames: prev.props.timing.getDurationInFrames({ fps }),
+                    onElementImage: (elementImage, draw) => {
+                      onPrevElementImage(elementImage, nextProgress, draw, i + 1);
+                      onNextElementImage(elementImage, prevProgress, draw, i - 1);
+                    },
+                    onUnmount: () => {
+                      onPrevElementImage(null, null, null, i + 1);
+                      onNextElementImage(null, null, null, i - 1);
+                    },
+                    bothEnteringAndExiting: true,
+                    children: /* @__PURE__ */ (0,jsx_runtime.jsx)(WrapInEnteringProgressContext, {
+                      presentationProgress: prevProgress,
+                      children: sequenceChildren
+                    })
+                  })
+                })
+              })
+            }, i));
+          }
+          if (prevProgress !== null && prev) {
+            const prevPresentation = prev.props.presentation ?? slide();
+            const UppercasePrevPresentation = prevPresentation.component;
+            return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+              from: actualStartFrame,
+              durationInFrames: durationInFramesProp,
+              ...propsForSequence,
+              name: passedProps.name || "<TS.Sequence>",
+              _remotionInternalDocumentationLink: passedProps.name ? undefined : "https://www.remotion.dev/docs/transitions/transitionseries",
+              controls: controls ?? undefined,
+              children: /* @__PURE__ */ (0,jsx_runtime.jsx)(UppercasePrevPresentation, {
+                passedProps: prevPresentation.props ?? {},
+                presentationDirection: "entering",
+                presentationProgress: prevProgress,
+                presentationDurationInFrames: prev.props.timing.getDurationInFrames({ fps }),
+                onElementImage: (elementImage, draw) => onNextElementImage(elementImage, prevProgress, draw, i - 1),
+                onUnmount: () => {
+                  onNextElementImage(null, null, null, i - 1);
+                },
+                bothEnteringAndExiting: false,
+                children: /* @__PURE__ */ (0,jsx_runtime.jsx)(WrapInEnteringProgressContext, {
+                  presentationProgress: prevProgress,
+                  children: sequenceChildren
+                })
+              })
+            }, i));
+          }
+          if (nextProgress !== null && next) {
+            const nextPresentation = next.props.presentation ?? slide();
+            const UppercaseNextPresentation = nextPresentation.component;
+            return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+              from: actualStartFrame,
+              durationInFrames: durationInFramesProp,
+              ...propsForSequence,
+              name: passedProps.name || "<TS.Sequence>",
+              _remotionInternalDocumentationLink: passedProps.name ? undefined : "https://www.remotion.dev/docs/transitions/transitionseries",
+              controls: controls ?? undefined,
+              children: /* @__PURE__ */ (0,jsx_runtime.jsx)(UppercaseNextPresentation, {
+                passedProps: nextPresentation.props ?? {},
+                presentationDirection: "exiting",
+                presentationProgress: nextProgress,
+                presentationDurationInFrames: next.props.timing.getDurationInFrames({ fps }),
+                onElementImage: (elementImage, draw) => onPrevElementImage(elementImage, nextProgress, draw, i + 1),
+                onUnmount: () => {
+                  onPrevElementImage(null, null, null, i + 1);
+                },
+                bothEnteringAndExiting: false,
+                children: /* @__PURE__ */ (0,jsx_runtime.jsx)(WrapInExitingProgressContext, {
+                  presentationProgress: nextProgress,
+                  children: sequenceChildren
+                })
+              })
+            }, i));
+          }
+          return renderSequenceAndRest(/* @__PURE__ */ (0,jsx_runtime.jsx)(SequenceWithoutSchema, {
+            from: actualStartFrame,
+            durationInFrames: durationInFramesProp,
+            ...propsForSequence,
+            name: passedProps.name || "<TS.Sequence>",
+            _remotionInternalDocumentationLink: passedProps.name ? undefined : "https://www.remotion.dev/docs/transitions/transitionseries",
+            controls: controls ?? undefined,
+            children: sequenceChildren
+          }, i));
+        }
+      });
+    };
+    return renderChildren({
+      index: 0,
+      transitionOffsets: 0,
+      startFrame: 0,
+      overlayRenders: [],
+      sequenceDurations: [],
+      pendingOverlayValidation: false
+    });
+  }, [flattedChildren, fps, frame, onPrevElementImage, onNextElementImage]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+    children: childrenValue
+  });
+};
+var TransitionSeriesInner = (props) => {
+  const {
+    children,
+    name,
+    layout: passedLayout,
+    controls,
+    ...otherProps
+  } = props;
+  const displayName = name ?? "<TransitionSeries>";
+  const layout = passedLayout ?? "absolute-fill";
+  if (no_react/* .NoReactInternals.ENABLE_V5_BREAKING_CHANGES */.JC.ENABLE_V5_BREAKING_CHANGES && layout !== "absolute-fill") {
+    throw new TypeError(`The "layout" prop of <TransitionSeries /> is not supported anymore in v5. TransitionSeries' must be absolutely positioned.`);
+  }
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(esm.Sequence, {
+    name: displayName,
+    layout,
+    _remotionInternalDocumentationLink: name === undefined ? "https://www.remotion.dev/docs/transitions/transitionseries" : undefined,
+    ...otherProps,
+    controls: controls ?? undefined,
+    children: /* @__PURE__ */ (0,jsx_runtime.jsx)(TransitionSeriesChildren, {
+      children
+    })
+  });
+};
+var TransitionSeries = esm.Interactive.withSchema({
+  Component: TransitionSeriesInner,
+  componentName: "<TransitionSeries>",
+  componentIdentity: "dev.remotion.transitions.TransitionSeries",
+  schema: transitionSeriesSchema,
+  supportsEffects: false
+});
+TransitionSeries.Sequence = SeriesSequence;
+TransitionSeries.Transition = TransitionSeriesTransition;
+TransitionSeries.Overlay = SeriesOverlay;
+// src/use-transition-progress.ts
+
+var useTransitionProgress = () => {
+  const entering = React5.useContext(EnteringContext);
+  const exiting = React5.useContext(ExitingContext);
+  if (!entering && !exiting) {
+    return {
+      isInTransitionSeries: false,
+      entering: 1,
+      exiting: 0
+    };
+  }
+  return {
+    isInTransitionSeries: true,
+    entering: entering?.enteringProgress ?? 1,
+    exiting: exiting?.exitingProgress ?? 0
+  };
+};
+
+
+;// CONCATENATED MODULE: ./node_modules/@remotion/transitions/dist/esm/fade.mjs
+// src/presentations/fade.tsx
+
+
+
+var FadePresentation = ({ children, presentationDirection, presentationProgress, passedProps }) => {
+  const isEntering = presentationDirection === "entering";
+  const style = (0,react.useMemo)(() => {
+    return {
+      opacity: isEntering ? presentationProgress : passedProps.shouldFadeOutExitingScene ? 1 - presentationProgress : 1,
+      ...presentationDirection === "entering" ? passedProps.enterStyle : passedProps.exitStyle
+    };
+  }, [
+    isEntering,
+    passedProps.enterStyle,
+    passedProps.exitStyle,
+    passedProps.shouldFadeOutExitingScene,
+    presentationDirection,
+    presentationProgress
+  ]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+    style,
+    children
+  });
+};
+var fade = (props) => {
+  return {
+    component: FadePresentation,
+    props: props ?? {}
+  };
+};
+
+
+;// CONCATENATED MODULE: ./node_modules/@remotion/transitions/dist/esm/slide.mjs
+// src/presentations/slide.tsx
+
+
+
+var slide_epsilon = 0.01;
+var slide_SlidePresentation = ({
+  children,
+  presentationProgress,
+  presentationDirection,
+  passedProps: { direction = "from-left", enterStyle, exitStyle }
+}) => {
+  const directionStyle = (0,react.useMemo)(() => {
+    const presentationProgressWithEpsilonCorrection = presentationProgress === 1 ? presentationProgress * 100 : presentationProgress * 100 - slide_epsilon;
+    if (presentationDirection === "exiting") {
+      switch (direction) {
+        case "from-left":
+          return {
+            transform: `translateX(${presentationProgressWithEpsilonCorrection}%)`
+          };
+        case "from-right":
+          return {
+            transform: `translateX(${-presentationProgress * 100}%)`
+          };
+        case "from-top":
+          return {
+            transform: `translateY(${presentationProgressWithEpsilonCorrection}%)`
+          };
+        case "from-bottom":
+          return {
+            transform: `translateY(${-presentationProgress * 100}%)`
+          };
+        default:
+          throw new Error(`Invalid direction: ${direction}`);
+      }
+    }
+    switch (direction) {
+      case "from-left":
+        return {
+          transform: `translateX(${-100 + presentationProgress * 100}%)`
+        };
+      case "from-right":
+        return {
+          transform: `translateX(${100 - presentationProgressWithEpsilonCorrection}%)`
+        };
+      case "from-top":
+        return {
+          transform: `translateY(${-100 + presentationProgress * 100}%)`
+        };
+      case "from-bottom":
+        return {
+          transform: `translateY(${100 - presentationProgressWithEpsilonCorrection}%)`
+        };
+      default:
+        throw new Error(`Invalid direction: ${direction}`);
+    }
+  }, [presentationDirection, presentationProgress, direction]);
+  const style = (0,react.useMemo)(() => {
+    return {
+      width: "100%",
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      ...directionStyle,
+      ...presentationDirection === "entering" ? enterStyle : exitStyle
+    };
+  }, [directionStyle, enterStyle, exitStyle, presentationDirection]);
+  return /* @__PURE__ */ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+    style,
+    children
+  });
+};
+var slide_slide = (props) => {
+  return {
+    component: slide_SlidePresentation,
+    props: props ?? {}
+  };
+};
+
+
 ;// CONCATENATED MODULE: ./src/SportsNews/Intro.tsx
 
 
@@ -18873,6 +20991,16 @@ const HelloWorld = ({ titleText: propOne, titleColor: propTwo, logoColor1, logoC
 const Intro = ()=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
+    // Subtle Ken Burns zoom effect on image
+    const zoom = (0,esm.interpolate)(frame, [
+        0,
+        100
+    ], [
+        1,
+        1.15
+    ], {
+        extrapolateRight: 'clamp'
+    });
     // Entrance spring for badge
     const badgeScale = (0,esm.spring)({
         frame,
@@ -18885,7 +21013,7 @@ const Intro = ()=>{
     // Title translation and opacity
     const titleOpacity = (0,esm.interpolate)(frame, [
         10,
-        30
+        25
     ], [
         0,
         1
@@ -18895,7 +21023,7 @@ const Intro = ()=>{
     });
     const titleY = (0,esm.interpolate)(frame, [
         10,
-        30
+        25
     ], [
         40,
         0
@@ -18905,7 +21033,7 @@ const Intro = ()=>{
     });
     // Match info scale
     const matchScale = (0,esm.spring)({
-        frame: frame - 25,
+        frame: frame - 20,
         fps,
         config: {
             damping: 14,
@@ -18915,83 +21043,130 @@ const Intro = ()=>{
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
         style: {
             flex: 1,
+            position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0 50px',
+            justifyContent: 'flex-end',
+            padding: '0 40px 100px 40px',
             textAlign: 'center',
-            fontFamily: 'Inter, system-ui, sans-serif'
+            fontFamily: 'Inter, system-ui, sans-serif',
+            overflow: 'hidden'
         },
         children: [
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                 style: {
-                    transform: `scale(${badgeScale})`,
-                    backgroundColor: '#e11d48',
-                    color: '#ffffff',
-                    padding: '12px 28px',
-                    borderRadius: '9999px',
-                    fontSize: '28px',
-                    fontWeight: '900',
-                    letterSpacing: '3px',
-                    textTransform: 'uppercase',
-                    boxShadow: '0 10px 25px rgba(225, 29, 72, 0.5)',
-                    marginBottom: '40px'
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    transform: `scale(${zoom})`,
+                    zIndex: 0
                 },
-                children: "\uD83D\uDD25 TIN N\xd3NG C1"
-            }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                style: {
-                    opacity: titleOpacity,
-                    transform: `translateY(${titleY}px)`,
-                    fontSize: '64px',
-                    fontWeight: '900',
-                    lineHeight: '1.2',
-                    color: '#ffffff',
-                    textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)',
-                    marginBottom: '40px'
-                },
-                children: "MOURINHO THẮNG NGHẸT THỞ ĐỘI B\xd3NG CŨ INTER"
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                        src: (0,esm.staticFile)('mourinho.jpg'),
+                        style: {
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center 20%'
+                        }
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.98) 100%)'
+                        }
+                    })
+                ]
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                 style: {
-                    transform: `scale(${Math.max(0, matchScale)})`,
+                    position: 'relative',
+                    zIndex: 1,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '30px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    padding: '20px 40px',
-                    borderRadius: '24px'
+                    width: '100%'
                 },
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            fontSize: '36px',
-                            fontWeight: '800',
-                            color: '#60a5fa'
-                        },
-                        children: "REAL MADRID"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                        style: {
+                            transform: `scale(${badgeScale})`,
+                            backgroundColor: '#e11d48',
+                            color: '#ffffff',
+                            padding: '12px 32px',
+                            borderRadius: '9999px',
                             fontSize: '28px',
                             fontWeight: '900',
-                            color: '#facc15',
-                            padding: '6px 14px',
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            borderRadius: '12px'
+                            letterSpacing: '3px',
+                            textTransform: 'uppercase',
+                            boxShadow: '0 10px 30px rgba(225, 29, 72, 0.6)',
+                            marginBottom: '30px'
                         },
-                        children: "VS"
+                        children: "\uD83D\uDD25 TIN N\xd3NG C1"
                     }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            fontSize: '36px',
-                            fontWeight: '800',
-                            color: '#38bdf8'
+                            opacity: titleOpacity,
+                            transform: `translateY(${titleY}px)`,
+                            fontSize: '56px',
+                            fontWeight: '900',
+                            lineHeight: '1.2',
+                            color: '#ffffff',
+                            textShadow: '0 4px 30px rgba(0, 0, 0, 0.9)',
+                            marginBottom: '35px'
                         },
-                        children: "INTER MILAN"
+                        children: "HLV MOURINHO THẮNG NGHẸT THỞ ĐỘI B\xd3NG CŨ INTER MILAN"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, matchScale)})`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '24px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                            backdropFilter: 'blur(15px)',
+                            border: '2px solid rgba(255, 255, 255, 0.25)',
+                            padding: '16px 36px',
+                            borderRadius: '24px',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                style: {
+                                    fontSize: '36px',
+                                    fontWeight: '900',
+                                    color: '#60a5fa'
+                                },
+                                children: "REAL MADRID"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                style: {
+                                    fontSize: '28px',
+                                    fontWeight: '900',
+                                    color: '#facc15',
+                                    padding: '6px 14px',
+                                    backgroundColor: 'rgba(0,0,0,0.6)',
+                                    borderRadius: '12px'
+                                },
+                                children: "VS"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                style: {
+                                    fontSize: '36px',
+                                    fontWeight: '900',
+                                    color: '#38bdf8'
+                                },
+                                children: "INTER MILAN"
+                            })
+                        ]
                     })
                 ]
             })
@@ -19006,16 +21181,26 @@ const Intro = ()=>{
 const MatchEvents = ()=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
+    // Subtle Ken Burns zoom for Mbappe image
+    const zoom = (0,esm.interpolate)(frame, [
+        0,
+        160
+    ], [
+        1,
+        1.15
+    ], {
+        extrapolateRight: 'clamp'
+    });
     const events = [
         {
             time: "14'",
-            event: "Mbappe ghi bàn (B. Diaz kiến tạo)",
+            event: "Mbappe dứt điểm mở tỷ số",
             score: "1 - 0",
             team: "Real"
         },
         {
             time: "23'",
-            event: "Valverde ép sân dẫn đến bàn phản lưới",
+            event: "Valverde ép sân phản lưới",
             score: "2 - 0",
             team: "Real"
         },
@@ -19027,7 +21212,7 @@ const MatchEvents = ()=>{
         },
         {
             time: "90'",
-            event: "Courtois cản phá xuất thần (7 saves)",
+            event: "Courtois cản phá xuất thần",
             score: "",
             team: "Highlight"
         }
@@ -19035,138 +21220,195 @@ const MatchEvents = ()=>{
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
         style: {
             flex: 1,
+            position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '80px 40px',
+            padding: '60px 40px',
             color: 'white',
-            fontFamily: 'Inter, system-ui, sans-serif'
+            fontFamily: 'Inter, system-ui, sans-serif',
+            overflow: 'hidden'
         },
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                 style: {
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '30px',
-                    width: '100%',
-                    marginBottom: '80px',
-                    padding: '20px',
-                    background: 'linear-gradient(to right, rgba(96, 165, 250, 0.2), rgba(56, 189, 248, 0.2))',
-                    borderRadius: '24px',
-                    border: '1px solid rgba(255,255,255,0.1)'
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    transform: `scale(${zoom})`,
+                    zIndex: 0
                 },
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                        src: (0,esm.staticFile)('mbappe.jpg'),
                         style: {
-                            fontSize: '48px',
-                            fontWeight: 'bold'
-                        },
-                        children: "REAL MADRID"
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center top'
+                        }
                     }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            fontSize: '56px',
-                            fontWeight: '900',
-                            color: '#facc15'
-                        },
-                        children: "2"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                        style: {
-                            fontSize: '40px',
-                            color: 'rgba(255,255,255,0.5)'
-                        },
-                        children: "-"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                        style: {
-                            fontSize: '56px',
-                            fontWeight: '900',
-                            color: '#facc15'
-                        },
-                        children: "1"
-                    }),
-                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                        style: {
-                            fontSize: '48px',
-                            fontWeight: 'bold'
-                        },
-                        children: "INTER MILAN"
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(15, 23, 42, 0.75)',
+                            backdropFilter: 'blur(8px)'
+                        }
                     })
                 ]
             }),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                 style: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '30px',
+                    position: 'relative',
+                    zIndex: 1,
                     width: '100%'
                 },
-                children: events.map((evt, idx)=>{
-                    const delay = idx * 25 + 15;
-                    const y = (0,esm.interpolate)(frame - delay, [
-                        0,
-                        20
-                    ], [
-                        50,
-                        0
-                    ], {
-                        extrapolateLeft: 'clamp',
-                        extrapolateRight: 'clamp'
-                    });
-                    const opacity = (0,esm.interpolate)(frame - delay, [
-                        0,
-                        20
-                    ], [
-                        0,
-                        1
-                    ], {
-                        extrapolateLeft: 'clamp',
-                        extrapolateRight: 'clamp'
-                    });
-                    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
-                            opacity,
-                            transform: `translateY(${y}px)`,
                             display: 'flex',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
-                            backgroundColor: 'rgba(0,0,0,0.4)',
+                            width: '100%',
+                            marginBottom: '60px',
                             padding: '24px 30px',
-                            borderRadius: '20px',
-                            borderLeft: `8px solid ${evt.team === 'Real' ? '#60a5fa' : evt.team === 'Inter' ? '#38bdf8' : '#facc15'}`
+                            background: 'linear-gradient(135deg, rgba(96, 165, 250, 0.4), rgba(56, 189, 248, 0.1))',
+                            borderRadius: '24px',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
                         },
                         children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
                                 style: {
-                                    width: '100px',
-                                    fontSize: '32px',
+                                    fontSize: '40px',
                                     fontWeight: '900',
-                                    color: '#facc15'
+                                    color: '#60a5fa'
                                 },
-                                children: evt.time
+                                children: "REAL MADRID"
                             }),
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                 style: {
-                                    flex: 1,
-                                    fontSize: '32px',
-                                    fontWeight: '600'
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '20px'
                                 },
-                                children: evt.event
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                        style: {
+                                            fontSize: '56px',
+                                            fontWeight: '900',
+                                            color: '#ffffff'
+                                        },
+                                        children: "2"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                        style: {
+                                            fontSize: '40px',
+                                            color: 'rgba(255,255,255,0.5)'
+                                        },
+                                        children: "-"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                        style: {
+                                            fontSize: '56px',
+                                            fontWeight: '900',
+                                            color: '#ffffff'
+                                        },
+                                        children: "1"
+                                    })
+                                ]
                             }),
-                            evt.score && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
                                 style: {
-                                    fontSize: '36px',
+                                    fontSize: '40px',
                                     fontWeight: '900',
-                                    backgroundColor: 'rgba(255,255,255,0.1)',
-                                    padding: '10px 20px',
-                                    borderRadius: '12px'
+                                    color: '#38bdf8'
                                 },
-                                children: evt.score
+                                children: "INTER MILAN"
                             })
                         ]
-                    }, idx);
-                })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            width: '100%'
+                        },
+                        children: events.map((evt, idx)=>{
+                            const delay = idx * 25 + 15;
+                            const y = (0,esm.interpolate)(frame - delay, [
+                                0,
+                                20
+                            ], [
+                                60,
+                                0
+                            ], {
+                                extrapolateLeft: 'clamp',
+                                extrapolateRight: 'clamp'
+                            });
+                            const opacity = (0,esm.interpolate)(frame - delay, [
+                                0,
+                                20
+                            ], [
+                                0,
+                                1
+                            ], {
+                                extrapolateLeft: 'clamp',
+                                extrapolateRight: 'clamp'
+                            });
+                            return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    opacity,
+                                    transform: `translateY(${y}px)`,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    backgroundColor: 'rgba(0,0,0,0.6)',
+                                    padding: '24px 24px',
+                                    borderRadius: '20px',
+                                    borderLeft: `8px solid ${evt.team === 'Real' ? '#60a5fa' : evt.team === 'Inter' ? '#38bdf8' : '#facc15'}`,
+                                    boxShadow: '0 10px 20px rgba(0,0,0,0.3)'
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            width: '90px',
+                                            fontSize: '32px',
+                                            fontWeight: '900',
+                                            color: '#facc15'
+                                        },
+                                        children: evt.time
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            flex: 1,
+                                            fontSize: '32px',
+                                            fontWeight: '600',
+                                            lineHeight: 1.3
+                                        },
+                                        children: evt.event
+                                    }),
+                                    evt.score && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: '32px',
+                                            fontWeight: '900',
+                                            backgroundColor: 'rgba(255,255,255,0.15)',
+                                            padding: '8px 16px',
+                                            borderRadius: '12px'
+                                        },
+                                        children: evt.score
+                                    })
+                                ]
+                            }, idx);
+                        })
+                    })
+                ]
             })
         ]
     });
@@ -19306,16 +21548,19 @@ const Outro = ()=>{
 
 
 
+
+
+
 const SportsNewsComp = ()=>{
     const frame = (0,esm.useCurrentFrame)();
     const { width, height } = (0,esm.useVideoConfig)();
     // Moving background gradient
     const bgOffset = (0,esm.interpolate)(frame, [
         0,
-        360
+        1101
     ], [
         0,
-        100
+        200
     ], {
         extrapolateRight: 'clamp'
     });
@@ -19326,6 +21571,31 @@ const SportsNewsComp = ()=>{
             height
         },
         children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                src: (0,esm.staticFile)('bgm.mp3'),
+                volume: 0.15
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 0,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('voice1.mp3'),
+                    volume: 1
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 302,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('voice2.mp3'),
+                    volume: 1
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 784,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('voice3.mp3'),
+                    volume: 1
+                })
+            }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
                 style: {
                     display: 'flex',
@@ -19343,26 +21613,2460 @@ const SportsNewsComp = ()=>{
                     children: "CHAMPIONS LEAGUE"
                 })
             }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(TransitionSeries, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 322,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Intro, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-right'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 14,
+                                stiffness: 80,
+                                mass: 0.8
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 502,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(MatchEvents, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: fade(),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 60
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 317,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Outro, {})
+                    })
+                ]
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/BusinessNews/Intro.tsx
+
+
+
+const Intro_Intro = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Very aggressive fast zoom for TikTok energy
+    const zoom = (0,esm.interpolate)(frame, [
+        0,
+        200
+    ], [
+        1,
+        1.3
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    const badgeScale = (0,esm.spring)({
+        frame,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 150,
+            mass: 0.8
+        }
+    });
+    const titleScale = (0,esm.spring)({
+        frame: frame - 10,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 40px',
+            textAlign: 'center',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            overflow: 'hidden'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    transform: `scale(${zoom})`,
+                    zIndex: 0
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                        src: (0,esm.staticFile)('thue.webp'),
+                        style: {
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%)'
+                        }
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'relative',
+                    zIndex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '30px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `scale(${badgeScale})`,
+                            backgroundColor: '#ef4444',
+                            color: '#ffffff',
+                            padding: '16px 40px',
+                            borderRadius: '24px',
+                            fontSize: '44px',
+                            fontWeight: '900',
+                            letterSpacing: '2px',
+                            textTransform: 'uppercase',
+                            boxShadow: '0 10px 40px rgba(239, 68, 68, 0.8)',
+                            border: '4px solid white',
+                            marginBottom: '20px'
+                        },
+                        children: "\uD83D\uDEA8 CẢNH B\xc1O"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${titleScale})`,
+                            fontSize: '60px',
+                            fontWeight: '900',
+                            lineHeight: '1.4',
+                            color: '#facc15',
+                            textShadow: '0 8px 30px rgba(0, 0, 0, 1)',
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            padding: '20px',
+                            borderRadius: '20px',
+                            border: '2px solid rgba(255,255,255,0.2)'
+                        },
+                        children: [
+                            'DOANH NGHIỆP "CHẾT" L\xc2U NĂM',
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("br", {}),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                style: {
+                                    color: 'white'
+                                },
+                                children: "VẪN PHẢI NỘP ĐỦ THUẾ!"
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/BusinessNews/Body.tsx
+
+
+
+const Body = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const points = [
+        {
+            badge: '95.000+',
+            title: 'DOANH NGHIỆP RÀ SOÁT',
+            desc: 'Chiến dịch làm sạch dữ liệu thuế quy mô cực lớn',
+            color: '#facc15'
+        },
+        {
+            badge: 'BẮT BUỘC',
+            title: 'THANH TOÁN HẾT NỢ',
+            desc: 'Muốn đóng mã số thuế? Phải trả sòng phẳng mọi khoản!',
+            color: '#38bdf8'
+        },
+        {
+            badge: 'TRUY QUÉT',
+            title: 'CÔNG TY MA - HÓA ĐƠN',
+            desc: 'Xử lý nghiêm hành vi mua bán hóa đơn bất hợp pháp',
+            color: '#ef4444'
+        }
+    ];
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 40px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    fontSize: '48px',
+                    fontWeight: '900',
+                    color: '#ffffff',
+                    marginBottom: '50px',
+                    textAlign: 'center',
+                    textTransform: 'uppercase',
+                    backgroundColor: '#0ea5e9',
+                    padding: '12px 30px',
+                    borderRadius: '16px'
+                },
+                children: "\uD83D\uDCCC ĐIỂM N\xd3NG CỤC THUẾ"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '30px',
+                    width: '100%'
+                },
+                children: points.map((p, idx)=>{
+                    const delay = idx * 25 + 5;
+                    const scale = (0,esm.spring)({
+                        frame: frame - delay,
+                        fps,
+                        config: {
+                            damping: 10,
+                            stiffness: 150
+                        }
+                    });
+                    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, scale)})`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '24px',
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            border: `3px solid ${p.color}`,
+                            padding: '24px 28px',
+                            borderRadius: '24px',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    backgroundColor: p.color,
+                                    color: '#000000',
+                                    fontWeight: '900',
+                                    fontSize: '28px',
+                                    padding: '12px 18px',
+                                    borderRadius: '16px',
+                                    minWidth: '150px',
+                                    textAlign: 'center'
+                                },
+                                children: p.badge
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '6px'
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: '32px',
+                                            fontWeight: '900',
+                                            color: p.color
+                                        },
+                                        children: p.title
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: '24px',
+                                            color: '#e2e8f0',
+                                            lineHeight: '1.4'
+                                        },
+                                        children: p.desc
+                                    })
+                                ]
+                            })
+                        ]
+                    }, idx);
+                })
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/BusinessNews/Outro.tsx
+
+
+
+const Outro_Outro = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const scale = (0,esm.spring)({
+        frame: frame - 5,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    const ctaScale = (0,esm.spring)({
+        frame: frame - 40,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 150
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 50px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            textAlign: 'center'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${scale})`,
+                    backgroundColor: '#22c55e',
+                    padding: '40px',
+                    borderRadius: '30px',
+                    border: '4px solid white',
+                    boxShadow: '0 20px 50px rgba(34, 197, 94, 0.4)',
+                    marginBottom: '60px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '100px',
+                            marginBottom: '10px'
+                        },
+                        children: "⚡"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '48px',
+                            fontWeight: '900',
+                            color: 'white',
+                            marginBottom: '16px'
+                        },
+                        children: "GIẢI QUYẾT TRONG 3 NG\xc0Y"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '32px',
+                            fontWeight: '800',
+                            color: '#ecfdf5'
+                        },
+                        children: "Ngay sau khi nộp đủ tiền!"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, ctaScale)})`,
+                    fontSize: '44px',
+                    color: '#ffffff',
+                    fontWeight: '900',
+                    textTransform: 'uppercase',
+                    backgroundColor: '#ef4444',
+                    padding: '24px 40px',
+                    borderRadius: '9999px',
+                    boxShadow: '0 10px 30px rgba(239, 68, 68, 0.6)'
+                },
+                children: "❤️ FOLLOW ĐỂ KHỎI MẤT TIỀN OAN!"
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/BusinessNews/index.tsx
+
+
+
+
+
+
+
+
+
+const BusinessNewsComp = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { width, height } = (0,esm.useVideoConfig)();
+    const bgOffset = (0,esm.interpolate)(frame, [
+        0,
+        809
+    ], [
+        0,
+        180
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+        style: {
+            background: `linear-gradient(${120 + bgOffset}deg, #020617, #0f172a, #1e293b)`,
+            width,
+            height
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                src: (0,esm.staticFile)('bgm.mp3'),
+                volume: 0.12
+            }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
                 from: 0,
-                durationInFrames: 100,
-                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Intro, {})
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('biz_tiktok_1.mp3'),
+                    volume: 1.2
+                })
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
-                from: 90,
-                durationInFrames: 160,
-                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(MatchEvents, {})
+                from: 227,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('biz_tiktok_2.mp3'),
+                    volume: 1.2
+                })
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
-                from: 240,
-                durationInFrames: 120,
-                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Outro, {})
+                from: 515,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('biz_tiktok_3.mp3'),
+                    volume: 1.2
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+                style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    opacity: 0.04
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        fontSize: '700px',
+                        fontWeight: '900',
+                        color: 'white'
+                    },
+                    children: "ALERT"
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(TransitionSeries, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 247,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Intro_Intro, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-right'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 100
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 308,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Body, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: fade(),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 80
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 294,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Outro_Outro, {})
+                    })
+                ]
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TrafficNews/Intro.tsx
+
+
+
+const TrafficNews_Intro_Intro = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const zoom = (0,esm.interpolate)(frame, [
+        0,
+        200
+    ], [
+        1,
+        1.3
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    const badgeScale = (0,esm.spring)({
+        frame,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 150,
+            mass: 0.8
+        }
+    });
+    // Title ONLY appears when voiceover speaks the second sentence (around frame 60)
+    const titleScale = (0,esm.spring)({
+        frame: frame - 60,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 40px 100px 40px',
+            textAlign: 'center',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            overflow: 'hidden'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    transform: `scale(${zoom})`,
+                    zIndex: 0
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                        src: (0,esm.staticFile)('traffic.webp'),
+                        style: {
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%)'
+                        }
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'relative',
+                    zIndex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '30px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `scale(${badgeScale})`,
+                            backgroundColor: '#ef4444',
+                            color: '#ffffff',
+                            padding: '16px 40px',
+                            borderRadius: '24px',
+                            fontSize: '44px',
+                            fontWeight: '900',
+                            letterSpacing: '2px',
+                            textTransform: 'uppercase',
+                            boxShadow: '0 10px 40px rgba(239, 68, 68, 0.8)',
+                            border: '4px solid white',
+                            marginBottom: '20px'
+                        },
+                        children: "\uD83D\uDEA8 NGHỊCH L\xdd GIAO TH\xd4NG"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, titleScale)})`,
+                            fontSize: '64px',
+                            fontWeight: '900',
+                            lineHeight: '1.4',
+                            color: '#facc15',
+                            textShadow: '0 8px 30px rgba(0, 0, 0, 1)',
+                            backgroundColor: 'rgba(0,0,0,0.6)',
+                            padding: '24px',
+                            borderRadius: '24px',
+                            border: '2px solid rgba(255,255,255,0.2)'
+                        },
+                        children: [
+                            "CHA MẸ ĐỘI MŨ",
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("br", {}),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                style: {
+                                    color: 'white'
+                                },
+                                children: 'CON TH\xcc "ĐẦU TRẦN"!'
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TrafficNews/Body.tsx
+
+
+
+const Body_Body = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const points = [
+        {
+            startFrame: 3,
+            badge: 'LÝ DO?',
+            title: 'MUỘN GIỜ, KHÔNG CHỊU ĐỘI',
+            desc: 'Phụ huynh thường lấy cớ vội vàng hoặc con không chịu nghe lời',
+            color: '#facc15'
+        },
+        {
+            startFrame: 117,
+            badge: 'TÁC HẠI!',
+            title: 'LÀM GƯƠNG XẤU CHO TRẺ',
+            desc: 'Người lớn không tự giác sẽ tạo tiền lệ xấu cho ý thức của con',
+            color: '#ef4444'
+        }
+    ];
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 40px 100px 40px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    fontSize: '44px',
+                    fontWeight: '900',
+                    color: '#ffffff',
+                    marginBottom: '50px',
+                    textAlign: 'center',
+                    textTransform: 'uppercase',
+                    backgroundColor: '#b91c1c',
+                    padding: '14px 32px',
+                    borderRadius: '16px',
+                    boxShadow: '0 8px 24px rgba(185, 28, 28, 0.6)'
+                },
+                children: "⚠️ B\xc0I HỌC \xdd THỨC"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '40px',
+                    width: '100%'
+                },
+                children: points.map((p, idx)=>{
+                    // Card ONLY appears when the frame reaches its specific startFrame!
+                    const scale = (0,esm.spring)({
+                        frame: frame - p.startFrame,
+                        fps,
+                        config: {
+                            damping: 10,
+                            stiffness: 150
+                        }
+                    });
+                    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, scale)})`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '24px',
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            border: `4px solid ${p.color}`,
+                            padding: '30px 28px',
+                            borderRadius: '24px',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    backgroundColor: p.color,
+                                    color: '#000000',
+                                    fontWeight: '900',
+                                    fontSize: '32px',
+                                    padding: '16px 20px',
+                                    borderRadius: '16px',
+                                    minWidth: '160px',
+                                    textAlign: 'center'
+                                },
+                                children: p.badge
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '8px'
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: '36px',
+                                            fontWeight: '900',
+                                            color: p.color
+                                        },
+                                        children: p.title
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: '28px',
+                                            color: '#e2e8f0',
+                                            lineHeight: '1.4'
+                                        },
+                                        children: p.desc
+                                    })
+                                ]
+                            })
+                        ]
+                    }, idx);
+                })
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TrafficNews/Outro.tsx
+
+
+
+const TrafficNews_Outro_Outro = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Appears when Voice starts talking about Police (local frame 3)
+    const scale = (0,esm.spring)({
+        frame: frame - 3,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    // Appears when Voice says "Đội mũ cho con là bảo vệ tính mạng..." (local frame 118)
+    const lessonScale = (0,esm.spring)({
+        frame: frame - 118,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 150
+        }
+    });
+    // Appears when Voice says "Bấm theo dõi ngay..." (local frame 230)
+    const ctaScale = (0,esm.spring)({
+        frame: frame - 230,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 150
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 50px 100px 50px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            textAlign: 'center',
+            gap: '40px'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, scale)})`,
+                    backgroundColor: '#ef4444',
+                    padding: '40px',
+                    borderRadius: '30px',
+                    border: '4px solid white',
+                    boxShadow: '0 20px 50px rgba(239, 68, 68, 0.4)'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '100px',
+                            marginBottom: '10px'
+                        },
+                        children: "\uD83D\uDC6E‍♂️"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '46px',
+                            fontWeight: '900',
+                            color: 'white',
+                            marginBottom: '16px'
+                        },
+                        children: "CSGT V\xc0O CUỘC!"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            fontSize: '32px',
+                            fontWeight: '800',
+                            color: '#fef2f2',
+                            lineHeight: '1.4'
+                        },
+                        children: [
+                            "Gửi th\xf4ng b\xe1o phạt",
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("br", {}),
+                            "thẳng về nh\xe0 trường!"
+                        ]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, lessonScale)})`,
+                    fontSize: '36px',
+                    color: '#facc15',
+                    fontWeight: '800',
+                    backgroundColor: 'rgba(0,0,0,0.6)',
+                    padding: '24px 30px',
+                    borderRadius: '20px',
+                    border: '2px solid #facc15'
+                },
+                children: [
+                    "Đội mũ cho con l\xe0",
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("br", {}),
+                    "bảo vệ mạng sống của con!"
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, ctaScale)})`,
+                    fontSize: '40px',
+                    color: '#ffffff',
+                    fontWeight: '900',
+                    textTransform: 'uppercase',
+                    backgroundColor: '#3b82f6',
+                    padding: '24px 40px',
+                    borderRadius: '9999px',
+                    boxShadow: '0 10px 30px rgba(59, 130, 246, 0.6)'
+                },
+                children: "\uD83D\uDC4D FOLLOW CẬP NHẬT TIN N\xd3NG!"
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./public/captions.json
+var captions_namespaceObject = JSON.parse('[{"start":3,"end":64,"text":"Cảnh báo khẩn cấp đầu năm học!"},{"start":63,"end":175,"text":"Cha mẹ thì chấp hành đầy đủ, nhưng lại để con trần đầu ngồi sau xe máy!"},{"start":175,"end":246,"text":"Nghịch lý này đang diễn ra ở khắp nơi!"},{"start":269,"end":385,"text":"Nhiều phụ huynh bao biện là do muộn giờ, hoặc do con không chịu đội mũ!"},{"start":383,"end":508,"text":"Nhưng bạn có biết, người lớn không làm gương sẽ làm hỏng ý thức giao thông của con em mình?"},{"start":531,"end":647,"text":"Cảnh sát giao thông đã vào cuộc chấn chỉnh, gửi thông báo phạt thẳng về nhà trường!"},{"start":646,"end":758,"text":"Đội mũ cho con là bảo vệ tính mạng của con, đừng để hối hận không kịp!"},{"start":758,"end":838,"text":"Bấm theo dõi ngay để cập nhật tin tức nóng hổi!"}]')
+;// CONCATENATED MODULE: ./src/TrafficNews/Captions.tsx
+
+
+
+
+const Captions = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    // Find active caption
+    const activeCaption = captions_namespaceObject.find((c)=>frame >= c.start && frame <= c.end + 5);
+    if (!activeCaption) {
+        return null;
+    }
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+        style: {
+            position: 'absolute',
+            bottom: '120px',
+            left: '40px',
+            right: '40px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            zIndex: 100,
+            pointerEvents: 'none'
+        },
+        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+            style: {
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                border: '3px solid #facc15',
+                borderRadius: '24px',
+                padding: '16px 28px',
+                color: '#ffffff',
+                fontSize: '38px',
+                fontWeight: '900',
+                lineHeight: '1.4',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                textShadow: '0 4px 15px rgba(0,0,0,0.9)',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.7)'
+            },
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    style: {
+                        color: '#facc15'
+                    },
+                    children: "\uD83D\uDDE3️ "
+                }),
+                activeCaption.text
+            ]
+        })
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TrafficNews/index.tsx
+
+
+
+
+
+
+
+
+
+
+const TrafficNewsComp = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { width, height } = (0,esm.useVideoConfig)();
+    const bgOffset = (0,esm.interpolate)(frame, [
+        0,
+        858
+    ], [
+        0,
+        180
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+        style: {
+            background: `linear-gradient(${120 + bgOffset}deg, #18181b, #27272a, #09090b)`,
+            width,
+            height
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                src: (0,esm.staticFile)('bgm.mp3'),
+                volume: 0.12
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 0,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('traffic_1.mp3'),
+                    volume: 1.2
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 266,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('traffic_2.mp3'),
+                    volume: 1.2
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 528,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('traffic_3.mp3'),
+                    volume: 1.2
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+                style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    opacity: 0.04
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        fontSize: '700px',
+                        fontWeight: '900',
+                        color: 'white'
+                    },
+                    children: "TRAFFIC"
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(TransitionSeries, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 286,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(TrafficNews_Intro_Intro, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-right'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 100
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 282,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(Body_Body, {})
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: fade(),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 80
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 330,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(TrafficNews_Outro_Outro, {})
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(Captions, {})
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TechNews/GenericScene.tsx
+
+
+
+const GenericScene = ({ data, color, takeawayStarts })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const titleScale = (0,esm.spring)({
+        frame: frame - 10,
+        fps,
+        config: {
+            damping: 12,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 50px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, titleScale)})`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '16px',
+                    marginBottom: '50px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            backgroundColor: color,
+                            color: '#000000',
+                            fontWeight: '900',
+                            fontSize: '32px',
+                            padding: '12px 28px',
+                            borderRadius: '9999px',
+                            textTransform: 'uppercase',
+                            boxShadow: `0 8px 24px ${color}66`
+                        },
+                        children: [
+                            "\uD83D\uDE80 ",
+                            data.tag
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '52px',
+                            fontWeight: '900',
+                            color: '#ffffff',
+                            textAlign: 'center',
+                            textShadow: '0 8px 30px rgba(0,0,0,0.8)',
+                            backgroundColor: 'rgba(0,0,0,0.6)',
+                            padding: '24px 32px',
+                            borderRadius: '24px',
+                            border: `2px solid rgba(255,255,255,0.2)`,
+                            lineHeight: 1.3
+                        },
+                        children: data.headline
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '32px',
+                    width: '100%'
+                },
+                children: data.keyTakeaways.map((takeaway, idx)=>{
+                    const scale = (0,esm.spring)({
+                        frame: frame - (takeawayStarts[idx] || 0),
+                        fps,
+                        config: {
+                            damping: 10,
+                            stiffness: 150
+                        }
+                    });
+                    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, scale)})`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '24px',
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            borderLeft: `8px solid ${color}`,
+                            padding: '28px 32px',
+                            borderRadius: '0 24px 24px 0',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: '40px'
+                                },
+                                children: "⚡"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: '32px',
+                                    color: '#f8fafc',
+                                    lineHeight: '1.5',
+                                    fontWeight: '600'
+                                },
+                                children: takeaway
+                            })
+                        ]
+                    }, idx);
+                })
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TechNews/Outro.tsx
+
+
+
+const TechNews_Outro_Outro = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Entrance spring for main summary header
+    const headerScale = (0,esm.spring)({
+        frame: frame - 5,
+        fps,
+        config: {
+            damping: 12,
+            stiffness: 120,
+            mass: 0.8
+        }
+    });
+    // Entrance spring for Call to Action
+    const ctaScale = (0,esm.spring)({
+        frame: frame - 65,
+        fps,
+        config: {
+            damping: 10,
+            stiffness: 140
+        }
+    });
+    // Entrance spring for Goodbye message
+    const byeScale = (0,esm.spring)({
+        frame: frame - 180,
+        fps,
+        config: {
+            damping: 12,
+            stiffness: 150
+        }
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 50px',
+            color: 'white',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            textAlign: 'center',
+            gap: '40px'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, headerScale)})`,
+                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                    border: '4px solid #38bdf8',
+                    borderRadius: '32px',
+                    padding: '40px 36px',
+                    boxShadow: '0 20px 50px rgba(56, 189, 248, 0.3)',
+                    width: '100%'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '90px',
+                            marginBottom: '16px'
+                        },
+                        children: "\uD83D\uDE80"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '48px',
+                            fontWeight: '900',
+                            color: '#38bdf8',
+                            marginBottom: '16px',
+                            textTransform: 'uppercase'
+                        },
+                        children: "KỶ NGUY\xcaN SỐ VIỆT NAM"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            fontSize: '32px',
+                            color: '#e2e8f0',
+                            fontWeight: '600',
+                            lineHeight: '1.4'
+                        },
+                        children: "Cập nhật th\xf4ng tin c\xf4ng nghệ & chuyển đổi số quốc gia h\xe0ng ng\xe0y"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, ctaScale)})`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '20px',
+                    width: '100%'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            backgroundColor: '#ef4444',
+                            color: '#ffffff',
+                            padding: '24px 32px',
+                            borderRadius: '24px',
+                            fontSize: '38px',
+                            fontWeight: '900',
+                            boxShadow: '0 10px 30px rgba(239, 68, 68, 0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '20px'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                children: "\uD83D\uDC4D"
+                            }),
+                            " NHẤN LIKE & CHIA SẺ"
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            backgroundColor: '#0284c7',
+                            color: '#ffffff',
+                            padding: '24px 32px',
+                            borderRadius: '24px',
+                            fontSize: '38px',
+                            fontWeight: '900',
+                            boxShadow: '0 10px 30px rgba(2, 132, 199, 0.5)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '20px'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                children: "\uD83D\uDD14"
+                            }),
+                            " THEO D\xd5I ĐỂ KH\xd4NG BỎ LỠ"
+                        ]
+                    })
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    transform: `scale(${Math.max(0, byeScale)})`,
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backdropFilter: 'blur(10px)',
+                    border: '2px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '24px',
+                    padding: '24px 40px',
+                    fontSize: '34px',
+                    fontWeight: '800',
+                    color: '#facc15'
+                },
+                children: "✨ CẢM ƠN & HẸN GẶP LẠI! ✨"
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/TechNews/index.tsx
+
+
+
+
+
+
+
+
+const scene1Data = {
+    tag: 'SỰ KIỆN NỔI BẬT',
+    headline: 'Khai Mạc Triển Lãm Quốc Tế HI-TECH VIETNAM 2026',
+    keyTakeaways: [
+        'Diễn ra từ ngày 09 - 11/09/2026 tại Trung tâm Triển lãm Việt Nam.',
+        'Quy tụ hàng trăm doanh nghiệp công nghệ trong nước và quốc tế.',
+        'Tập trung vào AI, bán dẫn, IoT và công nghệ đô thị thông minh.'
+    ]
+};
+const scene2Data = {
+    tag: 'CHÍNH SÁCH QUỐC GIA',
+    headline: 'Chiến Lược AI Mới: Chuyển Đổi Toàn Diện',
+    keyTakeaways: [
+        'Chuyển từ nghiên cứu thử nghiệm sang phổ cập toàn diện bằng AI.',
+        'Tập trung ứng dụng vào dịch vụ công, y tế, giáo dục và doanh nghiệp.',
+        'Xây dựng hạ tầng tính toán lớn và làm chủ mô hình tiếng Việt.'
+    ]
+};
+const scene3Data = {
+    tag: 'HÀNH ĐỘNG 100 NGÀY',
+    headline: 'Tăng Tốc Xử Lý Các Điểm Nghẽn Chuyển Đổi Số',
+    keyTakeaways: [
+        'Kế hoạch 100 ngày tháo gỡ điểm nghẽn dữ liệu hệ thống chính trị.',
+        'Đảm bảo an toàn thông tin và kết nối liên thông dữ liệu dân cư.',
+        'Tạo hành lang pháp lý thông thoáng và bảo mật dữ liệu cho dân.'
+    ]
+};
+const scene4Data = {
+    tag: 'MAKE IN VIET NAM',
+    headline: 'Giải Thưởng AI Make in Viet Nam 2026',
+    keyTakeaways: [
+        'Vinh danh nền tảng số và AI do kỹ sư Việt Nam làm chủ.',
+        'Thúc đẩy giải pháp giải quyết các bài toán thực tiễn xã hội.',
+        'Hỗ trợ tối đa kết nối thương mại hóa và đầu tư hạ tầng số.'
+    ]
+};
+const TechNewsComp = ()=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { width, height } = (0,esm.useVideoConfig)();
+    // Background slow rotation gradient
+    const bgAngle = (0,esm.interpolate)(frame, [
+        0,
+        1807
+    ], [
+        120,
+        240
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+        style: {
+            background: `linear-gradient(${bgAngle}deg, #020617, #0f172a, #1e1b4b)`,
+            width,
+            height
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                src: (0,esm.staticFile)('bgm.mp3'),
+                volume: 0.15
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 0,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('tech_1.mp3'),
+                    volume: 1.3
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 466,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('tech_2.mp3'),
+                    volume: 1.3
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 812,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('tech_3.mp3'),
+                    volume: 1.3
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 1139,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('tech_4.mp3'),
+                    volume: 1.3
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: 1459,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)('tech_5.mp3'),
+                    volume: 1.3
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+                style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    opacity: 0.03,
+                    pointerEvents: 'none'
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        fontSize: '400px',
+                        fontWeight: '900',
+                        color: '#38bdf8',
+                        letterSpacing: '10px'
+                    },
+                    children: "VIETNAM AI"
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(TransitionSeries, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 486,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(GenericScene, {
+                            data: scene1Data,
+                            color: "#38bdf8",
+                            takeawayStarts: [
+                                100,
+                                200,
+                                310
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-right'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 100
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 366,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(GenericScene, {
+                            data: scene2Data,
+                            color: "#a855f7",
+                            takeawayStarts: [
+                                80,
+                                160,
+                                220
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: fade(),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 80
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 347,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(GenericScene, {
+                            data: scene3Data,
+                            color: "#eab308",
+                            takeawayStarts: [
+                                70,
+                                150,
+                                210
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-bottom'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 100
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 340,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(GenericScene, {
+                            data: scene4Data,
+                            color: "#22c55e",
+                            takeawayStarts: [
+                                70,
+                                150,
+                                200
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                        presentation: slide_slide({
+                            direction: 'from-top'
+                        }),
+                        timing: springTiming({
+                            config: {
+                                damping: 12,
+                                stiffness: 100
+                            },
+                            durationInFrames: 20
+                        })
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: 348,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(TechNews_Outro_Outro, {})
+                    })
+                ]
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/design/tokens.ts
+const tokens = {
+    colors: {
+        background: '#0F172A',
+        primary: '#6366F1',
+        accent: '#38BDF8',
+        text: {
+            headline: '#F8FAFC',
+            body: '#E2E8F0',
+            muted: '#94A3B8'
+        },
+        overlay: {
+            scrim: 'linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(15, 23, 42, 0) 100%)'
+        }
+    },
+    typography: {
+        fontFamily: {
+            sans: '"Inter", "Roboto", sans-serif',
+            display: '"Inter", sans-serif'
+        },
+        size: {
+            title: '72px',
+            headline: '56px',
+            body: '40px',
+            caption: '32px'
+        },
+        weight: {
+            bold: 800,
+            semibold: 600,
+            regular: 400
+        },
+        lineHeight: {
+            tight: 1.1,
+            normal: 1.4
+        }
+    },
+    layout: {
+        safeArea: {
+            top: '12%',
+            bottom: '22%',
+            horizontal: '8%'
+        },
+        radius: '24px'
+    },
+    animation: {
+        spring: {
+            stiff: {
+                damping: 12,
+                stiffness: 100,
+                mass: 1
+            },
+            smooth: {
+                damping: 15,
+                stiffness: 80,
+                mass: 1
+            }
+        },
+        duration: {
+            short: 15,
+            medium: 30,
+            long: 60
+        }
+    }
+};
+
+;// CONCATENATED MODULE: ./src/design/components/SafeArea.tsx
+
+
+
+
+const SafeArea = ({ children })=>{
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+        style: {
+            paddingTop: tokens.layout.safeArea.top,
+            paddingBottom: tokens.layout.safeArea.bottom,
+            paddingLeft: tokens.layout.safeArea.horizontal,
+            paddingRight: tokens.layout.safeArea.horizontal,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            boxSizing: 'border-box'
+        },
+        children: children
+    });
+};
+
+;// CONCATENATED MODULE: ./src/design/components/ScrimOverlay.tsx
+
+
+
+
+const ScrimOverlay = ()=>{
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.AbsoluteFill, {
+        style: {
+            background: tokens.colors.overlay.scrim,
+            pointerEvents: 'none',
+            zIndex: 1 // Đảm bảo overlay nằm trên background và dưới text
+        }
+    });
+};
+
+;// CONCATENATED MODULE: ./src/DynamicNews/Scene.tsx
+
+
+
+
+
+
+const useAliveMotion = (offset = 0, speed = 30, intensity = 4)=>{
+    const frame = useCurrentFrame();
+    return Math.sin((frame + offset) / speed) * intensity;
+};
+// ============================================
+// TEMPLATE A: CARDS LIST (Danh sách Luận điểm)
+// ============================================
+const LayoutList = ({ data, color, takeawayStarts })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Chỉ 1 hiệu ứng xuất hiện chính cho cảnh này (title xuất hiện)
+    const titleProgress = (0,esm.spring)({
+        frame: frame - 10,
+        fps,
+        config: tokens.animation.spring.stiff
+    });
+    const titleY = (0,esm.interpolate)(titleProgress, [
+        0,
+        1
+    ], [
+        40,
+        0
+    ]);
+    const titleOpacity = (0,esm.interpolate)(titleProgress, [
+        0,
+        1
+    ], [
+        0,
+        1
+    ]);
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
+        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+            style: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                gap: '32px'
+            },
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                    style: {
+                        transform: `translateY(${titleY}px)`,
+                        opacity: titleOpacity,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '16px',
+                        width: '100%'
+                    },
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                            style: {
+                                backgroundColor: color,
+                                color: '#000',
+                                fontWeight: tokens.typography.weight.bold,
+                                fontSize: tokens.typography.size.caption,
+                                padding: '12px 32px',
+                                borderRadius: '99px',
+                                textTransform: 'uppercase'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                    style: {
+                                        marginRight: '8px'
+                                    },
+                                    children: "\uD83D\uDD34"
+                                }),
+                                " ",
+                                data.tag
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.headline,
+                                fontWeight: tokens.typography.weight.bold,
+                                color: tokens.colors.text.headline,
+                                textAlign: 'center',
+                                lineHeight: tokens.typography.lineHeight.tight
+                            },
+                            children: data.headline
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                        width: '100%'
+                    },
+                    children: (data.keyTakeaways || []).map((takeaway, idx)=>{
+                        // Static timeline, hạn chế slide rối rắm, chỉ fade mượt
+                        const progress = (0,esm.spring)({
+                            frame: frame - takeawayStarts[idx],
+                            fps,
+                            config: tokens.animation.spring.smooth
+                        });
+                        const cardOpacity = (0,esm.interpolate)(progress, [
+                            0,
+                            1
+                        ], [
+                            0,
+                            1
+                        ]);
+                        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                            style: {
+                                opacity: cardOpacity,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '24px',
+                                backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                                backdropFilter: 'blur(12px)',
+                                borderLeft: `6px solid ${color}`,
+                                padding: '24px',
+                                borderRadius: '16px'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                    style: {
+                                        minWidth: '40px',
+                                        height: '40px',
+                                        borderRadius: '50%',
+                                        backgroundColor: `${color}33`,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: color,
+                                        fontSize: '20px',
+                                        fontWeight: tokens.typography.weight.bold
+                                    },
+                                    children: idx + 1
+                                }),
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                    style: {
+                                        fontSize: tokens.typography.size.body,
+                                        color: tokens.colors.text.body,
+                                        lineHeight: tokens.typography.lineHeight.normal,
+                                        fontWeight: tokens.typography.weight.semibold
+                                    },
+                                    children: takeaway
+                                })
+                            ]
+                        }, idx);
+                    })
+                })
+            ]
+        })
+    });
+};
+// ============================================
+// TEMPLATE B: BIG STATISTIC (Chỉ số khổng lồ)
+// ============================================
+const LayoutStat = ({ data, color, takeawayStarts })=>{
+    var _data_keyTakeaways;
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Hero moment: Statistic pop-up
+    const statProgress = (0,esm.spring)({
+        frame: frame - 20,
+        fps,
+        config: tokens.animation.spring.stiff
+    });
+    const statText = data.statNumber || "100%";
+    const statFontSize = statText.length > 10 ? '90px' : statText.length > 6 ? '120px' : '150px';
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
+        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+            style: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                gap: '40px',
+                height: '100%'
+            },
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                    style: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '16px',
+                        opacity: statProgress
+                    },
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                            style: {
+                                color: color,
+                                fontWeight: tokens.typography.weight.bold,
+                                fontSize: tokens.typography.size.caption,
+                                textTransform: 'uppercase',
+                                letterSpacing: '2px'
+                            },
+                            children: [
+                                "✨ ",
+                                data.tag
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.headline,
+                                fontWeight: tokens.typography.weight.bold,
+                                color: tokens.colors.text.headline,
+                                textAlign: 'center',
+                                lineHeight: tokens.typography.lineHeight.tight
+                            },
+                            children: data.headline
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        transform: `scale(${statProgress})`,
+                        fontSize: statFontSize,
+                        fontWeight: '900',
+                        color: color,
+                        lineHeight: 1,
+                        textAlign: 'center'
+                    },
+                    children: statText
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        opacity: statProgress,
+                        backgroundColor: 'rgba(15,23,42,0.8)',
+                        backdropFilter: 'blur(16px)',
+                        padding: '24px 40px',
+                        borderRadius: tokens.layout.radius,
+                        borderTop: `4px solid ${color}`,
+                        fontSize: tokens.typography.size.body,
+                        fontWeight: tokens.typography.weight.bold,
+                        color: tokens.colors.text.body,
+                        textAlign: 'center'
+                    },
+                    children: data.statLabel || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0])
+                })
+            ]
+        })
+    });
+};
+// ============================================
+// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh) - Hero Template
+// ============================================
+const LayoutImage = ({ data, color, takeawayStarts })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    // Hero Moment: Hình ảnh zoom chậm (Ken Burns effect)
+    const imagePan = (0,esm.interpolate)(frame, [
+        0,
+        data.seqDuration || 300
+    ], [
+        1,
+        1.05
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    const opacity = (0,esm.spring)({
+        frame: frame - 10,
+        fps,
+        config: tokens.animation.spring.smooth
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0
+        },
+        children: [
+            data.imageFile ? /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                src: (0,esm.staticFile)(data.imageFile),
+                style: {
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transform: `scale(${imagePan})`
+                }
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: tokens.colors.background
+                }
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ScrimOverlay, {}),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
+                children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                    style: {
+                        opacity,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '20px',
+                        zIndex: 2,
+                        justifyContent: 'flex-end',
+                        height: '100%',
+                        paddingBottom: '40px'
+                    },
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                            style: {
+                                display: 'inline-block',
+                                backgroundColor: color,
+                                color: '#000',
+                                padding: '10px 24px',
+                                borderRadius: '12px',
+                                fontSize: '24px',
+                                fontWeight: tokens.typography.weight.bold,
+                                textTransform: 'uppercase',
+                                alignSelf: 'flex-start'
+                            },
+                            children: [
+                                "\uD83D\uDCF8 ",
+                                data.tag || "TIN TỨC"
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.title,
+                                fontWeight: tokens.typography.weight.bold,
+                                lineHeight: tokens.typography.lineHeight.tight,
+                                color: tokens.colors.text.headline
+                            },
+                            children: data.headline
+                        }),
+                        data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.body,
+                                color: tokens.colors.text.body,
+                                lineHeight: tokens.typography.lineHeight.normal
+                            },
+                            children: data.keyTakeaways[0]
+                        })
+                    ]
+                })
+            })
+        ]
+    });
+};
+// ============================================
+// TEMPLATE C: QUOTE FOCUS (Trích dẫn)
+// ============================================
+const LayoutQuote = LayoutList; // Thay thế bằng layout rút gọn cho phù hợp safe-area
+const DynamicScene = ({ data })=>{
+    const color = data.color || tokens.colors.accent;
+    const takeawayStarts = data.takeawayStarts || [
+        60,
+        120,
+        180,
+        240,
+        300
+    ];
+    let LayoutComponent = LayoutList;
+    if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
+    if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
+    if (data.layoutType === 'image') LayoutComponent = LayoutImage;
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+        style: {
+            flex: 1,
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            fontFamily: tokens.typography.fontFamily.sans
+        },
+        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(LayoutComponent, {
+            data: data,
+            color: color,
+            takeawayStarts: takeawayStarts
+        })
+    });
+};
+
+;// CONCATENATED MODULE: ./src/DynamicNews/Outro.tsx
+
+
+
+
+
+const DynamicOutro = ({ data })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const title = (data === null || data === void 0 ? void 0 : data.title) || 'KỶ NGUYÊN SỐ VIỆT NAM';
+    const subtitle = (data === null || data === void 0 ? void 0 : data.subtitle) || 'Cập nhật thông tin công nghệ & chuyển đổi số quốc gia';
+    // Hero moment: Reveal logo/title
+    const scale = (0,esm.spring)({
+        frame: frame - 5,
+        fps,
+        config: tokens.animation.spring.stiff
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
+        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+            style: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                fontFamily: tokens.typography.fontFamily.sans,
+                textAlign: 'center',
+                gap: '40px'
+            },
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                    style: {
+                        transform: `scale(${Math.max(0, scale)})`,
+                        backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                        border: `2px solid ${tokens.colors.primary}`,
+                        borderRadius: tokens.layout.radius,
+                        padding: '48px 32px',
+                        width: '100%'
+                    },
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: '80px',
+                                marginBottom: '24px'
+                            },
+                            children: "\uD83D\uDE80"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.headline,
+                                fontWeight: tokens.typography.weight.bold,
+                                color: tokens.colors.primary,
+                                marginBottom: '16px',
+                                textTransform: 'uppercase'
+                            },
+                            children: title
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                fontSize: tokens.typography.size.caption,
+                                color: tokens.colors.text.body,
+                                fontWeight: tokens.typography.weight.regular,
+                                lineHeight: tokens.typography.lineHeight.normal
+                            },
+                            children: subtitle
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        transform: `scale(${Math.max(0, scale)})`,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '24px',
+                        width: '100%'
+                    },
+                    children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            backgroundColor: tokens.colors.text.headline,
+                            color: tokens.colors.background,
+                            padding: '24px',
+                            borderRadius: tokens.layout.radius,
+                            fontSize: tokens.typography.size.caption,
+                            fontWeight: tokens.typography.weight.bold,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '16px'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                children: "\uD83D\uDC4D"
+                            }),
+                            " NHẤN LIKE & CHIA SẺ"
+                        ]
+                    })
+                })
+            ]
+        })
+    });
+};
+
+;// CONCATENATED MODULE: ./src/DynamicNews/Background.tsx
+
+
+
+const DynamicBackground = ({ primaryColor = '#38bdf8', bgStyle = 'hud', totalDurationInFrames })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { width, height } = (0,esm.useVideoConfig)();
+    // Dynamic orbits for Aurora orbs (Lissajous curves)
+    const orb1X = Math.sin(frame * 0.02) * 220;
+    const orb1Y = Math.cos(frame * 0.015) * 180;
+    const orb2X = Math.cos(frame * 0.018) * 200;
+    const orb2Y = Math.sin(frame * 0.022) * 160;
+    // Infinite cyber highway grid motion
+    const gridOffset = frame * 2.5 % 80;
+    // Slow rotation for tech rings
+    const rot1 = frame * 0.4 % 360;
+    const rot2 = -frame * 0.25 % 360;
+    const accent = primaryColor;
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+        style: {
+            backgroundColor: '#030712',
+            overflow: 'hidden'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'radial-gradient(circle at 50% 30%, #0f172a 0%, #020617 100%)'
+                }
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    top: '30%',
+                    left: '50%',
+                    transform: `translate(calc(-50% + ${orb1X}px), calc(-50% + ${orb1Y}px))`,
+                    width: '900px',
+                    height: '900px',
+                    borderRadius: '50%',
+                    background: `radial-gradient(circle, ${accent}44 0%, transparent 70%)`,
+                    filter: 'blur(90px)',
+                    pointerEvents: 'none'
+                }
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    bottom: '20%',
+                    left: '50%',
+                    transform: `translate(calc(-50% + ${orb2X}px), calc(-50% + ${orb2Y}px))`,
+                    width: '750px',
+                    height: '750px',
+                    borderRadius: '50%',
+                    background: `radial-gradient(circle, #8b5cf633 0%, transparent 65%)`,
+                    filter: 'blur(100px)',
+                    pointerEvents: 'none'
+                }
+            }),
+            bgStyle === 'grid' && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    bottom: '-150px',
+                    left: '-200px',
+                    right: '-200px',
+                    height: '1000px',
+                    perspective: '500px',
+                    pointerEvents: 'none',
+                    opacity: 0.35
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        width: '100%',
+                        height: '100%',
+                        transform: 'rotateX(72deg)',
+                        backgroundImage: `
+                linear-gradient(${accent}40 2px, transparent 2px),
+                linear-gradient(90deg, ${accent}40 2px, transparent 2px)
+              `,
+                        backgroundSize: '80px 80px',
+                        backgroundPosition: `0px ${gridOffset}px`,
+                        maskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 85%)',
+                        WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 85%)'
+                    }
+                })
+            }),
+            (bgStyle === 'hud' || !bgStyle) && /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
+                        style: {
+                            width: '1500px',
+                            height: '1500px',
+                            opacity: 0.18,
+                            transform: `rotate(${rot1}deg)`
+                        },
+                        viewBox: "0 0 1000 1000",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: "500",
+                                cy: "500",
+                                r: "460",
+                                stroke: accent,
+                                strokeWidth: "2",
+                                fill: "none",
+                                strokeDasharray: "20 40"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: "500",
+                                cy: "500",
+                                r: "380",
+                                stroke: "#ffffff",
+                                strokeWidth: "1.5",
+                                fill: "none",
+                                strokeDasharray: "40 80"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: "500",
+                                cy: "500",
+                                r: "280",
+                                stroke: accent,
+                                strokeWidth: "3",
+                                fill: "none",
+                                strokeDasharray: "60 100"
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("svg", {
+                        style: {
+                            position: 'absolute',
+                            width: '1100px',
+                            height: '1100px',
+                            opacity: 0.15,
+                            transform: `rotate(${rot2}deg)`
+                        },
+                        viewBox: "0 0 1000 1000",
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: "500",
+                                cy: "500",
+                                r: "320",
+                                stroke: "#c084fc",
+                                strokeWidth: "2",
+                                fill: "none",
+                                strokeDasharray: "15 35"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("circle", {
+                                cx: "500",
+                                cy: "500",
+                                r: "200",
+                                stroke: accent,
+                                strokeWidth: "2",
+                                fill: "none",
+                                strokeDasharray: "30 50"
+                            })
+                        ]
+                    })
+                ]
+            }),
+            bgStyle === 'particles' && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    pointerEvents: 'none'
+                },
+                children: [
+                    ...Array(24)
+                ].map((_, i)=>{
+                    const pX = (i * 41 + 13) % 100;
+                    const speed = i % 3 * 0.3 + 0.4;
+                    const pY = 100 - (i * 29 + frame * speed) % 110;
+                    const pSize = i % 5 * 2 + 4;
+                    const opacity = Math.sin(frame * 0.1 + i) * 0.3 + 0.5;
+                    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            left: `${pX}%`,
+                            top: `${pY}%`,
+                            width: `${pSize}px`,
+                            height: `${pSize}px`,
+                            borderRadius: '50%',
+                            backgroundColor: i % 2 === 0 ? accent : '#c084fc',
+                            opacity: Math.max(0.1, opacity),
+                            boxShadow: `0 0 16px ${accent}`
+                        }
+                    }, i);
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 6, 23, 0.85) 100%)',
+                    pointerEvents: 'none'
+                }
+            })
+        ]
+    });
+};
+
+;// CONCATENATED MODULE: ./src/DynamicNews/index.tsx
+
+
+
+
+
+
+
+
+
+const DynamicNewsComp = (props)=>{
+    const { width, height } = (0,esm.useVideoConfig)();
+    const totalFrames = props.totalDurationInFrames || 1800;
+    // Xóa bỏ random transition (vi phạm nguyên tắc), chỉ dùng slide mượt mà từ dưới lên hoặc fade
+    const getTransition = (idx)=>{
+        // Luôn dùng fade để đảm bảo sự liền mạch, tránh giật lag hoặc quá lạm dụng chuyển động
+        return fade();
+    };
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
+        style: {
+            width,
+            height,
+            backgroundColor: tokens.colors.background
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(DynamicBackground, {
+                primaryColor: props.themeColor || tokens.colors.primary,
+                bgStyle: props.bgStyle || 'hud',
+                totalDurationInFrames: totalFrames
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                src: (0,esm.staticFile)('bgm.mp3'),
+                volume: 0.15,
+                loop: true
+            }),
+            props.scenes.map((scene, idx)=>/*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                    from: scene.globalStart,
+                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                        src: (0,esm.staticFile)(scene.audioFile),
+                        volume: 1.3
+                    })
+                }, `audio-${idx}`)),
+            props.outro && /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Sequence, {
+                from: props.outro.globalStart,
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Audio, {
+                    src: (0,esm.staticFile)(props.outro.audioFile),
+                    volume: 1.3
+                })
+            }, "audio-outro"),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(TransitionSeries, {
+                children: [
+                    props.scenes.map((scene, idx)=>/*#__PURE__*/ (0,jsx_runtime.jsxs)(react.Fragment, {
+                            children: [
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                                    durationInFrames: scene.seqDuration,
+                                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)(DynamicScene, {
+                                        data: scene
+                                    })
+                                }),
+                                (idx < props.scenes.length - 1 || props.outro) && /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
+                                    presentation: getTransition(idx),
+                                    timing: springTiming({
+                                        config: tokens.animation.spring.smooth,
+                                        durationInFrames: tokens.animation.duration.medium
+                                    })
+                                })
+                            ]
+                        }, `scene-${idx}`)),
+                    props.outro && /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Sequence, {
+                        durationInFrames: props.outro.seqDuration,
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(DynamicOutro, {
+                            data: props.outro
+                        })
+                    })
+                ]
             })
         ]
     });
 };
 
 ;// CONCATENATED MODULE: ./src/Root.tsx
+
+
+
+
 
 
 
@@ -19406,7 +24110,46 @@ const RemotionRoot = ()=>{
             /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Composition, {
                 id: "SportsNews",
                 component: SportsNewsComp,
-                durationInFrames: 360,
+                durationInFrames: 1101,
+                fps: 30,
+                width: 1080,
+                height: 1920
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Composition, {
+                id: "BusinessNews",
+                component: BusinessNewsComp,
+                durationInFrames: 809,
+                fps: 30,
+                width: 1080,
+                height: 1920
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Composition, {
+                id: "TrafficNews",
+                component: TrafficNewsComp,
+                durationInFrames: 858,
+                fps: 30,
+                width: 1080,
+                height: 1920
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Composition, {
+                id: "TechNews",
+                component: TechNewsComp,
+                durationInFrames: 1807,
+                fps: 30,
+                width: 1080,
+                height: 1920
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Composition, {
+                id: "DynamicNews",
+                component: DynamicNewsComp,
+                calculateMetadata: async ()=>{
+                    // Dynamic data loaded from src/dynamic_news.json
+                    const data = __webpack_require__(5124);
+                    return {
+                        durationInFrames: data.totalDurationInFrames || 1800,
+                        props: data
+                    };
+                },
                 fps: 30,
                 width: 1080,
                 height: 1920
@@ -36646,6 +41389,11 @@ var NoReactInternals = {
 
 
 },
+5124(module) {
+"use strict";
+module.exports = JSON.parse('{"title":"Bóc Trần Mạng Tin Giả AI","themeColor":"#ef4444","bgStyle":"hud","totalDurationInFrames":1581,"scenes":[{"id":1,"tag":"ĐIỀU TRA QUỐC TẾ","layoutType":"list","headline":"Đường Dây Tin Giả Xuyên Lục Địa","keyTakeaways":["CBC Canada phanh phui đế chế tin rác AI","Trụ sở vận hành công khai tại Hà Nội"],"audioFile":"dynamic_1.mp3","audioFrames":333,"globalStart":0,"seqDuration":373,"color":"#38bdf8","takeawayStarts":[60,171]},{"id":2,"tag":"SỐ LIỆU KHỦNG","layoutType":"stat","headline":"Mạng Lưới Thao Túng Người Dùng","keyTakeaways":[],"statNumber":"55.000.000+","statLabel":"Lượt người theo dõi toàn cầu","audioFile":"dynamic_2.mp3","audioFrames":300,"globalStart":353,"seqDuration":340,"color":"#a855f7","takeawayStarts":[]},{"id":3,"tag":"Ý KIẾN CHUYÊN GIA","layoutType":"quote","headline":"Lời Cảnh Báo Từ Học Giả","keyTakeaways":[],"quoteText":"Quy mô những gì được thực hiện ở đây thật sự quá kinh ngạc. Hoàn toàn là một sự lừa dối có hệ thống.","quoteAuthor":"GS. Fenwick McKelvey - ĐH Concordia","audioFile":"dynamic_3.mp3","audioFrames":312,"globalStart":673,"seqDuration":352,"color":"#eab308","takeawayStarts":[]},{"id":4,"tag":"HỆ LỤY NẶNG NỀ","layoutType":"list","headline":"Cảnh Báo Giới MMO Việt Nam","keyTakeaways":["Gia tăng sức ép kiểm duyệt lên Meta","Nguy cơ siết tài khoản và thanh toán từ IP Việt"],"audioFile":"dynamic_4.mp3","audioFrames":311,"globalStart":1005,"seqDuration":331,"color":"#22c55e","takeawayStarts":[60,163]}],"outro":{"title":"Bóc Trần Mạng Tin Giả AI","subtitle":"Cập nhật tin tức nhanh và chính xác nhất","audioFile":"dynamic_outro.mp3","audioFrames":225,"globalStart":1336,"seqDuration":245}}')
+
+},
 
 });
 // The module cache
@@ -36978,7 +41726,7 @@ __webpack_require__.ruid = "bundler=rspack@1.7.11";
 // This entry module is referenced by other modules so it can't be inlined
 __webpack_require__(6507);
 __webpack_require__(3999);
-__webpack_require__(5865);
+__webpack_require__(589);
 __webpack_require__(3610);
 var __webpack_exports__ = __webpack_require__(3482);
 })()

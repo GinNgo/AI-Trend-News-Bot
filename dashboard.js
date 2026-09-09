@@ -4,6 +4,26 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
+
+let logClients = [];
+app.get('/api/logs', (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive'
+  });
+  logClients.push(res);
+  req.on('close', () => {
+    logClients = logClients.filter(c => c !== res);
+  });
+});
+function broadcastLog(msg) {
+  console.log(msg);
+  logClients.forEach(c => c.write(`data: ${JSON.stringify({ message: msg })}
+
+`));
+}
+
 const PORT = 4000;
 
 app.use(express.static('public'));
@@ -230,7 +250,7 @@ async function executeTrendCheck() {
   console.log(`\n[AUTO TREND BOT] 🔍 Đang quét tin lúc ${new Date().toLocaleTimeString()}...`);
 
   try {
-    const result = await trendBot.runTrendCheck((msg) => console.log(msg));
+    const result = await trendBot.runTrendCheck((msg) => broadcastLog(msg));
 
     if (result && trendBotStatus) {
       console.log(`\n[BOT] 🎬 Bắt đầu render Video TỰ ĐỘNG cho bài: ${result.title}`);
