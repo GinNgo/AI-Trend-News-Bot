@@ -1,5 +1,5 @@
 import React from 'react';
-import { spring, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
+import { spring, useCurrentFrame, useVideoConfig, interpolate, Img, staticFile } from 'remotion';
 import { DynamicSceneItem } from './types';
 
 // Hỗ trợ hiệu ứng thở mượt mà (Breathing/Floating)
@@ -137,6 +137,57 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string; takeawaySta
 };
 
 // ============================================
+// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh Chứng cứ)
+// ============================================
+const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string; takeawayStarts: number[] }> = ({ data, color, takeawayStarts }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const slowZoom = interpolate(frame, [0, data.seqDuration || 300], [1, 1.05], { extrapolateRight: 'clamp' });
+  const badgeProgress = spring({ frame: frame - 10, fps, config: { damping: 14, stiffness: 100 } });
+  const imageProgress = spring({ frame: frame - (takeawayStarts[0] || 40), fps, config: { damping: 12, stiffness: 90 } });
+  const textProgress = spring({ frame: frame - (takeawayStarts[1] || 80), fps, config: { damping: 12, stiffness: 100 } });
+
+  // Hình ảnh zoom nhẹ liên tục tạo hiệu ứng Ken Burns
+  const imagePan = interpolate(frame, [0, data.seqDuration || 300], [1, 1.1], { extrapolateRight: 'clamp' });
+
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 50px', color: 'white', transform: `scale(${slowZoom})`, width: '100%', boxSizing: 'border-box' }}>
+
+      <div style={{ transform: `translateY(${interpolate(badgeProgress, [0, 1], [40, 0])}px)`, opacity: badgeProgress, backgroundColor: '#ef4444', color: '#fff', padding: '12px 28px', borderRadius: '12px', fontSize: '26px', fontWeight: '900', marginBottom: '40px', textTransform: 'uppercase', boxShadow: `0 10px 30px rgba(239, 68, 68, 0.5)`, letterSpacing: '1px' }}>
+        📸 {data.tag || "BẰNG CHỨNG"}
+      </div>
+
+      <div style={{ transform: `translateY(${interpolate(imageProgress, [0, 1], [60, 0])}px)`, opacity: imageProgress, width: '100%', backgroundColor: '#0f172a', padding: '16px', borderRadius: '24px', boxShadow: `0 30px 60px rgba(0,0,0,0.8)`, border: `2px solid ${color}55`, marginBottom: '40px' }}>
+        <div style={{ width: '100%', height: '600px', borderRadius: '16px', overflow: 'hidden', position: 'relative', backgroundColor: '#000' }}>
+          {data.imageFile ? (
+            <Img src={staticFile(data.imageFile)} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${imagePan})` }} />
+          ) : (
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#334155', fontSize: '60px' }}>
+              📷 TÀI LIỆU MINH HOẠ
+            </div>
+          )}
+          {/* Overlay gradient bottom */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '30%', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }} />
+        </div>
+      </div>
+
+      <div style={{ transform: `translateY(${interpolate(textProgress, [0, 1], [40, 0])}px)`, opacity: textProgress, backgroundColor: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(20px)', padding: '36px 40px', borderRadius: '24px', borderLeft: `8px solid ${color}`, boxShadow: `0 20px 40px rgba(0,0,0,0.6)`, width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ fontSize: '42px', fontWeight: '800', lineHeight: 1.4, color: '#f8fafc', wordWrap: 'break-word', marginBottom: '16px' }}>
+          {data.headline}
+        </div>
+        {(data.keyTakeaways && data.keyTakeaways.length > 0) && (
+          <div style={{ fontSize: '32px', color: '#cbd5e1', lineHeight: 1.5 }}>
+            {data.keyTakeaways[0]}
+          </div>
+        )}
+      </div>
+
+    </div>
+  );
+};
+
+// ============================================
 // TÍCH HỢP AUDIO VISUALIZER (THANH SÓNG ÂM MÔ PHỎNG)
 // ============================================
 const AudioVisualizer: React.FC<{ color: string }> = ({ color }) => {
@@ -173,9 +224,10 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
   const color = data.color || '#38bdf8';
   const takeawayStarts = data.takeawayStarts || [60, 120, 180, 240, 300];
 
-  let LayoutComponent = LayoutList;
+  let LayoutComponent = LayoutList as React.ElementType;
   if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
   if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
+  if (data.layoutType === 'image') LayoutComponent = LayoutImage;
 
   return (
     <div style={{ flex: 1, position: 'relative', display: 'flex', width: '100%', height: '100%' }}>

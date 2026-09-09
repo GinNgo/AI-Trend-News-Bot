@@ -22,11 +22,26 @@ const model = genAI.getGenerativeModel({ model: config.GEMINI_MODEL });
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? https : http;
-    client.get(url, (res) => {
+    client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => resolve(data));
     }).on('error', reject);
+  });
+}
+
+function downloadImage(url, dest) {
+  return new Promise((resolve, reject) => {
+    const client = url.startsWith('https') ? https : http;
+    const file = fs.createWriteStream(dest);
+    client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (response) => {
+      response.pipe(file);
+      file.on('finish', () => {
+        file.close(resolve);
+      });
+    }).on('error', (err) => {
+      fs.unlink(dest, () => reject(err));
+    });
   });
 }
 
@@ -86,12 +101,45 @@ async function main() {
   }
 
   let articleText = "";
+  let downloadedImages = [];
+
+  const scrapeImages = async (html, baseUrl) => {
+    try {
+      const $ = cheerio.load(html);
+      const images = [];
+      $('img').each((i, el) => {
+        let src = $(el).attr('src') || $(el).attr('data-src');
+        if (!src) return;
+        if (src.includes('logo') || src.includes('icon') || src.includes('avatar') || src.includes('.svg') || src.includes('base64')) return;
+        try {
+          if (src.startsWith('//')) src = 'https:' + src;
+          else if (src.startsWith('/')) src = new URL(baseUrl).origin + src;
+          else if (!src.startsWith('http')) return;
+          images.push(src);
+        } catch(e) {}
+      });
+
+      const uniqueImages = [...new Set(images)].slice(0, 4);
+      for (let i = 0; i < uniqueImages.length; i++) {
+        const filename = `crawled_img_${i+1}.jpg`;
+        const dest = path.join(__dirname, 'public', filename);
+        console.log(`  📸 Đang tải ảnh thực tế ${i+1}: ${uniqueImages[i].substring(0, 60)}...`);
+        try {
+          await downloadImage(uniqueImages[i], dest);
+          if (fs.existsSync(dest) && fs.statSync(dest).size > 2000) {
+            downloadedImages.push(filename);
+          }
+        } catch(err) {}
+      }
+    } catch(e) {}
+  };
 
   if (urlArg.startsWith("http")) {
     console.log(`\n🔍 BƯỚC 1: Đang cào dữ liệu từ link...`);
     console.log(`URL: ${urlArg}`);
     try {
       const html = await fetchUrl(urlArg);
+      await scrapeImages(html, urlArg);
       const $ = cheerio.load(html);
 
       // Xóa các script, style để lấy text thuần
@@ -99,11 +147,11 @@ async function main() {
       articleText = $('body').text().replace(/\s+/g, ' ').trim();
 
       if (articleText.length < 200) {
-         console.warn("⚠️ Cảnh báo: Văn bản cào được rất ngắn (dưới 200 ký tự). Có thể website chặn Bot hoặc là trang động (React/Vue). AI sẽ cố gắng phân tích...");
+        console.warn("⚠️ Cảnh báo: Văn bản cào được rất ngắn (dưới 200 ký tự). Có thể website chặn Bot hoặc là trang động (React/Vue). AI sẽ cố gắng phân tích...");
       }
 
-      if (articleText.length > 8000) articleText = articleText.substring(0, 8000); // Tăng giới hạn số từ cho Gemini 3.x
-      console.log(`✅ Lấy thành công ${articleText.length} ký tự.`);
+      if (articleText.length > 9000) articleText = articleText.substring(0, 9000);
+      console.log(`✅ Lấy thành công ${articleText.length} ký tự và ${downloadedImages.length} hình ảnh thực chứng.`);
     } catch (e) {
       console.error("❌ Lỗi khi cào dữ liệu:", e.message);
       process.exit(1);
@@ -123,16 +171,17 @@ async function main() {
   if (urlMatch && !urlArg.startsWith("http")) {
     const embeddedUrl = urlMatch[0];
     console.log(`\n🔗 Phát hiện đường link bài viết trong Prompt: ${embeddedUrl}`);
-    console.log(`🌐 Đang tự động cào thêm nội dung chi tiết từ link để bổ sung kịch bản...`);
+    console.log(`🌐 Đang tự động cào thêm nội dung chi tiết & hình ảnh từ link để bổ sung kịch bản...`);
     try {
       const html = await fetchUrl(embeddedUrl);
+      await scrapeImages(html, embeddedUrl);
       const $ = cheerio.load(html);
       $('script, style, nav, footer, aside, header').remove();
       let crawledText = $('body').text().replace(/\s+/g, ' ').trim();
-      if (crawledText.length > 6000) crawledText = crawledText.substring(0, 6000);
+      if (crawledText.length > 8000) crawledText = crawledText.substring(0, 8000);
 
       if (crawledText.length > 200) {
-        console.log(`✅ Cào bổ sung thành công ${crawledText.length} ký tự từ link bài báo!`);
+        console.log(`✅ Cào bổ sung thành công ${crawledText.length} ký tự và ${downloadedImages.length} hình ảnh từ bài báo gốc!`);
         articleText += `\n\n--- DỮ LIỆU CHI TIẾT TỰ ĐỘNG CÀO TỪ BÀI BÁO GỐC (${embeddedUrl}) ---\n${crawledText}`;
       } else {
         console.log(`⚠️ Link bài viết trả về ít dữ liệu hoặc chặn bot, tiếp tục dùng nội dung prompt gốc.`);
@@ -142,31 +191,52 @@ async function main() {
     }
   }
 
-  if (articleText.length > 9000) articleText = articleText.substring(0, 9000);
+  if (articleText.length > 10000) articleText = articleText.substring(0, 10000);
 
-  console.log(`\n🧠 BƯỚC 2: AI đang phân tích & lên kịch bản JSON (co giãn N-Cảnh & Đa dạng Layout)...`);
+  console.log(`\n🧠 BƯỚC 2: AI đang phân tích ĐIỀU TRA CHUYÊN SÂU & Lên kịch bản có dẫn chứng, số liệu xác thực...`);
   const prompt = `
-Hãy đọc nội dung sau và tạo kịch bản video ngắn (Shorts) thời lượng 30 - 60 giây.
-Tuỳ thuộc vào độ dài nội dung, hãy chia kịch bản thành 3 đến 8 cảnh (scenes).
-Mỗi cảnh gồm 1 ý chính, đoạn thoại khoảng 10-15 giây đọc.
+Bạn là một Phóng viên Điều tra kiêm Biên tập viên Thời sự cao cấp.
+Hãy đọc kỹ toàn bộ dữ liệu bài báo dưới đây và xây dựng một kịch bản Video Ngắn (Shorts) thời lượng 45 - 60 giây mang phong cách ĐIỀU TRA SỰ THẬT, CỰC KỲ XÁC THỰC, CÓ DẪN CHỨNG, TÀI LIỆU VÀ SỐ LIỆU RÕ RÀNG.
 
-ĐẶC BIỆT: Để video không bị nhàm chán, hãy luân phiên sử dụng 3 kiểu Layout cho các cảnh:
-1. "list": Cho các thông tin liệt kê các luận điểm (có keyTakeaways).
-2. "stat": Dành cho cảnh có con số nổi bật, chỉ số tăng trưởng, tiền bạc, số lượng (yêu cầu điền thêm statNumber và statLabel).
-3. "quote": Dành cho các phát biểu, trích dẫn của chuyên gia, chính phủ, người nổi tiếng (yêu cầu điền quoteText và quoteAuthor).
+YÊU CẦU NỘI DUNG NGHIÊM NGẶT:
+1. KHÔNG NÓI CHUNG CHUNG HOẶC NÓI QUA LOA. Phải chỉ rõ:
+   - Cơ quan báo chí / đài truyền hình phanh phui là ai? (Ví dụ: CBC News, Bộ Công an, cơ quan quản lý...).
+   - Thủ đoạn cụ thể là gì? (Cách thức dùng AI thế nào, số lượng trang ra sao, kéo traffic kiếm tiền adsense ra sao).
+   - Dẫn chứng số liệu thực tế cụ thể: số trang web, lượt follow, số tiền trục lợi, thời gian, tên công ty/địa điểm nếu có.
+   - Hệ lụy và phản ứng của các bên liên quan (Meta, chính phủ, cộng đồng quốc tế).
+2. Tùy theo độ dài và chi tiết của thông tin, hãy chia kịch bản thành từ 4 đến 7 CẢNH (scenes) mạch lạc, logic.
+3. Luân phiên sử dụng 4 kiểu Layout:
+   - "list": Trình bày các luận điểm phân tích, các bước thủ đoạn (keyTakeaways).
+   - "stat": Nổi bật con số chứng cứ lớn (statNumber, statLabel).
+   - "quote": Trích dẫn nguyên văn phát biểu đanh thép của chuyên gia, báo đài, nạn nhân (quoteText, quoteAuthor).
+   - "image": Dành cho cảnh cần đối chiếu tài liệu, hình ảnh hiện trường, bằng chứng điều tra.
+
+${downloadedImages.length > 0 ? `LƯU Ý VỀ ẢNH: Hệ thống đã tải về các ảnh thực chứng: ${downloadedImages.join(', ')}. Hãy gán các ảnh này vào trường "imageFile" của các cảnh phù hợp (đặc biệt là layoutType 'image').` : ''}
 
 YÊU CẦU TRẢ VỀ DƯỚI DẠNG JSON HỢP LỆ (Không Markdown, KHÔNG BỌC \`\`\`json):
 {
   "title": "Tiêu đề ngắn 3-5 từ cho video",
-  "themeColor": "#38bdf8", // Trả về 1 mã màu HEX ngẫu nhiên nổi bật phù hợp với chủ đề video (Vd: #eab308, #22c55e, #ef4444, #a855f7)
-  "bgStyle": "hud", // Trả về 1 kiểu background: "hud" (công nghệ), "particles" (hạt nổi), "grid" (lưới lưới) hoặc "minimal" (tối giản)
+  "themeColor": "#ef4444", // Chọn 1 mã HEX phù hợp (tin nóng/điều tra nên dùng đỏ #ef4444, cam #f97316 hoặc xanh dương #06b6d4)
+  "bgStyle": "grid", // "grid" hoặc "hud" hoặc "particles"
   "scenes": [
     {
-      "tag": "THẺ PHÂN LOẠI (ví dụ: SỐ LIỆU KHỦNG, PHÁT BIỂU, ĐIỂM NHẤN)",
-      "layoutType": "list" | "stat" | "quote",
-      "headline": "Tiêu đề chính của cảnh",
-      "keyTakeaways": ["Ý chính 1", "Ý chính 2"],
-      "statNumber": "5.000.000+" (Nếu layoutType là stat),
+      "tag": "THẺ PHÂN LOẠI (vd: ĐIỀU TRA ĐỘC QUYỀN, THỦ ĐOẠN, SỐ LIỆU BẰNG CHỨNG, PHẢN ỨNG)",
+      "layoutType": "list" | "stat" | "quote" | "image",
+      "imageFile": "${downloadedImages[0] || ''}", // Nếu có layoutType là image
+      "headline": "Tiêu đề cô đọng, giật mình của cảnh",
+      "keyTakeaways": ["Luận điểm chứng cứ 1", "Luận điểm chứng cứ 2"],
+      "statNumber": "55 Triệu" (Nếu layoutType là stat),
+      "statLabel": "Lượt theo dõi bị thao túng" (Nếu layoutType là stat),
+      "quoteText": "Trích dẫn nguyên văn bằng chứng..." (Nếu layoutType là quote),
+      "quoteAuthor": "Đại diện CBC News / Chuyên gia bảo mật" (Nếu layoutType là quote),
+      "voiceover": "Đoạn thoại dài 15-25 giây đọc bằng AI, giọng đanh thép, chuyên nghiệp, dẫn chứng cụ thể, không giật gân rẻ tiền."
+    }
+  ]
+}
+
+Dữ liệu đầu vào:
+${articleText}
+  `;
       "statLabel": "Người dùng tiếp cận" (Nếu layoutType là stat),
       "quoteText": "Trích dẫn nguyên văn câu nói..." (Nếu layoutType là quote),
       "quoteAuthor": "Chuyên gia / Tên tác giả" (Nếu layoutType là quote),
@@ -253,6 +323,7 @@ ${articleText}
       id: i + 1,
       tag: s.tag,
       layoutType: s.layoutType || 'list',
+      imageFile: s.imageFile || (downloadedImages.length > 0 ? downloadedImages[i % downloadedImages.length] : undefined),
       headline: s.headline,
       keyTakeaways: s.keyTakeaways || [],
       statNumber: s.statNumber,

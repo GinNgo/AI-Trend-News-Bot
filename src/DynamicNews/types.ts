@@ -3,11 +3,12 @@ export interface DynamicSceneItem {
   tag: string;
   headline: string;
   keyTakeaways: string[];
-  layoutType?: 'list' | 'stat' | 'quote' | 'spotlight';
+  layoutType?: 'list' | 'stat' | 'quote' | 'spotlight' | 'image';
   statNumber?: string;
   statLabel?: string;
   quoteText?: string;
   quoteAuthor?: string;
+  imageFile?: string;
   audioFile: string;
   audioFrames: number;
   globalStart: number;
