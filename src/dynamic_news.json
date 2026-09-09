@@ -1,104 +1,89 @@
 {
-  "title": "Siêu Máy Tính AI Lên Quỹ Đạo",
-  "themeColor": "#06b6d4",
-  "bgStyle": "hud",
-  "totalDurationInFrames": 2017,
+  "title": "Hoa Hậu Hoàn Vũ Công Khai Bạn Trai",
+  "themeColor": "#ec4899",
+  "bgStyle": "grid",
+  "totalDurationInFrames": 2109,
   "scenes": [
     {
       "id": 1,
-      "tag": "XÁC MINH NGUỒN TIN",
-      "layoutType": "stat",
-      "imageFile": "crawled_img_1.jpg",
-      "headline": "SpaceX & NVIDIA Đưa Siêu Máy Tính AI Lên Vũ Trụ",
-      "keyTakeaways": [],
-      "statNumber": "Q4/2027",
-      "statLabel": "Thời điểm phóng vệ tinh Starmind AI1",
-      "audioFile": "dynamic_1.mp3",
-      "audioFrames": 336,
-      "globalStart": 0,
-      "seqDuration": 376,
-      "color": "#38bdf8",
-      "takeawayStarts": []
-    },
-    {
-      "id": 2,
-      "tag": "BẰNG CHỨNG KỸ THUẬT",
+      "tag": "TIN NÓNG GIẢI TRÍ",
       "layoutType": "image",
       "imageFile": "crawled_img_1.jpg",
-      "headline": "Thiết Kế Chịu Bức Xạ Và Chân Không",
+      "headline": "Sheynnis Palacios Công Khai Bạn Trai",
       "keyTakeaways": [
-        "Trang bị module NVIDIA Space-1 Vera Rubin NVL72",
-        "Tích hợp 72 GPU Rubin và 36 CPU Vera thế hệ mới"
+        "Đăng ảnh tình tứ ngày 8/9 trên Instagram",
+        "Chưa tiết lộ danh tính bạn trai"
       ],
-      "audioFile": "dynamic_2.mp3",
-      "audioFrames": 384,
-      "globalStart": 356,
-      "seqDuration": 424,
-      "color": "#a855f7",
+      "audioFile": "dynamic_1.mp3",
+      "audioFrames": 455,
+      "globalStart": 0,
+      "seqDuration": 495,
+      "color": "#38bdf8",
       "takeawayStarts": [
         60,
-        188
+        211
       ]
     },
     {
-      "id": 3,
-      "tag": "SỐ LIỆU ĐIỀU TRA",
-      "layoutType": "stat",
-      "imageFile": "crawled_img_1.jpg",
-      "headline": "Bứt Phá Tốc Độ Tính Toán Trực Tiếp",
+      "id": 2,
+      "tag": "GÓC NGÔN TÌNH",
+      "layoutType": "quote",
+      "headline": "Lời Tỏ Tình Ngọt Ngào",
       "keyTakeaways": [],
-      "statNumber": "25 Lần",
-      "statLabel": "Tăng trưởng hiệu suất AI On-Board",
+      "quoteText": "Và tình yêu đã đến với chúng ta. Một mối quan hệ - một đôi",
+      "quoteAuthor": "Sheynnis Palacios",
+      "audioFile": "dynamic_2.mp3",
+      "audioFrames": 456,
+      "globalStart": 475,
+      "seqDuration": 496,
+      "color": "#a855f7",
+      "takeawayStarts": []
+    },
+    {
+      "id": 3,
+      "tag": "NHÌN LẠI NHIỆM KỲ",
+      "layoutType": "stat",
+      "imageFile": "crawled_img_3.jpg",
+      "headline": "Hành Trình Rực Rỡ",
+      "keyTakeaways": [],
+      "statNumber": "Hơn 30",
+      "statLabel": "Quốc gia đã đi qua trong nhiệm kỳ",
       "audioFile": "dynamic_3.mp3",
-      "audioFrames": 320,
-      "globalStart": 760,
-      "seqDuration": 360,
+      "audioFrames": 427,
+      "globalStart": 951,
+      "seqDuration": 467,
       "color": "#eab308",
       "takeawayStarts": []
     },
     {
       "id": 4,
-      "tag": "PHẢN ỨNG THỊ TRƯỜNG",
-      "layoutType": "quote",
-      "imageFile": "crawled_img_1.jpg",
-      "headline": "Giải Khát Khủng Hoảng Năng Lượng Mặt Đất",
-      "keyTakeaways": [],
-      "quoteText": "Dự án mở ra kỷ nguyên điện toán ngoài không gian, giải tỏa áp lực tiêu thụ điện năng và nước làm mát khổng lồ tại các data center mặt đất.",
-      "quoteAuthor": "Phân tích Hạ tầng Công nghệ Quốc tế",
-      "audioFile": "dynamic_4.mp3",
-      "audioFrames": 341,
-      "globalStart": 1100,
-      "seqDuration": 381,
-      "color": "#22c55e",
-      "takeawayStarts": []
-    },
-    {
-      "id": 5,
-      "tag": "CỤC DIỆN TƯƠNG LAI",
+      "tag": "SẮC ĐẸP QUỐC TẾ",
       "layoutType": "list",
-      "imageFile": "crawled_img_1.jpg",
-      "headline": "Hệ Sinh Thái Điện Toán Vũ Trụ Mới",
+      "imageFile": "crawled_img_4.jpg",
+      "headline": "Những Danh Hiệu Danh Giá",
       "keyTakeaways": [
-        "Axiom Space, Planet Labs, Starcloud đã tích hợp nền tảng NVIDIA",
-        "Định hình lại chiến lược hạ tầng viễn thông và dữ liệu toàn cầu"
+        "Miss Grand Slam - Hoa hậu đẹp nhất Thế giới 2023",
+        "Lọt top 10 Timeless Beauty",
+        "Sắp trao vương miện tại Miss Universe lần thứ 73 ở Mexico"
       ],
-      "audioFile": "dynamic_5.mp3",
-      "audioFrames": 291,
-      "globalStart": 1461,
-      "seqDuration": 311,
-      "color": "#ef4444",
+      "audioFile": "dynamic_4.mp3",
+      "audioFrames": 446,
+      "globalStart": 1398,
+      "seqDuration": 466,
+      "color": "#22c55e",
       "takeawayStarts": [
         60,
-        157
+        171,
+        282
       ]
     }
   ],
   "outro": {
-    "title": "Siêu Máy Tính AI Lên Quỹ Đạo",
+    "title": "Hoa Hậu Hoàn Vũ Công Khai Bạn Trai",
     "subtitle": "Cập nhật tin tức nhanh và chính xác nhất",
     "audioFile": "dynamic_outro.mp3",
     "audioFrames": 225,
-    "globalStart": 1772,
+    "globalStart": 1864,
     "seqDuration": 245
   }
 }

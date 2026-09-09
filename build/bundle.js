@@ -765,6 +765,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   .uppercase {
     text-transform: uppercase;
   }
+  .italic {
+    font-style: italic;
+  }
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
@@ -936,7 +939,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
     }
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,kBAAkB;EACpB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kCAAkC;EACpC;EACA;IACE,gCAAgC;EAClC;EACA;IACE,cAAc;EAChB;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,qBAAqB;EACvB;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,YAAY;EACd;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,sCAAsC;IACtC,kBAAkB;EACpB;EACA;IACE,0LAA0L;EAC5L;EACA;IACE,wRAAwR;IACxR,gRAAgR;EAClR;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,sBAAsB;EACtB,eAAe;EACf,mBAAmB;AACrB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;MACxB,yBAAyB;MACzB,kBAAkB;MAClB,wBAAwB;MACxB,sBAAsB;MACtB,uBAAuB;MACvB,wBAAwB;MACxB,oBAAoB;MACpB,qBAAqB;MACrB,sBAAsB;MACtB,mBAAmB;MACnB,yBAAyB;MACzB,+BAA+B;MAC/B,4BAA4B;MAC5B,8BAA8B;MAC9B,2BAA2B;MAC3B,iCAAiC;MACjC,+BAA+B;MAC/B,gCAAgC;MAChC,iCAAiC;MACjC,6BAA6B;MAC7B,8BAA8B;MAC9B,+BAA+B;MAC/B,4BAA4B;IAC9B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .absolute {\n    position: absolute;\n  }\n  .relative {\n    position: relative;\n  }\n  .start {\n    inset-inline-start: var(--spacing);\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .block {\n    display: block;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .resize {\n    resize: both;\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n    }\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,kBAAkB;EACpB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kCAAkC;EACpC;EACA;IACE,gCAAgC;EAClC;EACA;IACE,cAAc;EAChB;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,qBAAqB;EACvB;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,YAAY;EACd;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,sCAAsC;IACtC,kBAAkB;EACpB;EACA;IACE,0LAA0L;EAC5L;EACA;IACE,wRAAwR;IACxR,gRAAgR;EAClR;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,sBAAsB;EACtB,eAAe;EACf,mBAAmB;AACrB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;MACxB,yBAAyB;MACzB,kBAAkB;MAClB,wBAAwB;MACxB,sBAAsB;MACtB,uBAAuB;MACvB,wBAAwB;MACxB,oBAAoB;MACpB,qBAAqB;MACrB,sBAAsB;MACtB,mBAAmB;MACnB,yBAAyB;MACzB,+BAA+B;MAC/B,4BAA4B;MAC5B,8BAA8B;MAC9B,2BAA2B;MAC3B,iCAAiC;MACjC,+BAA+B;MAC/B,gCAAgC;MAChC,iCAAiC;MACjC,6BAA6B;MAC7B,8BAA8B;MAC9B,+BAA+B;MAC/B,4BAA4B;IAC9B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .absolute {\n    position: absolute;\n  }\n  .relative {\n    position: relative;\n  }\n  .start {\n    inset-inline-start: var(--spacing);\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .block {\n    display: block;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .resize {\n    resize: both;\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .italic {\n    font-style: italic;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* export default */ const __rspack_default_export = (___CSS_LOADER_EXPORT___);
 
@@ -23300,9 +23303,137 @@ const ScrimOverlay = ()=>{
 
 
 
-const useAliveMotion = (offset = 0, speed = 30, intensity = 4)=>{
-    const frame = useCurrentFrame();
-    return Math.sin((frame + offset) / speed) * intensity;
+// Component làm nổi bật text (bôi đậm, đổi màu) nếu có dấu **text**
+const HighlightText = ({ text, color })=>{
+    if (!text) return null;
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)(jsx_runtime.Fragment, {
+        children: parts.map((part, i)=>{
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    style: {
+                        color,
+                        fontWeight: 900
+                    },
+                    children: part.slice(2, -2)
+                }, i);
+            }
+            return part;
+        })
+    });
+};
+// Component thanh thời gian chạy dọc
+const ProgressBar = ({ duration, color })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const width = (0,esm.interpolate)(frame, [
+        0,
+        duration
+    ], [
+        0,
+        100
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+        style: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '8px',
+            width: `${width}%`,
+            backgroundColor: color,
+            boxShadow: `0 0 10px ${color}`,
+            zIndex: 10
+        }
+    });
+};
+// ============================================
+// TEMPLATE: INTRO (Mở đầu cuốn hút)
+// ============================================
+const LayoutIntro = ({ data, color })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const titleProgress = (0,esm.spring)({
+        frame: frame - 15,
+        fps,
+        config: tokens.animation.spring.stiff
+    });
+    const titleY = (0,esm.interpolate)(titleProgress, [
+        0,
+        1
+    ], [
+        60,
+        0
+    ]);
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
+                duration: data.seqDuration || 300,
+                color: color
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    height: '100%',
+                    gap: '40px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            alignSelf: 'flex-start',
+                            transform: `translateY(${titleY}px)`,
+                            opacity: titleProgress,
+                            backgroundColor: color,
+                            color: '#000',
+                            fontWeight: tokens.typography.weight.bold,
+                            fontSize: tokens.typography.size.caption,
+                            padding: '16px 40px',
+                            borderRadius: '16px',
+                            textTransform: 'uppercase',
+                            boxShadow: `0 20px 40px ${color}66`
+                        },
+                        children: data.tag && (data.tag.toUpperCase().includes('NÓNG') || data.tag.toUpperCase().includes('HOT') || data.tag.toUpperCase().includes('ĐIỀU TRA')) ? '🔥 TIN NÓNG' : '📊 CẬP NHẬT MỚI'
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `translateY(${titleY}px)`,
+                            opacity: titleProgress,
+                            fontSize: '80px',
+                            fontWeight: tokens.typography.weight.bold,
+                            color: tokens.colors.text.headline,
+                            lineHeight: tokens.typography.lineHeight.tight,
+                            textShadow: '0 10px 40px rgba(0,0,0,0.5)'
+                        },
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                            text: data.headline,
+                            color: color
+                        })
+                    }),
+                    data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `translateY(${titleY}px)`,
+                            opacity: titleProgress,
+                            fontSize: tokens.typography.size.body,
+                            color: tokens.colors.text.body,
+                            lineHeight: tokens.typography.lineHeight.normal,
+                            backgroundColor: 'rgba(15,23,42,0.8)',
+                            padding: '32px',
+                            borderRadius: '24px',
+                            borderLeft: `8px solid ${color}`,
+                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)'
+                        },
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                            text: data.keyTakeaways[0],
+                            color: color
+                        })
+                    })
+                ]
+            })
+        ]
+    });
 };
 // ============================================
 // TEMPLATE A: CARDS LIST (Danh sách Luận điểm)
@@ -23310,7 +23441,6 @@ const useAliveMotion = (offset = 0, speed = 30, intensity = 4)=>{
 const LayoutList = ({ data, color, takeawayStarts })=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
-    // Chỉ 1 hiệu ứng xuất hiện chính cho cảnh này (title xuất hiện)
     const titleProgress = (0,esm.spring)({
         frame: frame - 10,
         fps,
@@ -23323,131 +23453,138 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
         40,
         0
     ]);
-    const titleOpacity = (0,esm.interpolate)(titleProgress, [
-        0,
-        1
-    ], [
-        0,
-        1
-    ]);
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
-        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-            style: {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                width: '100%',
-                gap: '32px'
-            },
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                    style: {
-                        transform: `translateY(${titleY}px)`,
-                        opacity: titleOpacity,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '16px',
-                        width: '100%'
-                    },
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                            style: {
-                                backgroundColor: color,
-                                color: '#000',
-                                fontWeight: tokens.typography.weight.bold,
-                                fontSize: tokens.typography.size.caption,
-                                padding: '12px 32px',
-                                borderRadius: '99px',
-                                textTransform: 'uppercase'
-                            },
-                            children: [
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                                    style: {
-                                        marginRight: '8px'
-                                    },
-                                    children: "\uD83D\uDD34"
-                                }),
-                                " ",
-                                data.tag
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.headline,
-                                fontWeight: tokens.typography.weight.bold,
-                                color: tokens.colors.text.headline,
-                                textAlign: 'center',
-                                lineHeight: tokens.typography.lineHeight.tight
-                            },
-                            children: data.headline
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                    style: {
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '24px',
-                        width: '100%'
-                    },
-                    children: (data.keyTakeaways || []).map((takeaway, idx)=>{
-                        // Static timeline, hạn chế slide rối rắm, chỉ fade mượt
-                        const progress = (0,esm.spring)({
-                            frame: frame - takeawayStarts[idx],
-                            fps,
-                            config: tokens.animation.spring.smooth
-                        });
-                        const cardOpacity = (0,esm.interpolate)(progress, [
-                            0,
-                            1
-                        ], [
-                            0,
-                            1
-                        ]);
-                        return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                            style: {
-                                opacity: cardOpacity,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '24px',
-                                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                                backdropFilter: 'blur(12px)',
-                                borderLeft: `6px solid ${color}`,
-                                padding: '24px',
-                                borderRadius: '16px'
-                            },
-                            children: [
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                                    style: {
-                                        minWidth: '40px',
-                                        height: '40px',
-                                        borderRadius: '50%',
-                                        backgroundColor: `${color}33`,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: color,
-                                        fontSize: '20px',
-                                        fontWeight: tokens.typography.weight.bold
-                                    },
-                                    children: idx + 1
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                                    style: {
-                                        fontSize: tokens.typography.size.body,
-                                        color: tokens.colors.text.body,
-                                        lineHeight: tokens.typography.lineHeight.normal,
-                                        fontWeight: tokens.typography.weight.semibold
-                                    },
-                                    children: takeaway
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
+                duration: data.seqDuration || 300,
+                color: color
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: '40px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            transform: `translateY(${titleY}px)`,
+                            opacity: titleProgress,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '20px',
+                            width: '100%'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    display: 'inline-block',
+                                    backgroundColor: 'rgba(255,255,255,0.1)',
+                                    color: color,
+                                    fontWeight: tokens.typography.weight.bold,
+                                    fontSize: tokens.typography.size.caption,
+                                    padding: '12px 32px',
+                                    borderRadius: '99px',
+                                    textTransform: 'uppercase',
+                                    alignSelf: 'flex-start',
+                                    border: `1px solid ${color}44`
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                        style: {
+                                            marginRight: '8px'
+                                        },
+                                        children: "\uD83C\uDFAF"
+                                    }),
+                                    " ",
+                                    data.tag
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.headline,
+                                    fontWeight: tokens.typography.weight.bold,
+                                    color: tokens.colors.text.headline,
+                                    lineHeight: tokens.typography.lineHeight.tight
+                                },
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                    text: data.headline,
+                                    color: color
                                 })
-                            ]
-                        }, idx);
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            width: '100%'
+                        },
+                        children: (data.keyTakeaways || []).map((takeaway, idx)=>{
+                            const progress = (0,esm.spring)({
+                                frame: frame - takeawayStarts[idx],
+                                fps,
+                                config: tokens.animation.spring.smooth
+                            });
+                            const cardOpacity = (0,esm.interpolate)(progress, [
+                                0,
+                                1
+                            ], [
+                                0,
+                                1
+                            ]);
+                            return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    opacity: cardOpacity,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '24px',
+                                    backgroundColor: 'rgba(15, 23, 42, 0.7)',
+                                    background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    borderLeft: `6px solid ${color}`,
+                                    padding: '28px 32px',
+                                    borderRadius: '20px',
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            minWidth: '48px',
+                                            height: '48px',
+                                            borderRadius: '50%',
+                                            backgroundColor: `${color}22`,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            color: color,
+                                            fontSize: '24px',
+                                            fontWeight: tokens.typography.weight.bold
+                                        },
+                                        children: idx + 1
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: tokens.typography.size.body,
+                                            color: tokens.colors.text.body,
+                                            lineHeight: tokens.typography.lineHeight.normal,
+                                            fontWeight: tokens.typography.weight.semibold
+                                        },
+                                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                            text: takeaway,
+                                            color: color
+                                        })
+                                    })
+                                ]
+                            }, idx);
+                        })
                     })
-                })
-            ]
-        })
+                ]
+            })
+        ]
     });
 };
 // ============================================
@@ -23457,103 +23594,136 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
     var _data_keyTakeaways;
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
-    // Hero moment: Statistic pop-up
     const statProgress = (0,esm.spring)({
         frame: frame - 20,
         fps,
         config: tokens.animation.spring.stiff
     });
     const statText = data.statNumber || "100%";
-    const statFontSize = statText.length > 10 ? '90px' : statText.length > 6 ? '120px' : '150px';
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
-        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-            style: {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                gap: '40px',
-                height: '100%'
-            },
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                    style: {
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '16px',
-                        opacity: statProgress
-                    },
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                            style: {
-                                color: color,
-                                fontWeight: tokens.typography.weight.bold,
-                                fontSize: tokens.typography.size.caption,
-                                textTransform: 'uppercase',
-                                letterSpacing: '2px'
-                            },
-                            children: [
-                                "✨ ",
-                                data.tag
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.headline,
-                                fontWeight: tokens.typography.weight.bold,
-                                color: tokens.colors.text.headline,
-                                textAlign: 'center',
-                                lineHeight: tokens.typography.lineHeight.tight
-                            },
-                            children: data.headline
+    const statFontSize = statText.length > 10 ? '90px' : statText.length > 6 ? '120px' : '160px';
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
+                duration: data.seqDuration || 300,
+                color: color
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    gap: '40px',
+                    height: '100%',
+                    position: 'relative'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '300px',
+                            height: '300px',
+                            backgroundColor: color,
+                            filter: 'blur(150px)',
+                            opacity: 0.3,
+                            zIndex: -1
+                        }
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '20px',
+                            opacity: statProgress
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    backgroundColor: 'rgba(0,0,0,0.5)',
+                                    padding: '12px 32px',
+                                    borderRadius: '99px',
+                                    color: color,
+                                    fontWeight: tokens.typography.weight.bold,
+                                    fontSize: tokens.typography.size.caption,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '2px',
+                                    border: `1px solid ${color}66`
+                                },
+                                children: [
+                                    "✨ ",
+                                    data.tag
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.headline,
+                                    fontWeight: tokens.typography.weight.bold,
+                                    color: tokens.colors.text.headline,
+                                    textAlign: 'center',
+                                    lineHeight: tokens.typography.lineHeight.tight
+                                },
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                    text: data.headline,
+                                    color: color
+                                })
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `scale(${statProgress})`,
+                            fontSize: statFontSize,
+                            fontWeight: '900',
+                            color: '#fff',
+                            textShadow: `0 0 40px ${color}, 0 20px 40px rgba(0,0,0,0.5)`,
+                            lineHeight: 1,
+                            textAlign: 'center',
+                            margin: '20px 0'
+                        },
+                        children: statText
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            opacity: statProgress,
+                            backgroundColor: 'rgba(15,23,42,0.9)',
+                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                            padding: '32px 48px',
+                            borderRadius: '32px',
+                            borderTop: `6px solid ${color}`,
+                            boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                            fontSize: tokens.typography.size.body,
+                            fontWeight: tokens.typography.weight.bold,
+                            color: tokens.colors.text.body,
+                            textAlign: 'center'
+                        },
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                            text: data.statLabel || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || "",
+                            color: color
                         })
-                    ]
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                    style: {
-                        transform: `scale(${statProgress})`,
-                        fontSize: statFontSize,
-                        fontWeight: '900',
-                        color: color,
-                        lineHeight: 1,
-                        textAlign: 'center'
-                    },
-                    children: statText
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                    style: {
-                        opacity: statProgress,
-                        backgroundColor: 'rgba(15,23,42,0.8)',
-                        backdropFilter: 'blur(16px)',
-                        padding: '24px 40px',
-                        borderRadius: tokens.layout.radius,
-                        borderTop: `4px solid ${color}`,
-                        fontSize: tokens.typography.size.body,
-                        fontWeight: tokens.typography.weight.bold,
-                        color: tokens.colors.text.body,
-                        textAlign: 'center'
-                    },
-                    children: data.statLabel || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0])
-                })
-            ]
-        })
+                    })
+                ]
+            })
+        ]
     });
 };
 // ============================================
-// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh) - Hero Template
+// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh)
 // ============================================
 const LayoutImage = ({ data, color, takeawayStarts })=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
-    // Hero Moment: Hình ảnh zoom chậm (Ken Burns effect)
     const imagePan = (0,esm.interpolate)(frame, [
         0,
         data.seqDuration || 300
     ], [
         1,
-        1.05
+        1.1
     ], {
         extrapolateRight: 'clamp'
     });
@@ -23587,55 +23757,75 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
                 }
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ScrimOverlay, {}),
-            /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
-                children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                    style: {
-                        opacity,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '20px',
-                        zIndex: 2,
-                        justifyContent: 'flex-end',
-                        height: '100%',
-                        paddingBottom: '40px'
-                    },
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                            style: {
-                                display: 'inline-block',
-                                backgroundColor: color,
-                                color: '#000',
-                                padding: '10px 24px',
-                                borderRadius: '12px',
-                                fontSize: '24px',
-                                fontWeight: tokens.typography.weight.bold,
-                                textTransform: 'uppercase',
-                                alignSelf: 'flex-start'
-                            },
-                            children: [
-                                "\uD83D\uDCF8 ",
-                                data.tag || "TIN TỨC"
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.title,
-                                fontWeight: tokens.typography.weight.bold,
-                                lineHeight: tokens.typography.lineHeight.tight,
-                                color: tokens.colors.text.headline
-                            },
-                            children: data.headline
-                        }),
-                        data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.body,
-                                color: tokens.colors.text.body,
-                                lineHeight: tokens.typography.lineHeight.normal
-                            },
-                            children: data.keyTakeaways[0]
-                        })
-                    ]
-                })
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
+                        duration: data.seqDuration || 300,
+                        color: color
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            opacity,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            zIndex: 2,
+                            justifyContent: 'flex-end',
+                            height: '100%',
+                            paddingBottom: '40px'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    display: 'inline-block',
+                                    backgroundColor: '#ef4444',
+                                    color: '#fff',
+                                    padding: '12px 32px',
+                                    borderRadius: '12px',
+                                    fontSize: '28px',
+                                    fontWeight: tokens.typography.weight.bold,
+                                    textTransform: 'uppercase',
+                                    alignSelf: 'flex-start',
+                                    boxShadow: '0 10px 30px rgba(239,68,68,0.5)'
+                                },
+                                children: [
+                                    "\uD83D\uDCF8 ",
+                                    data.tag || "BẰNG CHỨNG"
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: '64px',
+                                    fontWeight: tokens.typography.weight.bold,
+                                    lineHeight: tokens.typography.lineHeight.tight,
+                                    color: tokens.colors.text.headline,
+                                    textShadow: '0 10px 30px rgba(0,0,0,0.8)'
+                                },
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                    text: data.headline,
+                                    color: color
+                                })
+                            }),
+                            data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.body,
+                                    color: tokens.colors.text.body,
+                                    lineHeight: tokens.typography.lineHeight.normal,
+                                    backgroundColor: 'rgba(15,23,42,0.85)',
+                                    background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                                    padding: '32px',
+                                    borderRadius: '24px',
+                                    borderLeft: `8px solid ${color}`
+                                },
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                    text: data.keyTakeaways[0],
+                                    color: color
+                                })
+                            })
+                        ]
+                    })
+                ]
             })
         ]
     });
@@ -23643,7 +23833,126 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
 // ============================================
 // TEMPLATE C: QUOTE FOCUS (Trích dẫn)
 // ============================================
-const LayoutQuote = LayoutList; // Thay thế bằng layout rút gọn cho phù hợp safe-area
+const LayoutQuote = ({ data, color, takeawayStarts })=>{
+    var _data_keyTakeaways;
+    const frame = (0,esm.useCurrentFrame)();
+    const { fps } = (0,esm.useVideoConfig)();
+    const titleProgress = (0,esm.spring)({
+        frame: frame - 10,
+        fps,
+        config: tokens.animation.spring.stiff
+    });
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
+                duration: data.seqDuration || 300,
+                color: color
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    height: '100%',
+                    gap: '40px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            opacity: titleProgress,
+                            alignSelf: 'center',
+                            backgroundColor: 'rgba(255,255,255,0.1)',
+                            padding: '12px 32px',
+                            borderRadius: '99px',
+                            color: color,
+                            fontWeight: tokens.typography.weight.bold,
+                            fontSize: tokens.typography.size.caption,
+                            textTransform: 'uppercase',
+                            border: `1px solid ${color}66`
+                        },
+                        children: [
+                            "\uD83D\uDCAC ",
+                            data.tag || "PHÁT BIỂU"
+                        ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                        style: {
+                            opacity: titleProgress,
+                            position: 'relative',
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
+                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                            padding: '60px 50px',
+                            borderRadius: '40px',
+                            border: `1px solid rgba(255,255,255,0.1)`,
+                            borderLeft: `12px solid ${color}`,
+                            boxShadow: `0 40px 80px rgba(0,0,0,0.5)`
+                        },
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    position: 'absolute',
+                                    top: '-40px',
+                                    left: '40px',
+                                    fontSize: '120px',
+                                    color: color,
+                                    fontFamily: 'Georgia, serif',
+                                    lineHeight: 1
+                                },
+                                children: "“"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.headline,
+                                    fontWeight: tokens.typography.weight.semibold,
+                                    lineHeight: 1.5,
+                                    color: tokens.colors.text.headline,
+                                    fontStyle: 'italic',
+                                    marginBottom: '40px',
+                                    zIndex: 2,
+                                    position: 'relative'
+                                },
+                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                    text: data.quoteText || data.headline,
+                                    color: color
+                                })
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                style: {
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '20px'
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            width: '60px',
+                                            height: '4px',
+                                            backgroundColor: color,
+                                            borderRadius: '2px'
+                                        }
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                        style: {
+                                            fontSize: tokens.typography.size.caption,
+                                            fontWeight: tokens.typography.weight.bold,
+                                            color: tokens.colors.text.muted,
+                                            textTransform: 'uppercase'
+                                        },
+                                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                            text: data.quoteAuthor || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || "",
+                                            color: color
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    });
+};
 const DynamicScene = ({ data })=>{
     const color = data.color || tokens.colors.accent;
     const takeawayStarts = data.takeawayStarts || [
@@ -23657,6 +23966,9 @@ const DynamicScene = ({ data })=>{
     if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
     if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
     if (data.layoutType === 'image') LayoutComponent = LayoutImage;
+    if (data.tag && (data.tag.toUpperCase().includes('TIN NÓNG') || data.tag.toUpperCase().includes('TỔNG HỢP') || data.tag.toUpperCase().includes('ĐIỀU TRA'))) {
+        LayoutComponent = LayoutIntro;
+    }
     return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
         style: {
             flex: 1,
@@ -41391,7 +41703,7 @@ var NoReactInternals = {
 },
 5124(module) {
 "use strict";
-module.exports = JSON.parse('{"title":"Bóc Trần Mạng Tin Giả AI","themeColor":"#ef4444","bgStyle":"hud","totalDurationInFrames":1581,"scenes":[{"id":1,"tag":"ĐIỀU TRA QUỐC TẾ","layoutType":"list","headline":"Đường Dây Tin Giả Xuyên Lục Địa","keyTakeaways":["CBC Canada phanh phui đế chế tin rác AI","Trụ sở vận hành công khai tại Hà Nội"],"audioFile":"dynamic_1.mp3","audioFrames":333,"globalStart":0,"seqDuration":373,"color":"#38bdf8","takeawayStarts":[60,171]},{"id":2,"tag":"SỐ LIỆU KHỦNG","layoutType":"stat","headline":"Mạng Lưới Thao Túng Người Dùng","keyTakeaways":[],"statNumber":"55.000.000+","statLabel":"Lượt người theo dõi toàn cầu","audioFile":"dynamic_2.mp3","audioFrames":300,"globalStart":353,"seqDuration":340,"color":"#a855f7","takeawayStarts":[]},{"id":3,"tag":"Ý KIẾN CHUYÊN GIA","layoutType":"quote","headline":"Lời Cảnh Báo Từ Học Giả","keyTakeaways":[],"quoteText":"Quy mô những gì được thực hiện ở đây thật sự quá kinh ngạc. Hoàn toàn là một sự lừa dối có hệ thống.","quoteAuthor":"GS. Fenwick McKelvey - ĐH Concordia","audioFile":"dynamic_3.mp3","audioFrames":312,"globalStart":673,"seqDuration":352,"color":"#eab308","takeawayStarts":[]},{"id":4,"tag":"HỆ LỤY NẶNG NỀ","layoutType":"list","headline":"Cảnh Báo Giới MMO Việt Nam","keyTakeaways":["Gia tăng sức ép kiểm duyệt lên Meta","Nguy cơ siết tài khoản và thanh toán từ IP Việt"],"audioFile":"dynamic_4.mp3","audioFrames":311,"globalStart":1005,"seqDuration":331,"color":"#22c55e","takeawayStarts":[60,163]}],"outro":{"title":"Bóc Trần Mạng Tin Giả AI","subtitle":"Cập nhật tin tức nhanh và chính xác nhất","audioFile":"dynamic_outro.mp3","audioFrames":225,"globalStart":1336,"seqDuration":245}}')
+module.exports = JSON.parse('{"title":"Siêu Máy Tính AI Lên Quỹ Đạo","themeColor":"#06b6d4","bgStyle":"hud","totalDurationInFrames":2017,"scenes":[{"id":1,"tag":"XÁC MINH NGUỒN TIN","layoutType":"stat","imageFile":"crawled_img_1.jpg","headline":"SpaceX & NVIDIA Đưa Siêu Máy Tính AI Lên Vũ Trụ","keyTakeaways":[],"statNumber":"Q4/2027","statLabel":"Thời điểm phóng vệ tinh Starmind AI1","audioFile":"dynamic_1.mp3","audioFrames":336,"globalStart":0,"seqDuration":376,"color":"#38bdf8","takeawayStarts":[]},{"id":2,"tag":"BẰNG CHỨNG KỸ THUẬT","layoutType":"image","imageFile":"crawled_img_1.jpg","headline":"Thiết Kế Chịu Bức Xạ Và Chân Không","keyTakeaways":["Trang bị module NVIDIA Space-1 Vera Rubin NVL72","Tích hợp 72 GPU Rubin và 36 CPU Vera thế hệ mới"],"audioFile":"dynamic_2.mp3","audioFrames":384,"globalStart":356,"seqDuration":424,"color":"#a855f7","takeawayStarts":[60,188]},{"id":3,"tag":"SỐ LIỆU ĐIỀU TRA","layoutType":"stat","imageFile":"crawled_img_1.jpg","headline":"Bứt Phá Tốc Độ Tính Toán Trực Tiếp","keyTakeaways":[],"statNumber":"25 Lần","statLabel":"Tăng trưởng hiệu suất AI On-Board","audioFile":"dynamic_3.mp3","audioFrames":320,"globalStart":760,"seqDuration":360,"color":"#eab308","takeawayStarts":[]},{"id":4,"tag":"PHẢN ỨNG THỊ TRƯỜNG","layoutType":"quote","imageFile":"crawled_img_1.jpg","headline":"Giải Khát Khủng Hoảng Năng Lượng Mặt Đất","keyTakeaways":[],"quoteText":"Dự án mở ra kỷ nguyên điện toán ngoài không gian, giải tỏa áp lực tiêu thụ điện năng và nước làm mát khổng lồ tại các data center mặt đất.","quoteAuthor":"Phân tích Hạ tầng Công nghệ Quốc tế","audioFile":"dynamic_4.mp3","audioFrames":341,"globalStart":1100,"seqDuration":381,"color":"#22c55e","takeawayStarts":[]},{"id":5,"tag":"CỤC DIỆN TƯƠNG LAI","layoutType":"list","imageFile":"crawled_img_1.jpg","headline":"Hệ Sinh Thái Điện Toán Vũ Trụ Mới","keyTakeaways":["Axiom Space, Planet Labs, Starcloud đã tích hợp nền tảng NVIDIA","Định hình lại chiến lược hạ tầng viễn thông và dữ liệu toàn cầu"],"audioFile":"dynamic_5.mp3","audioFrames":291,"globalStart":1461,"seqDuration":311,"color":"#ef4444","takeawayStarts":[60,157]}],"outro":{"title":"Siêu Máy Tính AI Lên Quỹ Đạo","subtitle":"Cập nhật tin tức nhanh và chính xác nhất","audioFile":"dynamic_outro.mp3","audioFrames":225,"globalStart":1772,"seqDuration":245}}')
 
 },
 

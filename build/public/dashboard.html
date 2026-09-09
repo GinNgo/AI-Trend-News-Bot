@@ -496,6 +496,29 @@
     #btnConfirmUpload:hover {
       background: linear-gradient(135deg, #f87171, #ef4444);
     }
+  
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cyan);
+    }
+    
+    textarea.input-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+
   </style>
 </head>
 <body>
@@ -544,6 +567,9 @@
 
         <button class="btn-execute" id="btnRun" onclick="startWorkflow()">
           <span>⚡</span> BẮT ĐẦU CHẠY
+        </button>
+        <button class="btn-execute" id="btnReset" onclick="resetWorkflow()" style="background: rgba(239, 68, 68, 0.1); border-color: #ef4444; color: #ef4444; margin-left: 10px;">
+          <span>🔄</span> LÀM LẠI MỚI
         </button>
       </div>
     </div>
@@ -1029,6 +1055,32 @@
         }
       }
     }
-  </script>
+  
+    function resetWorkflow() {
+      const screen = document.getElementById('termScreen');
+      if (screen) {
+        screen.innerHTML = `<div class="t-row"><span class="t-time">[${new Date().toLocaleTimeString()}]</span> <span class="t-msg" style="color:#ef4444;">🧹 Đã dọn dẹp hệ thống. Sẵn sàng chạy lại từ đầu!</span></div>`;
+      }
+      
+      const inputUrl = document.getElementById('inputUrl');
+      const inputPrompt = document.getElementById('inputPrompt');
+      if (inputUrl) inputUrl.value = '';
+      if (inputPrompt) inputPrompt.value = '';
+      
+      const steps = ['crawler', 'text', 'script', 'audio', 'video'];
+      steps.forEach(step => {
+        const title = document.getElementById(`title-${step}`);
+        const log = document.getElementById(`log-${step}`);
+        if (title) title.className = 'node-title';
+        if (log) log.innerHTML = 'Chờ xử lý...';
+      });
+      
+      const player = document.getElementById('mainVideo');
+      if (player) {
+        player.src = '';
+      }
+    }
+
+</script>
 </body>
 </html>

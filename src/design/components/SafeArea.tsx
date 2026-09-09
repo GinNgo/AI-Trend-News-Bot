@@ -13,7 +13,8 @@ export const SafeArea: React.FC<{ children: React.ReactNode }> = ({ children }) 
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center', // Giữ content ở giữa thay vì flex-end để dễ quản lý hơn với các layout khác nhau
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        zIndex: 10 // Đảm bảo luôn nằm trên ScrimOverlay và Background
       }}
     >
       {children}
