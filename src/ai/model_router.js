@@ -14,8 +14,10 @@ function getModelsForTask(taskType, envDefaultModel = null) {
       preferredModels = [
         "gemini-3.5-flash-lite", // 500 RPD, 15 RPM
         "gemini-3.1-flash-lite", // 500 RPD, 15 RPM
+        "gemini-3.6-flash",
         "gemini-2.5-flash-lite",
         "gemini-3.0-flash",
+        "gemini-3.7-flash",
         "gemini-2.5-flash",
         "gemini-flash-latest"
       ];
@@ -29,6 +31,7 @@ function getModelsForTask(taskType, envDefaultModel = null) {
         "gemini-3.7-flash",      // Quota cực ít (20 RPD)
         "gemini-3.6-flash",
         "gemini-3.5-flash",
+        "gemini-3.7-flash",
         "gemini-2.5-flash",
         "gemini-2.5-pro"
       ];
