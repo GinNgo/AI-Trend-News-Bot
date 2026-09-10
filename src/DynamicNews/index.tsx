@@ -1,23 +1,38 @@
 import React from 'react';
-import { AbsoluteFill, useVideoConfig, useCurrentFrame, Audio, staticFile, Sequence } from 'remotion';
-import { TransitionSeries, springTiming } from '@remotion/transitions';
-import { fade } from '@remotion/transitions/fade';
+import { AbsoluteFill, useVideoConfig, Audio, staticFile, Sequence } from 'remotion';
+import { TransitionSeries, springTiming, linearTiming } from '@remotion/transitions';
 import { slide } from '@remotion/transitions/slide';
+import { wipe } from '@remotion/transitions/wipe';
+import { fade } from '@remotion/transitions/fade';
 
 import { DynamicOutroData, DynamicNewsData } from './types';
 import { DynamicScene } from './Scene';
 import { DynamicOutro } from './Outro';
 import { DynamicBackground } from './Background';
+import { NewsTicker } from './NewsTicker';
 import { tokens } from '../design/tokens';
 
 export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
   const { width, height } = useVideoConfig();
   const totalFrames = props.totalDurationInFrames || 1800;
 
-  // Xóa bỏ random transition (vi phạm nguyên tắc), chỉ dùng slide mượt mà từ dưới lên hoặc fade
+  // Luân phiên các hiệu ứng chuyển cảnh mượt mà cho mỗi Scene
   const getTransition = (idx: number) => {
-    // Luôn dùng fade để đảm bảo sự liền mạch, tránh giật lag hoặc quá lạm dụng chuyển động
-    return fade();
+    const types = [
+      slide({ direction: 'from-right' }),
+      slide({ direction: 'from-bottom' }),
+      slide({ direction: 'from-left' }),
+      fade()
+    ];
+    return types[idx % types.length];
+  };
+
+  const getTiming = (idx: number) => {
+    // Fade bị lỗi giật nháy nếu dùng spring, nên bắt buộc dùng linear
+    if (idx % 4 === 3) {
+      return linearTiming({ durationInFrames: 15 });
+    }
+    return springTiming({ config: tokens.animation.spring.smooth, durationInFrames: tokens.animation.duration.medium });
   };
 
   return (
@@ -52,11 +67,10 @@ export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
               <DynamicScene data={scene} />
             </TransitionSeries.Sequence>
 
-            {/* Transition duy nhất và đồng bộ */}
             {(idx < props.scenes.length - 1 || props.outro) && (
               <TransitionSeries.Transition
                 presentation={getTransition(idx)}
-                timing={springTiming({ config: tokens.animation.spring.smooth, durationInFrames: tokens.animation.duration.medium })}
+                timing={getTiming(idx)}
               />
             )}
           </React.Fragment>
@@ -68,6 +82,17 @@ export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
           </TransitionSeries.Sequence>
         )}
       </TransitionSeries>
+
+      {/*
+        The News Ticker is placed OUTSIDE the TransitionSeries so it persists
+        continuously and keeps moving smoothly across all scene transitions!
+      */}
+      <NewsTicker
+        title={props.title}
+        themeColor={props.themeColor || tokens.colors.primary}
+        language={props.language}
+        headlines={props.scenes.map((s) => s.headline)}
+      />
     </AbsoluteFill>
   );
 };

@@ -8,6 +8,7 @@ export interface DynamicSceneItem {
   statLabel?: string;
   quoteText?: string;
   quoteAuthor?: string;
+  voiceover?: string;
   imageFile?: string;
   audioFile: string;
   audioFrames: number;
@@ -32,5 +33,6 @@ export interface DynamicNewsData {
   bgStyle?: 'hud' | 'particles' | 'grid' | 'minimal';
   totalDurationInFrames: number;
   scenes: DynamicSceneItem[];
+  language?: string;
   outro?: DynamicOutroData;
 }

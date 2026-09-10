@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚡ Auto Video Pipeline Studio</title>
+  <title>⚡ Auto Video Factory V2 (SQLite Worker)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
@@ -17,19 +17,21 @@
       --purple-glow: rgba(157, 78, 221, 0.35);
       --green: #10b981;
       --green-glow: rgba(16, 185, 129, 0.4);
+      --orange: #f59e0b;
       --text: #f8fafc;
       --muted: #64748b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* FIX FONT CHỮ TIẾNG VIỆT HOÀN HẢO CHO WINDOWS BẰNG ARIAL FALLBACK */
     body {
       background-color: var(--bg);
       color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Be Vietnam Pro', Arial, Helvetica, sans-serif !important;
       min-height: 100vh;
       background-image:
-        radial-gradient(ellipse at top, rgba(0, 242, 254, 0.08), transparent 60%),
+        radial-gradient(ellipse at top, rgba(157, 78, 221, 0.08), transparent 60%),
         linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
       background-size: 100% 100%, 32px 32px, 32px 32px;
@@ -60,18 +62,19 @@
       width: 42px;
       height: 42px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      box-shadow: 0 0 20px var(--cyan-glow);
+      box-shadow: 0 0 20px var(--purple-glow);
     }
 
     .brand-text h1 {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 800;
       letter-spacing: -0.5px;
+      text-transform: uppercase;
     }
 
     .brand-text p {
@@ -82,7 +85,7 @@
 
     /* INPUT PANEL */
     .input-section {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 32px auto 10px auto;
       padding: 0 24px;
     }
@@ -112,13 +115,14 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
+      font-family: inherit;
     }
 
     .tab-btn.active {
-      background: rgba(0, 242, 254, 0.1);
-      border-color: var(--cyan);
+      background: rgba(157, 78, 221, 0.1);
+      border-color: var(--purple);
       color: var(--cyan);
-      box-shadow: 0 0 15px var(--cyan-glow);
+      box-shadow: 0 0 15px var(--purple-glow);
     }
 
     .input-row {
@@ -142,11 +146,12 @@
     }
 
     .input-control:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 20px var(--cyan-glow);
+      border-color: var(--purple);
+      box-shadow: 0 0 20px var(--purple-glow);
     }
 
     .btn-execute {
+      font-family: 'Be Vietnam Pro', Arial, sans-serif !important;
       background: linear-gradient(135deg, #00f2fe, #4facfe);
       color: #000;
       border: none;
@@ -199,12 +204,12 @@
     }
 
     .wire-flow {
-      stroke: var(--cyan);
+      stroke: var(--purple);
       stroke-width: 3;
       fill: none;
       stroke-dasharray: 8, 8;
       animation: dashFlow 0.6s linear infinite;
-      filter: drop-shadow(0 0 8px var(--cyan));
+      filter: drop-shadow(0 0 8px var(--purple));
       display: none;
     }
 
@@ -241,8 +246,8 @@
     }
 
     .node-card.running {
-      border-color: var(--cyan);
-      box-shadow: 0 0 30px var(--cyan-glow);
+      border-color: var(--purple);
+      box-shadow: 0 0 30px var(--purple-glow);
       transform: translateY(-4px);
     }
 
@@ -269,9 +274,9 @@
     }
 
     .node-card.running .node-badge {
-      background: rgba(0, 242, 254, 0.15);
+      background: rgba(157, 78, 221, 0.15);
       color: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan-glow);
+      box-shadow: 0 0 10px var(--purple-glow);
       animation: blink 1s infinite alternate;
     }
 
@@ -287,7 +292,7 @@
 
     .node-title {
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       color: #fff;
     }
 
@@ -327,198 +332,84 @@
     .port-right { right: -6px; }
 
     .node-card.running .port-left, .node-card.running .port-right {
-      background: var(--cyan);
-      box-shadow: 0 0 12px var(--cyan);
+      background: var(--purple);
+      box-shadow: 0 0 12px var(--purple);
     }
     .node-card.success .port-left, .node-card.success .port-right {
       background: var(--green);
       box-shadow: 0 0 10px var(--green);
     }
 
-    /* LOWER TERMINAL & PREVIEW */
-    .dashboard-bottom {
+    /* V2 LOWER SECTION */
+    .v2-bottom {
       max-width: 1400px;
       margin: 0 auto 50px auto;
       padding: 0 24px;
       display: grid;
-      grid-template-columns: 1fr 400px;
+      grid-template-columns: 1fr 1fr;
       gap: 28px;
     }
 
-    .terminal-container {
-      background: #080c14;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .terminal-titlebar {
-      background: #0e1422;
-      padding: 14px 22px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #94a3b8;
-    }
-
-    .terminal-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot.red { background: #ef4444; }
-    .dot.yellow { background: #f59e0b; }
-    .dot.green { background: #10b981; }
-
-    .terminal-screen {
-      padding: 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #cbd5e1;
-      height: 380px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .t-row { display: flex; gap: 12px; }
-    .t-time { color: #64748b; font-size: 12px; }
-    .t-msg { color: #38bdf8; word-break: break-word; }
-
-    .preview-container {
+    .v2-panel {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      backdrop-filter: blur(12px);
-    }
-
-    .preview-header {
-      font-size: 14px;
-      font-weight: 700;
-      color: #94a3b8;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .player-box {
-      width: 100%;
-      height: 340px;
-      background: #000;
-      border-radius: 14px;
       overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #1e293b;
-      position: relative;
+      flex-direction: column;
     }
 
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .empty-player {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-      padding: 20px;
-    }
-
-    /* YOUTUBE REVIEW BOX */
-    #youtubeReviewBox {
-      display: none;
-      width: 100%;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 10px;
-    }
-
-    #youtubeReviewBox label {
-      display: block;
-      font-size: 12px;
-      color: var(--cyan);
-      margin-bottom: 6px;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-
-    #youtubeReviewBox input, #youtubeReviewBox textarea, #youtubeReviewBox select {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid #334155;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-    }
-
-    #youtubeReviewBox textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    #btnConfirmUpload {
-      width: 100%;
-      margin-top: 16px;
-      background: linear-gradient(135deg, #ef4444, #b91c1c);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
+    .v2-panel-header {
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
       font-weight: 700;
-      cursor: pointer;
-      font-size: 14px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
-    #btnConfirmUpload:hover {
-      background: linear-gradient(135deg, #f87171, #ef4444);
+    .v2-panel-content {
+      padding: 20px;
+      flex: 1;
+      background: #080c14;
+      max-height: 400px;
+      overflow-y: auto;
     }
-  
+
+    .terminal-screen {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+
+    .t-row { margin-bottom: 8px; }
+    .t-time { color: var(--muted); margin-right: 8px; }
+    .t-msg { color: #e2e8f0; }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-PENDING { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-PUBLISHED { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-FAILED { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .status-PUBLISHING { background: rgba(0, 242, 254, 0.2); color: var(--cyan); border: 1px solid rgba(0, 242, 254, 0.3); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+
     /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--cyan);
-    }
-    
-    textarea.input-control {
-      resize: vertical;
-      min-height: 120px;
-    }
-
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
   </style>
 </head>
 <body>
@@ -527,15 +418,15 @@
     <div class="brand">
       <div class="brand-icon">⚡</div>
       <div class="brand-text">
-        <h1>AI VIDEO PIPELINE STUDIO</h1>
-        <p>Dynamic N-Scenes • Gemini 3.x Fallback • Neural TTS</p>
+        <h1>AI VIDEO FACTORY V2</h1>
+        <p>SQLite Workers • Fact Checking • Multi-Platform</p>
       </div>
     </div>
 
     <!-- TREND BOT TOGGLE -->
     <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 24px; border-radius: 99px; display: flex; align-items: center; gap: 16px;">
       <div style="display: flex; flex-direction: column;">
-        <span style="font-weight: bold; font-size: 14px; color: #fff;">🤖 Auto-Trend Bot</span>
+        <span style="font-weight: bold; font-size: 14px; color: #fff;">🤖 Auto-Trend Bot V2</span>
         <span id="botStatusText" style="font-size: 11px; color: #94a3b8;">Đang tắt (Kiểm tra tin nóng mỗi 10p)</span>
       </div>
       <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
@@ -549,16 +440,214 @@
 
   <style>
     /* CSS for toggle switch */
-    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider { background-color: #9d4edd; }
     input:checked + .slider .slider-dot { transform: translateX(24px); }
   </style>
 
+  <!-- MULTI-PLATFORM SETTINGS -->
+  <div style="max-width: 1400px; margin: 20px auto 0; padding: 0 24px;">
+
+    
+    <!-- BẢNG BẮT LỖI CLAUDE AUTO-FIX -->
+    <div id="claudeErrorBox" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 12px; padding: 14px 20px; align-items: center; justify-content: space-between; margin-bottom: 20px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 24px; animation: blink 1s infinite;">🚨</span>
+        <div>
+          <h3 style="font-size: 15px; margin: 0; color: #ef4444;">HỆ THỐNG PHÁT HIỆN LỖI! (<span id="errContext"></span>)</h3>
+          <p id="errMsg" style="font-size: 12px; color: #fca5a5; margin: 4px 0 0 0; font-family: monospace;"></p>
+        </div>
+      </div>
+      <button onclick="copyClaudeFixCommand()" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+        <span>🤖</span> Copy lệnh nhờ Claude Fix
+      </button>
+    </div>
+
+    <!-- TỰ ĐỘNG ĐĂNG TOGGLE VÀ NGÔN NGỮ -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px;">
+      <!-- Tự động xuất bản -->
+      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 24px;">🚀</span>
+          <div>
+            <h3 style="font-size: 16px; margin: 0; color: #10b981;">Tự động đăng Đa Nền Tảng</h3>
+            <p style="font-size: 12px; color: var(--muted); margin: 4px 0 0 0;">Khi BẬT, video sẽ tự động lên các kênh. Khi TẮT, video chờ Duyệt.</p>
+          </div>
+        </div>
+        <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+          <input type="checkbox" id="autoPublishBtn" onchange="toggleAutoPublish()" style="opacity: 0; width: 0; height: 0;">
+          <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 34px;">
+            <span class="slider-dot" style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+          </span>
+        </label>
+      </div>
+
+      <!-- Ngôn ngữ mục tiêu -->
+      <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;">
+         <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 24px;">🌍</span>
+          <div>
+            <h3 style="font-size: 16px; margin: 0; color: #38bdf8;">Ngôn ngữ Mục tiêu</h3>
+            <p style="font-size: 12px; color: var(--muted); margin: 4px 0 0 0;">(Kịch bản & Giọng AI)</p>
+          </div>
+        </div>
+        <select id="langSelect" onchange="changeLanguage()" style="background: #080c14; border: 1px solid #38bdf8; color: #fff; padding: 6px 12px; border-radius: 8px; font-weight: bold; outline: none; cursor: pointer;">
+          <option value="vi">🇻🇳 Tiếng Việt</option>
+          <option value="en">🇺🇸 English (Global)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PLATFORMS GRID -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+
+      <!-- YOUTUBE -->
+      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 14px; position: relative;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;">▶️</span>
+            <h3 style="font-size: 13px; margin: 0; color: #fff;">YouTube Shorts</h3>
+          </div>
+          <button onclick="toggleGuide('ytGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+        </div>
+        <p id="ytStatusText" style="font-size: 11px; color: var(--muted); margin: 0 0 10px 0;">Đang kiểm tra kết nối...</p>
+        <button id="btnAuthYt" onclick="authYouTube()" style="background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%; display: none;">🔑 Đăng nhập OAuth2</button>
+      </div>
+
+      <!-- TIKTOK -->
+      <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px; position: relative;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;">🎵</span>
+            <h3 style="font-size: 13px; margin: 0; color: #fff;">TikTok API</h3>
+          </div>
+          <button onclick="toggleGuide('tkGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+        </div>
+        <input type="text" id="tkClientKey" placeholder="Client Key" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+        <input type="password" id="tkClientSecret" placeholder="Client Secret" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
+        <button onclick="saveSettings()" style="background: #334155; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Cấu Hình</button>
+      </div>
+
+      <!-- FACEBOOK -->
+      <div style="background: rgba(24, 119, 242, 0.1); border: 1px solid rgba(24, 119, 242, 0.2); border-radius: 12px; padding: 14px; position: relative;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;">📘</span>
+            <h3 style="font-size: 13px; margin: 0; color: #fff;">Facebook Reels</h3>
+          </div>
+          <button onclick="toggleGuide('fbGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+        </div>
+        <input type="text" id="fbPageId" placeholder="Page ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+        <input type="password" id="fbToken" placeholder="Page Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
+        <button onclick="saveSettings()" style="background: #1877f2; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Facebook</button>
+      </div>
+
+      <!-- INSTAGRAM -->
+      <div style="background: rgba(225, 48, 108, 0.1); border: 1px solid rgba(225, 48, 108, 0.2); border-radius: 12px; padding: 14px; position: relative;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;">📸</span>
+            <h3 style="font-size: 13px; margin: 0; color: #fff;">Insta Reels</h3>
+          </div>
+          <button onclick="toggleGuide('igGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+        </div>
+        <input type="text" id="igAccountId" placeholder="Instagram Account ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+        <input type="password" id="igToken" placeholder="User Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
+        <button onclick="saveSettings()" style="background: #e1306c; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Instagram</button>
+      </div>
+    </div>
+
+    <!-- HƯỚNG DẪN BOX -->
+    <div id="ytGuide" style="display: none; background: #080c14; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 12px; line-height: 1.5; color: #cbd5e1;">
+      <h4 style="color: var(--cyan); margin-bottom: 8px;">Cách lấy API YouTube</h4>
+      <ol style="margin-left: 15px; padding-left: 0;">
+        <li>Vào Google Cloud Console tạo Project. Bật <b>YouTube Data API v3</b>.</li>
+        <li>Tạo OAuth client ID (Web application). Redirect URIs: <code>http://localhost:3050/oauth2callback</code>.</li>
+        <li>Tải file JSON về, đổi tên thành <code>client_secret.json</code> để vào thư mục dự án, sau đó bấm nút Đăng nhập OAuth2.</li>
+      </ol>
+    </div>
+
+    <div id="tkGuide" style="display: none; background: #080c14; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 12px; line-height: 1.5; color: #cbd5e1;">
+      <h4 style="color: var(--cyan); margin-bottom: 8px;">Cách lấy API TikTok</h4>
+      <ol style="margin-left: 15px; padding-left: 0;">
+        <li>Vào <a href="https://developers.tiktok.com/" target="_blank" style="color:var(--cyan);">TikTok for Developers</a> tạo App.</li>
+        <li>Cấp quyền <code>video.upload</code> và <code>video.publish</code>. Copy Client Key và Secret dán vào ô trên.</li>
+      </ol>
+      <p style="margin-top: 5px; color: var(--muted); font-size: 11px;">* Nếu để trống, TikTok sẽ chạy ở chế độ Mô phỏng (Mock Sandbox).</p>
+    </div>
+
+    <div id="fbGuide" style="display: none; background: #080c14; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 12px; line-height: 1.5; color: #cbd5e1;">
+      <h4 style="color: var(--cyan); margin-bottom: 8px;">Cách lấy API Facebook Reels</h4>
+      <ol style="margin-left: 15px; padding-left: 0;">
+        <li>Vào <a href="https://developers.facebook.com/" target="_blank" style="color:var(--cyan);">Meta for Developers</a> tạo App Doanh nghiệp.</li>
+        <li>Cấp quyền <code>pages_manage_posts</code>, <code>pages_read_engagement</code>, <code>publish_video</code>.</li>
+        <li>Sinh Page Access Token dài hạn bằng Graph API Explorer và lấy Page ID dán vào ô trên.</li>
+      </ol>
+      <p style="margin-top: 5px; color: var(--muted); font-size: 11px;">* Nếu để trống, Facebook sẽ chạy ở chế độ Mô phỏng (Mock Sandbox).</p>
+    </div>
+
+    <div id="igGuide" style="display: none; background: #080c14; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-top: 15px; font-size: 12px; line-height: 1.5; color: #cbd5e1;">
+      <h4 style="color: var(--cyan); margin-bottom: 8px;">Cách lấy API Instagram Reels</h4>
+      <ol style="margin-left: 15px; padding-left: 0;">
+        <li>Liên kết Instagram Professional Account với Facebook Page.</li>
+        <li>Trên Meta Developers, cấp quyền <code>instagram_content_publish</code>, <code>instagram_basic</code>.</li>
+        <li>Dùng endpoint <code>/me/accounts?fields=instagram_business_account</code> để lấy Account ID.</li>
+      </ol>
+      <p style="margin-top: 5px; color: var(--muted); font-size: 11px;">* Nếu để trống, Instagram sẽ chạy ở chế độ Mô phỏng (Mock Sandbox).</p>
+    </div>
+  </div>
+
+  
+  <!-- TREND SUGGESTIONS / AUTO DECISION SECTION -->
+  <div style="max-width: 1400px; margin: 0 auto 20px; padding: 0 24px;" id="trendBoxContainer">
+    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 24px;">🔥</span>
+          <div>
+            <h3 style="font-size: 16px; margin: 0; color: #f59e0b;">AI ĐỀ XUẤT TIN NÓNG</h3>
+            <p style="font-size: 12px; color: var(--muted); margin: 4px 0 0 0;" id="trendStatusTxt">Đang tải đề xuất...</p>
+          </div>
+        </div>
+        
+        <!-- Setting Auto-Decision -->
+        <div style="display: flex; gap: 10px; align-items: center; background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 8px;">
+          <label style="font-size: 11px; color: #94a3b8;">Hành động khi hết giờ:</label>
+          <select id="autoDecisionAction" onchange="saveAutoDecisionSettings()" style="background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 4px; font-size: 11px; outline: none;">
+            <option value="auto_pick">👉 Tự động TẠO VIDEO tin HOT nhất</option>
+            <option value="auto_skip">⏭️ Tự động BỎ QUA</option>
+          </select>
+          
+          <label style="font-size: 11px; color: #94a3b8; margin-left: 10px;">Thời gian chờ:</label>
+          <select id="autoDecisionTimeout" onchange="saveAutoDecisionSettings()" style="background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 4px; font-size: 11px; outline: none;">
+            <option value="0">Tắt (Thủ công)</option>
+            <option value="180">3 Phút</option>
+            <option value="300">5 Phút</option>
+            <option value="900">15 Phút</option>
+            <option value="1800">30 Phút</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Trend Items Grid -->
+      <div id="trendGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+        <!-- Inject items here -->
+      </div>
+      
+      <!-- Actions -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
+        <button onclick="dismissTrends()" style="background: transparent; border: 1px solid #64748b; color: #cbd5e1; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">⏭️ Bỏ qua tất cả</button>
+        <button onclick="refreshTrends()" style="background: #334155; border: none; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;">🔄 Quét lại tin tức</button>
+      </div>
+    </div>
+  </div>
+
   <!-- INPUT SECTION -->
+
   <div class="input-section">
     <div class="input-card">
       <div class="tabs">
-        <button class="tab-btn active" id="tabUrl" onclick="switchTab('url')">🌐 Dán Link Báo (Web URL)</button>
-        <button class="tab-btn" id="tabPrompt" onclick="switchTab('prompt')">✍️ Nhập Prompt / Nội Dung Tự Do</button>
+        <button class="tab-btn active" id="tabUrl" onclick="switchTab('url')">🌐 Đầu vào Bài báo / URL</button>
+        <button class="tab-btn" id="tabPrompt" onclick="switchTab('prompt')">✍️ Nhập Kịch bản Tự do</button>
       </div>
 
       <div class="input-row">
@@ -596,11 +685,11 @@
       <div class="node-card" id="node-crawler">
         <div class="port-right"></div>
         <div class="node-top">
-          <span style="font-size: 24px;">🕷️</span>
+          <span style="font-size: 24px;">🛡️</span>
           <span class="node-badge" id="badge-crawler">IDLE</span>
         </div>
-        <div class="node-title">Web Crawler</div>
-        <div class="node-desc">Cào dữ liệu & trích xuất văn bản sạch.</div>
+        <div class="node-title">SSRF Crawler</div>
+        <div class="node-desc">Cào dữ liệu web an toàn, chặn local network.</div>
         <div class="node-log" id="log-crawler">Chờ đầu vào...</div>
       </div>
 
@@ -612,8 +701,8 @@
           <span style="font-size: 24px;">🧠</span>
           <span class="node-badge" id="badge-ai">IDLE</span>
         </div>
-        <div class="node-title">Gemini 3.x AI</div>
-        <div class="node-desc">Chia N-cảnh động (Fallback 3.8 ➔ 2.5).</div>
+        <div class="node-title">Researcher AI</div>
+        <div class="node-desc">Bóc tách facts, trích xuất Claims & kịch bản.</div>
         <div class="node-log" id="log-ai">Chờ văn bản...</div>
       </div>
 
@@ -622,12 +711,12 @@
         <div class="port-left"></div>
         <div class="port-right"></div>
         <div class="node-top">
-          <span style="font-size: 24px;">🎙️</span>
+          <span style="font-size: 24px;">✅</span>
           <span class="node-badge" id="badge-tts">IDLE</span>
         </div>
-        <div class="node-title">Neural TTS</div>
-        <div class="node-desc">Sinh giọng đọc tự nhiên & sync timeline.</div>
-        <div class="node-log" id="log-tts">Chờ kịch bản...</div>
+        <div class="node-title">Fact Verifier</div>
+        <div class="node-desc">Sinh âm thanh & đối chiếu sự thật độc lập.</div>
+        <div class="node-log" id="log-tts">Chờ kiểm chứng...</div>
       </div>
 
       <!-- NODE 4 -->
@@ -638,8 +727,8 @@
           <span style="font-size: 24px;">🎬</span>
           <span class="node-badge" id="badge-render">IDLE</span>
         </div>
-        <div class="node-title">Remotion Engine</div>
-        <div class="node-desc">Render video MP4 1080x1920 60fps.</div>
+        <div class="node-title">Factory Engine</div>
+        <div class="node-desc">Render Remotion MP4 chuẩn 1080x1920 60FPS.</div>
         <div class="node-log" id="log-render">Chờ audio...</div>
       </div>
 
@@ -647,73 +736,72 @@
       <div class="node-card" id="node-youtube">
         <div class="port-left"></div>
         <div class="node-top">
-          <span style="font-size: 24px;">🚀</span>
+          <span style="font-size: 24px;">🌐</span>
           <span class="node-badge" id="badge-youtube">IDLE</span>
         </div>
-        <div class="node-title">YouTube Shorts</div>
-        <div class="node-desc">Tự động Hẹn giờ phát (Schedule).</div>
-        <div class="node-log" id="log-youtube" style="display: flex; justify-content: space-between; align-items: center;">
-          <span id="yt-status-text">Đang kiểm tra...</span>
-          <button id="btnAuthYt" onclick="authYouTube()" style="display: none; background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer; font-weight: bold;">🔑 Đăng Nhập</button>
-        </div>
+        <div class="node-title">Multi-Platform</div>
+        <div class="node-desc">Publish lên YouTube, TikTok, Instagram, FB.</div>
+        <div class="node-log" id="log-youtube">Chờ SQLite Queue...</div>
       </div>
     </div>
   </div>
 
-  <!-- LOWER MONITOR -->
-  <div class="dashboard-bottom">
-    <div class="terminal-container">
-      <div class="terminal-titlebar">
-        <div class="terminal-dots">
-          <div class="dot red"></div>
-          <div class="dot yellow"></div>
-          <div class="dot green"></div>
+  <!-- V2 LOWER MONITOR -->
+  <div class="v2-bottom">
+    <div class="v2-panel">
+      <div class="v2-panel-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="width:10px; height:10px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green)"></div>
+          TERMINAL MONITOR (WORKER STDOUT)
         </div>
-        <span>TERMINAL MONITOR (LIVE EXECUTION)</span>
       </div>
-      <div class="terminal-screen" id="termScreen">
+      <div class="v2-panel-content terminal-screen" id="termScreen">
         <div class="t-row">
           <span class="t-time">[System]</span>
-          <span class="t-msg">Hệ thống đã sẵn sàng. Hãy bấm BẮT ĐẦU CHẠY để kích hoạt đường ống!</span>
+          <span class="t-msg">Hệ thống V2 Factory đã sẵn sàng. Ghi log xuống SQLite WAL mode.</span>
         </div>
       </div>
     </div>
 
-    <div class="preview-container">
-      <div class="preview-header">📱 Video Thành Phẩm</div>
-      <div class="player-box">
-        <div class="empty-player" id="emptyVideo">
-          Video sẽ xuất hiện tại đây ngay khi quá trình Render kết thúc!
+    <div class="v2-panel">
+      <div class="v2-panel-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📦</span> MULTI-PLATFORM PUBLISHER QUEUE
         </div>
-        <video id="mainVideo" controls style="display: none;"></video>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="clearPublisherQueue()" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+            <span>🗑️</span> Xóa hàng đợi
+          </button>
+          <button onclick="triggerManualPublish()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+            <span>🚀</span> Duyệt & Đăng Ngay
+          </button>
+        </div>
       </div>
+      <div class="v2-panel-content" style="padding: 0;">
+        <table id="pubTable">
+          <thead>
+            <tr>
+              <th>Nền tảng</th>
+              <th>Trạng thái</th>
+              <th>URL / Phản hồi</th>
+              <th style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody id="pubBody">
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">
+                Chưa có tiến trình xuất bản nào trong Database.
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-      <!-- XEM LẠI & DUYỆT ĐĂNG YOUTUBE -->
-      <div id="youtubeReviewBox">
-        <div style="font-weight: bold; color: #fff; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-          <span>🔍</span> Xác Nhận Đăng YouTube Shorts
-        </div>
-
-        <label>Tiêu đề Video (#shorts)</label>
-        <input type="text" id="ytTitle" placeholder="Tiêu đề video..." />
-
-        <label>Mô tả & Hashtags</label>
-        <textarea id="ytDesc" placeholder="Mô tả video..."></textarea>
-
-        <label>Chế độ hiển thị</label>
-        <select id="ytPrivacy">
-          <option value="public" selected>Công khai (Public) - Ai cũng xem được</option>
-          <option value="unlisted">Không công khai (Unlisted) - Chỉ ai có link mới xem được</option>
-          <option value="private">Riêng tư (Private) - Chỉ mình bạn xem được</option>
-        </select>
-
-        <button id="btnConfirmUpload" onclick="submitYouTubeUpload()">
-          <span>🚀</span> Đăng Lên YouTube Shorts Ngay
-        </button>
-
-        <div id="ytResultLink" style="display: none; margin-top: 14px; padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; text-align: center;">
-          <span style="color: #10b981; font-weight: bold;">🎉 Đã đăng thành công!</span><br/>
-          <a id="ytShortLink" href="#" target="_blank" style="color: var(--cyan); text-decoration: underline; font-size: 13px; margin-top: 6px; display: inline-block;">Xem Shorts trên YouTube</a>
+        <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--cyan);">🎬 BẢN XEM TRƯỚC VIDEO (LATEST RENDER)</div>
+          <div id="emptyVideo" style="padding: 40px 20px; text-align: center; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1); color: var(--muted); font-size: 13px;">
+            Video sẽ xuất hiện tại đây ngay khi quá trình Render kết thúc!
+          </div>
+          <video id="mainVideo" controls style="display: none; width: 100%; max-width: 320px; margin: 0 auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--border);"></video>
         </div>
       </div>
     </div>
@@ -766,56 +854,233 @@
     }
 
     window.addEventListener('resize', updateWires);
+    
+    let trendInterval;
+    let trendCountdownInterval;
+    
+    async function loadTrends() {
+      try {
+        const res = await fetch('/api/trends');
+        const data = await res.json();
+        
+        if (data.status === 'LOADING') {
+           document.getElementById('trendStatusTxt').innerHTML = '⏳ Đang phân tích hàng ngàn tin tức mới nhất...';
+           return;
+        }
+        
+        if (!data.data || data.data.status !== 'SUCCESS' || data.data.suggestions.length === 0) {
+           document.getElementById('trendStatusTxt').innerHTML = '💤 Hiện tại không có tin tức nào đủ "nóng" để làm video. Hệ thống sẽ quét lại sau.';
+           document.getElementById('trendGrid').innerHTML = '';
+           return;
+        }
+
+        renderTrendGrid(data);
+      } catch (e) {
+        console.error("Lỗi khi load trends:", e);
+      }
+    }
+    
+    function renderTrendGrid(data) {
+      const grid = document.getElementById('trendGrid');
+      let html = '';
+      
+      data.data.suggestions.forEach((sug, i) => {
+         const isTop = i === 0;
+         html += `
+           <div style="background: ${isTop ? 'rgba(245, 158, 11, 0.15)' : 'rgba(0,0,0,0.3)'}; border: 1px solid ${isTop ? '#f59e0b' : '#334155'}; border-radius: 10px; padding: 16px; display: flex; flexDirection: column; justify-content: space-between;">
+             <div>
+               <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                 <span style="background: ${isTop ? '#f59e0b' : '#475569'}; color: ${isTop ? '#000' : '#fff'}; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">
+                   ${isTop ? 'TOP 1 XU HƯỚNG' : 'TOP ' + (i+1)}
+                 </span>
+                 <span style="color: #f59e0b; font-weight: bold; font-size: 14px;">🔥 ${sug.impactScore}/10</span>
+               </div>
+               <h4 style="margin: 0 0 8px 0; color: #f8fafc; font-size: 14px; line-height: 1.4;">${sug.title}</h4>
+               <p style="margin: 0 0 16px 0; color: #94a3b8; font-size: 11px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${sug.reason}</p>
+             </div>
+             <button onclick="pickTrend('${sug.link}')" style="width: 100%; background: ${isTop ? '#f59e0b' : '#334155'}; color: ${isTop ? '#000' : '#fff'}; border: none; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; transition: 0.2s;">
+               ▶️ Chọn làm video
+             </button>
+           </div>
+         `;
+      });
+      
+      grid.innerHTML = html;
+      
+      // Update countdown text
+      if (data.actionTaken || data.timeoutSec === 0) {
+        document.getElementById('trendStatusTxt').innerHTML = data.actionTaken ? '✅ Đã đưa ra quyết định duyệt.' : '⚙️ Chế độ duyệt thủ công đang bật. Bạn hãy chọn 1 tin để làm video.';
+      } else {
+        const min = Math.floor(data.remainingSeconds / 60);
+        const sec = data.remainingSeconds % 60;
+        const actionStr = data.autoAction === 'auto_pick' ? '<strong style="color:#10b981;">TỰ ĐỘNG CHỌN TOP 1</strong>' : '<strong style="color:#ef4444;">TỰ ĐỘNG BỎ QUA</strong>';
+        document.getElementById('trendStatusTxt').innerHTML = `⏳ Sẽ ${actionStr} sau: <span style="color:#f59e0b; font-family:monospace; font-weight:bold; font-size:14px;">${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}</span>`;
+      }
+    }
+    
+    function pickTrend(url) {
+       switchTab('url');
+       document.getElementById('inputUrl').value = url;
+       dismissTrends(); // Mark as decided
+       startWorkflow();
+    }
+    
+    async function dismissTrends() {
+      await fetch('/api/trends/dismiss', { method: 'POST' });
+      loadTrends();
+    }
+    
+    function refreshTrends() {
+      document.getElementById('trendGrid').innerHTML = '';
+      document.getElementById('trendStatusTxt').innerHTML = 'Đang ép quét lại tin tức mới...';
+      fetch('/api/trends/refresh', { method: 'POST' }).then(() => setTimeout(loadTrends, 2000));
+    }
+    
+    async function saveAutoDecisionSettings() {
+       const action = document.getElementById('autoDecisionAction').value;
+       const timeout = document.getElementById('autoDecisionTimeout').value;
+       await fetch('/api/settings', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ AUTO_DECISION_ACTION: action, AUTO_DECISION_TIMEOUT_SECONDS: parseInt(timeout, 10) })
+       });
+       loadTrends();
+    }
+
     window.addEventListener('load', () => {
+      loadSettings();
       updateWires();
-      checkYouTubeAuth();
       checkBotStatus();
-      setInterval(checkBotStatus, 10000); // cập nhật trạng thái bot mỗi 10s
+      checkYouTubeAuth();
+      setInterval(checkBotStatus, 10000);
+      loadTrends();
+      setInterval(loadTrends, 1000); // Cập nhật đếm ngược mỗi giây
+      setInterval(checkSystemErrors, 5000);
+      checkSystemErrors();
+      setupSQLiteListener();
     });
     setTimeout(updateWires, 200);
 
-    async function checkBotStatus() {
+    
+    async function checkSystemErrors() {
       try {
-        const res = await fetch('/api/bot/status');
-        const data = await res.json();
-        const toggle = document.getElementById('botToggleBtn');
-        const statusText = document.getElementById('botStatusText');
-        toggle.checked = data.active;
-        if (data.active) {
-          const nextMin = data.nextRun ? Math.max(0, Math.round((new Date(data.nextRun) - new Date()) / 60000)) : 10;
-          statusText.innerHTML = `<span style="color: #10b981; font-weight: bold;">Đang chạy</span> (Quét tiếp sau ~${nextMin} phút)`;
+        const res = await fetch('/api/last-error');
+        const errData = await res.json();
+        
+        const box = document.getElementById('claudeErrorBox');
+        if (errData.status === 'UNRESOLVED') {
+          box.style.display = 'flex';
+          document.getElementById('errContext').innerText = errData.context;
+          document.getElementById('errMsg').innerText = errData.message;
         } else {
-          statusText.innerHTML = `Đang tắt (Kiểm tra tin nóng mỗi 10p)`;
+          box.style.display = 'none';
         }
       } catch (e) {}
     }
 
-    async function toggleTrendBot() {
+    function copyClaudeFixCommand() {
+      const textToCopy = 'Có lỗi mới vừa xảy ra trong hệ thống (đã lưu ở data/last_error.json). Bạn đọc file đó và tự động fix lỗi luôn giúp tôi nhé!';
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('✅ Đã copy câu lệnh! Hãy dán vào khung chat của Claude Code để AI tự đọc file và fix lỗi ngay lập tức!');
+      });
+    }
+
+    function toggleGuide(id) {
+      const g = document.getElementById(id);
+      g.style.display = g.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function loadSettings() {
       try {
-        const res = await fetch('/api/bot/toggle', { method: 'POST' });
-        const data = await res.json();
-        if (data.active) {
-          log('🤖 Đã BẬT Bot Tự Động Săn Tin (Chu kỳ 10 phút/lần). Hệ thống sẽ tự quét, lọc tin HOT, tạo video và đăng YouTube!');
+        const res = await fetch('/api/settings');
+        const conf = await res.json();
+        
+        if (conf.AUTO_PUBLISH !== undefined) {
+          document.getElementById('autoPublishBtn').checked = conf.AUTO_PUBLISH;
         } else {
-          log('🛑 Đã TẮT Bot Tự Động Săn Tin.');
+          document.getElementById('autoPublishBtn').checked = false;
         }
-        checkBotStatus();
+
+        document.getElementById('tkClientKey').value = conf.TIKTOK_CLIENT_KEY || '';
+        document.getElementById('tkClientSecret').value = conf.TIKTOK_CLIENT_SECRET || '';
+        document.getElementById('fbPageId').value = conf.META_PAGE_ID || '';
+        document.getElementById('fbToken').value = conf.META_ACCESS_TOKEN || '';
+        document.getElementById('igAccountId').value = conf.IG_ACCOUNT_ID || '';
+        document.getElementById('igToken').value = conf.META_ACCESS_TOKEN || '';
       } catch (e) {
-        alert('Lỗi: ' + e.message);
+        console.error(e);
       }
     }
+
+    async function saveSettings() {
+      const payload = {
+        AUTO_PUBLISH: document.getElementById('autoPublishBtn').checked,
+        LANGUAGE: document.getElementById('langSelect').value,
+        TIKTOK_CLIENT_KEY: document.getElementById('tkClientKey').value.trim(),
+        TIKTOK_CLIENT_SECRET: document.getElementById('tkClientSecret').value.trim(),
+        META_PAGE_ID: document.getElementById('fbPageId').value.trim(),
+        META_ACCESS_TOKEN: document.getElementById('fbToken').value.trim() || document.getElementById('igToken').value.trim(),
+        IG_ACCOUNT_ID: document.getElementById('igAccountId').value.trim(),
+      };
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.ok) alert('✅ Đã lưu cấu hình thành công!');
+      } catch (e) {
+        alert('❌ Lỗi: ' + e.message);
+      }
+    }
+
+    async function changeLanguage() {
+      await saveSettings();
+      const lang = document.getElementById('langSelect').value;
+      if (lang === 'en') {
+        log('🌍 Đã đổi ngôn ngữ sang Tiếng Anh (Kịch bản, Giọng AI & Ticker sẽ dùng tiếng Anh).');
+      } else {
+        log('🇻🇳 Đã đổi ngôn ngữ sang Tiếng Việt.');
+      }
+    }
+    
+    async function toggleAutoPublish() {
+      await saveSettings();
+      if (document.getElementById('autoPublishBtn').checked) {
+        log('🚀 BẬT Tự động xuất bản đa nền tảng. Render xong sẽ Đăng ngay!');
+      } else {
+        log('⏸️ TẮT Tự động xuất bản. Video sẽ được đưa vào hàng đợi chờ duyệt.');
+      }
+    }
+
+    async function triggerManualPublish() {
+      try {
+        const res = await fetch('/api/publish-queue', { method: 'POST' });
+        const data = await res.json();
+        if (data.ok) {
+          log('🚀 Kích hoạt Đẩy Hàng Đợi (Publish) Thủ công!');
+          alert('✅ Đã kích hoạt đẩy video lên Đa Nền Tảng!');
+        }
+      } catch(e) {
+        alert('❌ Lỗi: ' + e.message);
+      }
+    }
+
+
+    
 
     async function checkYouTubeAuth() {
       try {
         const res = await fetch('/api/check-youtube');
         const data = await res.json();
-        const textSpan = document.getElementById('yt-status-text');
+        const textSpan = document.getElementById('ytStatusText');
         const btn = document.getElementById('btnAuthYt');
         if (data.authorized) {
-          textSpan.innerHTML = '<span style="color:#10b981;">✅ Đã liên kết kênh</span>';
+          textSpan.innerHTML = '<span style="color:var(--green); font-weight:bold;">✅ Đã kết nối & Cấp quyền thành công</span> (Lưu tại tokens.json)';
           btn.style.display = 'none';
         } else {
-          textSpan.innerHTML = '<span style="color:#ef4444;">❌ Chưa cấu hình OAuth</span>';
+          textSpan.innerHTML = '<span style="color:#ef4444; font-weight:bold;">❌ Chưa kết nối (Thiếu token)</span>';
           btn.style.display = 'block';
         }
       } catch (e) {
@@ -828,8 +1093,101 @@
         const res = await fetch('/api/auth-youtube', { method: 'POST' });
         const data = await res.json();
         alert(data.message);
-        // User needs to login in the popup window, then we check again after 15 seconds
         setTimeout(checkYouTubeAuth, 15000);
+      } catch (e) {
+        alert('Lỗi: ' + e.message);
+      }
+    }
+
+    // KẾT NỐI SSE ĐẾN WORKER V2 ĐỂ LẤY LOG SQLite
+    function setupSQLiteListener() {
+      const evtSource = new EventSource('/api/logs');
+      evtSource.onmessage = (e) => {
+        try {
+          const data = JSON.parse(e.data);
+          if (data.type === 'status_sync' && data.publications) {
+             const tbody = document.getElementById('pubBody');
+             if (data.publications.length === 0) {
+               tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">Hàng đợi trống.</td></tr>`;
+               return;
+             }
+
+             tbody.innerHTML = '';
+             data.publications.forEach(pub => {
+                const tr = document.createElement('tr');
+                let platIcon = '📺';
+                if(pub.platform === 'tiktok') platIcon = '🎵';
+                if(pub.platform === 'instagram') platIcon = '📸';
+                if(pub.platform === 'facebook') platIcon = '📘';
+                if(pub.platform === 'youtube') platIcon = '▶️';
+
+                tr.innerHTML = `
+                  <td style="font-weight: bold; color: #fff;">${platIcon} ${pub.platform.toUpperCase()}</td>
+                  <td><span class="status-badge status-${pub.status}">${pub.status}</span></td>
+                  <td style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+                     ${pub.url ? `<a href="${pub.url}" target="_blank" style="color:var(--cyan);text-decoration:underline;">${pub.url}</a>` : 'Đang đưa vào Queue...'}
+                  </td>
+                  <td>
+                    <button onclick="deletePublication('${pub.publicationId}')" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 4px; padding: 2px 6px; cursor: pointer; font-size: 11px;">Xóa</button>
+                  </td>
+                `;
+                tbody.appendChild(tr);
+             });
+          }
+        } catch(err) {}
+      };
+    }
+
+    async function deletePublication(id) {
+      if (!confirm('Bạn có chắc muốn xóa tiến trình đăng này?')) return;
+      try {
+        const res = await fetch('/api/publish-queue/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.ok) alert('✅ ' + data.message);
+        else alert('❌ Lỗi: ' + data.error);
+      } catch (e) {
+        alert('Lỗi: ' + e.message);
+      }
+    }
+
+    async function clearPublisherQueue() {
+      if (!confirm('Bạn có chắc muốn dọn dẹp toàn bộ hàng đợi?')) return;
+      try {
+        const res = await fetch('/api/publish-queue', { method: 'DELETE' });
+        const data = await res.json();
+        if (data.ok) alert('✅ ' + data.message);
+        else alert('❌ Lỗi: ' + data.error);
+      } catch (e) {
+        alert('Lỗi: ' + e.message);
+      }
+    }
+
+    async function checkBotStatus() {
+      try {
+        const res = await fetch('/api/bot/status');
+        const data = await res.json();
+        const toggle = document.getElementById('botToggleBtn');
+        const statusText = document.getElementById('botStatusText');
+        toggle.checked = data.active;
+        if (data.active) {
+          const nextMin = data.nextRun ? Math.max(0, Math.round((new Date(data.nextRun) - new Date()) / 60000)) : 10;
+          statusText.innerHTML = `<span style="color: #9d4edd; font-weight: bold;">Đang chạy</span> (Quét tiếp sau ~${nextMin} phút)`;
+        } else {
+          statusText.innerHTML = `Đang tắt (Kiểm tra tin nóng mỗi 10p)`;
+        }
+      } catch (e) {}
+    }
+
+    async function toggleTrendBot() {
+      try {
+        const res = await fetch('/api/bot/toggle', { method: 'POST' });
+        const data = await res.json();
+        if (data.active) {
+          log('🤖 Đã BẬT Bot Tự Động Săn Tin V2 (Chu kỳ 10 phút/lần). Hệ thống sẽ tự đưa dữ liệu vào bảng Jobs của SQLite!');
+        } else {
+          log('🛑 Đã TẮT Bot Tự Động Săn Tin.');
+        }
+        checkBotStatus();
       } catch (e) {
         alert('Lỗi: ' + e.message);
       }
@@ -895,12 +1253,11 @@
       document.getElementById('mainVideo').style.display = 'none';
       document.getElementById('emptyVideo').style.display = 'block';
 
-      log('🚀 Khởi động Pipeline tự động...');
+      log('🚀 Khởi động Factory Pipeline V2 (Ghi SQLite Jobs)...');
 
       let targetParam = val;
-      // If it's a long prompt or raw text, send via POST /api/prepare first to avoid URL length limit
       if (currentMode === 'prompt' || val.length > 500) {
-        log('📦 Đang chuẩn bị gói dữ liệu lớn...');
+        log('📦 Đang đóng gói Payload...');
         try {
           const res = await fetch('/api/prepare', {
             method: 'POST',
@@ -910,13 +1267,14 @@
           const json = await res.json();
           targetParam = json.file || 'temp_input.txt';
         } catch (err) {
-          log('❌ Lỗi chuẩn bị dữ liệu: ' + err.message);
+          log('❌ Lỗi API chuẩn bị: ' + err.message);
           btn.disabled = false;
           btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
           return;
         }
       }
 
+      // KẾT NỐI SSE ĐỂ NGHE LOG THỰC THI (Backward compatible)
       const evtSource = new EventSource(`/api/run?target=${encodeURIComponent(targetParam)}`);
 
       evtSource.onmessage = function(e) {
@@ -941,7 +1299,7 @@
           if (step === 'youtube' && status === 'running') setWire(4, true);
           if (step === 'youtube' && status === 'success') setWire(4, false);
         } else if (data.type === 'done') {
-          log('🎉 Toàn bộ quy trình đã kết thúc! Mời bạn duyệt video trước khi đăng.');
+          log('🎉 Pipeline hoàn tất! Đã bàn giao cho SQLite Multi-Platform Publisher.');
           btn.disabled = false;
           btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
 
@@ -953,30 +1311,9 @@
             player.play();
           }
 
-          // Hiển thị form duyệt đăng YouTube
-          document.getElementById('youtubeReviewBox').style.display = 'block';
-          document.getElementById('btnConfirmUpload').style.display = 'flex';
-          document.getElementById('ytResultLink').style.display = 'none';
-          document.getElementById('ytTitle').value = 'Video Mới #shorts';
-          document.getElementById('ytDesc').value = 'Nội dung video...\n#shorts #congnghe';
-
-          if (data.metadata) {
-             const m = data.metadata;
-             document.getElementById('ytTitle').value = `${m.title || 'Bản Tin Số'} #shorts`;
-
-             let desc = `${m.title || 'Bản Tin Số'}\n\n`;
-             if (m.scenes) {
-               m.scenes.forEach((s, i) => {
-                 desc += `${i+1}. ${s.headline}\n`;
-               });
-             }
-             desc += `\nĐừng quên nhấn Like và Đăng ký kênh nhé!\n#shorts #news #congnghe #vietnam`;
-             document.getElementById('ytDesc').value = desc;
-          }
-
           evtSource.close();
         } else if (data.type === 'error') {
-          log(`❌ LỖI: ${data.message}`);
+          log(`❌ LỖI TRONG PIPELINE: ${data.message}`);
           btn.disabled = false;
           btn.innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
           evtSource.close();
@@ -990,97 +1327,19 @@
       };
     }
 
-    async function submitYouTubeUpload() {
-      const title = document.getElementById('ytTitle').value.trim();
-      const desc = document.getElementById('ytDesc').value.trim();
-      const privacy = document.getElementById('ytPrivacy').value;
-      const btn = document.getElementById('btnConfirmUpload');
-
-      if (!title || !desc) return alert('Vui lòng nhập đủ Tiêu đề và Mô tả!');
-
-      btn.disabled = true;
-      btn.innerHTML = '<span>⏳</span> Đang tải lên YouTube...';
-
-      try {
-        const res = await fetch('/api/confirm-upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: title,
-            description: desc,
-            tags: ['shorts', 'công nghệ', 'việt nam', 'tin tức'],
-            privacyStatus: privacy
-          })
-        });
-
-        // Đọc SSE từ response (fetch stream) để cập nhật tiến trình
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder('utf-8');
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n\n');
-
-          for (let line of lines) {
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.replace('data: ', ''));
-                if (data.type === 'log') {
-                  log(data.message);
-                }
-                if (data.type === 'step') {
-                  setNode(data.step, data.status, data.info);
-                  if (data.step === 'youtube' && data.status === 'running') setWire(4, true);
-                  if (data.step === 'youtube' && data.status === 'success') setWire(4, false);
-                }
-                if (data.type === 'done' && data.shortUrl) {
-                  btn.style.display = 'none';
-                  const rsBox = document.getElementById('ytResultLink');
-                  rsBox.style.display = 'block';
-                  document.getElementById('ytShortLink').href = data.shortUrl;
-                  log('🎉 Đăng video thành công lên YouTube: ' + data.shortUrl);
-                }
-              } catch(e) {}
-            }
-          }
-        }
-      } catch (err) {
-        alert('Lỗi đăng YouTube: ' + err.message);
-      } finally {
-        btn.disabled = false;
-        if (document.getElementById('ytResultLink').style.display !== 'block') {
-          btn.innerHTML = '<span>🚀</span> Đăng Lên YouTube Shorts Ngay';
-        }
-      }
-    }
-  
     function resetWorkflow() {
-      const screen = document.getElementById('termScreen');
-      if (screen) {
-        screen.innerHTML = `<div class="t-row"><span class="t-time">[${new Date().toLocaleTimeString()}]</span> <span class="t-msg" style="color:#ef4444;">🧹 Đã dọn dẹp hệ thống. Sẵn sàng chạy lại từ đầu!</span></div>`;
+      ['crawler', 'ai', 'tts', 'render', 'youtube'].forEach(n => setNode(n, 'idle', 'Đã khởi tạo lại.'));
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`wire${i}-flow`).style.display = 'none';
+        document.getElementById(`wire${i}-bg`).classList.remove('wire-complete');
       }
-      
-      const inputUrl = document.getElementById('inputUrl');
-      const inputPrompt = document.getElementById('inputPrompt');
-      if (inputUrl) inputUrl.value = '';
-      if (inputPrompt) inputPrompt.value = '';
-      
-      const steps = ['crawler', 'text', 'script', 'audio', 'video'];
-      steps.forEach(step => {
-        const title = document.getElementById(`title-${step}`);
-        const log = document.getElementById(`log-${step}`);
-        if (title) title.className = 'node-title';
-        if (log) log.innerHTML = 'Chờ xử lý...';
-      });
-      
-      const player = document.getElementById('mainVideo');
-      if (player) {
-        player.src = '';
-      }
+      document.getElementById('mainVideo').style.display = 'none';
+      document.getElementById('emptyVideo').style.display = 'block';
+      document.getElementById('termScreen').innerHTML = '';
+      log('🔄 Đã làm mới giao diện.');
+      document.getElementById('btnRun').disabled = false;
+      document.getElementById('btnRun').innerHTML = '<span>⚡</span> BẮT ĐẦU CHẠY';
     }
-
-</script>
+  </script>
 </body>
 </html>

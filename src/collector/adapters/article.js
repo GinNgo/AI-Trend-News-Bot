@@ -5,6 +5,7 @@ const { BaseAdapter } = require('./base');
 const logger = require('../utils/logger');
 const limiter = require('../utils/limiter');
 const axiosRetry = require('axios-retry').default;
+const { isSafeUrl } = require('../../security/url_validator');
 
 const client = axios.create({
   timeout: 15000,
@@ -30,6 +31,9 @@ class WebArticleAdapter extends BaseAdapter {
   }
 
   async collect(url) {
+    if (!isSafeUrl(url)) {
+      throw new Error(`SSRF blocked: Unsafe Article URL: ${url}`);
+    }
     if (!(await this.canScrape(url))) {
       throw new Error('Robots.txt disallowed');
     }

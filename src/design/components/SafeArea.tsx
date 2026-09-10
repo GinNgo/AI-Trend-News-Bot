@@ -12,9 +12,9 @@ export const SafeArea: React.FC<{ children: React.ReactNode }> = ({ children }) 
         paddingRight: tokens.layout.safeArea.horizontal,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center', // Giữ content ở giữa thay vì flex-end để dễ quản lý hơn với các layout khác nhau
+        justifyContent: 'flex-start', // Push up to avoid colliding with SubtitleBox
         boxSizing: 'border-box',
-        zIndex: 10 // Đảm bảo luôn nằm trên ScrimOverlay và Background
+        zIndex: 10
       }}
     >
       {children}

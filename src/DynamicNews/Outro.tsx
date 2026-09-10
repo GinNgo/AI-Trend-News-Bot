@@ -21,29 +21,40 @@ export const DynamicOutro: React.FC<{
   });
 
   return (
-    <SafeArea>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          fontFamily: tokens.typography.fontFamily.sans,
-          textAlign: 'center',
-          gap: '40px',
-        }}
-      >
+    <div
+      style={{
+        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        backgroundColor: tokens.colors.background, // Opaque base
+        overflow: 'hidden',
+      }}
+    >
+      <SafeArea>
         <div
           style={{
-            transform: `scale(${Math.max(0, scale)})`,
-            backgroundColor: 'rgba(15, 23, 42, 0.8)',
-            border: `2px solid ${tokens.colors.primary}`,
-            borderRadius: tokens.layout.radius,
-            padding: '48px 32px',
-            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            fontFamily: tokens.typography.fontFamily.sans,
+            textAlign: 'center',
+            gap: '40px',
+            zIndex: 2,
           }}
         >
+          <div
+            style={{
+              transform: `scale(${Math.max(0, scale)})`,
+              backgroundColor: 'rgba(15, 23, 42, 0.8)',
+              border: `2px solid ${tokens.colors.primary}`,
+              borderRadius: tokens.layout.radius,
+              padding: '48px 32px',
+              width: '100%',
+            }}
+          >
           <div style={{ fontSize: '80px', marginBottom: '24px' }}>🚀</div>
           <div
             style={{
@@ -96,5 +107,6 @@ export const DynamicOutro: React.FC<{
         </div>
       </div>
     </SafeArea>
+    </div>
   );
 };

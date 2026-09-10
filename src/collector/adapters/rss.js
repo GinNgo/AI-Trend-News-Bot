@@ -1,6 +1,7 @@
 const Parser = require('rss-parser');
 const { BaseAdapter } = require('./base');
 const logger = require('../utils/logger');
+const { isSafeUrl } = require('../../security/url_validator');
 
 const parser = new Parser({
   timeout: 10000,
@@ -15,6 +16,9 @@ class RSSAdapter extends BaseAdapter {
   }
 
   async collect(feedUrl) {
+    if (!isSafeUrl(feedUrl)) {
+      throw new Error(`SSRF blocked: Unsafe RSS URL: ${feedUrl}`);
+    }
     try {
       logger.info(`Đang lấy RSS từ ${feedUrl}`);
       const feed = await parser.parseURL(feedUrl);

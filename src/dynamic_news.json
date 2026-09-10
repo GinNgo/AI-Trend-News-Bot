@@ -1,89 +1,113 @@
 {
-  "title": "Hoa Hậu Hoàn Vũ Công Khai Bạn Trai",
-  "themeColor": "#ec4899",
+  "language": "vi",
+  "title": "Sự Thật Bài Báo",
+  "themeColor": "#ef4444",
   "bgStyle": "grid",
-  "totalDurationInFrames": 2109,
+  "totalDurationInFrames": 1297,
   "scenes": [
     {
       "id": 1,
-      "tag": "TIN NÓNG GIẢI TRÍ",
-      "layoutType": "image",
-      "imageFile": "crawled_img_1.jpg",
-      "headline": "Sheynnis Palacios Công Khai Bạn Trai",
+      "tag": "ĐỜI SỐNG",
+      "layoutType": "list",
+      "headline": "Đường dẫn thô",
       "keyTakeaways": [
-        "Đăng ảnh tình tứ ngày 8/9 trên Instagram",
-        "Chưa tiết lộ danh tính bạn trai"
+        "Nội dung chỉ là đường dẫn thô",
+        "Không có thông tin chi tiết"
       ],
+      "statNumber": "",
+      "statLabel": "",
+      "quoteText": "",
+      "quoteAuthor": "",
+      "voiceover": "Nội dung bài báo cung cấp chỉ là một đường dẫn thô và hoàn toàn không có thông tin chi tiết về vụ việc hay sự kiện nào được đề cập trong văn bản này.",
       "audioFile": "dynamic_1.mp3",
-      "audioFrames": 455,
+      "audioFrames": 225,
       "globalStart": 0,
-      "seqDuration": 495,
+      "seqDuration": 265,
       "color": "#38bdf8",
       "takeawayStarts": [
         60,
-        211
+        135
       ]
     },
     {
       "id": 2,
-      "tag": "GÓC NGÔN TÌNH",
-      "layoutType": "quote",
-      "headline": "Lời Tỏ Tình Ngọt Ngào",
-      "keyTakeaways": [],
-      "quoteText": "Và tình yêu đã đến với chúng ta. Một mối quan hệ - một đôi",
-      "quoteAuthor": "Sheynnis Palacios",
+      "tag": "ĐỜI SỐNG",
+      "layoutType": "stat",
+      "headline": "Thiếu dữ liệu",
+      "keyTakeaways": [
+        "Không có số liệu",
+        "Không có nhân vật"
+      ],
+      "statNumber": "0",
+      "statLabel": "Dữ liệu được cung cấp",
+      "quoteText": "",
+      "quoteAuthor": "",
+      "voiceover": "Không thể trích xuất các dữ liệu cụ thể, số liệu hoặc sự kiện từ văn bản này. Không có nhân vật hay địa điểm nào được đề cập trong văn bản thô.",
       "audioFile": "dynamic_2.mp3",
-      "audioFrames": 456,
-      "globalStart": 475,
-      "seqDuration": 496,
+      "audioFrames": 267,
+      "globalStart": 245,
+      "seqDuration": 307,
       "color": "#a855f7",
-      "takeawayStarts": []
+      "takeawayStarts": [
+        60,
+        149
+      ]
     },
     {
       "id": 3,
-      "tag": "NHÌN LẠI NHIỆM KỲ",
-      "layoutType": "stat",
-      "imageFile": "crawled_img_3.jpg",
-      "headline": "Hành Trình Rực Rỡ",
-      "keyTakeaways": [],
-      "statNumber": "Hơn 30",
-      "statLabel": "Quốc gia đã đi qua trong nhiệm kỳ",
+      "tag": "ĐỜI SỐNG",
+      "layoutType": "quote",
+      "headline": "Yêu cầu kiểm chứng",
+      "keyTakeaways": [
+        "Cần thêm văn bản bài báo",
+        "Phóng viên tiến hành bóc tách"
+      ],
+      "statNumber": "",
+      "statLabel": "",
+      "quoteText": "Phóng viên điều tra cần thêm văn bản bài báo để tiến hành bóc tách thông tin chính xác.",
+      "quoteAuthor": "Phóng viên điều tra",
+      "voiceover": "Để làm rõ sự việc, phóng viên điều tra cần phải có thêm văn bản bài báo gốc để tiến hành bóc tách thông tin chính xác theo quy trình.",
       "audioFile": "dynamic_3.mp3",
-      "audioFrames": 427,
-      "globalStart": 951,
-      "seqDuration": 467,
+      "audioFrames": 207,
+      "globalStart": 532,
+      "seqDuration": 247,
       "color": "#eab308",
-      "takeawayStarts": []
+      "takeawayStarts": [
+        60,
+        129
+      ]
     },
     {
       "id": 4,
-      "tag": "SẮC ĐẸP QUỐC TẾ",
-      "layoutType": "list",
-      "imageFile": "crawled_img_4.jpg",
-      "headline": "Những Danh Hiệu Danh Giá",
+      "tag": "ĐỜI SỐNG",
+      "layoutType": "image",
+      "headline": "Chưa rõ hệ lụy",
       "keyTakeaways": [
-        "Miss Grand Slam - Hoa hậu đẹp nhất Thế giới 2023",
-        "Lọt top 10 Timeless Beauty",
-        "Sắp trao vương miện tại Miss Universe lần thứ 73 ở Mexico"
+        "Không xác định hệ lụy",
+        "Thiếu nội dung bài báo"
       ],
+      "statNumber": "",
+      "statLabel": "",
+      "quoteText": "",
+      "quoteAuthor": "",
+      "voiceover": "Hiện tại, chúng ta không thể xác định được các hệ lụy hoặc ảnh hưởng nào do tình trạng thiếu nội dung bài báo gây ra. Hãy cùng chờ đợi các thông tin tiếp theo.",
       "audioFile": "dynamic_4.mp3",
-      "audioFrames": 446,
-      "globalStart": 1398,
-      "seqDuration": 466,
+      "audioFrames": 279,
+      "globalStart": 759,
+      "seqDuration": 299,
       "color": "#22c55e",
       "takeawayStarts": [
         60,
-        171,
-        282
+        153
       ]
     }
   ],
   "outro": {
-    "title": "Hoa Hậu Hoàn Vũ Công Khai Bạn Trai",
+    "title": "Sự Thật Bài Báo",
     "subtitle": "Cập nhật tin tức nhanh và chính xác nhất",
     "audioFile": "dynamic_outro.mp3",
-    "audioFrames": 225,
-    "globalStart": 1864,
-    "seqDuration": 245
+    "audioFrames": 219,
+    "globalStart": 1058,
+    "seqDuration": 239
   }
 }

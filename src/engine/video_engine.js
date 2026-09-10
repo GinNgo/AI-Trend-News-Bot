@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { spawnSync } = require('child_process');
 const crypto = require('crypto');
 const logger = require('../collector/utils/logger');
 
@@ -39,7 +39,16 @@ class VideoEngine {
 
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        execSync(`edge-tts --voice ${voiceConfig.voice} -f "${tempFile}" --write-media "${audioPath}" --rate="${voiceConfig.rate}" --pitch="${voiceConfig.pitch}"`, { stdio: 'pipe' });
+        const ttsArgs = [
+          '--voice', voiceConfig.voice,
+          '-f', tempFile,
+          '--write-media', audioPath,
+          '--rate', voiceConfig.rate,
+          '--pitch', voiceConfig.pitch
+        ];
+        const result = spawnSync('edge-tts', ttsArgs, { stdio: 'pipe', shell: true });
+        if (result.error) throw result.error;
+
         if (fs.existsSync(audioPath) && fs.statSync(audioPath).size > 500) {
           fs.unlinkSync(tempFile);
           return { audioName, audioPath };
@@ -50,16 +59,16 @@ class VideoEngine {
     }
 
     if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
-    logger.error(`[VideoEngine] Lỗi TTS không thể phục hồi cho Scene ${scene.id}. Tạo dummy.`);
-    fs.writeFileSync(audioPath, "dummy audio");
-    return { audioName, audioPath };
+    logger.error(`[VideoEngine] Lỗi TTS không thể phục hồi cho Scene ${scene.id}. Báo lỗi để retry.`);
+    throw new Error(`TTS failed permanently for Scene ${scene.id}`);
   }
 
   // Get exact duration of an mp3
   getAudioDuration(filePath) {
     const pyCode = 'import sys; from mutagen.mp3 import MP3; print(MP3(sys.argv[1]).info.length if len(sys.argv) > 1 else 0)';
     try {
-      const output = execSync(`python -c "${pyCode}" "${filePath}"`).toString().trim();
+      const result = spawnSync('python', ['-c', pyCode, filePath], { encoding: 'utf-8' });
+      const output = (result.stdout || '').trim();
       const dur = parseFloat(output);
       return isNaN(dur) || dur <= 0 ? 10 : dur;
     } catch (e) {
@@ -76,9 +85,9 @@ class VideoEngine {
     const colors = ["#38bdf8", "#a855f7", "#eab308", "#22c55e", "#ef4444", "#ec4899", "#f97316"];
 
     const voiceConfig = {
-      voice: this.config.TTS_VOICE,
-      rate: this.config.TTS_RATE,
-      pitch: this.config.TTS_PITCH
+      voice: process.env.TTS_VOICE || "vi-VN-HoaiMyNeural",
+      rate: process.env.TTS_RATE || "+5%",
+      pitch: process.env.TTS_PITCH || "+0Hz"
     };
 
     // Process each scene dynamically
@@ -159,8 +168,13 @@ class VideoEngine {
     logger.info(`[VideoEngine] Đã đồng bộ Frame. Tổng thời lượng: ${totalSecs}s (${payload.totalDurationInFrames} frames)`);
 
     logger.info(`[VideoEngine] Bắt đầu Render bằng Remotion...`);
-    const renderCmd = `npx remotion render DynamicNews "${outputPath}"`;
-    execSync(renderCmd, { stdio: 'inherit' });
+    const renderResult = spawnSync('npx', ['remotion', 'render', 'DynamicNews', outputPath], { stdio: 'inherit', shell: true });
+    if (renderResult.error) {
+      throw renderResult.error;
+    }
+    if (renderResult.status !== 0) {
+      throw new Error(`Remotion render process exited with code ${renderResult.status}`);
+    }
 
     logger.info(`[VideoEngine] Render hoàn tất: ${outputPath}`);
     return outputPath;

@@ -1,7 +1,9 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Parser = require('rss-parser');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { getModelsForTask, blockModel, getModelBlockTimeRemaining } = require('./src/ai/model_router.js');
 
 const parser = new Parser({
   headers: {
@@ -10,9 +12,7 @@ const parser = new Parser({
 });
 
 // Load config
-const configPath = path.join(__dirname, 'config.json');
-const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const HISTORY_FILE = path.join(__dirname, 'trend_history.json');
 const MAX_VIDEOS_PER_DAY = 6; // Giới hạn số video tự động đăng mỗi ngày để bảo vệ kênh
@@ -149,9 +149,11 @@ TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json)
 
   try {
     let text = "";
-    const modelsToTry = [config.GEMINI_MODEL || "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.8-flash", "gemini-3.5-flash"];
+    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL);
     let success = false;
     for (const m of modelsToTry) {
+      if (getModelBlockTimeRemaining(m) > 0) continue;
+
       try {
         const model = genAI.getGenerativeModel({ model: m });
         const res = await model.generateContent(prompt);
@@ -159,7 +161,18 @@ TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json)
         success = true;
         break;
       } catch (e) {
-        logFn(`  ⚠️ Model ${m} lỗi: ${e.message}. Thử model khác...`);
+        logFn(`  ⚠️ Model ${m} lỗi: ${e.message}.`);
+        if (e.message.includes("429") || e.message.includes("Quota") || e.message.includes("retry in")) {
+          let waitSecs = 60; // default
+          const match = e.message.match(/retry in ([0-9.]+)s/i) || e.message.match(/retryDelay":"([0-9]+)s"/i);
+          if (match) {
+            waitSecs = Math.ceil(parseFloat(match[1])) + 1;
+          }
+          logFn(`  🚫 Đưa ${m} vào danh sách cấm (Blacklist) trong ${waitSecs}s.`);
+          blockModel(m, waitSecs);
+        } else if (e.message.includes("503")) {
+          await new Promise(r => setTimeout(r, 3000));
+        }
       }
     }
 
@@ -205,14 +218,96 @@ async function runTrendCheck(logFn = console.log) {
   return selected;
 }
 
+async function getTrendSuggestions(logFn = console.log) {
+  const history = getHistory();
+  if (!canPublishToday(history)) {
+    return { status: 'LIMIT_REACHED', suggestions: [] };
+  }
+
+  const newsList = await fetchLatestNews(logFn);
+  if (newsList.length === 0) {
+    return { status: 'NO_NEWS', suggestions: [] };
+  }
+
+  logFn(`  🧠 Gửi ${newsList.length} tin mới nhất sang AI phân tích xu hướng và lấy TOP 3...`);
+  const prompt = `
+Dưới đây là danh sách các tin tức vừa xuất bản.
+Hãy CHỌN RA TỐI ĐA 3 TIN CÓ TẦM ẢNH HƯỞNG LỚN NHẤT.
+
+DANH SÁCH TIN:
+${newsList.slice(0, 20).map((n, idx) => `[${idx + 1}] Tiêu đề: ${n.title}\nLink: ${n.link}\nThời gian: ${n.ageHours} giờ trước\nMô tả: ${n.snippet.substring(0, 150)}`).join('\n---\n')}
+
+TRẢ VỀ DUY NHẤT 1 MẢNG JSON HỢP LỆ:
+[
+  {
+    "selectedIndex": 1,
+    "title": "Tiêu đề tin",
+    "link": "Link bài báo",
+    "reason": "Lý do vì sao tin này quan trọng",
+    "impactScore": 9,
+    "category": "CÔNG NGHỆ"
+  }
+]
+  `;
+
+  try {
+    const configPath = require('path').join(__dirname, 'config.json');
+    let config = { GEMINI_MODEL: 'gemini-3.7-flash' };
+    try { config = JSON.parse(fs.readFileSync(configPath, 'utf8')); } catch(e){}
+
+    let text = "";
+    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL);
+
+    let success = false;
+    for (const m of modelsToTry) {
+      if (getModelBlockTimeRemaining(m) > 0) continue;
+
+      try {
+        const model = genAI.getGenerativeModel({ model: m });
+        const res = await model.generateContent(prompt);
+        text = res.response.text();
+        success = true;
+        break;
+      } catch (e) {
+        logFn(`  ⚠️ Model ${m} lỗi: ${e.message}.`);
+        if (e.message.includes("429") || e.message.includes("Quota") || e.message.includes("retry in")) {
+          let waitSecs = 60; // default
+          const match = e.message.match(/retry in ([0-9.]+)s/i) || e.message.match(/retryDelay":"([0-9]+)s"/i);
+          if (match) {
+            waitSecs = Math.ceil(parseFloat(match[1])) + 1;
+          }
+          logFn(`  🚫 Đưa ${m} vào danh sách cấm (Blacklist) trong ${waitSecs}s.`);
+          blockModel(m, waitSecs);
+        } else if (e.message.includes("503")) {
+          await new Promise(r => setTimeout(r, 3000));
+        }
+      }
+    }
+
+    if (!success) return { status: 'AI_ERROR', suggestions: [] };
+
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    let decision = [];
+    try { decision = JSON.parse(text); } catch(e) { return { status: 'PARSE_ERROR', suggestions: [] }; }
+
+    if (Array.isArray(decision) && decision.length > 0 && decision[0].impactScore >= 6) {
+      return { status: 'SUCCESS', suggestions: decision };
+    } else {
+      return { status: 'NO_HOT_NEWS', suggestions: [] };
+    }
+  } catch (err) {
+    return { status: 'ERROR', suggestions: [] };
+  }
+}
+
 module.exports = {
   runTrendCheck,
+  getTrendSuggestions,
   recordPublished,
   getHistory
 };
 
-const { execSync } = require('child_process');
-const path = require('path');
+const { spawnSync } = require('child_process');
 
 // Nếu chạy trực tiếp từ dòng lệnh: node trend_bot.js
 if (require.main === module) {
@@ -223,7 +318,7 @@ if (require.main === module) {
       try {
         // 1. Chạy auto_pipeline để render video
         console.log(`\n▶️ CHẠY AUTO PIPELINE (Cào chi tiết, Dựng script AI, TTS, Remotion)...`);
-        execSync(`node auto_pipeline.js "${result.link}"`, { stdio: 'inherit' });
+        spawnSync('node', ['auto_pipeline.js', result.link], { stdio: 'inherit' });
 
         // 2. Ghi metadata cho YouTube
         console.log(`\n▶️ GHI METADATA CHO YOUTUBE...`);
@@ -237,7 +332,7 @@ if (require.main === module) {
 
         // 3. Đăng lên YouTube
         console.log(`\n▶️ GỌI API YOUTUBE (Tải video lên kênh)...`);
-        execSync(`node upload_youtube.js`, { stdio: 'inherit' });
+        spawnSync('node', ['upload_youtube.js'], { stdio: 'inherit' });
 
         console.log(`\n✅ TOÀN BỘ CHUỖI API ĐÃ HOÀN TẤT VÀ LIÊN KẾT THÀNH CÔNG!`);
         recordPublished(result.title, result.link);

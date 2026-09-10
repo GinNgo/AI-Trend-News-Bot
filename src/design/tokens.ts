@@ -14,8 +14,8 @@ export const tokens = {
   },
   typography: {
     fontFamily: {
-      sans: '"Inter", "Roboto", sans-serif',
-      display: '"Inter", sans-serif',
+      sans: '"Be Vietnam Pro", "Roboto", "Inter", sans-serif',
+      display: '"Be Vietnam Pro", "Roboto", "Inter", sans-serif',
     },
     size: {
       title: '72px',
@@ -43,13 +43,13 @@ export const tokens = {
   },
   animation: {
     spring: {
-      stiff: { damping: 12, stiffness: 100, mass: 1 },
-      smooth: { damping: 15, stiffness: 80, mass: 1 },
+      stiff: { damping: 14, stiffness: 150, mass: 0.8 },
+      smooth: { damping: 18, stiffness: 110, mass: 1 },
     },
     duration: {
-      short: 15,
-      medium: 30,
-      long: 60,
+      short: 12,
+      medium: 20,
+      long: 45,
     }
   }
 };

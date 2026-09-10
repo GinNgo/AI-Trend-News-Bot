@@ -2,54 +2,43 @@ const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const { getDb } = require('./src/storage/db.js');
+const { JobRepository } = require('./src/storage/repositories/JobRepository.js');
+const { Publisher } = require('./src/publishing/publisher.js');
 
 const app = express();
-
-let logClients = [];
-app.get('/api/logs', (req, res) => {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-  });
-  logClients.push(res);
-  req.on('close', () => {
-    logClients = logClients.filter(c => c !== res);
-  });
-});
-function broadcastLog(msg) {
-  console.log(msg);
-  logClients.forEach(c => c.write(`data: ${JSON.stringify({ message: msg })}
-
-`));
-}
-
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.static('public'));
 app.use(express.json({ limit: '50mb' }));
-// Also serve the out directory to preview the video
 app.use('/out', express.static(path.join(__dirname, 'out')));
+
+const jobRepo = new JobRepository();
+const publisher = new Publisher();
+
+// Khởi động worker nội bộ để xử lý hàng đợi
+const { DurableWorker } = require('./src/scheduler/worker.js');
+const worker = new DurableWorker(5000);
+worker.start();
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
+// KEEP API PREPARE FOR FRONTEND COMPATIBILITY
 app.post('/api/prepare', (req, res) => {
   const { content } = req.body;
   if (!content) return res.status(400).json({ error: 'Missing content' });
 
-  // Save long text to a temporary file
   const tempPath = path.join(__dirname, 'temp_input.txt');
   fs.writeFileSync(tempPath, content, 'utf-8');
   res.json({ ok: true, file: 'temp_input.txt' });
 });
 
 app.get('/api/run', (req, res) => {
-  const target = req.query.target; // Either a URL or "temp_input.txt"
+  const target = req.query.target;
   if (!target) return res.status(400).send('Missing target');
 
-  // Set headers for Server-Sent Events (SSE)
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
@@ -78,7 +67,7 @@ app.get('/api/run', (req, res) => {
       }
       if (line.includes('Lấy thành công')) {
         sendEvent('step', { step: 'crawler', status: 'success', info: 'Đã cào xong văn bản sạch.' });
-        sendEvent('step', { step: 'ai', status: 'running', info: 'Đang gửi sang Gemini 3.x...' });
+        sendEvent('step', { step: 'ai', status: 'running', info: 'Đang gửi sang AI Pipeline...' });
       }
       if (line.includes('Đang thử kết nối model:')) {
         const modelMatch = line.match(/model:\s*(.+)\.\.\./);
@@ -86,18 +75,20 @@ app.get('/api/run', (req, res) => {
           sendEvent('step', { step: 'ai', status: 'running', info: `Đang kết nối: ${modelMatch[1]}` });
         }
       }
-      if (line.includes('AI đã chia thành')) {
-        const match = line.match(/thành (\d+) cảnh/);
-        sendEvent('step', { step: 'ai', status: 'success', info: `Tạo kịch bản ${match ? match[1] : 'N'} cảnh.` });
+      if (line.includes('AI đã viết kịch bản')) {
+        sendEvent('step', { step: 'ai', status: 'success', info: `Tạo kịch bản hoàn tất.` });
         sendEvent('step', { step: 'tts', status: 'running', info: 'Khởi động Neural Edge-TTS...' });
       }
       if (line.includes('Đồng bộ Frame hoàn tất')) {
         sendEvent('step', { step: 'tts', status: 'success', info: 'Audio sync hoàn tất.' });
         sendEvent('step', { step: 'render', status: 'running', info: 'Render Remotion GPU...' });
       }
-      // Remotion progress comes from stdout usually with percentage, but we just wait
-      if (line.includes('HOÀN TẤT PIPELINE')) {
+      if (line.includes('BƯỚC 5: ĐANG CHUẨN BỊ PUBLISH LÊN ĐA NỀN TẢNG')) {
         sendEvent('step', { step: 'render', status: 'success', info: 'Render xong: auto_news_result.mp4' });
+        sendEvent('step', { step: 'youtube', status: 'running', info: 'Đang phân phối (Multi-Platform)...' });
+      }
+      if (line.includes('QUÁ TRÌNH PHÂN PHỐI ĐÃ HOÀN TẤT')) {
+        sendEvent('step', { step: 'youtube', status: 'success', info: 'Đăng Đa nền tảng OK.' });
       }
     });
   });
@@ -113,26 +104,20 @@ app.get('/api/run', (req, res) => {
       return;
     }
 
-    sendEvent('log', { message: '🎬 Render xong! Mời bạn xem trước video và xác nhận đăng.' });
+    sendEvent('log', { message: '🎬 Quy trình hoàn tất! Mời bạn xem trước video.' });
 
-    // Đọc thông tin kịch bản AI đã sinh ra để làm metadata gợi ý cho YouTube
     let aiMeta = null;
     try {
-      const jsonStr = fs.readFileSync(path.join(__dirname, 'src', 'dynamic_news.json'), 'utf-8');
-      aiMeta = JSON.parse(jsonStr);
-    } catch(e) {}
+      const dbData = fs.readFileSync(path.join(__dirname, 'src', 'dynamic_news.json'), 'utf-8');
+      aiMeta = JSON.parse(dbData);
+    } catch (e) {}
 
-    // Dừng tiến trình tự động, chuyển sang trạng thái chờ Duyệt (Review)
-    sendEvent('step', { step: 'youtube', status: 'idle', info: 'Chờ duyệt đăng...' });
-
-    // Gửi event done kèm url và metadata cho giao diện
     sendEvent('done', {
       videoUrl: '/out/auto_news_result.mp4',
       metadata: aiMeta
     });
     res.end();
   });
-
 });
 
 app.get('/api/check-youtube', (req, res) => {
@@ -145,59 +130,54 @@ app.get('/api/check-youtube', (req, res) => {
 
 app.post('/api/auth-youtube', (req, res) => {
   const child = spawn('node', ['upload_youtube.js'], { cwd: __dirname });
-  // It will open the browser automatically.
-  res.json({ ok: true, message: 'Đã mở trình duyệt đăng nhập YouTube! Vui lòng kiểm tra các cửa sổ Chrome.' });
+  res.json({ ok: true, message: 'Đã mở trình duyệt đăng nhập YouTube! Vui lòng kiểm tra cửa sổ trình duyệt (Chrome/Edge).' });
 });
 
-app.post('/api/confirm-upload', (req, res) => {
-  const { title, description, tags, privacyStatus } = req.body;
-  if (!title || !description) return res.status(400).json({ error: 'Thiếu tiêu đề hoặc mô tả' });
+app.post('/api/jobs', (req, res) => {
+  const { sourceUrl, content } = req.body;
+  if (!sourceUrl && !content) return res.status(400).json({ error: 'Missing sourceUrl or content' });
 
-  // Lưu thông tin meta vào file để upload_youtube.js đọc
-  fs.writeFileSync(path.join(__dirname, 'youtube_meta.json'), JSON.stringify({
-    title, description, tags, privacyStatus
-  }, null, 2), 'utf-8');
+  const jobId = `JOB-${Date.now()}`;
+  jobRepo.createJob({
+    jobId,
+    stage: 'COLLECTING',
+    payload: { sourceUrl, content }
+  });
+  res.json({ ok: true, jobId });
+});
 
-  // Gửi lại event stream cho tiến trình upload
+app.get('/api/jobs', (req, res) => {
+  const db = getDb();
+  const jobs = db.prepare('SELECT * FROM jobs ORDER BY createdAt DESC LIMIT 50').all();
+  res.json(jobs);
+});
+
+let logClients = [];
+app.get('/api/logs', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive'
   });
-
-  const sendEvent = (type, data) => res.write(`data: ${JSON.stringify({ type, ...data })}\n\n`);
-
-  sendEvent('log', { message: '🚀 Bắt đầu quá trình tải video lên YouTube...' });
-  sendEvent('step', { step: 'youtube', status: 'running', info: 'Đang upload...' });
-
-  const child = spawn('node', ['upload_youtube.js'], { cwd: __dirname });
-  child.stdout.on('data', (d) => {
-    const text = d.toString().trim();
-    if (text) {
-      sendEvent('log', { message: '[YT] ' + text });
-      if (text.includes('TẢI LÊN THÀNH CÔNG')) {
-         sendEvent('step', { step: 'youtube', status: 'success', info: 'Đăng thành công!' });
-      }
-      if (text.includes('Link xem YouTube Short')) {
-         const match = text.match(/https:\/\/youtube\.com\/shorts\/\S+/);
-         if (match) {
-            sendEvent('done', { shortUrl: match[0] });
-         }
-      }
-    }
-  });
-
-  child.stderr.on('data', (d) => {
-    sendEvent('log', { message: '⚠️ ' + d.toString().trim() });
-  });
-
-  child.on('close', (code) => {
-    if (code !== 0) {
-      sendEvent('error', { message: `Upload kết thúc với mã lỗi ${code}` });
-    }
-    res.end();
+  logClients.push(res);
+  req.on('close', () => {
+    logClients = logClients.filter(c => c !== res);
   });
 });
+
+setInterval(() => {
+  const db = getDb();
+  const recentJobs = db.prepare('SELECT jobId, stage, status, updatedAt FROM jobs ORDER BY updatedAt DESC LIMIT 5').all();
+  const publications = db.prepare('SELECT publicationId, platform, status, url FROM publications ORDER BY updatedAt DESC LIMIT 10').all();
+
+  const msg = JSON.stringify({
+    type: 'status_sync',
+    jobs: recentJobs,
+    publications: publications
+  });
+
+  logClients.forEach(c => c.write(`data: ${msg}\n\n`));
+}, 2000);
 
 // ============================================
 // AUTO-TREND BOT INTEGRATION
@@ -208,7 +188,6 @@ let trendBotLastRun = null;
 let trendBotNextRun = null;
 let isBotExecuting = false;
 
-// Đọc động require để không bị lỗi nếu trend_bot.js chưa có
 let trendBot;
 try {
   trendBot = require('./trend_bot');
@@ -250,50 +229,221 @@ async function executeTrendCheck() {
   console.log(`\n[AUTO TREND BOT] 🔍 Đang quét tin lúc ${new Date().toLocaleTimeString()}...`);
 
   try {
-    const result = await trendBot.runTrendCheck((msg) => broadcastLog(msg));
+    const result = await trendBot.runTrendCheck((msg) => console.log(msg));
 
     if (result && trendBotStatus) {
       console.log(`\n[BOT] 🎬 Bắt đầu render Video TỰ ĐỘNG cho bài: ${result.title}`);
 
-      const child = spawn('node', ['auto_pipeline.js', result.link], { cwd: __dirname });
-      child.stdout.on('data', (d) => process.stdout.write(`[BOT-PIPELINE] ${d}`));
-      child.stderr.on('data', (d) => process.stderr.write(`[BOT-PIPELINE-ERR] ${d}`));
-
-      child.on('close', (code) => {
-        if (code === 0 && trendBotStatus) {
-          console.log(`\n[BOT] ✅ Render xong! Chuẩn bị Đăng YouTube Tự động...`);
-
-          fs.writeFileSync(path.join(__dirname, 'youtube_meta.json'), JSON.stringify({
-            title: `${result.title.substring(0, 80)} #shorts`,
-            description: `Bản Tin Nóng: ${result.title}\n\n${result.reason}\n\nNguồn: ${result.link}\n\n#shorts #tintuc #xuhuong #vietnam #news`,
-            tags: ['shorts', 'tin tức', 'xu hướng', 'việt nam', 'news'],
-            privacyStatus: 'public'
-          }, null, 2), 'utf-8');
-
-          const yt = spawn('node', ['upload_youtube.js'], { cwd: __dirname });
-          yt.stdout.on('data', (d) => process.stdout.write(`[BOT-YT] ${d}`));
-          yt.on('close', (ytCode) => {
-             if (ytCode === 0) {
-               console.log(`\n[BOT] 🎉 Đã XUẤT BẢN THÀNH CÔNG lên YouTube! Lưu vào lịch sử.`);
-               trendBot.recordPublished(result.title, result.link);
-             }
-             isBotExecuting = false;
-          });
-        } else {
-          isBotExecuting = false;
-        }
+      // Ghi thẳng vào SQLite theo luồng V2
+      const jobId = `JOB-BOT-${Date.now()}`;
+      jobRepo.createJob({
+        jobId,
+        stage: 'COLLECTING',
+        payload: { sourceUrl: result.link, content: null }
       });
-    } else {
-      isBotExecuting = false;
+      console.log(`[BOT] Đã đưa vào SQLite Job Queue (V2): ${jobId}`);
+
+      trendBot.recordPublished(result.title, result.link);
     }
   } catch (err) {
     console.error(`[BOT] Lỗi:`, err);
+  } finally {
     isBotExecuting = false;
   }
 }
 
+
+// ============================================
+// SETTINGS & MULTI-PLATFORM PUBLISHER CONFIG
+// ============================================
+const configPath = path.join(__dirname, 'config.json');
+
+app.get('/api/settings', (req, res) => {
+  let conf = {};
+  if (fs.existsSync(configPath)) {
+    try {
+      conf = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    } catch(e) {}
+  }
+  res.json(conf);
+});
+
+app.post('/api/settings', (req, res) => {
+  let conf = {};
+  if (fs.existsSync(configPath)) {
+    try {
+      conf = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    } catch(e) {}
+  }
+  
+  const updatedConf = { ...conf, ...req.body };
+  fs.writeFileSync(configPath, JSON.stringify(updatedConf, null, 2), 'utf-8');
+  res.json({ ok: true, settings: updatedConf });
+});
+
+app.post('/api/publish-queue', async (req, res) => {
+  try {
+    const { Publisher } = require('./src/publishing/publisher.js');
+    const pub = new Publisher();
+    await pub.processQueue();
+    res.json({ ok: true, message: 'Đã kích hoạt đẩy hàng đợi Đa nền tảng.' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/publish-queue/:id', (req, res) => {
+  try {
+    const db = getDb();
+    db.prepare('DELETE FROM publications WHERE publicationId = ?').run(req.params.id);
+    res.json({ ok: true, message: 'Đã xóa khỏi hàng đợi.' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/publish-queue', (req, res) => {
+  try {
+    const db = getDb();
+    db.prepare('DELETE FROM publications').run();
+    res.json({ ok: true, message: 'Đã dọn dẹp toàn bộ hàng đợi.' });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+app.get('/api/last-error', (req, res) => {
+  const errorFile = path.join(__dirname, 'data', 'last_error.json');
+  if (fs.existsSync(errorFile)) {
+    try {
+      const errData = JSON.parse(fs.readFileSync(errorFile, 'utf-8'));
+      return res.json(errData);
+    } catch(e) {}
+  }
+  res.json({ status: 'NONE' });
+});
+
+
+
+// ============================================
+// HỢP NHẤT: AUTONOMOUS TREND ENGINE & UI CACHE
+// (Chạy ngầm độc lập 24/7, Giao diện Dashboard chỉ hiển thị & tương tác)
+// ============================================
+let cachedTrends = null;
+let trendScanning = false;
+
+async function runAutonomousTrendCycle() {
+  if (trendScanning) return;
+  trendScanning = true;
+  
+  let conf = {};
+  if (fs.existsSync(configPath)) {
+    try { conf = JSON.parse(fs.readFileSync(configPath, 'utf-8')); } catch(e) {}
+  }
+
+  const timeoutSec = conf.AUTO_DECISION_TIMEOUT_SECONDS === undefined ? 300 : parseInt(conf.AUTO_DECISION_TIMEOUT_SECONDS, 10);
+  const autoAction = conf.AUTO_DECISION_ACTION || 'auto_pick';
+
+  try {
+    const { getTrendSuggestions } = require('./trend_bot.js');
+    console.log("[TREND-ENGINE] 📡 Bắt đầu chu kỳ quét tin tức tự động...");
+    const result = await getTrendSuggestions(console.log);
+
+    if (result && result.status === 'SUCCESS' && result.suggestions.length > 0) {
+      console.log(`[TREND-ENGINE] 🔥 Tìm thấy ${result.suggestions.length} tin tức xu hướng HOT!`);
+      cachedTrends = {
+        fetchTime: Date.now(),
+        data: result,
+        autoAction: autoAction,
+        timeoutSec: timeoutSec,
+        expiresAt: Date.now() + (timeoutSec * 1000),
+        actionTaken: false
+      };
+    } else {
+      console.log("[TREND-ENGINE] 💤 Chưa có tin tức nào đạt điểm HOT trong chu kỳ này.");
+      cachedTrends = {
+        fetchTime: Date.now(),
+        data: result || { status: 'NO_HOT_NEWS', suggestions: [] },
+        autoAction: autoAction,
+        timeoutSec: timeoutSec,
+        expiresAt: Date.now(),
+        actionTaken: true
+      };
+    }
+  } catch (err) {
+    console.error("[TREND-ENGINE] ❌ Lỗi quét tin:", err.message);
+  } finally {
+    trendScanning = false;
+  }
+}
+
+// Kiểm tra đếm ngược mỗi 5 giây ở server (hoạt động ngay cả khi tắt trình duyệt)
+setInterval(() => {
+  if (!cachedTrends || cachedTrends.actionTaken) return;
+  
+  const remaining = Math.floor((cachedTrends.expiresAt - Date.now()) / 1000);
+  if (remaining <= 0 && cachedTrends.timeoutSec > 0) {
+    cachedTrends.actionTaken = true;
+    if (cachedTrends.autoAction === 'auto_pick' && cachedTrends.data && cachedTrends.data.suggestions && cachedTrends.data.suggestions.length > 0) {
+      const topNews = cachedTrends.data.suggestions[0];
+      console.log(`\n⚡ [TREND-ENGINE] Hết hạn chờ người dùng! Tự động chọn TOP 1: "${topNews.title}"`);
+      console.log(`🚀 [TREND-ENGINE] Kích hoạt Pipeline sản xuất video: ${topNews.link}`);
+      
+      const { spawn } = require('child_process');
+      const child = spawn(process.execPath, ['auto_pipeline.js', topNews.link], {
+        detached: true,
+        stdio: 'inherit'
+      });
+      child.unref();
+      
+      // Ghi nhận lịch sử
+      const { recordPublished } = require('./trend_bot.js');
+      recordPublished(topNews.title, topNews.link);
+    } else {
+      console.log("\\n[TREND-ENGINE] Hết hạn chờ người dùng! Tự động bỏ qua theo cấu hình.");
+    }
+  }
+}, 5000);
+
+// Chu kỳ quét tự động mỗi 30 phút một lần
+setInterval(runAutonomousTrendCycle, 30 * 60 * 1000);
+// Khởi chạy quét lần đầu sau 10 giây khi khởi động server
+setTimeout(runAutonomousTrendCycle, 10000);
+
+app.get('/api/trends', async (req, res) => {
+  if (trendScanning && !cachedTrends) {
+    return res.json({ status: 'LOADING' });
+  }
+
+  if (cachedTrends) {
+    const remaining = Math.floor((cachedTrends.expiresAt - Date.now()) / 1000);
+    cachedTrends.remainingSeconds = remaining > 0 ? remaining : 0;
+  }
+
+  res.json(cachedTrends || { status: 'LOADING' });
+});
+
+app.post('/api/trends/dismiss', (req, res) => {
+  if (cachedTrends) {
+    cachedTrends.actionTaken = true;
+    cachedTrends.remainingSeconds = 0;
+  }
+  res.json({ ok: true });
+});
+
+app.post('/api/trends/refresh', async (req, res) => {
+  runAutonomousTrendCycle().catch(console.error);
+  res.json({ ok: true, message: 'Đã kích hoạt quét lại tin tức.' });
+});
+
+
 app.listen(PORT, () => {
-  console.log(`\n==============================================`);
-  console.log(`🚀 DASHBOARD TRỰC QUAN ĐANG CHẠY TẠI: http://localhost:${PORT}`);
-  console.log(`==============================================\n`);
+  console.log(`\n🚀 [Factory Dashboard V2] Server started at http://localhost:${PORT}`);
+  console.log(`✅ Durable Worker is running in background...`);
+});
+
+process.on('SIGINT', () => {
+  worker.stop();
+  process.exit(0);
 });

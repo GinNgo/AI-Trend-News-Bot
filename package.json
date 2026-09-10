@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@fontsource/be-vietnam-pro": "^5.3.0",
     "@google/generative-ai": "^0.24.1",
     "@mozilla/readability": "^0.6.0",
     "@remotion/cli": "4.0.522",
@@ -14,8 +15,10 @@
     "@remotion/zod-types": "4.0.522",
     "axios": "^1.20.0",
     "axios-retry": "^4.5.0",
+    "better-sqlite3": "^13.0.3",
     "bottleneck": "^2.19.5",
     "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "googleapis": "^178.1.1",
     "jsdom": "^30.0.1",
@@ -43,9 +46,12 @@
   "scripts": {
     "dev": "remotion studio",
     "dashboard": "node dashboard.js",
+    "worker": "node src/scheduler/worker.js",
+    "factory": "node src/application/video_factory_pipeline.js",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "db:migrate": "node src/storage/migrations/run.js"
   },
   "sideEffects": [
     "*.css"

@@ -6,7 +6,17 @@ const logger = require('../collector/utils/logger');
 
 // Retry wrapper cho LLM call
 async function callGeminiWithRetry(genAI, prompt, schema, maxRetries = 3) {
-  const models = ['gemini-2.5-flash', 'gemini-1.5-pro', 'gemini-1.5-flash'];
+  const models = [
+    process.env.GEMINI_MODEL,
+    'gemini-3.7-flash',
+    'gemini-3.6-flash',
+    'gemini-3.5-flash',
+    'gemini-3.5-flash-lite',
+    'gemini-3.0-flash',
+    'gemini-2.5-flash',
+    'gemini-2.5-pro',
+    'gemini-flash-latest'
+  ].filter(Boolean);
   let lastError;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -35,6 +45,17 @@ async function callGeminiWithRetry(genAI, prompt, schema, maxRetries = 3) {
       } catch (err) {
         lastError = err;
         logger.warn(`Lỗi ở model ${modelName} (Attempt ${attempt}): ${err.message}`);
+        if (err.message.includes('429') || err.message.includes('Quota') || err.message.includes('retry in')) {
+          let waitSecs = 2; // default
+          const match = err.message.match(/retry in ([0-9.]+)s/i) || err.message.match(/retryDelay":"([0-9]+)s"/i);
+          if (match) {
+            waitSecs = Math.ceil(parseFloat(match[1])) + 1; // +1s buffer
+          }
+          logger.warn(`⏳ Bị chặn Rate Limit. Đang chờ ${waitSecs}s trước khi đổi model...`);
+          await new Promise(r => setTimeout(r, waitSecs * 1000));
+        } else if (err.message.includes('503')) {
+          await new Promise(r => setTimeout(r, 3000));
+        }
         // Nếu lỗi do Zod validation, prompt lại AI để sửa format (tùy chọn)
         if (err.name === 'ZodError') {
           prompt += `\n\n[LỖI HỆ THỐNG]: Lần chạy trước bạn trả về JSON không đúng Schema. Lỗi chi tiết: ${JSON.stringify(err.errors)}. Vui lòng sửa lại.`;

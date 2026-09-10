@@ -21,4 +21,8 @@ youtube_meta.json
 temp_input.txt
 temp_tts.txt
 test_tts.mp3
-*.pyc
+*.pycdata/*.db
+data/*.sqlite
+data/*.db-wal
+data/*.db-shm
+data/last_error.json

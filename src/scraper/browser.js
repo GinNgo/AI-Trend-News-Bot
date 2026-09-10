@@ -7,7 +7,10 @@ const https = require('https');
 const http = require('http');
 const cheerio = require('cheerio');
 
+const { isSafeUrl } = require('../security/url_validator');
+
 async function downloadImage(url, dest) {
+  if (!isSafeUrl(url)) return Promise.reject(new Error(`SSRF blocked: Unsafe image URL: ${url}`));
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? https : http;
     const file = fs.createWriteStream(dest);
@@ -27,6 +30,9 @@ async function downloadImage(url, dest) {
  * Includes basic image extraction as well.
  */
 async function scrapeArticleDeep(url, publicDir) {
+  if (!isSafeUrl(url)) {
+    throw new Error(`SSRF blocked: Unsafe target URL: ${url}`);
+  }
   console.log(`  🌐 [Deep Scraper] Khởi tạo trình duyệt Headless để lấy nội dung từ: ${url}`);
   let browser;
   try {
@@ -51,7 +57,19 @@ async function scrapeArticleDeep(url, publicDir) {
     });
 
     console.log(`  🌐 [Deep Scraper] Đang tải trang...`);
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+    try {
+      // Dùng domcontentloaded thay vì networkidle2 để tránh treo do ads/tracking
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+
+      if (url.includes('news.google.com')) {
+        console.log(`  🔗 Đang đợi Google News chuyển hướng...`);
+        try {
+          await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 });
+        } catch(e) {}
+      }
+    } catch (gotoErr) {
+      console.log(`  ⚠️ [Deep Scraper] Cảnh báo timeout khi tải trang, nhưng vẫn tiếp tục bóc tách dữ liệu hiện có: ${gotoErr.message}`);
+    }
 
     // Scroll down a bit to trigger lazy loading images
     await page.evaluate(() => window.scrollBy(0, window.innerHeight));
@@ -116,10 +134,57 @@ async function scrapeArticleDeep(url, publicDir) {
       images: downloadedImages,
       title: article ? article.title : $('title').text()
     };
+  
   } catch (error) {
-    console.error(`  ❌ [Deep Scraper] Lỗi khi cào dữ liệu:`, error.message);
-    throw error;
+    console.error(`  ❌ [Deep Scraper] Puppeteer thất bại (${error.message}). Thử fallback bằng HTTP thuần...`);
+    try {
+      if (browser) await browser.close();
+      browser = null; // Tránh close lần 2 trong finally
+      
+      const https = require('https');
+      const http = require('http');
+      const client = url.startsWith('https') ? https : http;
+      
+      const html = await new Promise((resolve, reject) => {
+        client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0' } }, (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+             // Basic redirect follow if needed, but for now just fail over
+             return reject(new Error("Redirect not supported in basic fallback"));
+          }
+          let data = '';
+          res.on('data', chunk => data += chunk);
+          res.on('end', () => resolve(data));
+        }).on('error', reject);
+      });
+      
+      const cheerio = require('cheerio');
+      const { JSDOM } = require('jsdom');
+      const { Readability } = require('@mozilla/readability');
+      
+      const doc = new JSDOM(html, { url });
+      const reader = new Readability(doc.window.document);
+      const article = reader.parse();
+      
+      let textContent = '';
+      if (article && article.textContent && article.textContent.trim().length > 200) {
+        textContent = article.textContent.replace(/s+/g, ' ').trim();
+      } else {
+        const $ = cheerio.load(html);
+        $('script, style, nav, footer, aside, header').remove();
+        textContent = $('body').text().replace(/s+/g, ' ').trim();
+      }
+      
+      return {
+        text: textContent,
+        images: [], // HTTP fallback skip image parsing for simplicity to ensure text extraction succeeds
+        title: article ? article.title : "Crawled Article"
+      };
+    } catch (fallbackErr) {
+       console.error(`  ❌ [Deep Scraper Fallback] Cả HTTP Fallback cũng thất bại: ${fallbackErr.message}`);
+       throw error; // Ném lỗi gốc
+    }
   } finally {
+
     if (browser) await browser.close();
   }
 }

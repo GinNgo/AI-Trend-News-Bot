@@ -32,7 +32,8 @@ YÊU CẦU TRẢ VỀ ĐỊNH DẠNG JSON:
 }
     `;
 
-    const model = this.genAI.getGenerativeModel({ model: "gemini-3.5-flash" }); // Sử dụng model ổn định
+    const modelName = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+    const model = this.genAI.getGenerativeModel({ model: modelName });
 
     try {
       const result = await model.generateContent({

@@ -540,6 +540,69 @@ module.exports = webpackEmptyContext;
 
 
 },
+8721(module, __webpack_exports__, __webpack_require__) {
+"use strict";
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (__rspack_default_export)
+});
+/* import */ var _css_loader_dist_runtime_sourceMaps_js__rspack_import_0 = __webpack_require__(1354);
+/* import */ var _css_loader_dist_runtime_sourceMaps_js__rspack_import_0_default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_sourceMaps_js__rspack_import_0);
+/* import */ var _css_loader_dist_runtime_api_js__rspack_import_1 = __webpack_require__(6314);
+/* import */ var _css_loader_dist_runtime_api_js__rspack_import_1_default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__rspack_import_1);
+/* import */ var _css_loader_dist_runtime_getUrl_js__rspack_import_2 = __webpack_require__(4417);
+/* import */ var _css_loader_dist_runtime_getUrl_js__rspack_import_2_default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_getUrl_js__rspack_import_2);
+// Imports
+
+
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */__webpack_require__(8491), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */__webpack_require__(7827), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */__webpack_require__(2438), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */__webpack_require__(5308), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_4___ = new URL(/* asset import */__webpack_require__(5980), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_5___ = new URL(/* asset import */__webpack_require__(5946), __webpack_require__.b);
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__rspack_import_1_default()((_css_loader_dist_runtime_sourceMaps_js__rspack_import_0_default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_2___);
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_3___);
+var ___CSS_LOADER_URL_REPLACEMENT_4___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_4___);
+var ___CSS_LOADER_URL_REPLACEMENT_5___ = _css_loader_dist_runtime_getUrl_js__rspack_import_2_default()(___CSS_LOADER_URL_IMPORT_5___);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* be-vietnam-pro-vietnamese-400-normal */
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_0___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_1___}) format('woff');
+  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;
+}
+
+/* be-vietnam-pro-latin-ext-400-normal */
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_2___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_3___}) format('woff');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* be-vietnam-pro-latin-400-normal */
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(${___CSS_LOADER_URL_REPLACEMENT_4___}) format('woff2'), url(${___CSS_LOADER_URL_REPLACEMENT_5___}) format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}`, "",{"version":3,"sources":["webpack://./node_modules/@fontsource/be-vietnam-pro/index.css"],"names":[],"mappings":"AAAA,yCAAyC;AACzC;EACE,6BAA6B;EAC7B,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAmJ;EACnJ,2JAA2J;AAC7J;;AAEA,wCAAwC;AACxC;EACE,6BAA6B;EAC7B,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAiJ;EACjJ,iMAAiM;AACnM;;AAEA,oCAAoC;AACpC;EACE,6BAA6B;EAC7B,kBAAkB;EAClB,kBAAkB;EAClB,gBAAgB;EAChB,oHAAyI;EACzI,uKAAuK;AACzK","sourcesContent":["/* be-vietnam-pro-vietnamese-400-normal */\n@font-face {\n  font-family: 'Be Vietnam Pro';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 400;\n  src: url(./files/be-vietnam-pro-vietnamese-400-normal.woff2) format('woff2'), url(./files/be-vietnam-pro-vietnamese-400-normal.woff) format('woff');\n  unicode-range: U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;\n}\n\n/* be-vietnam-pro-latin-ext-400-normal */\n@font-face {\n  font-family: 'Be Vietnam Pro';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 400;\n  src: url(./files/be-vietnam-pro-latin-ext-400-normal.woff2) format('woff2'), url(./files/be-vietnam-pro-latin-ext-400-normal.woff) format('woff');\n  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;\n}\n\n/* be-vietnam-pro-latin-400-normal */\n@font-face {\n  font-family: 'Be Vietnam Pro';\n  font-style: normal;\n  font-display: swap;\n  font-weight: 400;\n  src: url(./files/be-vietnam-pro-latin-400-normal.woff2) format('woff2'), url(./files/be-vietnam-pro-latin-400-normal.woff) format('woff');\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}"],"sourceRoot":""}]);
+// Exports
+/* export default */ const __rspack_default_export = (___CSS_LOADER_EXPORT___);
+
+
+},
 5291(module, __webpack_exports__, __webpack_require__) {
 "use strict";
 __webpack_require__.d(__webpack_exports__, {
@@ -725,6 +788,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   }
 }
 @layer utilities {
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -737,8 +803,29 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   .end {
     inset-inline-end: var(--spacing);
   }
+  .container {
+    width: 100%;
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
+  }
   .block {
     display: block;
+  }
+  .contents {
+    display: contents;
   }
   .flex {
     display: flex;
@@ -751,6 +838,12 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
   }
   .inline-block {
     display: inline-block;
+  }
+  .table {
+    display: table;
+  }
+  .border-collapse {
+    border-collapse: collapse;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -939,7 +1032,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*! tailwindcss v4.2.0 | MIT License |
     }
   }
 }
-`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,kBAAkB;EACpB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kCAAkC;EACpC;EACA;IACE,gCAAgC;EAClC;EACA;IACE,cAAc;EAChB;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,qBAAqB;EACvB;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,YAAY;EACd;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,sCAAsC;IACtC,kBAAkB;EACpB;EACA;IACE,0LAA0L;EAC5L;EACA;IACE,wRAAwR;IACxR,gRAAgR;EAClR;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,sBAAsB;EACtB,eAAe;EACf,mBAAmB;AACrB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;MACxB,yBAAyB;MACzB,kBAAkB;MAClB,wBAAwB;MACxB,sBAAsB;MACtB,uBAAuB;MACvB,wBAAwB;MACxB,oBAAoB;MACpB,qBAAqB;MACrB,sBAAsB;MACtB,mBAAmB;MACnB,yBAAyB;MACzB,+BAA+B;MAC/B,4BAA4B;MAC5B,8BAA8B;MAC9B,2BAA2B;MAC3B,iCAAiC;MACjC,+BAA+B;MAC/B,gCAAgC;MAChC,iCAAiC;MACjC,6BAA6B;MAC7B,8BAA8B;MAC9B,+BAA+B;MAC/B,4BAA4B;IAC9B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .absolute {\n    position: absolute;\n  }\n  .relative {\n    position: relative;\n  }\n  .start {\n    inset-inline-start: var(--spacing);\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .block {\n    display: block;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .resize {\n    resize: both;\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .italic {\n    font-style: italic;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n    }\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iBAAiB;AACjB,yCAAyC;AACzC;EACE;IACE;6DACyD;IACzD;iDAC6C;IAC7C,kBAAkB;IAClB,oCAAoC;IACpC,kEAAkE;IAClE,uCAAuC;IACvC,wEAAwE;IACxE;;KAEC;IACD,4CAA4C;IAC5C;;KAEC;IACD;;KAEC;EACH;AACF;AACA;EACE;IACE,sBAAsB;IACtB,SAAS;IACT,UAAU;IACV,eAAe;EACjB;EACA;IACE,gBAAgB;IAChB,8BAA8B;IAC9B,WAAW;IACX,6JAA6J;IAC7J,mEAAmE;IACnE,yEAAyE;IACzE,wCAAwC;EAC1C;EACA;IACE,oBAAoB;EACtB;EACA;IACE,SAAS;IACT,cAAc;IACd,qBAAqB;EACvB;EACA;IACE,yCAAyC;IACzC,iCAAiC;EACnC;EACA;IACE,kBAAkB;IAClB,oBAAoB;EACtB;EACA;IACE,cAAc;IACd,gCAAgC;IAChC,wBAAwB;EAC1B;EACA;IACE,mBAAmB;EACrB;EACA;IACE,kJAAkJ;IAClJ,0EAA0E;IAC1E,8EAA8E;IAC9E,cAAc;EAChB;EACA;IACE,cAAc;EAChB;EACA;IACE,cAAc;IACd,cAAc;IACd,kBAAkB;IAClB,wBAAwB;EAC1B;EACA;IACE,eAAe;EACjB;EACA;IACE,WAAW;EACb;EACA;IACE,cAAc;IACd,qBAAqB;IACrB,yBAAyB;EAC3B;EACA;IACE,aAAa;EACf;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,cAAc;IACd,sBAAsB;EACxB;EACA;IACE,eAAe;IACf,YAAY;EACd;EACA;IACE,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,uBAAuB;IACvB,cAAc;IACd,gBAAgB;IAChB,6BAA6B;IAC7B,UAAU;EACZ;EACA;IACE,mBAAmB;EACrB;EACA;IACE,0BAA0B;EAC5B;EACA;IACE,sBAAsB;EACxB;EACA;IACE,UAAU;IACV,mBAAmB;IACnB;MACE,yDAAyD;IAC3D;EACF;EACA;IACE,gBAAgB;EAClB;EACA;IACE,wBAAwB;EAC1B;EACA;IACE,eAAe;IACf,mBAAmB;EACrB;EACA;IACE,oBAAoB;EACtB;EACA;IACE,UAAU;EACZ;EACA;IACE,gBAAgB;EAClB;EACA;IACE,gBAAgB;EAClB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,YAAY;EACd;EACA;IACE,wBAAwB;EAC1B;AACF;AACA;EACE;IACE,mBAAmB;EACrB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kBAAkB;EACpB;EACA;IACE,kCAAkC;EACpC;EACA;IACE,gCAAgC;EAClC;EACA;IACE,WAAW;IACX;MACE,gBAAgB;IAClB;IACA;MACE,gBAAgB;IAClB;IACA;MACE,gBAAgB;IAClB;IACA;MACE,gBAAgB;IAClB;IACA;MACE,gBAAgB;IAClB;EACF;EACA;IACE,cAAc;EAChB;EACA;IACE,iBAAiB;EACnB;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,aAAa;EACf;EACA;IACE,qBAAqB;EACvB;EACA;IACE,cAAc;EAChB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,0GAA0G;EAC5G;EACA;IACE,YAAY;EACd;EACA;IACE,oCAAoC;IACpC,iBAAiB;EACnB;EACA;IACE,yBAAyB;EAC3B;EACA;IACE,kBAAkB;EACpB;EACA;IACE,sCAAsC;IACtC,kBAAkB;EACpB;EACA;IACE,0LAA0L;EAC5L;EACA;IACE,wRAAwR;IACxR,gRAAgR;EAClR;EACA;IACE,yUAAyU;IACzU,qFAAqF;IACrF,2EAA2E;EAC7E;AACF;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;EACf,oBAAoB;AACtB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,sBAAsB;EACtB,eAAe;EACf,mBAAmB;AACrB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE,WAAW;EACX,eAAe;AACjB;AACA;EACE;IACE;MACE,sBAAsB;MACtB,sBAAsB;MACtB,sBAAsB;MACtB,oBAAoB;MACpB,oBAAoB;MACpB,wBAAwB;MACxB,yBAAyB;MACzB,kBAAkB;MAClB,wBAAwB;MACxB,sBAAsB;MACtB,uBAAuB;MACvB,wBAAwB;MACxB,oBAAoB;MACpB,qBAAqB;MACrB,sBAAsB;MACtB,mBAAmB;MACnB,yBAAyB;MACzB,+BAA+B;MAC/B,4BAA4B;MAC5B,8BAA8B;MAC9B,2BAA2B;MAC3B,iCAAiC;MACjC,+BAA+B;MAC/B,gCAAgC;MAChC,iCAAiC;MACjC,6BAA6B;MAC7B,8BAA8B;MAC9B,+BAA+B;MAC/B,4BAA4B;IAC9B;EACF;AACF","sourcesContent":["/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\",\n      \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,\n      \"Liberation Mono\", \"Courier New\", monospace;\n    --spacing: 0.25rem;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-font-feature-settings: var(--font-sans--font-feature-settings);\n    --default-font-variation-settings: var(\n      --font-sans--font-variation-settings\n    );\n    --default-mono-font-family: var(--font-mono);\n    --default-mono-font-feature-settings: var(\n      --font-mono--font-feature-settings\n    );\n    --default-mono-font-variation-settings: var(\n      --font-mono--font-variation-settings\n    );\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" );\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var( --default-font-variation-settings, normal );\n    -webkit-tap-highlight-color: transparent;\n  }\n  body {\n    line-height: inherit;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace );\n    font-feature-settings: var( --default-mono-font-feature-settings, normal );\n    font-variation-settings: var( --default-mono-font-variation-settings, normal );\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n    color: currentColor;\n    @supports (color: color-mix(in lab, red, red)) {\n      color: color-mix(in oklab, currentColor 50%, transparent);\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .visible {\n    visibility: visible;\n  }\n  .absolute {\n    position: absolute;\n  }\n  .relative {\n    position: relative;\n  }\n  .start {\n    inset-inline-start: var(--spacing);\n  }\n  .end {\n    inset-inline-end: var(--spacing);\n  }\n  .container {\n    width: 100%;\n    @media (width >= 40rem) {\n      max-width: 40rem;\n    }\n    @media (width >= 48rem) {\n      max-width: 48rem;\n    }\n    @media (width >= 64rem) {\n      max-width: 64rem;\n    }\n    @media (width >= 80rem) {\n      max-width: 80rem;\n    }\n    @media (width >= 96rem) {\n      max-width: 96rem;\n    }\n  }\n  .block {\n    display: block;\n  }\n  .contents {\n    display: contents;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline-block {\n    display: inline-block;\n  }\n  .table {\n    display: table;\n  }\n  .border-collapse {\n    border-collapse: collapse;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .resize {\n    resize: both;\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .italic {\n    font-style: italic;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* export default */ const __rspack_default_export = (___CSS_LOADER_EXPORT___);
 
@@ -1031,6 +1124,36 @@ module.exports = function (cssWithMappingToString) {
     }
   };
   return list;
+};
+
+},
+4417(module) {
+"use strict";
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+  if (!url) {
+    return url;
+  }
+  url = String(url.__esModule ? url.default : url);
+
+  // If url is already wrapped in quotes, remove them
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+  if (options.hash) {
+    url += options.hash;
+  }
+
+  // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+  return url;
 };
 
 },
@@ -18614,13 +18737,39 @@ function styleTagTransform(css, styleElement) {
 module.exports = styleTagTransform;
 
 },
-589(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
+5946(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "8d52a96685bcd7e7.woff";
+
+},
+5980(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "33beca82c36a5a09.woff2";
+
+},
+5308(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "3f4ab67480eface5.woff";
+
+},
+2438(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "aa2e5312a8556fa1.woff2";
+
+},
+7827(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "b8a5509c07bbd699.woff";
+
+},
+8491(module, __unused_rspack_exports, __webpack_require__) {
+"use strict";
+module.exports = __webpack_require__.p + "061fc9860f929c05.woff2";
+
+},
+1252(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
 "use strict";
 
-// EXTERNAL MODULE: ./node_modules/remotion/dist/esm/index.mjs
-var esm = __webpack_require__(3947);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(4848);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(5072);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -18639,6 +18788,39 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__(1113);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./node_modules/@tailwindcss/webpack/dist/index.js!./node_modules/@fontsource/be-vietnam-pro/index.css
+var be_vietnam_pro = __webpack_require__(8721);
+;// CONCATENATED MODULE: ./node_modules/@fontsource/be-vietnam-pro/index.css
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var be_vietnam_pro_options = {};
+
+be_vietnam_pro_options.styleTagTransform = (styleTagTransform_default());
+be_vietnam_pro_options.setAttributes = (setAttributesWithoutAttributes_default());
+be_vietnam_pro_options.insert = insertBySelector_default().bind(null, "head");
+be_vietnam_pro_options.domAPI = (styleDomAPI_default());
+be_vietnam_pro_options.insertStyleElement = (insertStyleElement_default());
+
+var update = injectStylesIntoStyleTag_default()(be_vietnam_pro/* ["default"] */.A, be_vietnam_pro_options);
+
+
+
+
+       /* export default */ const _fontsource_be_vietnam_pro = (be_vietnam_pro/* ["default"] */.A && be_vietnam_pro/* ["default"].locals */.A.locals ? be_vietnam_pro/* ["default"].locals */.A.locals : undefined);
+
+// EXTERNAL MODULE: ./node_modules/remotion/dist/esm/index.mjs
+var esm = __webpack_require__(3947);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(4848);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./node_modules/@tailwindcss/webpack/dist/index.js!./src/index.css
 var index_js_src = __webpack_require__(5291);
 ;// CONCATENATED MODULE: ./src/index.css
@@ -18661,7 +18843,7 @@ src_options.insert = insertBySelector_default().bind(null, "head");
 src_options.domAPI = (styleDomAPI_default());
 src_options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(index_js_src/* ["default"] */.A, src_options);
+var src_update = injectStylesIntoStyleTag_default()(index_js_src/* ["default"] */.A, src_options);
 
 
 
@@ -20273,7 +20455,7 @@ var linearTiming = (options) => {
       return options.durationInFrames;
     },
     getProgress: ({ frame }) => {
-      return interpolate2(frame, [0, options.durationInFrames], [0, 1], {
+      return (0,esm.interpolate)(frame, [0, options.durationInFrames], [0, 1], {
         easing: options.easing,
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp"
@@ -23212,8 +23394,8 @@ const tokens = {
     },
     typography: {
         fontFamily: {
-            sans: '"Inter", "Roboto", sans-serif',
-            display: '"Inter", sans-serif'
+            sans: '"Be Vietnam Pro", "Roboto", "Inter", sans-serif',
+            display: '"Be Vietnam Pro", "Roboto", "Inter", sans-serif'
         },
         size: {
             title: '72px',
@@ -23242,20 +23424,20 @@ const tokens = {
     animation: {
         spring: {
             stiff: {
-                damping: 12,
-                stiffness: 100,
-                mass: 1
+                damping: 14,
+                stiffness: 150,
+                mass: 0.8
             },
             smooth: {
-                damping: 15,
-                stiffness: 80,
+                damping: 18,
+                stiffness: 110,
                 mass: 1
             }
         },
         duration: {
-            short: 15,
-            medium: 30,
-            long: 60
+            short: 12,
+            medium: 20,
+            long: 45
         }
     }
 };
@@ -23274,8 +23456,9 @@ const SafeArea = ({ children })=>{
             paddingRight: tokens.layout.safeArea.horizontal,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            boxSizing: 'border-box'
+            justifyContent: 'flex-start',
+            boxSizing: 'border-box',
+            zIndex: 10
         },
         children: children
     });
@@ -23303,7 +23486,6 @@ const ScrimOverlay = ()=>{
 
 
 
-// Component làm nổi bật text (bôi đậm, đổi màu) nếu có dấu **text**
 const HighlightText = ({ text, color })=>{
     if (!text) return null;
     const parts = text.split(/(\*\*.*?\*\*)/g);
@@ -23322,7 +23504,39 @@ const HighlightText = ({ text, color })=>{
         })
     });
 };
-// Component thanh thời gian chạy dọc
+// Sóng âm thanh Audio Visualizer sinh động mô phỏng giọng đọc
+const AudioVisualizer = ({ color })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+        style: {
+            display: 'flex',
+            gap: '8px',
+            alignItems: 'flex-end',
+            height: '40px',
+            marginTop: '10px'
+        },
+        children: [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ].map((i)=>{
+            const height = 12 + Math.abs(Math.sin(frame * 0.25 + i * 1.2)) * 25;
+            return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    width: '8px',
+                    height: `${height}px`,
+                    backgroundColor: color,
+                    borderRadius: '4px',
+                    boxShadow: `0 0 10px ${color}`
+                }
+            }, i);
+        })
+    });
+};
+// Thanh tiến trình chạy mượt mà ở đầu khung hình
 const ProgressBar = ({ duration, color })=>{
     const frame = (0,esm.useCurrentFrame)();
     const width = (0,esm.interpolate)(frame, [
@@ -23334,16 +23548,18 @@ const ProgressBar = ({ duration, color })=>{
     ], {
         extrapolateRight: 'clamp'
     });
+    const pulse = 0.7 + Math.sin(frame * 0.1) * 0.3;
     return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
         style: {
             position: 'absolute',
             top: 0,
             left: 0,
-            height: '8px',
+            height: '10px',
             width: `${width}%`,
             backgroundColor: color,
-            boxShadow: `0 0 10px ${color}`,
-            zIndex: 10
+            boxShadow: `0 0 20px ${color}`,
+            zIndex: 10,
+            opacity: pulse
         }
     });
 };
@@ -23354,7 +23570,7 @@ const LayoutIntro = ({ data, color })=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
     const titleProgress = (0,esm.spring)({
-        frame: frame - 15,
+        frame: frame - 5,
         fps,
         config: tokens.animation.spring.stiff
     });
@@ -23362,9 +23578,10 @@ const LayoutIntro = ({ data, color })=>{
         0,
         1
     ], [
-        60,
+        80,
         0
     ]);
+    const floatY = Math.sin(frame * 0.04) * 8; // Chuyển động nổi hữu cơ
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
@@ -23383,25 +23600,25 @@ const LayoutIntro = ({ data, color })=>{
                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
                             alignSelf: 'flex-start',
-                            transform: `translateY(${titleY}px)`,
+                            transform: `translateY(${titleY + floatY}px)`,
                             opacity: titleProgress,
                             backgroundColor: color,
                             color: '#000',
-                            fontWeight: tokens.typography.weight.bold,
+                            fontWeight: 900,
                             fontSize: tokens.typography.size.caption,
                             padding: '16px 40px',
                             borderRadius: '16px',
                             textTransform: 'uppercase',
                             boxShadow: `0 20px 40px ${color}66`
                         },
-                        children: data.tag && (data.tag.toUpperCase().includes('NÓNG') || data.tag.toUpperCase().includes('HOT') || data.tag.toUpperCase().includes('ĐIỀU TRA')) ? '🔥 TIN NÓNG' : '📊 CẬP NHẬT MỚI'
+                        children: data.tag && (data.tag.toUpperCase().includes('NÓNG') || data.tag.toUpperCase().includes('HOT') || data.tag.toUpperCase().includes('ĐIỀU TRA')) ? '🔥 TIN NÓNG' : '📊 CẬP NHẬT'
                     }),
                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            transform: `translateY(${titleY}px)`,
+                            transform: `translateY(${titleY + floatY * 0.8}px)`,
                             opacity: titleProgress,
                             fontSize: '80px',
-                            fontWeight: tokens.typography.weight.bold,
+                            fontWeight: 900,
                             color: tokens.colors.text.headline,
                             lineHeight: tokens.typography.lineHeight.tight,
                             textShadow: '0 10px 40px rgba(0,0,0,0.5)'
@@ -23411,19 +23628,21 @@ const LayoutIntro = ({ data, color })=>{
                             color: color
                         })
                     }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AudioVisualizer, {
+                        color: color
+                    }),
                     data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            transform: `translateY(${titleY}px)`,
+                            transform: `translateY(${titleY + floatY * 0.5}px)`,
                             opacity: titleProgress,
                             fontSize: tokens.typography.size.body,
                             color: tokens.colors.text.body,
                             lineHeight: tokens.typography.lineHeight.normal,
-                            backgroundColor: 'rgba(15,23,42,0.8)',
+                            backgroundColor: 'rgba(15,23,42,0.85)',
                             padding: '32px',
                             borderRadius: '24px',
                             borderLeft: `8px solid ${color}`,
-                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)'
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
                         },
                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                             text: data.keyTakeaways[0],
@@ -23436,13 +23655,13 @@ const LayoutIntro = ({ data, color })=>{
     });
 };
 // ============================================
-// TEMPLATE A: CARDS LIST (Danh sách Luận điểm)
+// TEMPLATE A: CARDS LIST (Danh sách Luận điểm nảy động)
 // ============================================
 const LayoutList = ({ data, color, takeawayStarts })=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
     const titleProgress = (0,esm.spring)({
-        frame: frame - 10,
+        frame: frame - 5,
         fps,
         config: tokens.animation.spring.stiff
     });
@@ -23450,9 +23669,10 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
         0,
         1
     ], [
-        40,
+        60,
         0
     ]);
+    const headerFloat = Math.sin(frame * 0.04) * 6;
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
@@ -23464,12 +23684,13 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
                     display: 'flex',
                     flexDirection: 'column',
                     width: '100%',
-                    gap: '40px'
+                    gap: '40px',
+                    paddingTop: '40px'
                 },
                 children: [
                     /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
-                            transform: `translateY(${titleY}px)`,
+                            transform: `translateY(${titleY + headerFloat}px)`,
                             opacity: titleProgress,
                             display: 'flex',
                             flexDirection: 'column',
@@ -23479,34 +23700,39 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                 style: {
-                                    display: 'inline-block',
-                                    backgroundColor: 'rgba(255,255,255,0.1)',
-                                    color: color,
-                                    fontWeight: tokens.typography.weight.bold,
-                                    fontSize: tokens.typography.size.caption,
-                                    padding: '12px 32px',
-                                    borderRadius: '99px',
-                                    textTransform: 'uppercase',
-                                    alignSelf: 'flex-start',
-                                    border: `1px solid ${color}44`
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '20px'
                                 },
                                 children: [
-                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                         style: {
-                                            marginRight: '8px'
+                                            backgroundColor: 'rgba(255,255,255,0.1)',
+                                            color: color,
+                                            fontWeight: 800,
+                                            fontSize: '28px',
+                                            padding: '12px 32px',
+                                            borderRadius: '99px',
+                                            textTransform: 'uppercase',
+                                            border: `1px solid ${color}44`
                                         },
-                                        children: "\uD83C\uDFAF"
+                                        children: [
+                                            "\uD83C\uDFAF ",
+                                            data.tag || 'TIN TỨC'
+                                        ]
                                     }),
-                                    " ",
-                                    data.tag
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AudioVisualizer, {
+                                        color: color
+                                    })
                                 ]
                             }),
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                 style: {
-                                    fontSize: tokens.typography.size.headline,
-                                    fontWeight: tokens.typography.weight.bold,
+                                    fontSize: '70px',
+                                    fontWeight: 900,
                                     color: tokens.colors.text.headline,
-                                    lineHeight: tokens.typography.lineHeight.tight
+                                    lineHeight: tokens.typography.lineHeight.tight,
+                                    textShadow: '0 10px 20px rgba(0,0,0,0.5)'
                                 },
                                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                                     text: data.headline,
@@ -23523,11 +23749,30 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
                             width: '100%'
                         },
                         children: (data.keyTakeaways || []).map((takeaway, idx)=>{
+                            // Hiệu ứng nảy lò xo (Bouncy spring) và trượt lên từng thẻ
+                            const startTime = takeawayStarts[idx] !== undefined ? takeawayStarts[idx] : 30 + idx * 45;
                             const progress = (0,esm.spring)({
-                                frame: frame - takeawayStarts[idx],
+                                frame: frame - startTime,
                                 fps,
-                                config: tokens.animation.spring.smooth
+                                config: {
+                                    damping: 12,
+                                    stiffness: 90
+                                }
                             });
+                            const cardY = (0,esm.interpolate)(progress, [
+                                0,
+                                1
+                            ], [
+                                80,
+                                0
+                            ]);
+                            const cardScale = (0,esm.interpolate)(progress, [
+                                0,
+                                1
+                            ], [
+                                0.85,
+                                1
+                            ]);
                             const cardOpacity = (0,esm.interpolate)(progress, [
                                 0,
                                 1
@@ -23535,20 +23780,19 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
                                 0,
                                 1
                             ]);
+                            const float = Math.sin(frame * 0.05 + idx) * 5;
                             return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                 style: {
                                     opacity: cardOpacity,
+                                    transform: `translateY(${cardY + float}px) scale(${cardScale})`,
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '24px',
-                                    backgroundColor: 'rgba(15, 23, 42, 0.7)',
-                                    background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-                                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
-                                    border: '1px solid rgba(255,255,255,0.05)',
-                                    borderLeft: `6px solid ${color}`,
+                                    backgroundColor: 'rgba(15, 23, 42, 0.85)',
                                     padding: '28px 32px',
-                                    borderRadius: '20px',
-                                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                                    borderRadius: '24px',
+                                    borderLeft: `6px solid ${color}`,
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
                                 },
                                 children: [
                                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
@@ -23562,16 +23806,16 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
                                             justifyContent: 'center',
                                             color: color,
                                             fontSize: '24px',
-                                            fontWeight: tokens.typography.weight.bold
+                                            fontWeight: 900
                                         },
                                         children: idx + 1
                                     }),
                                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                         style: {
-                                            fontSize: tokens.typography.size.body,
+                                            fontSize: '40px',
                                             color: tokens.colors.text.body,
-                                            lineHeight: tokens.typography.lineHeight.normal,
-                                            fontWeight: tokens.typography.weight.semibold
+                                            lineHeight: 1.4,
+                                            fontWeight: 600
                                         },
                                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                                             text: takeaway,
@@ -23588,19 +23832,20 @@ const LayoutList = ({ data, color, takeawayStarts })=>{
     });
 };
 // ============================================
-// TEMPLATE B: BIG STATISTIC (Chỉ số khổng lồ)
+// TEMPLATE B: BIG STATISTIC (Chỉ số khổng lồ nhấp nháy sống động)
 // ============================================
-const LayoutStat = ({ data, color, takeawayStarts })=>{
+const LayoutStat = ({ data, color })=>{
     var _data_keyTakeaways;
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
     const statProgress = (0,esm.spring)({
-        frame: frame - 20,
+        frame: frame - 10,
         fps,
         config: tokens.animation.spring.stiff
     });
-    const statText = data.statNumber || "100%";
+    const statText = data.statNumber || 'HOT';
     const statFontSize = statText.length > 10 ? '90px' : statText.length > 6 ? '120px' : '160px';
+    const statPulse = 1 + Math.sin(frame * 0.08) * 0.04; // Nhịp đập liên tục không đứng yên
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
@@ -23629,7 +23874,7 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
                             height: '300px',
                             backgroundColor: color,
                             filter: 'blur(150px)',
-                            opacity: 0.3,
+                            opacity: 0.35 + Math.sin(frame * 0.05) * 0.15,
                             zIndex: -1
                         }
                     }),
@@ -23639,33 +23884,40 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
                             flexDirection: 'column',
                             alignItems: 'center',
                             gap: '20px',
-                            opacity: statProgress
+                            opacity: statProgress,
+                            transform: `translateY(${(0,esm.interpolate)(statProgress, [
+                                0,
+                                1
+                            ], [
+                                40,
+                                0
+                            ])}px)`
                         },
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                 style: {
-                                    backgroundColor: 'rgba(0,0,0,0.5)',
+                                    backgroundColor: 'rgba(0,0,0,0.6)',
                                     padding: '12px 32px',
                                     borderRadius: '99px',
                                     color: color,
-                                    fontWeight: tokens.typography.weight.bold,
-                                    fontSize: tokens.typography.size.caption,
+                                    fontWeight: 900,
+                                    fontSize: '28px',
                                     textTransform: 'uppercase',
                                     letterSpacing: '2px',
-                                    border: `1px solid ${color}66`
+                                    border: `2px solid ${color}66`
                                 },
                                 children: [
                                     "✨ ",
-                                    data.tag
+                                    data.tag || 'CHỈ SỐ'
                                 ]
                             }),
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                 style: {
-                                    fontSize: tokens.typography.size.headline,
-                                    fontWeight: tokens.typography.weight.bold,
+                                    fontSize: '64px',
+                                    fontWeight: 900,
                                     color: tokens.colors.text.headline,
                                     textAlign: 'center',
-                                    lineHeight: tokens.typography.lineHeight.tight
+                                    lineHeight: 1.2
                                 },
                                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                                     text: data.headline,
@@ -23676,9 +23928,9 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
                     }),
                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
-                            transform: `scale(${statProgress})`,
+                            transform: `scale(${statProgress * statPulse})`,
                             fontSize: statFontSize,
-                            fontWeight: '900',
+                            fontWeight: 900,
                             color: '#fff',
                             textShadow: `0 0 40px ${color}, 0 20px 40px rgba(0,0,0,0.5)`,
                             lineHeight: 1,
@@ -23687,23 +23939,26 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
                         },
                         children: statText
                     }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AudioVisualizer, {
+                        color: color
+                    }),
                     /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                         style: {
                             opacity: statProgress,
-                            backgroundColor: 'rgba(15,23,42,0.9)',
-                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                            transform: `translateY(${Math.sin(frame * 0.04) * 8}px)`,
+                            backgroundColor: 'rgba(15,23,42,0.95)',
                             padding: '32px 48px',
                             borderRadius: '32px',
                             borderTop: `6px solid ${color}`,
-                            boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
-                            fontSize: tokens.typography.size.body,
-                            fontWeight: tokens.typography.weight.bold,
+                            boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
+                            fontSize: '40px',
+                            fontWeight: 700,
                             color: tokens.colors.text.body,
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            maxWidth: '90%'
                         },
                         children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
-                            text: data.statLabel || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || "",
+                            text: data.statLabel || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || '',
                             color: color
                         })
                     })
@@ -23713,9 +23968,9 @@ const LayoutStat = ({ data, color, takeawayStarts })=>{
     });
 };
 // ============================================
-// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh)
+// TEMPLATE D: IMAGE EVIDENCE (Hình ảnh phóng to trượt điện ảnh + Cyber Fallback)
 // ============================================
-const LayoutImage = ({ data, color, takeawayStarts })=>{
+const LayoutImage = ({ data, color })=>{
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
     const imagePan = (0,esm.interpolate)(frame, [
@@ -23723,15 +23978,23 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
         data.seqDuration || 300
     ], [
         1,
-        1.1
+        1.15
     ], {
         extrapolateRight: 'clamp'
     });
     const opacity = (0,esm.spring)({
-        frame: frame - 10,
+        frame: frame - 5,
         fps,
         config: tokens.animation.spring.smooth
     });
+    const contentY = (0,esm.interpolate)(opacity, [
+        0,
+        1
+    ], [
+        60,
+        0
+    ]);
+    const scanLineY = frame * 6 % 1920;
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
         style: {
             width: '100%',
@@ -23749,12 +24012,38 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
                     objectFit: 'cover',
                     transform: `scale(${imagePan})`
                 }
-            }) : /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+            }) : /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                 style: {
                     width: '100%',
                     height: '100%',
-                    backgroundColor: tokens.colors.background
-                }
+                    backgroundColor: '#020617',
+                    position: 'relative',
+                    overflow: 'hidden'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: `linear-gradient(${color}33 2px, transparent 2px), linear-gradient(90deg, ${color}33 2px, transparent 2px)`,
+                            backgroundSize: '60px 60px',
+                            transform: `scale(${imagePan})`,
+                            opacity: 0.5
+                        }
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: scanLineY,
+                            height: '4px',
+                            backgroundColor: color,
+                            boxShadow: `0 0 40px 10px ${color}`,
+                            zIndex: 1
+                        }
+                    })
+                ]
             }),
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ScrimOverlay, {}),
             /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
@@ -23766,40 +24055,51 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
                     /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
                             opacity,
+                            transform: `translateY(${contentY}px)`,
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '24px',
                             zIndex: 2,
                             justifyContent: 'flex-end',
                             height: '100%',
-                            paddingBottom: '40px'
+                            paddingBottom: '28%'
                         },
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                 style: {
-                                    display: 'inline-block',
-                                    backgroundColor: '#ef4444',
-                                    color: '#fff',
-                                    padding: '12px 32px',
-                                    borderRadius: '12px',
-                                    fontSize: '28px',
-                                    fontWeight: tokens.typography.weight.bold,
-                                    textTransform: 'uppercase',
-                                    alignSelf: 'flex-start',
-                                    boxShadow: '0 10px 30px rgba(239,68,68,0.5)'
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '20px'
                                 },
                                 children: [
-                                    "\uD83D\uDCF8 ",
-                                    data.tag || "BẰNG CHỨNG"
+                                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                                        style: {
+                                            backgroundColor: color,
+                                            color: '#fff',
+                                            padding: '12px 32px',
+                                            borderRadius: '12px',
+                                            fontSize: '28px',
+                                            fontWeight: 900,
+                                            textTransform: 'uppercase',
+                                            boxShadow: `0 10px 30px ${color}88`
+                                        },
+                                        children: [
+                                            "\uD83D\uDCF8 ",
+                                            data.tag || 'BẰNG CHỨNG'
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AudioVisualizer, {
+                                        color: color
+                                    })
                                 ]
                             }),
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                 style: {
-                                    fontSize: '64px',
-                                    fontWeight: tokens.typography.weight.bold,
-                                    lineHeight: tokens.typography.lineHeight.tight,
-                                    color: tokens.colors.text.headline,
-                                    textShadow: '0 10px 30px rgba(0,0,0,0.8)'
+                                    fontSize: '70px',
+                                    fontWeight: 900,
+                                    lineHeight: 1.1,
+                                    color: '#fff',
+                                    textShadow: '0 10px 30px rgba(0,0,0,0.9)'
                                 },
                                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                                     text: data.headline,
@@ -23808,15 +24108,14 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
                             }),
                             data.keyTakeaways && data.keyTakeaways.length > 0 && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                 style: {
-                                    fontSize: tokens.typography.size.body,
-                                    color: tokens.colors.text.body,
-                                    lineHeight: tokens.typography.lineHeight.normal,
-                                    backgroundColor: 'rgba(15,23,42,0.85)',
-                                    background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-                                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                                    fontSize: '40px',
+                                    color: '#f1f5f9',
+                                    lineHeight: 1.4,
+                                    backgroundColor: 'rgba(15,23,42,0.9)',
                                     padding: '32px',
                                     borderRadius: '24px',
-                                    borderLeft: `8px solid ${color}`
+                                    borderLeft: `8px solid ${color}`,
+                                    boxShadow: '0 20px 40px rgba(0,0,0,0.6)'
                                 },
                                 children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
                                     text: data.keyTakeaways[0],
@@ -23831,9 +24130,9 @@ const LayoutImage = ({ data, color, takeawayStarts })=>{
     });
 };
 // ============================================
-// TEMPLATE C: QUOTE FOCUS (Trích dẫn)
+// TEMPLATE C: QUOTE FOCUS (Trích dẫn phong cách phóng sự)
 // ============================================
-const LayoutQuote = ({ data, color, takeawayStarts })=>{
+const LayoutQuote = ({ data, color })=>{
     var _data_keyTakeaways;
     const frame = (0,esm.useCurrentFrame)();
     const { fps } = (0,esm.useVideoConfig)();
@@ -23842,6 +24141,14 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
         fps,
         config: tokens.animation.spring.stiff
     });
+    const contentY = (0,esm.interpolate)(titleProgress, [
+        0,
+        1
+    ], [
+        60,
+        0
+    ]);
+    const float = Math.sin(frame * 0.03) * 8;
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(SafeArea, {
         children: [
             /*#__PURE__*/ (0,jsx_runtime.jsx)(ProgressBar, {
@@ -23860,33 +24167,32 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
                     /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
                             opacity: titleProgress,
+                            transform: `translateY(${contentY + float}px)`,
                             alignSelf: 'center',
                             backgroundColor: 'rgba(255,255,255,0.1)',
                             padding: '12px 32px',
                             borderRadius: '99px',
                             color: color,
-                            fontWeight: tokens.typography.weight.bold,
-                            fontSize: tokens.typography.size.caption,
+                            fontWeight: 900,
+                            fontSize: '28px',
                             textTransform: 'uppercase',
-                            border: `1px solid ${color}66`
+                            border: `2px solid ${color}66`
                         },
                         children: [
                             "\uD83D\uDCAC ",
-                            data.tag || "PHÁT BIỂU"
+                            data.tag || 'PHÁT BIỂU'
                         ]
                     }),
                     /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
                             opacity: titleProgress,
+                            transform: `translateY(${contentY + float * 1.5}px)`,
                             position: 'relative',
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)',
-                            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.1)',
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
                             padding: '60px 50px',
                             borderRadius: '40px',
-                            border: `1px solid rgba(255,255,255,0.1)`,
                             borderLeft: `12px solid ${color}`,
-                            boxShadow: `0 40px 80px rgba(0,0,0,0.5)`
+                            boxShadow: `0 40px 80px rgba(0,0,0,0.6)`
                         },
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
@@ -23894,7 +24200,7 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
                                     position: 'absolute',
                                     top: '-40px',
                                     left: '40px',
-                                    fontSize: '120px',
+                                    fontSize: '140px',
                                     color: color,
                                     fontFamily: 'Georgia, serif',
                                     lineHeight: 1
@@ -23903,10 +24209,10 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
                             }),
                             /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
                                 style: {
-                                    fontSize: tokens.typography.size.headline,
-                                    fontWeight: tokens.typography.weight.semibold,
+                                    fontSize: '60px',
+                                    fontWeight: 700,
                                     lineHeight: 1.5,
-                                    color: tokens.colors.text.headline,
+                                    color: '#fff',
                                     fontStyle: 'italic',
                                     marginBottom: '40px',
                                     zIndex: 2,
@@ -23921,28 +24227,40 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
                                 style: {
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '20px'
+                                    justifyContent: 'space-between'
                                 },
                                 children: [
-                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                                         style: {
-                                            width: '60px',
-                                            height: '4px',
-                                            backgroundColor: color,
-                                            borderRadius: '2px'
-                                        }
-                                    }),
-                                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                                        style: {
-                                            fontSize: tokens.typography.size.caption,
-                                            fontWeight: tokens.typography.weight.bold,
-                                            color: tokens.colors.text.muted,
-                                            textTransform: 'uppercase'
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '20px'
                                         },
-                                        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
-                                            text: data.quoteAuthor || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || "",
-                                            color: color
-                                        })
+                                        children: [
+                                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                                style: {
+                                                    width: '60px',
+                                                    height: '6px',
+                                                    backgroundColor: color,
+                                                    borderRadius: '3px'
+                                                }
+                                            }),
+                                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                                style: {
+                                                    fontSize: '32px',
+                                                    fontWeight: 900,
+                                                    color: tokens.colors.text.muted,
+                                                    textTransform: 'uppercase'
+                                                },
+                                                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                                                    text: data.quoteAuthor || ((_data_keyTakeaways = data.keyTakeaways) === null || _data_keyTakeaways === void 0 ? void 0 : _data_keyTakeaways[0]) || '',
+                                                    color: color
+                                                })
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime.jsx)(AudioVisualizer, {
+                                        color: color
                                     })
                                 ]
                             })
@@ -23955,33 +24273,137 @@ const LayoutQuote = ({ data, color, takeawayStarts })=>{
 };
 const DynamicScene = ({ data })=>{
     const color = data.color || tokens.colors.accent;
-    const takeawayStarts = data.takeawayStarts || [
-        60,
+    // Khởi động các bullet points dồn dập hơn để màn hình luôn có chuyển động mới
+    const takeawayStarts = data.takeawayStarts && data.takeawayStarts.length > 0 ? data.takeawayStarts : [
+        30,
+        75,
         120,
-        180,
-        240,
-        300
+        165,
+        210
     ];
     let LayoutComponent = LayoutList;
-    if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
-    if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
-    if (data.layoutType === 'image') LayoutComponent = LayoutImage;
     if (data.tag && (data.tag.toUpperCase().includes('TIN NÓNG') || data.tag.toUpperCase().includes('TỔNG HỢP') || data.tag.toUpperCase().includes('ĐIỀU TRA'))) {
         LayoutComponent = LayoutIntro;
     }
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+    // Explicit layout types override the default/tag-based layout
+    if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
+    if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
+    if (data.layoutType === 'image') LayoutComponent = LayoutImage;
+    // Handle Background Image inside the Scene to prevent bleeding and show scraped images
+    const frame = (0,esm.useCurrentFrame)();
+    const imagePan = (0,esm.interpolate)(frame, [
+        0,
+        data.seqDuration || 300
+    ], [
+        1,
+        1.15
+    ], {
+        extrapolateRight: 'clamp'
+    });
+    const hasImage = data.imageFile && data.imageFile.trim() !== '';
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
         style: {
             flex: 1,
-            position: 'relative',
+            position: 'absolute',
             width: '100%',
             height: '100%',
-            fontFamily: tokens.typography.fontFamily.sans
+            backgroundColor: tokens.colors.background,
+            fontFamily: tokens.typography.fontFamily.sans,
+            overflow: 'hidden'
         },
-        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(LayoutComponent, {
-            data: data,
-            color: color,
-            takeawayStarts: takeawayStarts
-        })
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 0
+                },
+                children: hasImage ? /*#__PURE__*/ (0,jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                    children: [
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)(esm.Img, {
+                            src: (0,esm.staticFile)(data.imageFile),
+                            style: {
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                transform: `scale(${imagePan})`,
+                                opacity: 0.4
+                            }
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                            style: {
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundImage: 'linear-gradient(to right, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.7) 50%, rgba(15,23,42,0.9) 100%)'
+                            }
+                        })
+                    ]
+                }) : /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#020617',
+                        position: 'relative',
+                        overflow: 'hidden'
+                    },
+                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: `linear-gradient(${color}22 2px, transparent 2px), linear-gradient(90deg, ${color}22 2px, transparent 2px)`,
+                            backgroundSize: '80px 80px',
+                            transform: `scale(${imagePan})`,
+                            opacity: 0.3
+                        }
+                    })
+                })
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(ScrimOverlay, {}),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 2
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)(LayoutComponent, {
+                    data: data,
+                    color: color,
+                    takeawayStarts: takeawayStarts
+                })
+            }),
+            data.voiceover && /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    position: 'absolute',
+                    bottom: '10%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '90%',
+                    zIndex: 100,
+                    display: 'flex',
+                    justifyContent: 'center'
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                    style: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.92)',
+                        backdropFilter: 'blur(12px)',
+                        padding: '18px 32px',
+                        borderRadius: '20px',
+                        border: `1.5px solid ${color}88`,
+                        boxShadow: `0 15px 35px rgba(0,0,0,0.7), 0 0 25px ${color}22`,
+                        color: '#ffffff',
+                        fontSize: '34px',
+                        fontWeight: 700,
+                        textAlign: 'center',
+                        lineHeight: 1.35,
+                        textShadow: '0 2px 8px rgba(0,0,0,0.8)'
+                    },
+                    children: /*#__PURE__*/ (0,jsx_runtime.jsx)(HighlightText, {
+                        text: data.voiceover,
+                        color: color
+                    })
+                })
+            })
+        ]
     });
 };
 
@@ -24002,87 +24424,98 @@ const DynamicOutro = ({ data })=>{
         fps,
         config: tokens.animation.spring.stiff
     });
-    return /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
-        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-            style: {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                fontFamily: tokens.typography.fontFamily.sans,
-                textAlign: 'center',
-                gap: '40px'
-            },
-            children: [
-                /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
-                    style: {
-                        transform: `scale(${Math.max(0, scale)})`,
-                        backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                        border: `2px solid ${tokens.colors.primary}`,
-                        borderRadius: tokens.layout.radius,
-                        padding: '48px 32px',
-                        width: '100%'
-                    },
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: '80px',
-                                marginBottom: '24px'
-                            },
-                            children: "\uD83D\uDE80"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.headline,
-                                fontWeight: tokens.typography.weight.bold,
-                                color: tokens.colors.primary,
-                                marginBottom: '16px',
-                                textTransform: 'uppercase'
-                            },
-                            children: title
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                            style: {
-                                fontSize: tokens.typography.size.caption,
-                                color: tokens.colors.text.body,
-                                fontWeight: tokens.typography.weight.regular,
-                                lineHeight: tokens.typography.lineHeight.normal
-                            },
-                            children: subtitle
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
-                    style: {
-                        transform: `scale(${Math.max(0, scale)})`,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '24px',
-                        width: '100%'
-                    },
-                    children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+    return /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+        style: {
+            flex: 1,
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backgroundColor: tokens.colors.background,
+            overflow: 'hidden'
+        },
+        children: /*#__PURE__*/ (0,jsx_runtime.jsx)(SafeArea, {
+            children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    fontFamily: tokens.typography.fontFamily.sans,
+                    textAlign: 'center',
+                    gap: '40px',
+                    zIndex: 2
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
                         style: {
-                            backgroundColor: tokens.colors.text.headline,
-                            color: tokens.colors.background,
-                            padding: '24px',
+                            transform: `scale(${Math.max(0, scale)})`,
+                            backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                            border: `2px solid ${tokens.colors.primary}`,
                             borderRadius: tokens.layout.radius,
-                            fontSize: tokens.typography.size.caption,
-                            fontWeight: tokens.typography.weight.bold,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '16px'
+                            padding: '48px 32px',
+                            width: '100%'
                         },
                         children: [
-                            /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
-                                children: "\uD83D\uDC4D"
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: '80px',
+                                    marginBottom: '24px'
+                                },
+                                children: "\uD83D\uDE80"
                             }),
-                            " NHẤN LIKE & CHIA SẺ"
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.headline,
+                                    fontWeight: tokens.typography.weight.bold,
+                                    color: tokens.colors.primary,
+                                    marginBottom: '16px',
+                                    textTransform: 'uppercase'
+                                },
+                                children: title
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                                style: {
+                                    fontSize: tokens.typography.size.caption,
+                                    color: tokens.colors.text.body,
+                                    fontWeight: tokens.typography.weight.regular,
+                                    lineHeight: tokens.typography.lineHeight.normal
+                                },
+                                children: subtitle
+                            })
                         ]
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            transform: `scale(${Math.max(0, scale)})`,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '24px',
+                            width: '100%'
+                        },
+                        children: /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                            style: {
+                                backgroundColor: tokens.colors.text.headline,
+                                color: tokens.colors.background,
+                                padding: '24px',
+                                borderRadius: tokens.layout.radius,
+                                fontSize: tokens.typography.size.caption,
+                                fontWeight: tokens.typography.weight.bold,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '16px'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                                    children: "\uD83D\uDC4D"
+                                }),
+                                " NHẤN LIKE & CHIA SẺ"
+                            ]
+                        })
                     })
-                })
-            ]
+                ]
+            })
         })
     });
 };
@@ -24294,7 +24727,96 @@ const DynamicBackground = ({ primaryColor = '#38bdf8', bgStyle = 'hud', totalDur
     });
 };
 
+;// CONCATENATED MODULE: ./src/DynamicNews/NewsTicker.tsx
+
+
+
+const NewsTicker = ({ title, themeColor, language = 'vi', headlines = [] })=>{
+    const frame = (0,esm.useCurrentFrame)();
+    const { width } = (0,esm.useVideoConfig)();
+    // Speed of scrolling text
+    const speed = 4; // pixels per frame
+    const isEn = language === 'en';
+    const headlinesText = headlines.length > 0 ? headlines.map((h)=>h.toUpperCase()).join(' • ') : isEn ? '24/7 GLOBAL UPDATE' : 'CẬP NHẬT LIÊN TỤC 24/7';
+    const tickerText = isEn ? `🔴 BREAKING NEWS • ${title.toUpperCase()} • ${headlinesText} • LIKE & SUBSCRIBE • ` : `🔴 BẢN TIN ĐẶC BIỆT • ${title.toUpperCase()} • ${headlinesText} • BẤM LIKE & THEO DÕI ĐỂ KHÔNG BỎ LỠ • `;
+    // Ticker bar animation (không dùng modulo để tránh giật lag khi chuỗi dài ngắn khác nhau)
+    const offset = -(frame * speed);
+    // Lặp chuỗi đủ nhiều để chạy suốt video 60 giây (~1800 frames * speed)
+    const repeatedText = Array(30).fill(tickerText).join(' ');
+    return /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+        style: {
+            position: 'absolute',
+            top: '6%',
+            left: 0,
+            width: '100%',
+            height: '70px',
+            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+            borderBottom: `2px solid ${themeColor}`,
+            borderTop: `2px solid ${themeColor}`,
+            boxShadow: `0 10px 30px rgba(0,0,0,0.5)`,
+            display: 'flex',
+            alignItems: 'center',
+            zIndex: 90,
+            overflow: 'hidden',
+            backdropFilter: 'blur(10px)'
+        },
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime.jsxs)("div", {
+                style: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    backgroundColor: '#ef4444',
+                    color: '#ffffff',
+                    fontWeight: 900,
+                    fontSize: '26px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 30px',
+                    zIndex: 100,
+                    boxShadow: '10px 0 20px rgba(0,0,0,0.5)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px'
+                },
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                        style: {
+                            width: '14px',
+                            height: '14px',
+                            borderRadius: '50%',
+                            backgroundColor: '#fff',
+                            marginRight: '12px',
+                            opacity: frame % 30 < 15 ? 1 : 0.3
+                        }
+                    }),
+                    isEn ? 'BREAKING' : 'TIN NÓNG'
+                ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)("div", {
+                style: {
+                    display: 'flex',
+                    whiteSpace: 'nowrap',
+                    transform: `translateX(${offset}px)`,
+                    gap: '50px',
+                    marginLeft: '220px',
+                    fontSize: '28px',
+                    fontWeight: 700,
+                    color: '#f8fafc',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px'
+                },
+                children: /*#__PURE__*/ (0,jsx_runtime.jsx)("span", {
+                    children: repeatedText
+                })
+            })
+        ]
+    });
+};
+
 ;// CONCATENATED MODULE: ./src/DynamicNews/index.tsx
+
+
 
 
 
@@ -24307,10 +24829,33 @@ const DynamicBackground = ({ primaryColor = '#38bdf8', bgStyle = 'hud', totalDur
 const DynamicNewsComp = (props)=>{
     const { width, height } = (0,esm.useVideoConfig)();
     const totalFrames = props.totalDurationInFrames || 1800;
-    // Xóa bỏ random transition (vi phạm nguyên tắc), chỉ dùng slide mượt mà từ dưới lên hoặc fade
+    // Luân phiên các hiệu ứng chuyển cảnh mượt mà cho mỗi Scene
     const getTransition = (idx)=>{
-        // Luôn dùng fade để đảm bảo sự liền mạch, tránh giật lag hoặc quá lạm dụng chuyển động
-        return fade();
+        const types = [
+            slide_slide({
+                direction: 'from-right'
+            }),
+            slide_slide({
+                direction: 'from-bottom'
+            }),
+            slide_slide({
+                direction: 'from-left'
+            }),
+            fade()
+        ];
+        return types[idx % types.length];
+    };
+    const getTiming = (idx)=>{
+        // Fade bị lỗi giật nháy nếu dùng spring, nên bắt buộc dùng linear
+        if (idx % 4 === 3) {
+            return linearTiming({
+                durationInFrames: 15
+            });
+        }
+        return springTiming({
+            config: tokens.animation.spring.smooth,
+            durationInFrames: tokens.animation.duration.medium
+        });
     };
     return /*#__PURE__*/ (0,jsx_runtime.jsxs)(esm.AbsoluteFill, {
         style: {
@@ -24355,10 +24900,7 @@ const DynamicNewsComp = (props)=>{
                                 }),
                                 (idx < props.scenes.length - 1 || props.outro) && /*#__PURE__*/ (0,jsx_runtime.jsx)(TransitionSeries.Transition, {
                                     presentation: getTransition(idx),
-                                    timing: springTiming({
-                                        config: tokens.animation.spring.smooth,
-                                        durationInFrames: tokens.animation.duration.medium
-                                    })
+                                    timing: getTiming(idx)
                                 })
                             ]
                         }, `scene-${idx}`)),
@@ -24369,6 +24911,12 @@ const DynamicNewsComp = (props)=>{
                         })
                     })
                 ]
+            }),
+            /*#__PURE__*/ (0,jsx_runtime.jsx)(NewsTicker, {
+                title: props.title,
+                themeColor: props.themeColor || tokens.colors.primary,
+                language: props.language,
+                headlines: props.scenes.map((s)=>s.headline)
             })
         ]
     });
@@ -24473,6 +25021,7 @@ const RemotionRoot = ()=>{
 ;// CONCATENATED MODULE: ./src/index.ts
 // This is your entry file! Refer to it when you render:
 // npx remotion render <entry-file> HelloWorld out/video.mp4
+
 
 
 (0,esm.registerRoot)(RemotionRoot);
@@ -41703,7 +42252,7 @@ var NoReactInternals = {
 },
 5124(module) {
 "use strict";
-module.exports = JSON.parse('{"title":"Siêu Máy Tính AI Lên Quỹ Đạo","themeColor":"#06b6d4","bgStyle":"hud","totalDurationInFrames":2017,"scenes":[{"id":1,"tag":"XÁC MINH NGUỒN TIN","layoutType":"stat","imageFile":"crawled_img_1.jpg","headline":"SpaceX & NVIDIA Đưa Siêu Máy Tính AI Lên Vũ Trụ","keyTakeaways":[],"statNumber":"Q4/2027","statLabel":"Thời điểm phóng vệ tinh Starmind AI1","audioFile":"dynamic_1.mp3","audioFrames":336,"globalStart":0,"seqDuration":376,"color":"#38bdf8","takeawayStarts":[]},{"id":2,"tag":"BẰNG CHỨNG KỸ THUẬT","layoutType":"image","imageFile":"crawled_img_1.jpg","headline":"Thiết Kế Chịu Bức Xạ Và Chân Không","keyTakeaways":["Trang bị module NVIDIA Space-1 Vera Rubin NVL72","Tích hợp 72 GPU Rubin và 36 CPU Vera thế hệ mới"],"audioFile":"dynamic_2.mp3","audioFrames":384,"globalStart":356,"seqDuration":424,"color":"#a855f7","takeawayStarts":[60,188]},{"id":3,"tag":"SỐ LIỆU ĐIỀU TRA","layoutType":"stat","imageFile":"crawled_img_1.jpg","headline":"Bứt Phá Tốc Độ Tính Toán Trực Tiếp","keyTakeaways":[],"statNumber":"25 Lần","statLabel":"Tăng trưởng hiệu suất AI On-Board","audioFile":"dynamic_3.mp3","audioFrames":320,"globalStart":760,"seqDuration":360,"color":"#eab308","takeawayStarts":[]},{"id":4,"tag":"PHẢN ỨNG THỊ TRƯỜNG","layoutType":"quote","imageFile":"crawled_img_1.jpg","headline":"Giải Khát Khủng Hoảng Năng Lượng Mặt Đất","keyTakeaways":[],"quoteText":"Dự án mở ra kỷ nguyên điện toán ngoài không gian, giải tỏa áp lực tiêu thụ điện năng và nước làm mát khổng lồ tại các data center mặt đất.","quoteAuthor":"Phân tích Hạ tầng Công nghệ Quốc tế","audioFile":"dynamic_4.mp3","audioFrames":341,"globalStart":1100,"seqDuration":381,"color":"#22c55e","takeawayStarts":[]},{"id":5,"tag":"CỤC DIỆN TƯƠNG LAI","layoutType":"list","imageFile":"crawled_img_1.jpg","headline":"Hệ Sinh Thái Điện Toán Vũ Trụ Mới","keyTakeaways":["Axiom Space, Planet Labs, Starcloud đã tích hợp nền tảng NVIDIA","Định hình lại chiến lược hạ tầng viễn thông và dữ liệu toàn cầu"],"audioFile":"dynamic_5.mp3","audioFrames":291,"globalStart":1461,"seqDuration":311,"color":"#ef4444","takeawayStarts":[60,157]}],"outro":{"title":"Siêu Máy Tính AI Lên Quỹ Đạo","subtitle":"Cập nhật tin tức nhanh và chính xác nhất","audioFile":"dynamic_outro.mp3","audioFrames":225,"globalStart":1772,"seqDuration":245}}')
+module.exports = JSON.parse('{"language":"vi","title":"Sự Thật Bài Báo","themeColor":"#ef4444","bgStyle":"grid","totalDurationInFrames":1297,"scenes":[{"id":1,"tag":"ĐỜI SỐNG","layoutType":"list","headline":"Đường dẫn thô","keyTakeaways":["Nội dung chỉ là đường dẫn thô","Không có thông tin chi tiết"],"statNumber":"","statLabel":"","quoteText":"","quoteAuthor":"","voiceover":"Nội dung bài báo cung cấp chỉ là một đường dẫn thô và hoàn toàn không có thông tin chi tiết về vụ việc hay sự kiện nào được đề cập trong văn bản này.","audioFile":"dynamic_1.mp3","audioFrames":225,"globalStart":0,"seqDuration":265,"color":"#38bdf8","takeawayStarts":[60,135]},{"id":2,"tag":"ĐỜI SỐNG","layoutType":"stat","headline":"Thiếu dữ liệu","keyTakeaways":["Không có số liệu","Không có nhân vật"],"statNumber":"0","statLabel":"Dữ liệu được cung cấp","quoteText":"","quoteAuthor":"","voiceover":"Không thể trích xuất các dữ liệu cụ thể, số liệu hoặc sự kiện từ văn bản này. Không có nhân vật hay địa điểm nào được đề cập trong văn bản thô.","audioFile":"dynamic_2.mp3","audioFrames":267,"globalStart":245,"seqDuration":307,"color":"#a855f7","takeawayStarts":[60,149]},{"id":3,"tag":"ĐỜI SỐNG","layoutType":"quote","headline":"Yêu cầu kiểm chứng","keyTakeaways":["Cần thêm văn bản bài báo","Phóng viên tiến hành bóc tách"],"statNumber":"","statLabel":"","quoteText":"Phóng viên điều tra cần thêm văn bản bài báo để tiến hành bóc tách thông tin chính xác.","quoteAuthor":"Phóng viên điều tra","voiceover":"Để làm rõ sự việc, phóng viên điều tra cần phải có thêm văn bản bài báo gốc để tiến hành bóc tách thông tin chính xác theo quy trình.","audioFile":"dynamic_3.mp3","audioFrames":207,"globalStart":532,"seqDuration":247,"color":"#eab308","takeawayStarts":[60,129]},{"id":4,"tag":"ĐỜI SỐNG","layoutType":"image","headline":"Chưa rõ hệ lụy","keyTakeaways":["Không xác định hệ lụy","Thiếu nội dung bài báo"],"statNumber":"","statLabel":"","quoteText":"","quoteAuthor":"","voiceover":"Hiện tại, chúng ta không thể xác định được các hệ lụy hoặc ảnh hưởng nào do tình trạng thiếu nội dung bài báo gây ra. Hãy cùng chờ đợi các thông tin tiếp theo.","audioFile":"dynamic_4.mp3","audioFrames":279,"globalStart":759,"seqDuration":299,"color":"#22c55e","takeawayStarts":[60,153]}],"outro":{"title":"Sự Thật Bài Báo","subtitle":"Cập nhật tin tức nhanh và chính xác nhất","audioFile":"dynamic_outro.mp3","audioFrames":219,"globalStart":1058,"seqDuration":239}}')
 
 },
 
@@ -42038,7 +42587,7 @@ __webpack_require__.ruid = "bundler=rspack@1.7.11";
 // This entry module is referenced by other modules so it can't be inlined
 __webpack_require__(6507);
 __webpack_require__(3999);
-__webpack_require__(589);
+__webpack_require__(1252);
 __webpack_require__(3610);
 var __webpack_exports__ = __webpack_require__(3482);
 })()
