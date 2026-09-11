@@ -12,37 +12,33 @@ function getModelsForTask(taskType, envDefaultModel = null) {
     case 'FILTER':
       // Tác vụ quét/lọc tin: Cần siêu tốc độ, tiết kiệm quota nhất.
       preferredModels = [
-        "gemini-3.5-flash-lite", // 500 RPD, 15 RPM
-        "gemini-3.1-flash-lite", // 500 RPD, 15 RPM
+        "gemini-3.5-flash-lite",
+        "gemini-3.6-flash",
+        "gemini-flash-latest",
         "gemini-2.5-flash-lite",
-        "gemini-3.0-flash",
-        "gemini-2.5-flash",
-        "gemini-flash-latest"
+        "gemini-3.5-flash"
       ];
       break;
 
     case 'EXTRACT':
       // Tác vụ bóc tách sự kiện/Facts
       preferredModels = [
-        "gemini-3.5-flash-lite", // Dùng bản lite mới nhất vì quota dồi dào
-        "gemini-3.1-flash-lite",
-        "gemini-3.7-flash",      // Quota cực ít (20 RPD)
+        "gemini-3.5-flash-lite",
         "gemini-3.6-flash",
+        "gemini-flash-latest",
         "gemini-3.5-flash",
-        "gemini-2.5-flash",
-        "gemini-2.5-pro"
+        "gemini-2.5-flash-lite"
       ];
       break;
 
     case 'WRITE':
       // Tác vụ viết kịch bản sáng tạo
       preferredModels = [
-        "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        "gemini-3.7-flash",
         "gemini-3.6-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-flash-latest",
         "gemini-3.5-flash",
-        "gemini-2.5-flash"
+        "gemini-2.5-flash-lite"
       ];
       break;
 
@@ -50,11 +46,10 @@ function getModelsForTask(taskType, envDefaultModel = null) {
       // Tác vụ chung chung
       preferredModels = [
         "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        "gemini-3.7-flash",
         "gemini-3.6-flash",
+        "gemini-flash-latest",
         "gemini-3.5-flash",
-        "gemini-2.5-flash"
+        "gemini-2.5-flash-lite"
       ];
       break;
   }

@@ -1,113 +1,168 @@
 {
   "language": "vi",
-  "title": "Sự Thật Bài Báo",
-  "themeColor": "#ef4444",
+  "title": "Lộ Trình AI Việt Nam 2030",
+  "category": "CÔNG NGHỆ",
+  "themeColor": "#3b82f6",
   "bgStyle": "grid",
-  "totalDurationInFrames": 1297,
+  "totalDurationInFrames": 2067,
   "scenes": [
     {
       "id": 1,
-      "tag": "ĐỜI SỐNG",
-      "layoutType": "list",
-      "headline": "Đường dẫn thô",
+      "tag": "CÔNG NGHỆ",
+      "layoutType": "image",
+      "imageFile": "crawled_img_1.jpg",
+      "headline": "Việt Nam bứt phá công nghệ",
       "keyTakeaways": [
-        "Nội dung chỉ là đường dẫn thô",
-        "Không có thông tin chi tiết"
+        "Phát triển nguồn nhân lực AI",
+        "Theo Quyết định số 1528/QĐ-TTg"
       ],
       "statNumber": "",
       "statLabel": "",
       "quoteText": "",
       "quoteAuthor": "",
-      "voiceover": "Nội dung bài báo cung cấp chỉ là một đường dẫn thô và hoàn toàn không có thông tin chi tiết về vụ việc hay sự kiện nào được đề cập trong văn bản này.",
+      "voiceover": "Việt Nam chính thức ban hành lộ trình quốc gia phát triển nguồn nhân lực trí tuệ nhân tạo đến năm 2030 theo Quyết định số 1528/QĐ-TTg, đánh dấu bước ngoặt lớn cho công nghệ nước nhà.",
       "audioFile": "dynamic_1.mp3",
-      "audioFrames": 225,
+      "audioFrames": 336,
       "globalStart": 0,
-      "seqDuration": 265,
+      "seqDuration": 376,
       "color": "#38bdf8",
       "takeawayStarts": [
         60,
-        135
+        172
       ]
     },
     {
       "id": 2,
-      "tag": "ĐỜI SỐNG",
-      "layoutType": "stat",
-      "headline": "Thiếu dữ liệu",
+      "tag": "GIÁO DỤC AI",
+      "layoutType": "list",
+      "imageFile": "crawled_img_4.jpg",
+      "headline": "Phổ cập AI toàn diện",
       "keyTakeaways": [
-        "Không có số liệu",
-        "Không có nhân vật"
+        "100% đại học tích hợp quy định AI",
+        "80% học sinh phổ thông được tiếp cận"
       ],
-      "statNumber": "0",
-      "statLabel": "Dữ liệu được cung cấp",
+      "statNumber": "",
+      "statLabel": "",
       "quoteText": "",
       "quoteAuthor": "",
-      "voiceover": "Không thể trích xuất các dữ liệu cụ thể, số liệu hoặc sự kiện từ văn bản này. Không có nhân vật hay địa điểm nào được đề cập trong văn bản thô.",
+      "voiceover": "Mục tiêu lớn đặt ra là chuẩn hóa một trăm phần trăm trường đại học tích hợp AI. Đồng thời, ít nhất tám mươi phần trăm học sinh phổ thông và giáo dục nghề nghiệp sẽ được phổ cập kiến thức này.",
       "audioFile": "dynamic_2.mp3",
-      "audioFrames": 267,
-      "globalStart": 245,
-      "seqDuration": 307,
+      "audioFrames": 315,
+      "globalStart": 356,
+      "seqDuration": 355,
       "color": "#a855f7",
       "takeawayStarts": [
         60,
-        149
+        165
       ]
     },
     {
       "id": 3,
-      "tag": "ĐỜI SỐNG",
-      "layoutType": "quote",
-      "headline": "Yêu cầu kiểm chứng",
+      "tag": "MỤC TIÊU LỚN",
+      "layoutType": "stat",
+      "imageFile": "crawled_img_4.jpg",
+      "headline": "Hàng chục nghìn nhân sự chất lượng cao",
       "keyTakeaways": [
-        "Cần thêm văn bản bài báo",
-        "Phóng viên tiến hành bóc tách"
+        "Đào tạo 50.000 cử nhân trình độ đại học",
+        "Phát triển 10.000 nhân lực AI trình độ cao"
       ],
-      "statNumber": "",
-      "statLabel": "",
-      "quoteText": "Phóng viên điều tra cần thêm văn bản bài báo để tiến hành bóc tách thông tin chính xác.",
-      "quoteAuthor": "Phóng viên điều tra",
-      "voiceover": "Để làm rõ sự việc, phóng viên điều tra cần phải có thêm văn bản bài báo gốc để tiến hành bóc tách thông tin chính xác theo quy trình.",
+      "statNumber": "60.000",
+      "statLabel": "Nhân lực AI & Đại học",
+      "quoteText": "",
+      "quoteAuthor": "",
+      "voiceover": "Chương trình đặt mục tiêu đào tạo tối thiểu năm mươi nghìn nhân lực trình độ đại học trở lên và mười nghìn nhân lực AI trình độ cao, bao gồm cả chuyên gia nghiên cứu công nghệ lõi.",
       "audioFile": "dynamic_3.mp3",
-      "audioFrames": 207,
-      "globalStart": 532,
-      "seqDuration": 247,
+      "audioFrames": 256,
+      "globalStart": 691,
+      "seqDuration": 296,
       "color": "#eab308",
       "takeawayStarts": [
         60,
-        129
+        145
       ]
     },
     {
       "id": 4,
-      "tag": "ĐỜI SỐNG",
-      "layoutType": "image",
-      "headline": "Chưa rõ hệ lụy",
+      "tag": "HẠ TẦNG SỐ",
+      "layoutType": "list",
+      "imageFile": "crawled_img_4.jpg",
+      "headline": "Mở rộng trung tâm nghiên cứu",
       "keyTakeaways": [
-        "Không xác định hệ lụy",
-        "Thiếu nội dung bài báo"
+        "Hình thành 10 trung tâm AI tiên tiến",
+        "25 trường đại học làm đầu mối đổi mới"
       ],
       "statNumber": "",
       "statLabel": "",
       "quoteText": "",
       "quoteAuthor": "",
-      "voiceover": "Hiện tại, chúng ta không thể xác định được các hệ lụy hoặc ảnh hưởng nào do tình trạng thiếu nội dung bài báo gây ra. Hãy cùng chờ đợi các thông tin tiếp theo.",
+      "voiceover": "Nước ta sẽ hình thành mạng lưới tối thiểu mười trung tâm đào tạo, nghiên cứu AI tiên tiến cùng hai mươi lăm cơ sở giáo dục đại học làm đầu mối thúc đẩy đổi mới sáng tạo.",
       "audioFile": "dynamic_4.mp3",
-      "audioFrames": 279,
-      "globalStart": 759,
+      "audioFrames": 259,
+      "globalStart": 967,
       "seqDuration": 299,
       "color": "#22c55e",
       "takeawayStarts": [
         60,
-        153
+        146
+      ]
+    },
+    {
+      "id": 5,
+      "tag": "NHÂN LỰC SỐ",
+      "layoutType": "stat",
+      "imageFile": "crawled_img_1.jpg",
+      "headline": "Nâng tầm kỹ năng lao động",
+      "keyTakeaways": [
+        "100.000 giáo viên được bồi dưỡng chuyên sâu",
+        "10 triệu lao động cập nhật kỹ năng AI"
+      ],
+      "statNumber": "10 Triệu",
+      "statLabel": "Lao động cập nhật kỹ năng",
+      "quoteText": "",
+      "quoteAuthor": "",
+      "voiceover": "Có ít nhất một trăm nghìn giáo viên, cán bộ quản lý giáo dục được bồi dưỡng chuyên sâu, và mười triệu người lao động được đào tạo, cập nhật các kỹ năng AI cơ bản.",
+      "audioFile": "dynamic_5.mp3",
+      "audioFrames": 259,
+      "globalStart": 1246,
+      "seqDuration": 299,
+      "color": "#ef4444",
+      "takeawayStarts": [
+        60,
+        146
+      ]
+    },
+    {
+      "id": 6,
+      "tag": "TƯƠNG LAI",
+      "layoutType": "quote",
+      "imageFile": "crawled_img_4.jpg",
+      "headline": "Làm chủ công nghệ tương lai",
+      "keyTakeaways": [
+        "Chuyển đổi từ người dùng sang làm chủ",
+        "Nâng cao năng lực cạnh tranh quốc gia"
+      ],
+      "statNumber": "",
+      "statLabel": "",
+      "quoteText": "Định hình lại hệ thống đào tạo, đưa lực lượng lao động Việt Nam làm chủ hoàn toàn công nghệ AI.",
+      "quoteAuthor": "Chính phủ Việt Nam",
+      "voiceover": "Đề án này sẽ định hình lại toàn bộ hệ thống đào tạo, giúp lực lượng lao động chuyển từ người dùng thụ động sang làm chủ công nghệ, nâng cao vị thế cạnh tranh quốc gia trên trường quốc tế.",
+      "audioFile": "dynamic_6.mp3",
+      "audioFrames": 283,
+      "globalStart": 1525,
+      "seqDuration": 303,
+      "color": "#ec4899",
+      "takeawayStarts": [
+        60,
+        154
       ]
     }
   ],
   "outro": {
-    "title": "Sự Thật Bài Báo",
+    "title": "Lộ Trình AI Việt Nam 2030",
     "subtitle": "Cập nhật tin tức nhanh và chính xác nhất",
     "audioFile": "dynamic_outro.mp3",
     "audioFrames": 219,
-    "globalStart": 1058,
+    "globalStart": 1828,
     "seqDuration": 239
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 export const Body: React.FC = () => {
   const frame = useCurrentFrame();

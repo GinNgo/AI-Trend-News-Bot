@@ -8,6 +8,7 @@ import { TrafficNewsComp } from "./TrafficNews";
 import { TechNewsComp } from "./TechNews";
 import { DynamicNewsComp } from "./DynamicNews";
 import { DynamicNewsData } from "./DynamicNews/types";
+import dynamicNewsDefault from "./dynamic_news.json";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -86,6 +87,8 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="DynamicNews"
         component={DynamicNewsComp}
+        durationInFrames={1800}
+        defaultProps={dynamicNewsDefault as DynamicNewsData}
         calculateMetadata={async () => {
           // Dynamic data loaded from src/dynamic_news.json
           const data: DynamicNewsData = require('./dynamic_news.json');

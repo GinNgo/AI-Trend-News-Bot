@@ -2,10 +2,9 @@ import React from 'react';
 import { AbsoluteFill, useVideoConfig, Audio, staticFile, Sequence } from 'remotion';
 import { TransitionSeries, springTiming, linearTiming } from '@remotion/transitions';
 import { slide } from '@remotion/transitions/slide';
-import { wipe } from '@remotion/transitions/wipe';
 import { fade } from '@remotion/transitions/fade';
 
-import { DynamicOutroData, DynamicNewsData } from './types';
+import { DynamicNewsData } from './types';
 import { DynamicScene } from './Scene';
 import { DynamicOutro } from './Outro';
 import { DynamicBackground } from './Background';
@@ -78,7 +77,7 @@ export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
 
         {props.outro && (
           <TransitionSeries.Sequence durationInFrames={props.outro.seqDuration}>
-            <DynamicOutro data={props.outro} />
+            <DynamicOutro data={props.outro} language={props.language} />
           </TransitionSeries.Sequence>
         )}
       </TransitionSeries>
@@ -92,6 +91,9 @@ export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
         themeColor={props.themeColor || tokens.colors.primary}
         language={props.language}
         headlines={props.scenes.map((s) => s.headline)}
+        category={(props.category as string) || (props.scenes && props.scenes[0] && props.scenes[0].tag)}
+        tickerTag={props.tickerTag as string | undefined}
+        tickerColor={props.tickerColor as string | undefined}
       />
     </AbsoluteFill>
   );

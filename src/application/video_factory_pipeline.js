@@ -50,8 +50,9 @@ class VideoFactoryPipeline {
       }
 
       case 'RESEARCHING': {
-        const article = payload.article;
+        const article = payload.article || (payload.artifacts && payload.artifacts.article);
         if (!article) throw new Error('Missing article in payload');
+        payload.article = article;
 
         // Extract claims & event
         const extracted = await this.researcher.extractClaims([article]);

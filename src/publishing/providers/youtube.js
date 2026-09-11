@@ -69,13 +69,12 @@ class YouTubeProvider extends PlatformAdapter {
   async publish(publicationRecord) {
     logger.info(`[YouTubeProvider] Uploading to YouTube for story ${publicationRecord.storyId}`);
 
+    
     if (process.env.DRY_RUN === 'true') {
-      logger.info(`[YouTubeProvider] DRY_RUN: Upload skipped.`);
-      return {
-        platformVideoId: `dryrun-yt-${Date.now()}`,
-        url: `https://youtube.com/shorts/dryrun`
-      };
+      logger.info("[YouTubeProvider] DRY_RUN: Upload skipped. Returning DRY_RUN status.");
+      throw new Error("DRY_RUN: API Upload aborted deliberately. No fake ID will be generated.");
     }
+
 
     if (!this.oauth2Client) throw new Error('Not authenticated with YouTube. Missing client_secret.json or tokens.json');
 

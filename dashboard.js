@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
@@ -159,16 +160,39 @@ app.get('/api/logs', (req, res) => {
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive'
   });
+
+  // Gửi ngay trạng thái khởi tạo tức thì khi client kết nối
+  try {
+    const db = getDb();
+    const recentJobs = db.prepare('SELECT jobId, stage, status, updatedAt FROM jobs ORDER BY updatedAt DESC LIMIT 5').all();
+    const publications = db.prepare('SELECT publicationId, platform, status, url, title, lastError, publishedAt, createdAt, updatedAt FROM publications ORDER BY updatedAt DESC LIMIT 200').all();
+    res.write(`data: ${JSON.stringify({ type: 'status_sync', jobs: recentJobs, publications })}\n\n`);
+  } catch(e) {}
+
   logClients.push(res);
   req.on('close', () => {
     logClients = logClients.filter(c => c !== res);
   });
 });
 
+app.get('/api/publications', (req, res) => {
+  try {
+    const db = getDb();
+    const limit = req.query.limit ? parseInt(req.query.limit) : 200;
+    const query = limit > 0
+      ? 'SELECT publicationId, platform, status, url, title, lastError, publishedAt, createdAt, updatedAt FROM publications ORDER BY updatedAt DESC LIMIT ?'
+      : 'SELECT publicationId, platform, status, url, title, lastError, publishedAt, createdAt, updatedAt FROM publications ORDER BY updatedAt DESC';
+    const publications = limit > 0 ? db.prepare(query).all(limit) : db.prepare(query).all();
+    res.json(publications);
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 setInterval(() => {
   const db = getDb();
   const recentJobs = db.prepare('SELECT jobId, stage, status, updatedAt FROM jobs ORDER BY updatedAt DESC LIMIT 5').all();
-  const publications = db.prepare('SELECT publicationId, platform, status, url FROM publications ORDER BY updatedAt DESC LIMIT 10').all();
+  const publications = db.prepare('SELECT publicationId, platform, status, url, title, lastError, publishedAt, createdAt, updatedAt FROM publications ORDER BY updatedAt DESC LIMIT 200').all();
 
   const msg = JSON.stringify({
     type: 'status_sync',
@@ -330,12 +354,51 @@ app.post('/api/settings', (req, res) => {
   res.json({ ok: true, settings: updatedConf });
 });
 
+app.post('/api/settings/clear-platform', (req, res) => {
+  const { platform } = req.body || {};
+  let conf = {};
+  if (fs.existsSync(configPath)) {
+    try {
+      conf = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    } catch(e) {}
+  }
+
+  if (platform === 'youtube') {
+    conf.ENABLE_YOUTUBE = false;
+    const tokensFile = path.join(__dirname, 'tokens.json');
+    if (fs.existsSync(tokensFile)) {
+      try { fs.unlinkSync(tokensFile); } catch(e) {}
+    }
+  } else if (platform === 'tiktok') {
+    conf.ENABLE_TIKTOK = false;
+    conf.TIKTOK_CLIENT_KEY = '';
+    conf.TIKTOK_CLIENT_SECRET = '';
+  } else if (platform === 'facebook') {
+    conf.ENABLE_FACEBOOK = false;
+    conf.META_PAGE_ID = '';
+    if (!conf.ENABLE_INSTAGRAM) {
+      conf.META_ACCESS_TOKEN = '';
+    }
+  } else if (platform === 'instagram') {
+    conf.ENABLE_INSTAGRAM = false;
+    conf.IG_ACCOUNT_ID = '';
+    if (!conf.ENABLE_FACEBOOK) {
+      conf.META_ACCESS_TOKEN = '';
+    }
+  }
+
+  fs.writeFileSync(configPath, JSON.stringify(conf, null, 2), 'utf-8');
+  res.json({ ok: true, settings: conf });
+});
+
 app.post('/api/publish-queue', async (req, res) => {
   try {
+    const { publicationIds } = req.body || {};
     const { Publisher } = require('./src/publishing/publisher.js');
     const pub = new Publisher();
-    await pub.processQueue();
-    res.json({ ok: true, message: 'Đã kích hoạt đẩy hàng đợi Đa nền tảng.' });
+    await pub.processQueue(publicationIds);
+    const countMsg = publicationIds && publicationIds.length ? `${publicationIds.length} mục đã chọn` : 'toàn bộ mục chờ đăng';
+    res.json({ ok: true, message: `Đã kích hoạt đẩy xuất bản ${countMsg}.` });
   } catch(e) {
     res.status(500).json({ error: e.message });
   }
@@ -353,9 +416,16 @@ app.delete('/api/publish-queue/:id', (req, res) => {
 
 app.delete('/api/publish-queue', (req, res) => {
   try {
+    const { publicationIds } = req.body || {};
     const db = getDb();
-    db.prepare('DELETE FROM publications').run();
-    res.json({ ok: true, message: 'Đã dọn dẹp toàn bộ hàng đợi.' });
+    if (publicationIds && Array.isArray(publicationIds) && publicationIds.length > 0) {
+      const placeholders = publicationIds.map(() => '?').join(',');
+      db.prepare(`DELETE FROM publications WHERE publicationId IN (${placeholders})`).run(...publicationIds);
+      res.json({ ok: true, message: `Đã xóa ${publicationIds.length} mục đã chọn.` });
+    } else {
+      db.prepare('DELETE FROM publications').run();
+      res.json({ ok: true, message: 'Đã dọn dẹp toàn bộ hàng đợi.' });
+    }
   } catch(e) {
     res.status(500).json({ error: e.message });
   }

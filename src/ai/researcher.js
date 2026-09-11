@@ -8,14 +8,11 @@ const logger = require('../collector/utils/logger');
 async function callGeminiWithRetry(genAI, prompt, schema, maxRetries = 3) {
   const models = [
     process.env.GEMINI_MODEL,
-    'gemini-3.7-flash',
-    'gemini-3.6-flash',
-    'gemini-3.5-flash',
     'gemini-3.5-flash-lite',
-    'gemini-3.0-flash',
-    'gemini-2.5-flash',
-    'gemini-2.5-pro',
-    'gemini-flash-latest'
+    'gemini-3.6-flash',
+    'gemini-flash-latest',
+    'gemini-3.5-flash',
+    'gemini-2.5-flash-lite'
   ].filter(Boolean);
   let lastError;
 

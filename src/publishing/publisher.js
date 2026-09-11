@@ -36,9 +36,21 @@ class Publisher {
     `).all();
   }
 
-  async processQueue() {
-    const pubs = this.getPendingPublications();
+  async processQueue(publicationIds = null) {
+    let pubs;
+    if (publicationIds && Array.isArray(publicationIds) && publicationIds.length > 0) {
+      const placeholders = publicationIds.map(() => '?').join(',');
+      pubs = this.db.prepare(`
+        SELECT * FROM publications
+        WHERE publicationId IN (${placeholders})
+      `).all(...publicationIds);
+    } else {
+      pubs = this.getPendingPublications();
+    }
     for (const pub of pubs) {
+      if (pub.status === 'FAILED') {
+        this.updateStatus(pub.publicationId, 'PENDING', null);
+      }
       await this.publish(pub);
     }
   }
@@ -59,8 +71,19 @@ class Publisher {
       const render = this.db.prepare('SELECT * FROM renders WHERE renderId = ?').get(pub.renderId);
       if (!render) throw new Error('Render not found');
 
-      // 2. Load platform credentials (mocked for now unless via oauth flow)
-      // Usually would come from a tokens table or env
+      // 2. Load platform credentials & privacy status
+      const path = require('path');
+      const fs = require('fs');
+      let privacyStatus = 'public';
+      try {
+        const confPath = path.join(__dirname, '../../config.json');
+        if (fs.existsSync(confPath)) {
+          const conf = JSON.parse(fs.readFileSync(confPath, 'utf-8'));
+          if (conf.YOUTUBE_PRIVACY) privacyStatus = conf.YOUTUBE_PRIVACY;
+        }
+      } catch(e) {}
+      if (process.env.YOUTUBE_PRIVACY) privacyStatus = process.env.YOUTUBE_PRIVACY;
+      if (process.env.DEFAULT_PRIVACY) privacyStatus = process.env.DEFAULT_PRIVACY;
 
       // 3. Perform upload
       const result = await provider.publish({
@@ -68,7 +91,7 @@ class Publisher {
         mediaPath: render.videoPath,
         title: pub.title,
         caption: pub.caption,
-        privacyStatus: process.env.DEFAULT_PRIVACY || 'private'
+        privacyStatus: privacyStatus
       });
 
       // 4. Record success

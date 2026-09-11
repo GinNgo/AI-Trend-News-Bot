@@ -1,5 +1,5 @@
 import React from 'react';
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, useCurrentFrame } from 'remotion';
 
 export const DynamicBackground: React.FC<{
   primaryColor?: string;
@@ -7,7 +7,6 @@ export const DynamicBackground: React.FC<{
   totalDurationInFrames: number;
 }> = ({ primaryColor = '#38bdf8', bgStyle = 'hud', totalDurationInFrames }) => {
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
 
   // Dynamic orbits for Aurora orbs (Lissajous curves)
   const orb1X = Math.sin(frame * 0.02) * 220;

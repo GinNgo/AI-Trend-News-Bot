@@ -14,6 +14,15 @@ const parser = new Parser({
 // Load config
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+function getBotConfig() {
+  const configPath = path.join(__dirname, 'config.json');
+  let conf = { GEMINI_MODEL: 'gemini-3.5-flash-lite' };
+  if (fs.existsSync(configPath)) {
+    try { conf = JSON.parse(fs.readFileSync(configPath, 'utf8')); } catch (e) {}
+  }
+  return conf;
+}
+
 const HISTORY_FILE = path.join(__dirname, 'trend_history.json');
 const MAX_VIDEOS_PER_DAY = 6; // Giới hạn số video tự động đăng mỗi ngày để bảo vệ kênh
 
@@ -149,7 +158,8 @@ TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json)
 
   try {
     let text = "";
-    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL);
+    const config = getBotConfig();
+    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL || 'gemini-3.5-flash-lite');
     let success = false;
     for (const m of modelsToTry) {
       if (getModelBlockTimeRemaining(m) > 0) continue;
@@ -251,12 +261,9 @@ TRẢ VỀ DUY NHẤT 1 MẢNG JSON HỢP LỆ:
   `;
 
   try {
-    const configPath = require('path').join(__dirname, 'config.json');
-    let config = { GEMINI_MODEL: 'gemini-3.7-flash' };
-    try { config = JSON.parse(fs.readFileSync(configPath, 'utf8')); } catch(e){}
-
+    const config = getBotConfig();
     let text = "";
-    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL);
+    const modelsToTry = getModelsForTask('FILTER', config.GEMINI_MODEL || 'gemini-3.5-flash-lite');
 
     let success = false;
     for (const m of modelsToTry) {

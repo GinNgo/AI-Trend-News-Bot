@@ -6,6 +6,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const { scrapeArticleDeep } = require('./src/scraper/browser.js');
 const { extractFacts, generateScript } = require('./src/ai/agents.js');
+const { classifyLanguage, getSourceMetadata } = require('./src/ai/language_classifier.js');
+const { classifyDataViz } = require('./src/ai/data_viz_classifier.js');
 
 // Load config
 require('dotenv').config();
@@ -49,8 +51,8 @@ function generateAudioSafe(text, outputPath, voice, rate, pitch) {
         return; // Success
       }
     } catch (e) {
-      console.warn(`    ⚠️ Thử lại lần ${attempt}/3 do lỗi TTS: ${e.message.substring(0, 50)}...`);
-      execSync('timeout /t 2 /nobreak >nul 2>&1 || ping -n 3 127.0.0.1 >nul');
+      console.warn(`    ⚠️ Thử lại lần ${attempt}/3 do lỗi TTS: ${e.message ? e.message.substring(0, 50) : e}...`);
+      try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 2000); } catch (_) {}
     }
   }
   if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
@@ -117,9 +119,10 @@ async function main() {
   // Chuyển sang AI Agents Workflow
   console.log(`\n🧠 KHỞI ĐỘNG HỆ THỐNG AI ĐA TẦNG...`);
 
+  // Stage 1: Extract facts (initial pass in default language)
   let facts;
   try {
-    facts = await extractFacts(genAI, articleText, config.LANGUAGE || 'vi');
+    facts = await extractFacts(genAI, articleText, config.LANGUAGE === 'auto' ? 'vi' : (config.LANGUAGE || 'vi'));
     console.log(`  ✅ Bóc tách sự kiện thành công!`);
     console.log(`  📎 Tóm tắt: ${facts.summary}`);
   } catch (err) {
@@ -127,17 +130,51 @@ async function main() {
     process.exit(1);
   }
 
+  // Stage 1.5: Auto Language Detection (NEW)
+  let detectedLanguage = config.LANGUAGE || 'vi';
+  if (config.LANGUAGE === 'auto' || !config.LANGUAGE) {
+    try {
+      const sourceUrl = urlArg.startsWith('http') ? urlArg : '';
+      const langResult = await classifyLanguage(genAI, {
+        sourceUrl,
+        facts,
+        rawText: articleText.substring(0, 3000),
+      });
+      detectedLanguage = langResult.language;
+      console.log(`  🌐 Ngôn ngữ video: ${detectedLanguage === 'en' ? '🇬🇧 English' : '🇻🇳 Tiếng Việt'} (${(langResult.confidence * 100).toFixed(0)}%)`);
+
+      // If language is EN and facts were extracted in VI, re-extract in EN
+      if (detectedLanguage === 'en') {
+        console.log(`  🔄 Re-extract facts bằng Tiếng Anh...`);
+        facts = await extractFacts(genAI, articleText, 'en');
+      }
+    } catch (err) {
+      console.warn(`  ⚠️ Language detection thất bại, dùng mặc định: ${detectedLanguage}`);
+    }
+  }
+
+  // Stage 2: Generate video script
   let aiData;
   try {
-    aiData = await generateScript(genAI, facts, downloadedImages, config.LANGUAGE || 'vi');
-    console.log(`  ✅ AI đã viết kịch bản gồm ${aiData.scenes.length} cảnh.`);
+    aiData = await generateScript(genAI, facts, downloadedImages, detectedLanguage);
+    console.log(`  ✅ AI đã viết kịch bản gồm ${aiData.scenes.length} cảnh (${detectedLanguage}).`);
   } catch (err) {
     console.error("❌ AI không thể tạo kịch bản:", err.message);
     process.exit(1);
   }
 
+  // Stage 2.5: Data Visualization Classification (NEW)
+  try {
+    aiData.scenes = await classifyDataViz(genAI, aiData.scenes, facts);
+  } catch (err) {
+    console.warn(`  ⚠️ Data viz classification thất bại, giữ layout gốc: ${err.message}`);
+  }
+
   console.log(`\n🎙️ BƯỚC 3: Đang sinh Audio & Đồng bộ Khung hình (Edge-TTS)...`);
-  const isEnglish = (config.LANGUAGE === 'en');
+  const isEnglish = (detectedLanguage === 'en');
+  const ttsVoice = isEnglish ? 'en-US-ChristopherNeural' : (config.TTS_VOICE || 'vi-VN-HoaiMyNeural');
+  const ttsRate = isEnglish ? '+0%' : (config.TTS_RATE || '+5%');
+  const ttsPitch = config.TTS_PITCH || '+0Hz';
   const FPS = 30;
   const padding = 20; // 20 frames rest
   let globalStart = 0;
@@ -151,7 +188,7 @@ async function main() {
 
     console.log(`  Đang sinh audio cảnh ${i+1}...`);
     const voiceText = s.voiceover || s.voiceoverScript || s.headline;
-    generateAudioSafe(voiceText, audioPath, isEnglish ? 'en-US-ChristopherNeural' : config.TTS_VOICE, config.TTS_RATE, config.TTS_PITCH);
+    generateAudioSafe(voiceText, audioPath, ttsVoice, ttsRate, ttsPitch);
 
     const durSec = getAudioDurationPython(audioPath);
     const frames = Math.round(durSec * FPS);
@@ -181,7 +218,16 @@ async function main() {
       globalStart: globalStart,
       seqDuration: seqDur,
       color: colors[i % colors.length],
-      takeawayStarts: takeawayStarts
+      takeawayStarts: takeawayStarts,
+      language: detectedLanguage,
+      // Data Visualization fields (populated by classifyDataViz)
+      chartData: s.chartData || undefined,
+      progressValue: s.progressValue || undefined,
+      progressLabel: s.progressLabel || undefined,
+      counterTarget: s.counterTarget || undefined,
+      counterPrefix: s.counterPrefix || undefined,
+      counterSuffix: s.counterSuffix || undefined,
+      comparisonData: s.comparisonData || undefined,
     });
 
     globalStart += frames + padding;
@@ -193,7 +239,7 @@ async function main() {
     : "Hãy nhấn Like và Đăng ký theo dõi kênh để không bỏ lỡ các thông tin nóng nhất hàng ngày. Xin chào và hẹn gặp lại!";
   const outroAudio = 'dynamic_outro.mp3';
   const outroPath = path.join(publicDir, outroAudio);
-  generateAudioSafe(outroVoiceover, outroPath, isEnglish ? 'en-US-ChristopherNeural' : config.TTS_VOICE, config.TTS_RATE, config.TTS_PITCH);
+  generateAudioSafe(outroVoiceover, outroPath, ttsVoice, ttsRate, ttsPitch);
 
   const outroDur = getAudioDurationPython(outroPath);
   const outroFrames = Math.round(outroDur * FPS);
@@ -201,7 +247,7 @@ async function main() {
 
   const finalOutro = {
     title: aiData.title,
-    subtitle: "Cập nhật tin tức nhanh và chính xác nhất",
+    subtitle: isEnglish ? "Fast & accurate news updates" : "Cập nhật tin tức nhanh và chính xác nhất",
     audioFile: outroAudio,
     audioFrames: outroFrames,
     globalStart: globalStart,
@@ -211,8 +257,9 @@ async function main() {
   globalStart += outroFrames + padding;
 
   const finalRemotionJson = {
-    language: config.LANGUAGE || 'vi',
+    language: detectedLanguage,
     title: aiData.title,
+    category: (facts && facts.category) || (aiData.scenes && aiData.scenes[0] && aiData.scenes[0].tag),
     themeColor: aiData.themeColor,
     bgStyle: aiData.bgStyle,
     totalDurationInFrames: globalStart,
@@ -259,32 +306,41 @@ async function main() {
 
     let scheduledCount = 0;
 
-    const ytTitle = aiData.youtubeTitle || `${aiData.title} | Tin Tức Mới Nhất #shorts`;
+    const ytTitleSuffix = isEnglish ? ' | Breaking News #shorts' : ' | Tin Tức Mới Nhất #shorts';
+    const ytTitle = aiData.youtubeTitle || `${aiData.title}${ytTitleSuffix}`;
+    const defaultHashtags = isEnglish
+      ? '#shorts #breakingnews #tech #trending'
+      : '#shorts #tintuc #thoisu #xuhuong';
     const hashtags = aiData.youtubeTags && Array.isArray(aiData.youtubeTags)
       ? aiData.youtubeTags.map(t => `#${t.replace(/^#/, '')}`).join(' ')
-      : '#shorts #tintuc #thoisu #xuhuong';
+      : defaultHashtags;
     const ytCaption = (aiData.youtubeDescription || aiData.title) + '\n\n' + hashtags;
 
+    const enableYouTube = config.ENABLE_YOUTUBE !== undefined ? config.ENABLE_YOUTUBE : true;
+    const enableTikTok = config.ENABLE_TIKTOK !== undefined ? config.ENABLE_TIKTOK : false;
+    const enableInstagram = config.ENABLE_INSTAGRAM !== undefined ? config.ENABLE_INSTAGRAM : false;
+    const enableFacebook = config.ENABLE_FACEBOOK !== undefined ? config.ENABLE_FACEBOOK : false;
+
     const hasYouTube = fs.existsSync(path.join(__dirname, 'tokens.json')) || fs.existsSync(path.join(__dirname, 'client_secret.json'));
-    if (hasYouTube) {
+    if (hasYouTube && enableYouTube) {
       console.log(`- Lên lịch đăng YouTube Shorts...`);
       publisher.createPublication(storyId, renderId, 'youtube', ytTitle, ytCaption);
       scheduledCount++;
     }
 
-    if (config.TIKTOK_CLIENT_KEY && config.TIKTOK_CLIENT_SECRET) {
+    if (config.TIKTOK_CLIENT_KEY && config.TIKTOK_CLIENT_SECRET && enableTikTok) {
       console.log(`- Lên lịch đăng TikTok...`);
       publisher.createPublication(storyId, renderId, 'tiktok', ytTitle, ytCaption);
       scheduledCount++;
     }
 
-    if (config.IG_ACCOUNT_ID && config.META_ACCESS_TOKEN) {
+    if (config.IG_ACCOUNT_ID && config.META_ACCESS_TOKEN && enableInstagram) {
       console.log(`- Lên lịch đăng Instagram Reels...`);
       publisher.createPublication(storyId, renderId, 'instagram', ytTitle, ytCaption);
       scheduledCount++;
     }
 
-    if (config.META_PAGE_ID && config.META_ACCESS_TOKEN) {
+    if (config.META_PAGE_ID && config.META_ACCESS_TOKEN && enableFacebook) {
       console.log(`- Lên lịch đăng Facebook Reels...`);
       publisher.createPublication(storyId, renderId, 'facebook', ytTitle, ytCaption);
       scheduledCount++;

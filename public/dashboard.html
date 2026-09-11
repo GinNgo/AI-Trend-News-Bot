@@ -346,8 +346,20 @@
       margin: 0 auto 50px auto;
       padding: 0 24px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 1100px) {
+      .v2-bottom {
+        grid-template-columns: 1fr !important;
+      }
+      #videoSidebarPanel {
+        width: 100% !important;
+        position: static !important;
+      }
     }
 
     .v2-panel {
@@ -465,15 +477,18 @@
     <!-- TỰ ĐỘNG ĐĂNG TOGGLE VÀ NGÔN NGỮ -->
     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 20px;">
       <!-- Tự động xuất bản -->
-      <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;">
+      <div id="autoPublishContainer" style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s;">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 24px;">🚀</span>
+          <span style="font-size: 24px;" id="autoPublishIcon">⏸️</span>
           <div>
-            <h3 style="font-size: 16px; margin: 0; color: #10b981;">Tự động đăng Đa Nền Tảng</h3>
-            <p style="font-size: 12px; color: var(--muted); margin: 4px 0 0 0;">Khi BẬT, video sẽ tự động lên các kênh. Khi TẮT, video chờ Duyệt.</p>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h3 style="font-size: 16px; margin: 0; color: #fff;">Tự động xuất bản Đa Nền Tảng</h3>
+              <span id="autoPublishBadge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: bold;">⏸️ CHỜ DUYỆT THỦ CÔNG</span>
+            </div>
+            <p id="autoPublishDesc" style="font-size: 12px; color: var(--muted); margin: 4px 0 0 0;">Khi TẮT: Render xong video sẽ nằm ở tab "Duyệt & Xuất Bản" để bạn kiểm tra trước khi bấm đăng.</p>
           </div>
         </div>
-        <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px;">
+        <label class="switch" style="position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0;">
           <input type="checkbox" id="autoPublishBtn" onchange="toggleAutoPublish()" style="opacity: 0; width: 0; height: 0;">
           <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 34px;">
             <span class="slider-dot" style="position: absolute; content: ''; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
@@ -498,76 +513,165 @@
     </div>
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-     <h3 style="font-size: 16px; margin: 0; color: #fff;">🔌 KẾT NỐI API MẠNG XÃ HỘI</h3>
-     <button onclick="exportConfig()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
-       <span>📥</span> Xuất File Cấu Hình (config.json)
-     </button>
-   </div>
+      <div>
+        <h3 style="font-size: 16px; margin: 0; color: #fff;">🔌 KẾT NỐI API & CÔNG TẮC TỪNG NỀN TẢNG</h3>
+        <p style="font-size: 11px; color: var(--muted); margin: 2px 0 0 0;">Bật/tắt hoặc xóa cấu hình từng kênh độc lập. Kênh nào tắt sẽ KHÔNG đăng video.</p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <input type="file" id="importConfigFile" accept=".json" style="display: none;" onchange="handleImportConfig(event)">
+        <button onclick="document.getElementById('importConfigFile').click()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+          <span>📤</span> Nhập File Cấu Hình (Import)
+        </button>
+        <button onclick="exportConfig()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+          <span>📥</span> Xuất File Cấu Hình (config.json)
+        </button>
+      </div>
+    </div>
    <!-- PLATFORMS GRID -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
 
       <!-- YOUTUBE -->
-      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 14px; position: relative;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 16px;">▶️</span>
-            <h3 style="font-size: 13px; margin: 0; color: #fff;">YouTube Shorts</h3>
+      <div id="cardYt" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 14px; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 16px;">▶️</span>
+              <h3 style="font-size: 13px; margin: 0; color: #fff;">YouTube Shorts</h3>
+            </div>
+            <!-- Bật/Tắt Kênh Toggle -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label class="switch" style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0;">
+                <input type="checkbox" id="enableYt" onchange="togglePlatformSwitch('youtube')" style="opacity: 0; width: 0; height: 0;">
+                <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .3s; border-radius: 20px;">
+                  <span class="slider-dot" style="position: absolute; content: ''; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;"></span>
+                </span>
+              </label>
+              <span id="ytEnableLabel" style="font-size: 10px; font-weight: 700; color: #10b981;">BẬT</span>
+            </div>
           </div>
-          <button onclick="toggleGuide('ytGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+          <p id="ytStatusText" style="font-size: 11px; color: var(--muted); margin: 0 0 8px 0;">Đang kiểm tra kết nối...</p>
+          
+          <div style="margin-bottom: 8px;">
+            <label style="display: block; font-size: 11px; color: #cbd5e1; margin-bottom: 4px;">Chế độ hiển thị khi đăng:</label>
+            <select id="ytPrivacy" onchange="saveSettings(true)" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-size: 11px;">
+              <option value="public">🌐 Công khai (Public) - Mặc định</option>
+              <option value="unlisted">🔗 Không công khai (Unlisted)</option>
+              <option value="private">🔒 Riêng tư (Private)</option>
+            </select>
+          </div>
+
+          <button id="btnAuthYt" onclick="authYouTube()" style="background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%; display: none; margin-bottom: 6px;">🔑 Đăng nhập OAuth2</button>
         </div>
-        <p id="ytStatusText" style="font-size: 11px; color: var(--muted); margin: 0 0 10px 0;">Đang kiểm tra kết nối...</p>
-        <button id="btnAuthYt" onclick="authYouTube()" style="background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%; display: none;">🔑 Đăng nhập OAuth2</button>
+
+        <div style="display: flex; gap: 6px; margin-top: 8px;">
+          <button onclick="toggleGuide('ytGuide')" style="flex: 1; background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; padding: 6px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+          <button onclick="clearPlatformConfig('youtube')" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: 600;" title="Xóa tokens.json và tắt kết nối">🧹 Hủy kết nối</button>
+        </div>
       </div>
 
       <!-- TIKTOK -->
-      <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px; position: relative;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 16px;">🎵</span>
-            <h3 style="font-size: 13px; margin: 0; color: #fff;">TikTok API</h3>
+      <div id="cardTk" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 16px;">🎵</span>
+              <h3 style="font-size: 13px; margin: 0; color: #fff;">TikTok API</h3>
+            </div>
+            <!-- Bật/Tắt Kênh Toggle -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label class="switch" style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0;">
+                <input type="checkbox" id="enableTk" onchange="togglePlatformSwitch('tiktok')" style="opacity: 0; width: 0; height: 0;">
+                <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .3s; border-radius: 20px;">
+                  <span class="slider-dot" style="position: absolute; content: ''; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;"></span>
+                </span>
+              </label>
+              <span id="tkEnableLabel" style="font-size: 10px; font-weight: 700; color: #94a3b8;">TẮT</span>
+            </div>
           </div>
-          <button onclick="toggleGuide('tkGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+          <input type="text" id="tkClientKey" placeholder="Client Key" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+          <input type="password" id="tkClientSecret" placeholder="Client Secret" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 8px;">
         </div>
-        <input type="text" id="tkClientKey" placeholder="Client Key" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
-        <input type="password" id="tkClientSecret" placeholder="Client Secret" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <div style="display: flex; gap: 8px;">
-     <button onclick="saveSettings()" style="flex: 1; background: #334155; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
-     <button onclick="testConnection('tiktok')" style="background: #0f172a; border: 1px solid #334155; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
-   </div>
+
+        <div>
+          <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+            <button onclick="saveSettings()" style="flex: 1; background: #334155; color: white; border: none; padding: 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">💾 Lưu</button>
+            <button onclick="testConnection('tiktok')" style="background: #0f172a; border: 1px solid #334155; color: white; padding: 6px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">🔌 Test</button>
+            <button onclick="clearPlatformConfig('tiktok')" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;" title="Xóa Key & Tắt TikTok">🧹 Xóa</button>
+          </div>
+          <div style="text-align: right;">
+            <button onclick="toggleGuide('tkGuide')" style="background: transparent; border: none; color: #64748b; font-size: 10px; cursor: pointer;">📖 Hướng dẫn</button>
+          </div>
+        </div>
       </div>
 
       <!-- FACEBOOK -->
-      <div style="background: rgba(24, 119, 242, 0.1); border: 1px solid rgba(24, 119, 242, 0.2); border-radius: 12px; padding: 14px; position: relative;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 16px;">📘</span>
-            <h3 style="font-size: 13px; margin: 0; color: #fff;">Facebook Reels</h3>
+      <div id="cardFb" style="background: rgba(24, 119, 242, 0.08); border: 1px solid rgba(24, 119, 242, 0.25); border-radius: 12px; padding: 14px; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 16px;">📘</span>
+              <h3 style="font-size: 13px; margin: 0; color: #fff;">Facebook Reels</h3>
+            </div>
+            <!-- Bật/Tắt Kênh Toggle -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label class="switch" style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0;">
+                <input type="checkbox" id="enableFb" onchange="togglePlatformSwitch('facebook')" style="opacity: 0; width: 0; height: 0;">
+                <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .3s; border-radius: 20px;">
+                  <span class="slider-dot" style="position: absolute; content: ''; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;"></span>
+                </span>
+              </label>
+              <span id="fbEnableLabel" style="font-size: 10px; font-weight: 700; color: #94a3b8;">TẮT</span>
+            </div>
           </div>
-          <button onclick="toggleGuide('fbGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+          <input type="text" id="fbPageId" placeholder="Page ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+          <input type="password" id="fbToken" placeholder="Page Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 8px;">
         </div>
-        <input type="text" id="fbPageId" placeholder="Page ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
-        <input type="password" id="fbToken" placeholder="Page Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <div style="display: flex; gap: 8px;">
-     <button onclick="saveSettings()" style="flex: 1; background: #1877f2; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
-     <button onclick="testConnection('facebook')" style="background: rgba(24, 119, 242, 0.2); border: 1px solid #1877f2; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
-   </div>
+
+        <div>
+          <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+            <button onclick="saveSettings()" style="flex: 1; background: #1877f2; color: white; border: none; padding: 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">💾 Lưu</button>
+            <button onclick="testConnection('facebook')" style="background: rgba(24, 119, 242, 0.2); border: 1px solid #1877f2; color: white; padding: 6px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">🔌 Test</button>
+            <button onclick="clearPlatformConfig('facebook')" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;" title="Xóa Token & Tắt Facebook">🧹 Xóa</button>
+          </div>
+          <div style="text-align: right;">
+            <button onclick="toggleGuide('fbGuide')" style="background: transparent; border: none; color: #64748b; font-size: 10px; cursor: pointer;">📖 Hướng dẫn</button>
+          </div>
+        </div>
       </div>
 
       <!-- INSTAGRAM -->
-      <div style="background: rgba(225, 48, 108, 0.1); border: 1px solid rgba(225, 48, 108, 0.2); border-radius: 12px; padding: 14px; position: relative;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span style="font-size: 16px;">📸</span>
-            <h3 style="font-size: 13px; margin: 0; color: #fff;">Insta Reels</h3>
+      <div id="cardIg" style="background: rgba(225, 48, 108, 0.08); border: 1px solid rgba(225, 48, 108, 0.25); border-radius: 12px; padding: 14px; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 16px;">📸</span>
+              <h3 style="font-size: 13px; margin: 0; color: #fff;">Insta Reels</h3>
+            </div>
+            <!-- Bật/Tắt Kênh Toggle -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <label class="switch" style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0;">
+                <input type="checkbox" id="enableIg" onchange="togglePlatformSwitch('instagram')" style="opacity: 0; width: 0; height: 0;">
+                <span class="slider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .3s; border-radius: 20px;">
+                  <span class="slider-dot" style="position: absolute; content: ''; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;"></span>
+                </span>
+              </label>
+              <span id="igEnableLabel" style="font-size: 10px; font-weight: 700; color: #94a3b8;">TẮT</span>
+            </div>
           </div>
-          <button onclick="toggleGuide('igGuide')" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;">📖 Hướng dẫn</button>
+          <input type="text" id="igAccountId" placeholder="Instagram Account ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
+          <input type="password" id="igToken" placeholder="User Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 8px;">
         </div>
-        <input type="text" id="igAccountId" placeholder="Instagram Account ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
-        <input type="password" id="igToken" placeholder="User Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <div style="display: flex; gap: 8px;">
-     <button onclick="saveSettings()" style="flex: 1; background: #e1306c; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
-     <button onclick="testConnection('instagram')" style="background: rgba(225, 48, 108, 0.2); border: 1px solid #e1306c; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
-   </div>
+
+        <div>
+          <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+            <button onclick="saveSettings()" style="flex: 1; background: #e1306c; color: white; border: none; padding: 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">💾 Lưu</button>
+            <button onclick="testConnection('instagram')" style="background: rgba(225, 48, 108, 0.2); border: 1px solid #e1306c; color: white; padding: 6px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px;">🔌 Test</button>
+            <button onclick="clearPlatformConfig('instagram')" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 10px;" title="Xóa Token & Tắt Instagram">🧹 Xóa</button>
+          </div>
+          <div style="text-align: right;">
+            <button onclick="toggleGuide('igGuide')" style="background: transparent; border: none; color: #64748b; font-size: 10px; cursor: pointer;">📖 Hướng dẫn</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -761,63 +865,141 @@
     </div>
   </div>
 
-  <!-- V2 LOWER MONITOR -->
-  <div class="v2-bottom">
-    <div class="v2-panel">
-      <div class="v2-panel-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <div style="width:10px; height:10px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green)"></div>
-          TERMINAL MONITOR (WORKER STDOUT)
+  <!-- V2 LOWER MONITOR & WORKSPACE -->
+  <div class="v2-bottom" id="v2BottomArea">
+    <!-- MAIN TABS CONTAINER (Takes remaining width: ~1000px or 100%) -->
+    <div class="v2-panel" id="mainTabsPanel">
+      <div class="v2-panel-header" style="padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.7); flex-wrap: wrap; gap: 8px;">
+        <!-- TAB BUTTONS -->
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button id="tabBtnPublisher" onclick="switchMainTab('publisher')" style="background: rgba(0, 242, 254, 0.15); border: 1px solid var(--cyan); color: #fff; padding: 10px 18px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+            <span>📦</span> DUYỆT &amp; XUẤT BẢN ĐA NỀN TẢNG
+            <span id="tabBadgePending" style="background: rgba(245, 158, 11, 0.25); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: bold;">0 chờ</span>
+          </button>
+          <button id="tabBtnTerminal" onclick="switchMainTab('terminal')" style="background: transparent; border: 1px solid transparent; color: var(--muted); padding: 10px 18px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+            <div style="width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green)"></div>
+            NHẬT KÝ HỆ THỐNG (TERMINAL)
+          </button>
+        </div>
+
+        <!-- RIGHT TOGGLE BUTTON -->
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button id="btnToggleVideoPreview" onclick="toggleVideoSidebar()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #94a3b8; padding: 8px 14px; border-radius: 8px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600;">
+            <span id="videoSidebarIcon">⇲</span> <span id="videoSidebarText">Thu gọn Video</span>
+          </button>
         </div>
       </div>
-      <div class="v2-panel-content terminal-screen" id="termScreen">
-        <div class="t-row">
-          <span class="t-time">[System]</span>
-          <span class="t-msg">Hệ thống V2 Factory đã sẵn sàng. Ghi log xuống SQLite WAL mode.</span>
+
+      <!-- TAB 1: PUBLISHER QUEUE -->
+      <div id="tabContentPublisher" style="display: block;">
+        <!-- FILTER & SELECTION BAR -->
+        <div style="padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <span style="font-size: 12px; color: var(--muted); margin-right: 2px;">Lọc:</span>
+            <button id="tab-pub-all" onclick="filterPublications('all')" style="background: rgba(0, 242, 254, 0.2); border: 1px solid var(--cyan); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">Tất cả (<span id="countAll">0</span>)</button>
+            <button id="tab-pub-pending" onclick="filterPublications('pending')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">⏳ Chờ đăng (<span id="countPending">0</span>)</button>
+            <button id="tab-pub-published" onclick="filterPublications('published')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">✅ Đã đăng (<span id="countPublished">0</span>)</button>
+            <button id="tab-pub-failed" onclick="filterPublications('failed')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">⚠️ Thất bại (<span id="countFailed">0</span>)</button>
+            <button onclick="selectAllPending()" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; padding: 5px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; margin-left: 6px;">Chọn bài Chờ đăng</button>
+            <button onclick="deselectAllPubs()" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--muted); padding: 5px 10px; border-radius: 8px; font-size: 11px; cursor: pointer;">Bỏ chọn</button>
+          </div>
+
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button id="btnDeleteSelected" onclick="deleteSelectedPubs()" disabled style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: not-allowed; font-size: 12px; opacity: 0.5; display: flex; align-items: center; gap: 6px;">
+              <span>🗑️</span> Xóa mục đã chọn
+            </button>
+            <button id="btnPublishSelected" onclick="publishSelectedPubs()" disabled style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 7px 16px; border-radius: 8px; font-weight: bold; cursor: not-allowed; font-size: 12px; opacity: 0.5; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+              <span>🚀</span> Duyệt &amp; Đăng mục đã chọn (<span id="selectedCount">0</span>)
+            </button>
+            <button onclick="triggerManualPublish()" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;" title="Đẩy tất cả bài đang ở trạng thái PENDING">
+              <span>⚡</span> Duyệt tất cả
+            </button>
+            <button onclick="clearPublisherQueue()" style="background: transparent; color: #94a3b8; border: 1px solid #334155; padding: 6px 10px; border-radius: 8px; font-size: 11px; cursor: pointer;">
+              Xóa hết
+            </button>
+          </div>
+        </div>
+
+        <!-- TABLE CONTAINER WITH DEDICATED SCROLLBAR -->
+        <div style="max-height: 540px; overflow-y: auto; background: #080c14;">
+          <table id="pubTable">
+            <thead>
+              <tr>
+                <th style="width: 42px; text-align: center;">
+                  <input type="checkbox" id="selectAllPubs" onchange="toggleSelectAllPubs(this)" title="Chọn tất cả" style="cursor: pointer; width: 16px; height: 16px;">
+                </th>
+                <th style="width: 130px;">Nền tảng</th>
+                <th style="width: 145px;">Thời gian</th>
+                <th style="width: 110px;">Trạng thái</th>
+                <th>Tiêu đề &amp; Liên kết / Lỗi</th>
+                <th style="width: 50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="pubBody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">
+                  Chưa có tiến trình xuất bản nào trong Database.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: TERMINAL MONITOR -->
+      <div id="tabContentTerminal" style="display: none; background: #080c14;">
+        <div style="padding: 10px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 12px; color: var(--muted);">Live Logs từ Factory Worker &amp; Pipeline V2</span>
+          <div style="display: flex; gap: 8px;">
+            <button onclick="copyTerminalLog()" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">📋 Copy Log</button>
+            <button onclick="clearTerminalLog()" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">🧹 Xóa màn hình</button>
+          </div>
+        </div>
+        <div class="terminal-screen" id="termScreen" style="padding: 16px 20px; max-height: 540px; overflow-y: auto; min-height: 400px;">
+          <div class="t-row">
+            <span class="t-time">[System]</span>
+            <span class="t-msg">Hệ thống V2 Factory đã sẵn sàng. Ghi log xuống SQLite WAL mode.</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="v2-panel">
-      <div class="v2-panel-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span>📦</span> MULTI-PLATFORM PUBLISHER QUEUE
+    <!-- SIDEBAR: DEDICATED VIDEO PREVIEW (STANDALONE, NOT SCROLLED TOGETHER) -->
+    <div class="v2-panel" id="videoSidebarPanel" style="width: 340px; position: sticky; top: 20px; align-self: start;">
+      <div class="v2-panel-header" style="padding: 14px 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--cyan); font-weight: bold;">
+          <span>🎬</span> XEM TRƯỚC VIDEO (LATEST)
         </div>
-        <div style="display: flex; gap: 8px;">
-          <button onclick="clearPublisherQueue()" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
-            <span>🗑️</span> Xóa hàng đợi
-          </button>
-          <button onclick="triggerManualPublish()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
-            <span>🚀</span> Duyệt & Đăng Ngay
-          </button>
+        <button onclick="openVideoModal()" title="Xem video phóng to" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1; cursor: pointer; font-size: 11px; padding: 3px 8px; border-radius: 6px;">⛶ Phóng to</button>
+      </div>
+      <div style="padding: 16px; background: #080c14; display: flex; flex-direction: column; align-items: center;">
+        <div id="emptyVideo" style="width: 100%; aspect-ratio: 9/16; max-height: 460px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); color: var(--muted); font-size: 12px; padding: 20px;">
+          <div style="font-size: 32px; margin-bottom: 12px; opacity: 0.6;">🎞️</div>
+          <span style="font-weight: 500; color: #cbd5e1;">Chưa có video render gần đây.</span>
+          <span style="font-size: 11px; margin-top: 6px; color: #64748b;">Video sẽ tự động phát tại đây ngay khi hoàn thành!</span>
+        </div>
+        <video id="mainVideo" controls style="display: none; width: 100%; max-height: 460px; aspect-ratio: 9/16; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid var(--border); background: #000;"></video>
+        
+        <div id="videoMetaBox" style="display: none; width: 100%; margin-top: 12px; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px; font-size: 11px; color: #94a3b8;">
+          <div id="videoTitleDisplay" style="font-weight: bold; color: #fff; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="videoStatusDisplay" style="color: var(--green);">● Đã sẵn sàng</span>
+            <a id="videoDownloadLink" href="#" download="render_video.mp4" style="color: var(--cyan); text-decoration: underline;">⬇️ Tải file video</a>
+          </div>
         </div>
       </div>
-      <div class="v2-panel-content" style="padding: 0;">
-        <table id="pubTable">
-          <thead>
-            <tr>
-              <th>Nền tảng</th>
-              <th>Trạng thái</th>
-              <th>URL / Phản hồi</th>
-              <th style="width: 50px;"></th>
-            </tr>
-          </thead>
-          <tbody id="pubBody">
-            <tr>
-              <td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">
-                Chưa có tiến trình xuất bản nào trong Database.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    </div>
+  </div>
 
-        <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
-          <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px; color: var(--cyan);">🎬 BẢN XEM TRƯỚC VIDEO (LATEST RENDER)</div>
-          <div id="emptyVideo" style="padding: 40px 20px; text-align: center; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1); color: var(--muted); font-size: 13px;">
-            Video sẽ xuất hiện tại đây ngay khi quá trình Render kết thúc!
-          </div>
-          <video id="mainVideo" controls style="display: none; width: 100%; max-width: 320px; margin: 0 auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid var(--border);"></video>
-        </div>
+  <!-- VIDEO POPUP MODAL -->
+  <div id="videoModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; backdrop-filter: blur(8px); justify-content: center; align-items: center; padding: 20px;" onclick="closeVideoModal(event)">
+    <div style="position: relative; max-width: 440px; width: 100%; background: #0b1120; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+      <div style="padding: 12px 16px; background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: bold; color: #fff; font-size: 13px;">🎬 Xem Video Phóng To</span>
+        <button onclick="closeVideoModal()" style="background: transparent; border: none; color: #fff; font-size: 18px; cursor: pointer;">✕</button>
+      </div>
+      <div style="padding: 16px; text-align: center; background: #000;">
+        <video id="modalVideoPlayer" controls style="width: 100%; max-height: 75vh; border-radius: 10px; background: #000;"></video>
       </div>
     </div>
   </div>
@@ -973,7 +1155,21 @@
       setInterval(checkSystemErrors, 5000);
       checkSystemErrors();
       setupSQLiteListener();
+      checkLatestVideo();
+      loadPublications();
     });
+
+    async function checkLatestVideo() {
+      try {
+        const res = await fetch('/out/auto_news_result.mp4', { method: 'HEAD' });
+        if (res.ok) {
+          const player = document.getElementById('mainVideo');
+          player.src = '/out/auto_news_result.mp4?t=' + Date.now();
+          player.style.display = 'block';
+          document.getElementById('emptyVideo').style.display = 'none';
+        }
+      } catch (e) {}
+    }
     setTimeout(updateWires, 200);
 
     
@@ -1005,16 +1201,134 @@
       g.style.display = g.style.display === 'none' ? 'block' : 'none';
     }
 
+    function updateAutoPublishBadge(isAuto) {
+      const badge = document.getElementById('autoPublishBadge');
+      const icon = document.getElementById('autoPublishIcon');
+      const desc = document.getElementById('autoPublishDesc');
+      const container = document.getElementById('autoPublishContainer');
+      if (isAuto) {
+        if (badge) {
+          badge.textContent = '🚀 TỰ ĐỘNG XUẤT BẢN NGAY';
+          badge.style.background = 'rgba(16, 185, 129, 0.2)';
+          badge.style.color = '#10b981';
+          badge.style.border = '1px solid rgba(16, 185, 129, 0.4)';
+        }
+        if (icon) icon.textContent = '🚀';
+        if (desc) desc.textContent = 'Khi BẬT: Render xong video sẽ TỰ ĐỘNG tải ngay lên các kênh được kích hoạt (YouTube, TikTok, Facebook, IG).';
+        if (container) {
+          container.style.background = 'rgba(16, 185, 129, 0.12)';
+          container.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+        }
+      } else {
+        if (badge) {
+          badge.textContent = '⏸️ CHỜ DUYỆT THỦ CÔNG (KHUYẾN NGHỊ)';
+          badge.style.background = 'rgba(245, 158, 11, 0.2)';
+          badge.style.color = '#fbbf24';
+          badge.style.border = '1px solid rgba(245, 158, 11, 0.4)';
+        }
+        if (icon) icon.textContent = '⏸️';
+        if (desc) desc.textContent = 'Khi TẮT: Render xong video sẽ nằm ở tab "Duyệt & Xuất Bản" chờ bạn kiểm tra và bấm Đăng.';
+        if (container) {
+          container.style.background = 'rgba(245, 158, 11, 0.08)';
+          container.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+        }
+      }
+    }
+
+    function updatePlatformBadges() {
+      const platforms = [
+        { key: 'enableYt', label: 'ytEnableLabel', card: 'cardYt', name: 'YouTube' },
+        { key: 'enableTk', label: 'tkEnableLabel', card: 'cardTk', name: 'TikTok' },
+        { key: 'enableFb', label: 'fbEnableLabel', card: 'cardFb', name: 'Facebook' },
+        { key: 'enableIg', label: 'igEnableLabel', card: 'cardIg', name: 'Instagram' },
+      ];
+      platforms.forEach(p => {
+        const chk = document.getElementById(p.key);
+        const lbl = document.getElementById(p.label);
+        const card = document.getElementById(p.card);
+        if (!chk) return;
+        const isEnabled = chk.checked;
+        if (lbl) {
+          lbl.textContent = isEnabled ? 'BẬT' : 'TẮT';
+          lbl.style.color = isEnabled ? '#10b981' : '#94a3b8';
+        }
+        if (card) {
+          card.style.opacity = isEnabled ? '1' : '0.65';
+        }
+      });
+    }
+
+    async function togglePlatformSwitch(platform) {
+      await saveSettings(true);
+      const isChecked = platform === 'youtube' ? document.getElementById('enableYt').checked :
+                        platform === 'tiktok' ? document.getElementById('enableTk').checked :
+                        platform === 'facebook' ? document.getElementById('enableFb').checked :
+                        document.getElementById('enableIg').checked;
+      log(`${isChecked ? '✅' : '⚪'} Đã ${isChecked ? 'BẬT' : 'TẮT'} xuất bản kênh ${platform.toUpperCase()}`);
+    }
+
+    async function clearPlatformConfig(platform) {
+      const names = {
+        youtube: 'YouTube (xóa Token đăng nhập OAuth2)',
+        tiktok: 'TikTok (xóa Client Key & Secret)',
+        facebook: 'Facebook (xóa Page ID & Token)',
+        instagram: 'Instagram (xóa Account ID & Token)'
+      };
+      if (!confirm(`Bạn có chắc muốn XÓA CẤU HÌNH & TẮT kênh ${names[platform] || platform}?\n\nKênh này sẽ không được xuất bản cho đến khi bạn cấu hình lại.`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/settings/clear-platform', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ platform })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (platform === 'youtube') {
+            if (document.getElementById('enableYt')) document.getElementById('enableYt').checked = false;
+            checkYouTubeAuth();
+          } else if (platform === 'tiktok') {
+            if (document.getElementById('enableTk')) document.getElementById('enableTk').checked = false;
+            document.getElementById('tkClientKey').value = '';
+            document.getElementById('tkClientSecret').value = '';
+          } else if (platform === 'facebook') {
+            if (document.getElementById('enableFb')) document.getElementById('enableFb').checked = false;
+            document.getElementById('fbPageId').value = '';
+            document.getElementById('fbToken').value = '';
+          } else if (platform === 'instagram') {
+            if (document.getElementById('enableIg')) document.getElementById('enableIg').checked = false;
+            document.getElementById('igAccountId').value = '';
+            document.getElementById('igToken').value = '';
+          }
+          updatePlatformBadges();
+          log(`🧹 Đã xóa cấu hình và tắt kênh ${platform.toUpperCase()}`);
+          alert(`✅ Đã xóa cấu hình và tắt kênh ${platform.toUpperCase()} thành công!`);
+        } else {
+          alert('❌ Lỗi: ' + (data.error || 'Thất bại'));
+        }
+      } catch (e) {
+        alert('❌ Lỗi: ' + e.message);
+      }
+    }
+
     async function loadSettings() {
       try {
         const res = await fetch('/api/settings');
         const conf = await res.json();
         
-        if (conf.AUTO_PUBLISH !== undefined) {
-          document.getElementById('autoPublishBtn').checked = conf.AUTO_PUBLISH;
-        } else {
-          document.getElementById('autoPublishBtn').checked = false;
+        const isAuto = conf.AUTO_PUBLISH === true;
+        if (document.getElementById('autoPublishBtn')) {
+          document.getElementById('autoPublishBtn').checked = isAuto;
         }
+        updateAutoPublishBadge(isAuto);
+
+        if (document.getElementById('enableYt')) document.getElementById('enableYt').checked = conf.ENABLE_YOUTUBE !== false;
+        if (document.getElementById('enableTk')) document.getElementById('enableTk').checked = !!conf.ENABLE_TIKTOK;
+        if (document.getElementById('enableFb')) document.getElementById('enableFb').checked = !!conf.ENABLE_FACEBOOK;
+        if (document.getElementById('enableIg')) document.getElementById('enableIg').checked = !!conf.ENABLE_INSTAGRAM;
+        updatePlatformBadges();
 
         document.getElementById('tkClientKey').value = conf.TIKTOK_CLIENT_KEY || '';
         document.getElementById('tkClientSecret').value = conf.TIKTOK_CLIENT_SECRET || '';
@@ -1022,15 +1336,24 @@
         document.getElementById('fbToken').value = conf.META_ACCESS_TOKEN || '';
         document.getElementById('igAccountId').value = conf.IG_ACCOUNT_ID || '';
         document.getElementById('igToken').value = conf.META_ACCESS_TOKEN || '';
+        if (conf.LANGUAGE && document.getElementById('langSelect')) document.getElementById('langSelect').value = conf.LANGUAGE;
+        if (conf.YOUTUBE_PRIVACY && document.getElementById('ytPrivacy')) {
+          document.getElementById('ytPrivacy').value = conf.YOUTUBE_PRIVACY;
+        }
       } catch (e) {
         console.error(e);
       }
     }
 
-    async function saveSettings() {
+    async function saveSettings(silent = false) {
       const payload = {
-        AUTO_PUBLISH: document.getElementById('autoPublishBtn').checked,
-        LANGUAGE: document.getElementById('langSelect').value,
+        AUTO_PUBLISH: document.getElementById('autoPublishBtn') ? document.getElementById('autoPublishBtn').checked : false,
+        ENABLE_YOUTUBE: document.getElementById('enableYt') ? document.getElementById('enableYt').checked : true,
+        ENABLE_TIKTOK: document.getElementById('enableTk') ? document.getElementById('enableTk').checked : false,
+        ENABLE_FACEBOOK: document.getElementById('enableFb') ? document.getElementById('enableFb').checked : false,
+        ENABLE_INSTAGRAM: document.getElementById('enableIg') ? document.getElementById('enableIg').checked : false,
+        LANGUAGE: document.getElementById('langSelect') ? document.getElementById('langSelect').value : 'vi',
+        YOUTUBE_PRIVACY: document.getElementById('ytPrivacy') ? document.getElementById('ytPrivacy').value : 'public',
         TIKTOK_CLIENT_KEY: document.getElementById('tkClientKey').value.trim(),
         TIKTOK_CLIENT_SECRET: document.getElementById('tkClientSecret').value.trim(),
         META_PAGE_ID: document.getElementById('fbPageId').value.trim(),
@@ -1044,14 +1367,16 @@
           body: JSON.stringify(payload)
         });
         const data = await res.json();
-        if (data.ok) alert('✅ Đã lưu cấu hình thành công!');
+        updateAutoPublishBadge(payload.AUTO_PUBLISH);
+        updatePlatformBadges();
+        if (data.ok && !silent) alert('✅ Đã lưu cấu hình thành công!');
       } catch (e) {
-        alert('❌ Lỗi: ' + e.message);
+        if (!silent) alert('❌ Lỗi: ' + e.message);
       }
     }
 
     async function changeLanguage() {
-      await saveSettings();
+      await saveSettings(true);
       const lang = document.getElementById('langSelect').value;
       if (lang === 'en') {
         log('🌍 Đã đổi ngôn ngữ sang Tiếng Anh (Kịch bản, Giọng AI & Ticker sẽ dùng tiếng Anh).');
@@ -1061,11 +1386,13 @@
     }
     
     async function toggleAutoPublish() {
-      await saveSettings();
-      if (document.getElementById('autoPublishBtn').checked) {
-        log('🚀 BẬT Tự động xuất bản đa nền tảng. Render xong sẽ Đăng ngay!');
+      const isChecked = document.getElementById('autoPublishBtn').checked;
+      updateAutoPublishBadge(isChecked);
+      await saveSettings(true);
+      if (isChecked) {
+        log('🚀 BẬT Tự động xuất bản đa nền tảng. Render xong sẽ Đăng ngay lên các kênh đã BẬT!');
       } else {
-        log('⏸️ TẮT Tự động xuất bản. Video sẽ được đưa vào hàng đợi chờ duyệt.');
+        log('⏸️ TẮT Tự động xuất bản. Video sẽ được đưa vào tab "Duyệt & Xuất Bản" chờ bạn bấm Đăng.');
       }
     }
 
@@ -1114,6 +1441,370 @@
       }
     }
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatDateTime(dateStr) {
+      if (!dateStr) return '--:--';
+      try {
+        let s = String(dateStr).trim();
+        if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(s)) {
+          s = s.replace(' ', 'T') + 'Z';
+        }
+        const d = new Date(s);
+        if (isNaN(d.getTime())) return dateStr;
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+        return `${hours}:${minutes} - ${day}/${month}/${year}`;
+      } catch (e) {
+        return dateStr;
+      }
+    }
+
+    let allPublications = [];
+    let currentFilter = 'all';
+
+    function filterPublications(filter) {
+      currentFilter = filter;
+      ['all', 'pending', 'published', 'failed'].forEach(f => {
+        const el = document.getElementById(`tab-pub-${f}`);
+        if (el) {
+          if (f === filter) {
+            el.style.background = 'rgba(0, 242, 254, 0.2)';
+            el.style.borderColor = 'var(--cyan)';
+            el.style.color = '#fff';
+          } else {
+            el.style.background = 'rgba(255, 255, 255, 0.05)';
+            el.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            el.style.color = 'var(--muted)';
+          }
+        }
+      });
+      renderPublicationsList(allPublications);
+    }
+
+    function switchMainTab(tab) {
+      const btnPub = document.getElementById('tabBtnPublisher');
+      const btnTerm = document.getElementById('tabBtnTerminal');
+      const contentPub = document.getElementById('tabContentPublisher');
+      const contentTerm = document.getElementById('tabContentTerminal');
+
+      if (tab === 'publisher') {
+        contentPub.style.display = 'block';
+        contentTerm.style.display = 'none';
+        btnPub.style.background = 'rgba(0, 242, 254, 0.15)';
+        btnPub.style.borderColor = 'var(--cyan)';
+        btnPub.style.color = '#fff';
+
+        btnTerm.style.background = 'transparent';
+        btnTerm.style.borderColor = 'transparent';
+        btnTerm.style.color = 'var(--muted)';
+      } else {
+        contentPub.style.display = 'none';
+        contentTerm.style.display = 'block';
+        btnTerm.style.background = 'rgba(16, 185, 129, 0.15)';
+        btnTerm.style.borderColor = 'var(--green)';
+        btnTerm.style.color = '#fff';
+
+        btnPub.style.background = 'transparent';
+        btnPub.style.borderColor = 'transparent';
+        btnPub.style.color = 'var(--muted)';
+      }
+    }
+
+    function toggleVideoSidebar() {
+      const area = document.getElementById('v2BottomArea');
+      const sidebar = document.getElementById('videoSidebarPanel');
+      const icon = document.getElementById('videoSidebarIcon');
+      const text = document.getElementById('videoSidebarText');
+
+      if (sidebar.style.display === 'none') {
+        sidebar.style.display = 'block';
+        area.style.gridTemplateColumns = '1fr 340px';
+        if (icon) icon.innerText = '⇲';
+        if (text) text.innerText = 'Thu gọn Video';
+      } else {
+        sidebar.style.display = 'none';
+        area.style.gridTemplateColumns = '1fr';
+        if (icon) icon.innerText = '⇱';
+        if (text) text.innerText = 'Mở Video';
+      }
+    }
+
+    function openVideoModal() {
+      const mainVideo = document.getElementById('mainVideo');
+      if (!mainVideo || !mainVideo.src || mainVideo.style.display === 'none') {
+        return alert('Chưa có video render gần đây để xem!');
+      }
+      const modal = document.getElementById('videoModal');
+      const modalPlayer = document.getElementById('modalVideoPlayer');
+      modalPlayer.src = mainVideo.src;
+      modal.style.display = 'flex';
+      modalPlayer.play().catch(() => {});
+    }
+
+    function closeVideoModal(e) {
+      if (e && e.target && e.target.id !== 'videoModal' && !e.target.innerText.includes('✕')) {
+        return;
+      }
+      const modal = document.getElementById('videoModal');
+      const modalPlayer = document.getElementById('modalVideoPlayer');
+      if (modalPlayer) modalPlayer.pause();
+      if (modal) modal.style.display = 'none';
+    }
+
+    function clearTerminalLog() {
+      const screen = document.getElementById('termScreen');
+      if (screen) screen.innerHTML = '<div class="t-row"><span class="t-time">[System]</span> <span class="t-msg">Đã làm sạch nhật ký màn hình.</span></div>';
+    }
+
+    function copyTerminalLog() {
+      const screen = document.getElementById('termScreen');
+      if (!screen) return;
+      navigator.clipboard.writeText(screen.innerText).then(() => {
+        alert('✅ Đã copy toàn bộ nhật ký Terminal vào Clipboard!');
+      });
+    }
+
+    function updateFilterCounts(publications) {
+      let countAll = publications.length;
+      let countPending = 0;
+      let countPublished = 0;
+      let countFailed = 0;
+
+      publications.forEach(p => {
+        if (p.status === 'PENDING' || p.status === 'PUBLISHING') countPending++;
+        else if (p.status === 'PUBLISHED') countPublished++;
+        else if (p.status === 'FAILED') countFailed++;
+      });
+
+      const cAll = document.getElementById('countAll'); if (cAll) cAll.innerText = countAll;
+      const cPen = document.getElementById('countPending'); if (cPen) cPen.innerText = countPending;
+      const cPub = document.getElementById('countPublished'); if (cPub) cPub.innerText = countPublished;
+      const cFai = document.getElementById('countFailed'); if (cFai) cFai.innerText = countFailed;
+
+      const tabBadge = document.getElementById('tabBadgePending');
+      if (tabBadge) {
+        tabBadge.innerText = `${countPending} chờ`;
+        tabBadge.style.display = countPending > 0 ? 'inline-block' : 'none';
+      }
+    }
+
+    function toggleSelectAllPubs(master) {
+      const checkboxes = document.querySelectorAll('.pub-check');
+      checkboxes.forEach(cb => {
+        cb.checked = master.checked;
+      });
+      updateSelectedCount();
+    }
+
+    function selectAllPending() {
+      const checkboxes = document.querySelectorAll('.pub-check');
+      checkboxes.forEach(cb => {
+        const status = cb.getAttribute('data-status');
+        cb.checked = (status === 'PENDING' || status === 'FAILED');
+      });
+      const master = document.getElementById('selectAllPubs');
+      if (master) master.checked = false;
+      updateSelectedCount();
+    }
+
+    function deselectAllPubs() {
+      const checkboxes = document.querySelectorAll('.pub-check');
+      checkboxes.forEach(cb => cb.checked = false);
+      const master = document.getElementById('selectAllPubs');
+      if (master) master.checked = false;
+      updateSelectedCount();
+    }
+
+    function updateSelectedCount() {
+      const selected = document.querySelectorAll('.pub-check:checked');
+      const count = selected.length;
+      const span = document.getElementById('selectedCount');
+      if (span) span.innerText = count;
+
+      const btnPublish = document.getElementById('btnPublishSelected');
+      const btnDelete = document.getElementById('btnDeleteSelected');
+      if (btnPublish) {
+        btnPublish.disabled = (count === 0);
+        btnPublish.style.opacity = count === 0 ? '0.5' : '1';
+        btnPublish.style.cursor = count === 0 ? 'not-allowed' : 'pointer';
+      }
+      if (btnDelete) {
+        btnDelete.disabled = (count === 0);
+        btnDelete.style.opacity = count === 0 ? '0.5' : '1';
+        btnDelete.style.cursor = count === 0 ? 'not-allowed' : 'pointer';
+      }
+    }
+
+    function getSelectedPubIds() {
+      const selected = document.querySelectorAll('.pub-check:checked');
+      return Array.from(selected).map(cb => cb.value);
+    }
+
+    async function publishSelectedPubs() {
+      const ids = getSelectedPubIds();
+      if (ids.length === 0) {
+        return alert('Vui lòng tích chọn ít nhất một mục cần đăng!');
+      }
+
+      if (!confirm(`Bạn có chắc chắn muốn duyệt và đẩy xuất bản ${ids.length} mục đã chọn?`)) {
+        return;
+      }
+
+      const btn = document.getElementById('btnPublishSelected');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>⏳</span> Đang đăng ${ids.length} mục...`;
+      }
+
+      try {
+        const res = await fetch('/api/publish-queue', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ publicationIds: ids })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          log(`🚀 ${data.message}`);
+          alert(`✅ ${data.message}`);
+        } else {
+          alert(`❌ Lỗi: ${data.error}`);
+        }
+      } catch(e) {
+        alert(`❌ Lỗi kết nối: ${e.message}`);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>🚀</span> Duyệt &amp; Đăng mục đã chọn (<span id="selectedCount">0</span>)`;
+        }
+        loadPublications();
+      }
+    }
+
+    async function deleteSelectedPubs() {
+      const ids = getSelectedPubIds();
+      if (ids.length === 0) {
+        return alert('Vui lòng tích chọn ít nhất một mục để xóa!');
+      }
+
+      if (!confirm(`Bạn có chắc muốn xóa ${ids.length} mục đã chọn khỏi hàng đợi?`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/publish-queue', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ publicationIds: ids })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert(`✅ ${data.message}`);
+        } else {
+          alert(`❌ Lỗi: ${data.error}`);
+        }
+      } catch(e) {
+        alert(`❌ Lỗi: ${e.message}`);
+      } finally {
+        loadPublications();
+      }
+    }
+
+    function renderPublicationsList(publications) {
+       if (Array.isArray(publications)) {
+         allPublications = publications;
+       }
+       updateFilterCounts(allPublications);
+
+       const tbody = document.getElementById('pubBody');
+       if (!tbody) return;
+
+       let displayList = allPublications;
+       if (currentFilter === 'pending') {
+         displayList = allPublications.filter(p => p.status === 'PENDING' || p.status === 'PUBLISHING');
+       } else if (currentFilter === 'published') {
+         displayList = allPublications.filter(p => p.status === 'PUBLISHED');
+       } else if (currentFilter === 'failed') {
+         displayList = allPublications.filter(p => p.status === 'FAILED');
+       }
+
+       if (!displayList || displayList.length === 0) {
+         tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--muted); padding: 30px;">Không có mục nào phù hợp với bộ lọc "${currentFilter}".</td></tr>`;
+         updateSelectedCount();
+         return;
+       }
+
+       tbody.innerHTML = '';
+       displayList.forEach(pub => {
+          const tr = document.createElement('tr');
+          let platIcon = '📺';
+          if(pub.platform === 'tiktok') platIcon = '🎵';
+          if(pub.platform === 'instagram') platIcon = '📸';
+          if(pub.platform === 'facebook') platIcon = '📘';
+          if(pub.platform === 'youtube') platIcon = '▶️';
+
+          // Format thời gian: ưu tiên publishedAt (lúc đăng), rồi updatedAt, rồi createdAt
+          const rawTime = pub.publishedAt || pub.updatedAt || pub.createdAt;
+          const timeDisplay = formatDateTime(rawTime);
+
+          // Tiêu đề & Liên kết hoặc Lỗi
+          let contentHtml = '';
+          if (pub.title) {
+            contentHtml += `<div style="font-weight: 600; color: #fff; margin-bottom: 4px; max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(pub.title)}">${escapeHtml(pub.title)}</div>`;
+          }
+          if (pub.url) {
+            contentHtml += `<a href="${pub.url}" target="_blank" style="color:var(--cyan);text-decoration:underline;word-break:break-all;font-size:11px;">🔗 ${escapeHtml(pub.url)}</a>`;
+          } else if (pub.status === 'FAILED' && pub.lastError) {
+            const shortErr = pub.lastError.length > 90 ? pub.lastError.substring(0, 90) + '...' : pub.lastError;
+            contentHtml += `<span style="color:#ef4444;font-size:11px;" title="${escapeHtml(pub.lastError)}">⚠️ ${escapeHtml(shortErr)}</span>`;
+          } else if (pub.status === 'PENDING' || pub.status === 'PUBLISHING') {
+            contentHtml += `<span style="color:var(--muted);font-size:11px;">⏳ Đang chờ duyệt / xếp hàng...</span>`;
+          } else {
+            contentHtml += `<span style="color:var(--muted);font-size:11px;">Chưa có link</span>`;
+          }
+
+          tr.innerHTML = `
+            <td style="text-align: center; vertical-align: middle;">
+              <input type="checkbox" class="pub-check" value="${pub.publicationId}" data-status="${pub.status}" onchange="updateSelectedCount()" style="cursor: pointer; width: 15px; height: 15px;">
+            </td>
+            <td style="font-weight: bold; color: #fff; white-space: nowrap;">${platIcon} ${pub.platform.toUpperCase()}</td>
+            <td style="white-space: nowrap; color: #94a3b8; font-size: 11px; font-family: 'JetBrains Mono', monospace;">
+              🕒 ${timeDisplay}
+            </td>
+            <td><span class="status-badge status-${pub.status}">${pub.status}</span></td>
+            <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">
+               ${contentHtml}
+            </td>
+            <td>
+              <button onclick="deletePublication('${pub.publicationId}')" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 4px; padding: 2px 6px; cursor: pointer; font-size: 11px;" title="Xóa bản ghi này">Xóa</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+       });
+       updateSelectedCount();
+    }
+
+    async function loadPublications() {
+      try {
+        const res = await fetch('/api/publications');
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          renderPublicationsList(data);
+        }
+      } catch(e) {}
+    }
+
     // KẾT NỐI SSE ĐẾN WORKER V2 ĐỂ LẤY LOG SQLite
     function setupSQLiteListener() {
       const evtSource = new EventSource('/api/logs');
@@ -1121,33 +1812,7 @@
         try {
           const data = JSON.parse(e.data);
           if (data.type === 'status_sync' && data.publications) {
-             const tbody = document.getElementById('pubBody');
-             if (data.publications.length === 0) {
-               tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">Hàng đợi trống.</td></tr>`;
-               return;
-             }
-
-             tbody.innerHTML = '';
-             data.publications.forEach(pub => {
-                const tr = document.createElement('tr');
-                let platIcon = '📺';
-                if(pub.platform === 'tiktok') platIcon = '🎵';
-                if(pub.platform === 'instagram') platIcon = '📸';
-                if(pub.platform === 'facebook') platIcon = '📘';
-                if(pub.platform === 'youtube') platIcon = '▶️';
-
-                tr.innerHTML = `
-                  <td style="font-weight: bold; color: #fff;">${platIcon} ${pub.platform.toUpperCase()}</td>
-                  <td><span class="status-badge status-${pub.status}">${pub.status}</span></td>
-                  <td style="color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 11px;">
-                     ${pub.url ? `<a href="${pub.url}" target="_blank" style="color:var(--cyan);text-decoration:underline;">${pub.url}</a>` : 'Đang đưa vào Queue...'}
-                  </td>
-                  <td>
-                    <button onclick="deletePublication('${pub.publicationId}')" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; border-radius: 4px; padding: 2px 6px; cursor: pointer; font-size: 11px;">Xóa</button>
-                  </td>
-                `;
-                tbody.appendChild(tr);
-             });
+             renderPublicationsList(data.publications);
           }
         } catch(err) {}
       };
@@ -1219,14 +1884,10 @@
         });
         const data = await res.json();
         if (data.ok) {
-          alert('✅ Kết nối ' + platform.toUpperCase() + ' THÀNH CÔNG!
-
-' + data.message);
+          alert('✅ Kết nối ' + platform.toUpperCase() + ' THÀNH CÔNG!\n\n' + data.message);
           log('✅ ' + platform.toUpperCase() + ': ' + data.message);
         } else {
-          alert('❌ Kết nối ' + platform.toUpperCase() + ' THẤT BẠI!
-
-Lỗi: ' + data.error);
+          alert('❌ Kết nối ' + platform.toUpperCase() + ' THẤT BẠI!\n\nLỗi: ' + data.error);
           log('❌ Lỗi ' + platform.toUpperCase() + ': ' + data.error);
         }
       } catch (e) {
@@ -1236,6 +1897,35 @@ Lỗi: ' + data.error);
 
     function exportConfig() {
       window.location.href = '/api/export-config';
+    }
+
+    async function handleImportConfig(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const json = JSON.parse(e.target.result);
+          const res = await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(json)
+          });
+          const result = await res.json();
+          if (result.ok) {
+            await loadSettings();
+            alert('✅ Đã nhập file cấu hình config.json thành công!');
+            log('📥 Nhập file cấu hình thành công.');
+          } else {
+            alert('❌ Lỗi lưu cấu hình: ' + (result.error || 'Thất bại'));
+          }
+        } catch (err) {
+          alert('❌ File JSON không hợp lệ: ' + err.message);
+        } finally {
+          event.target.value = '';
+        }
+      };
+      reader.readAsText(file);
     }
 
     function log(msg) {
@@ -1297,7 +1987,10 @@ Lỗi: ' + data.error);
       }
       document.getElementById('mainVideo').style.display = 'none';
       document.getElementById('emptyVideo').style.display = 'block';
+      const metaBox = document.getElementById('videoMetaBox');
+      if (metaBox) metaBox.style.display = 'none';
 
+      switchMainTab('terminal');
       log('🚀 Khởi động Factory Pipeline V2 (Ghi SQLite Jobs)...');
 
       let targetParam = val;
@@ -1350,11 +2043,19 @@ Lỗi: ' + data.error);
 
           if (data.videoUrl) {
             const player = document.getElementById('mainVideo');
-            player.src = data.videoUrl + '?t=' + Date.now();
+            const fullUrl = data.videoUrl + '?t=' + Date.now();
+            player.src = fullUrl;
             player.style.display = 'block';
             document.getElementById('emptyVideo').style.display = 'none';
-            player.play();
+            const metaBox = document.getElementById('videoMetaBox');
+            if (metaBox) metaBox.style.display = 'block';
+            const dlLink = document.getElementById('videoDownloadLink');
+            if (dlLink) dlLink.href = data.videoUrl;
+            player.play().catch(() => {});
           }
+
+          loadPublications();
+          setTimeout(() => switchMainTab('publisher'), 1200);
 
           evtSource.close();
         } else if (data.type === 'error') {

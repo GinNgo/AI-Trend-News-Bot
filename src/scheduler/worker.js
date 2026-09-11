@@ -77,7 +77,8 @@ class DurableWorker {
           stage: nextStage,
           lockedBy: null,
           lockedAt: null,
-          status: 'PENDING'
+          status: 'PENDING',
+          payload: job.payload
         });
         this.jobRepo.addJobEvent(job.jobId, nextStage, 'PENDING', `Transitioned to ${nextStage}`);
       } else {
@@ -86,6 +87,7 @@ class DurableWorker {
           lockedBy: null,
           lockedAt: null,
           status: 'COMPLETED',
+          payload: job.payload,
           finishedAt: new Date().toISOString()
         });
         this.jobRepo.addJobEvent(job.jobId, job.stage, 'COMPLETED', `Job finished`);

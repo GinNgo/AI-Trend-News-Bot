@@ -6,12 +6,14 @@ import { SafeArea } from '../design/components/SafeArea';
 
 export const DynamicOutro: React.FC<{
   data?: DynamicOutroData;
-}> = ({ data }) => {
+  language?: 'vi' | 'en';
+}> = ({ data, language = 'vi' }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const isEn = language === 'en';
 
-  const title = data?.title || 'KỶ NGUYÊN SỐ VIỆT NAM';
-  const subtitle = data?.subtitle || 'Cập nhật thông tin công nghệ & chuyển đổi số quốc gia';
+  const title = data?.title || (isEn ? 'DIGITAL ERA' : 'KỶ NGUYÊN SỐ VIỆT NAM');
+  const subtitle = data?.subtitle || (isEn ? 'Stay updated with the latest tech & digital transformation' : 'Cập nhật thông tin công nghệ & chuyển đổi số quốc gia');
 
   // Hero moment: Reveal logo/title
   const scale = spring({
@@ -102,7 +104,7 @@ export const DynamicOutro: React.FC<{
               gap: '16px',
             }}
           >
-            <span>👍</span> NHẤN LIKE & CHIA SẺ
+            <span>👍</span> {isEn ? 'LIKE & SHARE' : 'NHẤN LIKE & CHIA SẺ'}
           </div>
         </div>
       </div>

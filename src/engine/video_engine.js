@@ -146,6 +146,7 @@ class VideoEngine {
     // Package JSON for Remotion
     const finalRemotionJson = {
       title: storyPackage.title,
+      category: storyPackage.category || (storyPackage.scenes && storyPackage.scenes[0] && storyPackage.scenes[0].tag),
       themeColor: storyPackage.themeColor,
       bgStyle: storyPackage.bgStyle,
       storyAngle: storyPackage.storyAngle,

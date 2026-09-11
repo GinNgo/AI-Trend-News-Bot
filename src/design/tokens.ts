@@ -10,7 +10,8 @@ export const tokens = {
     },
     overlay: {
       scrim: 'linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 40%, rgba(15, 23, 42, 0) 100%)',
-    }
+    },
+    chart: ['#6366F1', '#38BDF8', '#22D3EE', '#34D399', '#FBBF24', '#F87171', '#A78BFA'],
   },
   typography: {
     fontFamily: {
@@ -50,6 +51,12 @@ export const tokens = {
       short: 12,
       medium: 20,
       long: 45,
+    },
+    chart: {
+      counterDuration: 45,   // Frames for counter to reach target
+      barDelay: 15,           // Stagger delay between bars
+      ringDuration: 60,       // Frames for progress ring to fill
+      lineDrawDuration: 90,   // Frames for line chart to draw
     }
   }
 };

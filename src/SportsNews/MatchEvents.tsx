@@ -1,9 +1,8 @@
 import React from 'react';
-import { interpolate, spring, useCurrentFrame, useVideoConfig, Img, staticFile } from 'remotion';
+import { interpolate, useCurrentFrame, Img, staticFile } from 'remotion';
 
 export const MatchEvents: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   // Subtle Ken Burns zoom for Mbappe image
   const zoom = interpolate(frame, [0, 160], [1, 1.15], {

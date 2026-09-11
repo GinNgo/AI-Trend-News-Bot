@@ -4,6 +4,13 @@ import { DynamicSceneItem } from './types';
 import { tokens } from '../design/tokens';
 import { SafeArea } from '../design/components/SafeArea';
 import { ScrimOverlay } from '../design/components/ScrimOverlay';
+import {
+  LayoutAnimatedCounter,
+  LayoutBarChart,
+  LayoutProgressRing,
+  LayoutLineChart,
+  LayoutComparison,
+} from './charts';
 
 const HighlightText: React.FC<{ text: string; color: string }> = ({ text, color }) => {
   if (!text) return null;
@@ -100,12 +107,17 @@ const LayoutIntro: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
             boxShadow: `0 20px 40px ${color}66`,
           }}
         >
-          {data.tag &&
-          (data.tag.toUpperCase().includes('NÓNG') ||
-            data.tag.toUpperCase().includes('HOT') ||
-            data.tag.toUpperCase().includes('ĐIỀU TRA'))
-            ? '🔥 TIN NÓNG'
-            : '📊 CẬP NHẬT'}
+          {data.tag ? (
+            data.tag.toUpperCase().includes('NÓNG') || data.tag.toUpperCase().includes('HOT')
+              ? `🔥 ${data.tag.toUpperCase()}`
+              : data.tag.toUpperCase().includes('CÔNG NGHỆ') || data.tag.toUpperCase().includes('AI')
+              ? `⚡ ${data.tag.toUpperCase()}`
+              : data.tag.toUpperCase().includes('KINH TẾ') || data.tag.toUpperCase().includes('TÀI CHÍNH')
+              ? `📈 ${data.tag.toUpperCase()}`
+              : data.tag.toUpperCase().includes('GIÁO DỤC') || data.tag.toUpperCase().includes('MỤC TIÊU')
+              ? `🎯 ${data.tag.toUpperCase()}`
+              : `📊 ${data.tag.toUpperCase()}`
+          ) : '📊 CẬP NHẬT'}
         </div>
         <div
           style={{
@@ -187,7 +199,7 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
                 border: `1px solid ${color}44`,
               }}
             >
-              🎯 {data.tag || 'TIN TỨC'}
+              🎯 {data.tag || (data.language === 'en' ? 'NEWS' : 'TIN TỨC')}
             </div>
             <AudioVisualizer color={color} />
           </div>
@@ -323,7 +335,7 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
               border: `2px solid ${color}66`,
             }}
           >
-            ✨ {data.tag || 'CHỈ SỐ'}
+            ✨ {data.tag || (data.language === 'en' ? 'STATS' : 'CHỈ SỐ')}
           </div>
           <div
             style={{
@@ -452,7 +464,7 @@ const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
                 boxShadow: `0 10px 30px ${color}88`,
               }}
             >
-              📸 {data.tag || 'BẰNG CHỨNG'}
+              📸 {data.tag || (data.language === 'en' ? 'EVIDENCE' : 'BẰNG CHỨNG')}
             </div>
             <AudioVisualizer color={color} />
           </div>
@@ -521,7 +533,7 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
             border: `2px solid ${color}66`,
           }}
         >
-          💬 {data.tag || 'PHÁT BIỂU'}
+          💬 {data.tag || (data.language === 'en' ? 'QUOTE' : 'PHÁT BIỂU')}
         </div>
 
         <div
@@ -589,9 +601,10 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
   let LayoutComponent = LayoutList as React.ElementType;
   if (
     data.tag &&
-    (data.tag.toUpperCase().includes('TIN NÓNG') ||
-      data.tag.toUpperCase().includes('TỔNG HỢP') ||
-      data.tag.toUpperCase().includes('ĐIỀU TRA'))
+    (data.tag.toUpperCase().includes('NÓNG') ||
+      data.tag.toUpperCase().includes('HOT') ||
+      data.tag.toUpperCase().includes('ĐIỀU TRA') ||
+      data.tag.toUpperCase().includes('BREAKING'))
   ) {
     LayoutComponent = LayoutIntro;
   }
@@ -600,6 +613,13 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
   if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
   if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
   if (data.layoutType === 'image') LayoutComponent = LayoutImage;
+
+  // Data Visualization chart layouts (NEW)
+  if (data.layoutType === 'animated_counter') LayoutComponent = LayoutAnimatedCounter;
+  if (data.layoutType === 'bar_chart') LayoutComponent = LayoutBarChart;
+  if (data.layoutType === 'progress_ring') LayoutComponent = LayoutProgressRing;
+  if (data.layoutType === 'line_chart') LayoutComponent = LayoutLineChart;
+  if (data.layoutType === 'comparison') LayoutComponent = LayoutComparison;
 
 
   // Handle Background Image inside the Scene to prevent bleeding and show scraped images
