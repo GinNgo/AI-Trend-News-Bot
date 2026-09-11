@@ -497,7 +497,13 @@
       </div>
     </div>
 
-    <!-- PLATFORMS GRID -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+     <h3 style="font-size: 16px; margin: 0; color: #fff;">🔌 KẾT NỐI API MẠNG XÃ HỘI</h3>
+     <button onclick="exportConfig()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+       <span>📥</span> Xuất File Cấu Hình (config.json)
+     </button>
+   </div>
+   <!-- PLATFORMS GRID -->
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
 
       <!-- YOUTUBE -->
@@ -524,7 +530,10 @@
         </div>
         <input type="text" id="tkClientKey" placeholder="Client Key" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
         <input type="password" id="tkClientSecret" placeholder="Client Secret" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <button onclick="saveSettings()" style="background: #334155; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Cấu Hình</button>
+        <div style="display: flex; gap: 8px;">
+     <button onclick="saveSettings()" style="flex: 1; background: #334155; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
+     <button onclick="testConnection('tiktok')" style="background: #0f172a; border: 1px solid #334155; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
+   </div>
       </div>
 
       <!-- FACEBOOK -->
@@ -538,7 +547,10 @@
         </div>
         <input type="text" id="fbPageId" placeholder="Page ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
         <input type="password" id="fbToken" placeholder="Page Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <button onclick="saveSettings()" style="background: #1877f2; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Facebook</button>
+        <div style="display: flex; gap: 8px;">
+     <button onclick="saveSettings()" style="flex: 1; background: #1877f2; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
+     <button onclick="testConnection('facebook')" style="background: rgba(24, 119, 242, 0.2); border: 1px solid #1877f2; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
+   </div>
       </div>
 
       <!-- INSTAGRAM -->
@@ -552,7 +564,10 @@
         </div>
         <input type="text" id="igAccountId" placeholder="Instagram Account ID" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 6px;">
         <input type="password" id="igToken" placeholder="User Access Token" style="width: 100%; background: #070a12; border: 1px solid #283548; border-radius: 6px; padding: 6px 8px; color: #fff; font-family: monospace; font-size: 11px; margin-bottom: 10px;">
-        <button onclick="saveSettings()" style="background: #e1306c; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; width: 100%;">💾 Lưu Instagram</button>
+        <div style="display: flex; gap: 8px;">
+     <button onclick="saveSettings()" style="flex: 1; background: #e1306c; color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">💾 Lưu</button>
+     <button onclick="testConnection('instagram')" style="background: rgba(225, 48, 108, 0.2); border: 1px solid #e1306c; color: white; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px;">🔌 Test</button>
+   </div>
       </div>
     </div>
 
@@ -1191,6 +1206,36 @@
       } catch (e) {
         alert('Lỗi: ' + e.message);
       }
+    }
+
+    
+    async function testConnection(platform) {
+      try {
+        log('🔌 Đang kiểm tra kết nối API ' + platform.toUpperCase() + '...');
+        const res = await fetch('/api/test-connection', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ platform })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          alert('✅ Kết nối ' + platform.toUpperCase() + ' THÀNH CÔNG!
+
+' + data.message);
+          log('✅ ' + platform.toUpperCase() + ': ' + data.message);
+        } else {
+          alert('❌ Kết nối ' + platform.toUpperCase() + ' THẤT BẠI!
+
+Lỗi: ' + data.error);
+          log('❌ Lỗi ' + platform.toUpperCase() + ': ' + data.error);
+        }
+      } catch (e) {
+        alert('Lỗi hệ thống: ' + e.message);
+      }
+    }
+
+    function exportConfig() {
+      window.location.href = '/api/export-config';
     }
 
     function log(msg) {

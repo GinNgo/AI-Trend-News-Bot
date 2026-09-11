@@ -179,6 +179,55 @@ setInterval(() => {
   logClients.forEach(c => c.write(`data: ${msg}\n\n`));
 }, 2000);
 
+
+// ============================================
+// TEST CONNECTION & EXPORT CONFIG
+// ============================================
+app.post('/api/test-connection', async (req, res) => {
+  const { platform } = req.body;
+  const confPath = path.join(__dirname, 'config.json');
+  let conf = {};
+  if (fs.existsSync(confPath)) {
+    try { conf = JSON.parse(fs.readFileSync(confPath, 'utf-8')); } catch(e) {}
+  }
+
+  try {
+    if (platform === 'facebook' || platform === 'instagram') {
+      const token = conf.META_ACCESS_TOKEN;
+      if (!token) return res.status(400).json({ error: 'Chưa cấu hình META_ACCESS_TOKEN' });
+
+      // Gọi Graph API kiểm tra token
+      const fetch = (await import('node-fetch')).default;
+      const apiRes = await fetch(`https://graph.facebook.com/v19.0/me?access_token=${token}`);
+      const data = await apiRes.json();
+
+      if (data.error) {
+        return res.status(400).json({ error: data.error.message });
+      }
+      return res.json({ ok: true, message: `Token hợp lệ. Xin chào ${data.name || data.id}!` });
+    }
+
+    if (platform === 'tiktok') {
+      const key = conf.TIKTOK_CLIENT_KEY;
+      if (!key) return res.status(400).json({ error: 'Chưa cấu hình TIKTOK_CLIENT_KEY' });
+      return res.json({ ok: true, message: 'Client Key hợp lệ (chế độ Sandbox/Mock).' });
+    }
+
+    res.status(400).json({ error: 'Nền tảng không hợp lệ' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/export-config', (req, res) => {
+  const confPath = path.join(__dirname, 'config.json');
+  if (fs.existsSync(confPath)) {
+    res.download(confPath, 'config.json');
+  } else {
+    res.status(404).send('Không tìm thấy file cấu hình.');
+  }
+});
+
 // ============================================
 // AUTO-TREND BOT INTEGRATION
 // ============================================
