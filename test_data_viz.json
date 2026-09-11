@@ -1,0 +1,133 @@
+{
+  "title": "AI Industry Q3 2026 Roundup",
+  "themeColor": "#6C5CE7",
+  "bgStyle": "gradient",
+  "totalDurationInFrames": 1020,
+  "language": "en",
+  "scenes": [
+    {
+      "id": "scene-1-counter",
+      "tag": "FUNDING",
+      "headline": "OpenAI Raises $2.5B",
+      "layoutType": "animated_counter",
+      "counterTarget": 2500000000,
+      "counterPrefix": "$",
+      "keyTakeaways": [
+        "Largest AI funding round in 2026",
+        "Valuation surpasses $150B",
+        "Led by Thrive Capital and Microsoft"
+      ],
+      "voiceover": "OpenAI has just closed a massive two-point-five billion dollar funding round, pushing its valuation past one hundred and fifty billion dollars.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 0,
+      "seqDuration": 170,
+      "color": "#6C5CE7"
+    },
+    {
+      "id": "scene-2-bar",
+      "tag": "BENCHMARKS",
+      "headline": "AI Benchmark Scores",
+      "layoutType": "bar_chart",
+      "chartData": [
+        { "label": "GPT-4", "value": 86 },
+        { "label": "Gemini", "value": 91 },
+        { "label": "Claude", "value": 89 }
+      ],
+      "keyTakeaways": [
+        "Gemini leads with 91 points",
+        "Claude edges out GPT-4",
+        "Gap narrowing across all models"
+      ],
+      "voiceover": "In the latest MMLU benchmarks, Gemini takes the lead at ninety-one, followed closely by Claude at eighty-nine and GPT-4 at eighty-six.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 170,
+      "seqDuration": 170,
+      "color": "#00B894"
+    },
+    {
+      "id": "scene-3-ring",
+      "tag": "MARKET",
+      "headline": "Chrome Dominance",
+      "layoutType": "progress_ring",
+      "progressValue": 73,
+      "progressLabel": "Market Share",
+      "keyTakeaways": [
+        "Chrome holds 73% browser market share",
+        "Safari distant second at 18%",
+        "Edge growing slowly at 5%"
+      ],
+      "voiceover": "Google Chrome continues to dominate the browser market with a commanding seventy-three percent market share worldwide.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 340,
+      "seqDuration": 170,
+      "color": "#FDCB6E"
+    },
+    {
+      "id": "scene-4-line",
+      "tag": "REVENUE",
+      "headline": "Revenue Growth",
+      "layoutType": "line_chart",
+      "chartData": [
+        { "label": "Q3 2025", "value": 1200 },
+        { "label": "Q4 2025", "value": 1850 },
+        { "label": "Q1 2026", "value": 2400 },
+        { "label": "Q2 2026", "value": 3100 },
+        { "label": "Q3 2026", "value": 4200 }
+      ],
+      "keyTakeaways": [
+        "Revenue up 250% year-over-year",
+        "Q3 2026 hit $4.2B quarterly revenue",
+        "Growth accelerating each quarter"
+      ],
+      "voiceover": "AI-driven revenue has seen explosive growth, climbing from one-point-two billion in Q3 last year to four-point-two billion this quarter.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 510,
+      "seqDuration": 170,
+      "color": "#E17055"
+    },
+    {
+      "id": "scene-5-comparison",
+      "tag": "GROWTH",
+      "headline": "AI Market Explosion",
+      "layoutType": "comparison",
+      "comparisonData": {
+        "before": { "label": "2024", "value": "$1.2B" },
+        "after": { "label": "2026", "value": "$8.5B" }
+      },
+      "keyTakeaways": [
+        "Market grew 7x in just two years",
+        "Enterprise adoption driving growth",
+        "Expected to hit $15B by 2028"
+      ],
+      "voiceover": "The AI market has exploded from one-point-two billion dollars in 2024 to an estimated eight-point-five billion in 2026 — a staggering seven-fold increase.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 680,
+      "seqDuration": 170,
+      "color": "#A29BFE"
+    },
+    {
+      "id": "scene-6-list",
+      "tag": "SUMMARY",
+      "headline": "Key Takeaways",
+      "layoutType": "list",
+      "keyTakeaways": [
+        "AI funding at all-time highs",
+        "Model benchmarks converging rapidly",
+        "Chrome maintains browser dominance",
+        "Quarterly AI revenue quadrupled",
+        "Market size grew 7x since 2024"
+      ],
+      "voiceover": "To wrap up, AI funding is at all-time highs, benchmark scores are converging, and the market has grown seven-fold in just two years.",
+      "audioFile": "bgm.mp3",
+      "audioFrames": 150,
+      "globalStart": 850,
+      "seqDuration": 170,
+      "color": "#55E6C1"
+    }
+  ]
+}

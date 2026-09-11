@@ -63,13 +63,14 @@ class VideoEngine {
     throw new Error(`TTS failed permanently for Scene ${scene.id}`);
   }
 
-  // Get exact duration of an mp3
+  // Get exact duration of an mp3 using Node.js music-metadata (no Python dependency!)
   getAudioDuration(filePath) {
-    const pyCode = 'import sys; from mutagen.mp3 import MP3; print(MP3(sys.argv[1]).info.length if len(sys.argv) > 1 else 0)';
     try {
-      const result = spawnSync('python', ['-c', pyCode, filePath], { encoding: 'utf-8' });
-      const output = (result.stdout || '').trim();
-      const dur = parseFloat(output);
+      // Use synchronous approach: spawn a small node script
+      const { spawnSync } = require('child_process');
+      const script = `const mm = require('music-metadata');mm.parseFile(process.argv[1]).then(m => process.stdout.write(String(m.format.duration || 0))).catch(() => process.stdout.write('0'));`;
+      const result = spawnSync('node', ['-e', script, filePath], { encoding: 'utf-8', timeout: 10000 });
+      const dur = parseFloat((result.stdout || '').trim());
       return isNaN(dur) || dur <= 0 ? 10 : dur;
     } catch (e) {
       return 10;
@@ -84,9 +85,12 @@ class VideoEngine {
     const finalScenes = [];
     const colors = ["#38bdf8", "#a855f7", "#eab308", "#22c55e", "#ef4444", "#ec4899", "#f97316"];
 
+    // Auto-switch TTS voice based on detected language
+    const language = storyPackage.language || 'vi';
+    const isEnglish = language === 'en';
     const voiceConfig = {
-      voice: process.env.TTS_VOICE || "vi-VN-HoaiMyNeural",
-      rate: process.env.TTS_RATE || "+5%",
+      voice: isEnglish ? 'en-US-ChristopherNeural' : (process.env.TTS_VOICE || "vi-VN-HoaiMyNeural"),
+      rate: isEnglish ? '+0%' : (process.env.TTS_RATE || "+5%"),
       pitch: process.env.TTS_PITCH || "+0Hz"
     };
 
@@ -126,7 +130,16 @@ class VideoEngine {
         seqDuration: seqDur,      // Độ dài vùng chứa của cảnh (có padding)
         globalStart: globalStart,
         color: colors[i % colors.length],
-        takeawayStarts: takeawayStarts
+        takeawayStarts: takeawayStarts,
+        language: language,
+        // Data Visualization fields
+        chartData: s.chartData,
+        progressValue: s.progressValue,
+        progressLabel: s.progressLabel,
+        counterTarget: s.counterTarget,
+        counterPrefix: s.counterPrefix,
+        counterSuffix: s.counterSuffix,
+        comparisonData: s.comparisonData,
       });
 
       globalStart += seqDur;
@@ -137,7 +150,7 @@ class VideoEngine {
     const outroFrames = Math.round(outroDurSec * this.fps);
     const finalOutro = {
       title: storyPackage.title,
-      subtitle: "Cảm ơn bạn đã theo dõi!",
+      subtitle: isEnglish ? "Thanks for watching!" : "Cảm ơn bạn đã theo dõi!",
       seqDuration: outroFrames,
       globalStart: globalStart
     };
@@ -146,6 +159,7 @@ class VideoEngine {
     // Package JSON for Remotion
     const finalRemotionJson = {
       title: storyPackage.title,
+      language: language,
       category: storyPackage.category || (storyPackage.scenes && storyPackage.scenes[0] && storyPackage.scenes[0].tag),
       themeColor: storyPackage.themeColor,
       bgStyle: storyPackage.bgStyle,

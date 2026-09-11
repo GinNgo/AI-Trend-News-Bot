@@ -8,6 +8,8 @@ const { VideoEngine } = require('../engine/video_engine.js');
 const { ClaimRepository } = require('../storage/repositories/ClaimRepository.js');
 const { EventRepository } = require('../storage/repositories/EventRepository.js');
 const { scrapeArticleDeep } = require('../scraper/browser.js');
+const { classifyLanguage, getSourceMetadata } = require('../ai/language_classifier.js');
+const { classifyDataViz } = require('../ai/data_viz_classifier.js');
 const logger = require('../collector/utils/logger.js');
 
 class VideoFactoryPipeline {
@@ -36,9 +38,13 @@ class VideoFactoryPipeline {
         const publicDir = path.join(__dirname, '../../public');
         const scraped = await scrapeArticleDeep(url, publicDir);
 
+        // Store source metadata for language classification
+        const sourceMeta = getSourceMetadata(url);
+        payload.sourceMeta = sourceMeta || { region: 'unknown', defaultLang: 'vi', name: 'Unknown' };
+
         payload.article = {
           sourceId: `web-${Date.now()}`,
-          sourceName: 'Web',
+          sourceName: sourceMeta ? sourceMeta.name : 'Web',
           url: url,
           title: scraped.title,
           content: scraped.fullText,
@@ -86,6 +92,28 @@ class VideoFactoryPipeline {
       }
 
       case 'STORY_PLANNING': {
+        // Auto Language Detection (NEW)
+        const { GoogleGenerativeAI } = require('@google/generative-ai');
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        let detectedLanguage = 'vi';
+        try {
+          const langResult = await classifyLanguage(genAI, {
+            sourceUrl: payload.sourceUrl || '',
+            facts: {
+              summary: payload.event?.topic || '',
+              category: payload.event?.entities?.join(', ') || '',
+              impact: '',
+              keyFacts: (payload.verifiedClaims || []).map(c => c.statement),
+            },
+          });
+          detectedLanguage = langResult.language;
+          payload.detectedLanguage = detectedLanguage;
+          logger.info(`[Pipeline] 🌐 Ngôn ngữ video: ${detectedLanguage === 'en' ? '🇬🇧 EN' : '🇻🇳 VI'} (${(langResult.confidence * 100).toFixed(0)}%)`);
+        } catch (err) {
+          logger.warn(`[Pipeline] Language detection failed, defaulting to vi: ${err.message}`);
+          payload.detectedLanguage = 'vi';
+        }
+
         const impactData = await this.researcher.analyzeImpact(payload.event, payload.verifiedClaims);
         payload.impact = impactData;
 
@@ -96,7 +124,22 @@ class VideoFactoryPipeline {
         }, impactData);
 
         storyPackage.storyId = storyPackage.storyId || `ST-${Date.now()}`;
+        storyPackage.language = detectedLanguage;
         payload.storyPackage = storyPackage;
+
+        // Data Visualization Classification (NEW)
+        if (storyPackage.scenes && storyPackage.scenes.length > 0) {
+          try {
+            const facts = {
+              keyFacts: (payload.verifiedClaims || []).map(c => c.statement),
+              impact: impactData?.summary || '',
+            };
+            storyPackage.scenes = await classifyDataViz(genAI, storyPackage.scenes, facts);
+            logger.info(`[Pipeline] 📊 Data viz classification hoàn tất.`);
+          } catch (err) {
+            logger.warn(`[Pipeline] Data viz classification failed: ${err.message}`);
+          }
+        }
 
         return 'FINAL_FACT_CHECK';
       }

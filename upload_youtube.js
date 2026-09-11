@@ -78,6 +78,7 @@ async function main() {
   let videoDesc = 'Bản Tin Công Nghệ & Chuyển Đổi Số Việt Nam\n#shorts #congnghe #chuyendoiso #ai #vietnam';
   let videoTags = ['shorts', 'công nghệ', 'chuyển đổi số', 'ai', 'việt nam'];
   let privacyStatus = 'public';
+  let videoLanguage = 'vi'; // Default language
 
   const metaPath = path.join(__dirname, 'youtube_meta.json');
   if (fs.existsSync(metaPath)) {
@@ -87,10 +88,20 @@ async function main() {
       if (customMeta.description) videoDesc = customMeta.description;
       if (customMeta.tags && Array.isArray(customMeta.tags)) videoTags = customMeta.tags;
       if (customMeta.privacyStatus) privacyStatus = customMeta.privacyStatus;
+      if (customMeta.language) videoLanguage = customMeta.language;
     } catch(e) {
       console.warn('Không thể đọc youtube_meta.json, sử dụng mặc định.');
     }
   }
+
+  // Also try reading language from the dynamic_news.json (auto-detected)
+  try {
+    const dynamicJsonPath = path.join(__dirname, 'src', 'dynamic_news.json');
+    if (fs.existsSync(dynamicJsonPath)) {
+      const dynamicData = JSON.parse(fs.readFileSync(dynamicJsonPath, 'utf-8'));
+      if (dynamicData.language) videoLanguage = dynamicData.language;
+    }
+  } catch(e) {}
 
   try {
     const res = await youtube.videos.insert(
@@ -102,8 +113,8 @@ async function main() {
             description: videoDesc,
             tags: videoTags,
             categoryId: '28', // Science & Technology
-            defaultLanguage: 'vi',
-            defaultAudioLanguage: 'vi',
+            defaultLanguage: videoLanguage,
+            defaultAudioLanguage: videoLanguage,
           },
           status: {
             privacyStatus: privacyStatus, // 'public', 'unlisted', 'private'

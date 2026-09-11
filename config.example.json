@@ -1,7 +1,20 @@
 {
-  "GEMINI_API_KEY": "YOUR_GEMINI_API_KEY_HERE",
-  "GEMINI_MODEL": "gemini-2.5-flash",
+  "GEMINI_MODEL": "gemini-3.5-flash-lite",
   "TTS_VOICE": "vi-VN-HoaiMyNeural",
   "TTS_RATE": "+5%",
-  "TTS_PITCH": "+2Hz"
+  "TTS_PITCH": "+0Hz",
+  "AUTO_PUBLISH": false,
+  "ENABLE_YOUTUBE": true,
+  "ENABLE_TIKTOK": false,
+  "ENABLE_FACEBOOK": false,
+  "ENABLE_INSTAGRAM": false,
+  "LANGUAGE": "auto",
+  "AUTO_DECISION_ACTION": "auto_pick",
+  "AUTO_DECISION_TIMEOUT_SECONDS": 300,
+  "TIKTOK_CLIENT_KEY": "",
+  "TIKTOK_CLIENT_SECRET": "",
+  "META_PAGE_ID": "",
+  "META_ACCESS_TOKEN": "",
+  "IG_ACCOUNT_ID": "",
+  "YOUTUBE_PRIVACY": "public"
 }

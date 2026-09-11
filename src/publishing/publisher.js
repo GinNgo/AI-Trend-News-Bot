@@ -17,13 +17,19 @@ class Publisher {
     };
   }
 
-  createPublication(storyId, renderId, platform, title, caption, tags = []) {
+  createPublication(storyId, renderId, platform, title, caption, tags = [], language = 'vi') {
     const pubId = `PUB-${Date.now()}-${Math.random().toString(36).substring(7)}`;
 
     this.db.prepare(`
       INSERT INTO publications (publicationId, storyId, renderId, platform, title, caption, status)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `).run(pubId, storyId, renderId, platform, title, caption, 'PENDING');
+
+    // Store language metadata for the publication
+    try {
+      this.db.prepare(`UPDATE publications SET caption = ? WHERE publicationId = ?`)
+        .run(`${caption}\n\n__lang:${language}__`, pubId);
+    } catch(e) { /* ignore if column doesn't support */ }
 
     return pubId;
   }

@@ -7,10 +7,11 @@ const os = require('os');
 const workerId = `${os.hostname()}-${process.pid}`;
 
 class DurableWorker {
-  constructor(pollIntervalMs = 5000) {
+  constructor(pollIntervalMs = 5000, concurrency = 1) {
     this.jobRepo = new JobRepository();
     this.pipeline = new VideoFactoryPipeline();
     this.pollIntervalMs = pollIntervalMs;
+    this.concurrency = concurrency;
     this.isRunning = false;
   }
 
@@ -51,16 +52,22 @@ class DurableWorker {
   }
 
   async poll() {
-    const jobs = this.jobRepo.findPendingJobs(5); // Fetch up to 5 jobs
+    const jobs = this.jobRepo.findPendingJobs(Math.max(5, this.concurrency)); // Fetch enough jobs for concurrency
     if (jobs.length === 0) return;
 
+    const batch = [];
     for (const job of jobs) {
       if (!this.isRunning) break;
 
       const locked = this.jobRepo.lockJob(job.jobId, workerId);
       if (locked) {
-        await this.processJob(job);
+        batch.push(this.processJob(job));
+        if (batch.length >= this.concurrency) break;
       }
+    }
+
+    if (batch.length > 0) {
+      await Promise.allSettled(batch);
     }
   }
 
@@ -104,14 +111,44 @@ class DurableWorker {
   }
 }
 
-module.exports = { DurableWorker };
+class WorkerPool {
+  constructor(workerCount = 1, pollIntervalMs = 5000) {
+    this.workers = [];
+    for (let i = 0; i < workerCount; i++) {
+      this.workers.push(new DurableWorker(pollIntervalMs, 1)); // each worker processes 1 job at a time
+    }
+  }
+
+  async start() {
+    logger.info(`[WorkerPool] Starting ${this.workers.length} workers...`);
+    await Promise.all(this.workers.map(w => w.start()));
+  }
+
+  stop() {
+    this.workers.forEach(w => w.stop());
+  }
+}
+
+module.exports = { DurableWorker, WorkerPool };
 
 if (require.main === module) {
-  const worker = new DurableWorker();
-  worker.start();
+  const workerCount = parseInt(process.env.WORKER_COUNT, 10) || 1;
 
-  process.on('SIGINT', () => {
-    worker.stop();
-    process.exit(0);
-  });
+  if (workerCount > 1) {
+    const pool = new WorkerPool(workerCount);
+    pool.start();
+
+    process.on('SIGINT', () => {
+      pool.stop();
+      process.exit(0);
+    });
+  } else {
+    const worker = new DurableWorker();
+    worker.start();
+
+    process.on('SIGINT', () => {
+      worker.stop();
+      process.exit(0);
+    });
+  }
 }

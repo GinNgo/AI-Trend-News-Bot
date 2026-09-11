@@ -9,6 +9,7 @@ import { DynamicScene } from './Scene';
 import { DynamicOutro } from './Outro';
 import { DynamicBackground } from './Background';
 import { NewsTicker } from './NewsTicker';
+import { SubtitleOverlay, generateSimpleCaptions } from './Subtitles';
 import { tokens } from '../design/tokens';
 
 export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
@@ -95,6 +96,33 @@ export const DynamicNewsComp: React.FC<DynamicNewsData> = (props) => {
         tickerTag={props.tickerTag as string | undefined}
         tickerColor={props.tickerColor as string | undefined}
       />
+
+      {/* Auto-generated Subtitles from voiceover text */}
+      {props.scenes.map((scene, idx) => {
+        if (!scene.voiceover) return null;
+        const captions = generateSimpleCaptions(
+          scene.voiceover,
+          scene.globalStart,
+          scene.audioFrames || scene.seqDuration,
+        );
+        return (
+          <Sequence key={`sub-${idx}`} from={scene.globalStart} durationInFrames={scene.seqDuration}>
+            <SubtitleOverlay
+              segments={captions.map(seg => ({
+                ...seg,
+                startFrame: seg.startFrame - scene.globalStart,
+                endFrame: seg.endFrame - scene.globalStart,
+                words: seg.words.map(w => ({
+                  ...w,
+                  startFrame: w.startFrame - scene.globalStart,
+                  endFrame: w.endFrame - scene.globalStart,
+                })),
+              }))}
+              color={props.themeColor || tokens.colors.accent}
+            />
+          </Sequence>
+        );
+      })}
     </AbsoluteFill>
   );
 };

@@ -15,6 +15,7 @@ config.json
 client_secret*.json
 tokens.json
 youtube_meta.json
+db_jobs.json
 
 # Logs & Temp files
 *.log

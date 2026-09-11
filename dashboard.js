@@ -10,6 +10,16 @@ const { Publisher } = require('./src/publishing/publisher.js');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Allow-Private-Network', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 app.use(express.static('public'));
 app.use(express.json({ limit: '50mb' }));
 app.use('/out', express.static(path.join(__dirname, 'out')));
