@@ -12,11 +12,14 @@ function getModelsForTask(taskType, envDefaultModel = null) {
     case 'FILTER':
       // Tác vụ quét/lọc tin: Cần siêu tốc độ, tiết kiệm quota nhất.
       preferredModels = [
-        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash-lite", // 500 RPD, 15 RPM
+        "gemini-3.1-flash-lite", // 500 RPD, 15 RPM
         "gemini-3.6-flash",
         "gemini-flash-latest",
         "gemini-2.5-flash-lite",
-        "gemini-3.5-flash"
+        "gemini-3.5-flash",
+        "gemini-3.0-flash",
+        "gemini-2.5-flash"
       ];
       break;
 
@@ -27,7 +30,10 @@ function getModelsForTask(taskType, envDefaultModel = null) {
         "gemini-3.6-flash",
         "gemini-flash-latest",
         "gemini-3.5-flash",
-        "gemini-2.5-flash-lite"
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-3.7-flash",
+        "gemini-2.5-pro"
       ];
       break;
 

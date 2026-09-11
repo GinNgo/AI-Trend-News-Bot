@@ -11,8 +11,11 @@ const parser = new Parser({
   }
 });
 
+const configPath = path.join(__dirname, 'config.json');
+let config = {};
+try { config = JSON.parse(fs.readFileSync(configPath, 'utf8')); } catch(e){}
 // Load config
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(config.GEMINI_API_KEY || process.env.GEMINI_API_KEY);
 
 function getBotConfig() {
   const configPath = path.join(__dirname, 'config.json');
@@ -39,7 +42,7 @@ const RSS_FEEDS = [
 
 // Thời gian tối đa của một bản tin (tính bằng giờ)
 // Tin cũ hơn số giờ này sẽ bị tự động loại bỏ để đảm bảo tính thời sự.
-const MAX_NEWS_AGE_HOURS = 24;
+const MAX_NEWS_AGE_HOURS = 72;
 
 function getHistory() {
   if (!fs.existsSync(HISTORY_FILE)) {
@@ -86,7 +89,7 @@ async function fetchLatestNews(logFn = console.log) {
       logFn(`  📡 Đang quét nguồn: ${feed.name}...`);
       const parsed = await parser.parseURL(feed.url);
       if (parsed && parsed.items) {
-        for (const item of parsed.items.slice(0, 10)) { // Lấy 10 tin mới nhất mỗi nguồn
+        for (const item of parsed.items.slice(0, 30)) { // Lấy 10 tin mới nhất mỗi nguồn
           const title = (item.title || '').trim();
           const link = item.link;
           if (!title || !link) continue;
@@ -143,7 +146,7 @@ YÊU CẦU:
 3. Nếu tất cả các tin đều là tin vụn vặt, tin giải trí nhỏ lẻ, tai nạn cá nhân hoặc không có gì nổi bật, hãy trả về null.
 
 DANH SÁCH TIN:
-${newsList.slice(0, 15).map((n, idx) => `[${idx + 1}] Tiêu đề: ${n.title}\nLink: ${n.link}\nThời gian: ${n.ageHours} giờ trước\nMô tả: ${n.snippet.substring(0, 150)}`).join('\n---\n')}
+${newsList.slice(0, 30).map((n, idx) => `[${idx + 1}] Tiêu đề: ${n.title}\nLink: ${n.link}\nThời gian: ${n.ageHours} giờ trước\nMô tả: ${n.snippet.substring(0, 150)}`).join('\n---\n')}
 
 TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json):
 {
@@ -152,7 +155,10 @@ TRẢ VỀ DUY NHẤT 1 ĐỊNH DẠNG JSON HỢP LỆ (KHÔNG BỌC \`\`\`json)
   "title": "Tiêu đề tin được chọn",
   "link": "Link bài báo được chọn",
   "reason": "Lý do vì sao tin này quan trọng và hút người xem",
-  "impactScore": 9 // Thang điểm 1-10
+  "impactScore": 9, // Thang điểm 1-10
+  "scope": "domestic", // "domestic" (quốc nội) hoặc "international" (quốc tế)
+  "suggestedTitle": "Tiêu đề chuyên nghiệp, tự nhiên (Ví dụ: Tiêu điểm, Khám phá, Phân tích... không dùng Tin Nóng Hổi)",
+  "suggestedCaption": "Caption khách quan kèm hashtag"
 }
   `;
 
@@ -245,7 +251,7 @@ Dưới đây là danh sách các tin tức vừa xuất bản.
 Hãy CHỌN RA TỐI ĐA 3 TIN CÓ TẦM ẢNH HƯỞNG LỚN NHẤT.
 
 DANH SÁCH TIN:
-${newsList.slice(0, 20).map((n, idx) => `[${idx + 1}] Tiêu đề: ${n.title}\nLink: ${n.link}\nThời gian: ${n.ageHours} giờ trước\nMô tả: ${n.snippet.substring(0, 150)}`).join('\n---\n')}
+${newsList.slice(0, 30).map((n, idx) => `[${idx + 1}] Tiêu đề: ${n.title}\nLink: ${n.link}\nThời gian: ${n.ageHours} giờ trước\nMô tả: ${n.snippet.substring(0, 150)}`).join('\n---\n')}
 
 TRẢ VỀ DUY NHẤT 1 MẢNG JSON HỢP LỆ:
 [
