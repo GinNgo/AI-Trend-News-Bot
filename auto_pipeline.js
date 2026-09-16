@@ -324,6 +324,45 @@ async function main() {
     console.warn(`  ⚠️ Data viz classification thất bại, giữ layout gốc: ${err.message}`);
   }
 
+  // FEATURE FLAG: V3 VIDEO PRODUCTION ENGINE (Default: v1 for 100% stable production)
+  const videoEngineVersion = process.env.VIDEO_ENGINE || config.VIDEO_ENGINE || 'v1';
+  console.log(`🎬 Động cơ Video: [VIDEO_ENGINE=${videoEngineVersion.toUpperCase()}]`);
+
+  let videoPlan = null;
+  if (videoEngineVersion === 'v2') {
+    try {
+      console.log(`\n🚀 [V3 ENGINE] Kích hoạt Video Director & Visual Choreographer...`);
+      const { VideoDirector } = require('./src/ai/agents/video_director.js');
+      const { VisualDirector } = require('./src/ai/agents/visual_director.js');
+      const { RetentionOptimizer } = require('./src/ai/agents/retention_optimizer.js');
+
+      const director = new VideoDirector({ genAI, modelName: process.env.GEMINI_MODEL || config.GEMINI_MODEL });
+      videoPlan = await director.directVideo({
+        storyPackage: facts,
+        script: aiData,
+        narration: aiData.scenes.map(s => s.voiceover).join(' '),
+        targetDurationSec: 48,
+        platform: 'youtubeShorts',
+        category: aiData.category || '',
+        language: detectedLanguage,
+        availableImages: downloadedImages
+      });
+
+      const visualDirector = new VisualDirector();
+      videoPlan = visualDirector.enhanceVideoPlan(videoPlan, downloadedImages);
+
+      const retentionOptimizer = new RetentionOptimizer();
+      const retentionReport = retentionOptimizer.evaluateRetention(videoPlan, aiData);
+      if (!retentionReport.passed) {
+        console.log(`  ⚡ [V3 ENGINE] Tự động tối ưu nhịp dựng kịch bản: ${retentionReport.recommendations.join('; ')}`);
+        videoPlan = retentionOptimizer.optimizePlan(videoPlan);
+      }
+      console.log(`  ✅ [V3 ENGINE] Video Plan hoàn tất với ${videoPlan.totalShots || 'đa'} cú máy.`);
+    } catch (v2Err) {
+      console.warn(`⚠️ [V3 ENGINE] Lỗi khởi chạy V2, tự động fallback an toàn về V1: ${v2Err.message}`);
+    }
+  }
+
   // 1. Phân loại Kênh xuất bản (Thời sự VN vs Tech/Global)
   const { ChannelRouter } = require('./src/publishing/channel_router.js');
   const channelRouter = new ChannelRouter();
@@ -708,6 +747,30 @@ async function main() {
 
   console.log(`\n🎉 HOÀN TẤT PIPELINE TỰ ĐỘNG!`);
   console.log(`Video lưu riêng biệt tại: ${uniqueVideoPath}`);
+
+  // V3 VIDEO QUALITY ASSURANCE & QUALITY MEMORY
+  try {
+    const { VideoQA } = require('./src/ai/agents/video_qa.js');
+    const { QualityMemory } = require('./src/ai/agents/quality_memory.js');
+    const videoQA = new VideoQA();
+    const qaReport = videoQA.inspect({
+      videoPath: uniqueVideoPath,
+      renderPayload: finalRemotionJson,
+      videoPlan: videoPlan
+    });
+
+    const memory = new QualityMemory();
+    memory.saveRecord({
+      videoId: renderId,
+      channelId: targetChannelId,
+      videoPlan,
+      qaResult: qaReport,
+      fixesApplied: []
+    });
+    console.log(`🛡️ [VideoQA] Báo cáo chất lượng: Điểm ${qaReport.score}/100 | Trạng thái: [${qaReport.status}]`);
+  } catch (qaErr) {
+    console.warn(`⚠️ [VideoQA] Bỏ qua kiểm định QA: ${qaErr.message}`);
+  }
 
   const storyId = `ST-AUTO-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
   const durationSec = Number((globalStart / 30).toFixed(1));
