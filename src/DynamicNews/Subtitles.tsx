@@ -47,9 +47,9 @@ export function parseVttToCaptions(vttContent: string, fps: number = 30): Captio
   while (i < lines.length) {
     const line = lines[i].trim();
 
-    // Match timestamp lines: 00:00:01.240 --> 00:00:01.640
+    // Match timestamp lines: 00:00:01.240 --> 00:00:01.640 or 00:00:01,240 --> 00:00:01,640
     const timeMatch = line.match(
-      /(\d{2}):(\d{2}):(\d{2})\.(\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})\.(\d{3})/
+      /(\d{2}):(\d{2}):(\d{2})[.,](\d{3})\s*-->\s*(\d{2}):(\d{2}):(\d{2})[.,](\d{3})/
     );
 
     if (timeMatch) {
@@ -74,19 +74,36 @@ export function parseVttToCaptions(vttContent: string, fps: number = 30): Captio
 
       text = text.replace(/<[^>]+>/g, '').trim(); // Strip HTML tags
       if (text) {
-        words.push({
-          text,
-          startFrame: Math.round(startSec * fps),
-          endFrame: Math.round(endSec * fps),
-        });
+        const lineWords = text.split(/\s+/).filter(Boolean);
+        const cueStartFrame = Math.round(startSec * fps);
+        const cueEndFrame = Math.round(endSec * fps);
+        const cueDuration = Math.max(1, cueEndFrame - cueStartFrame);
+
+        if (lineWords.length <= 1) {
+          words.push({
+            text,
+            startFrame: cueStartFrame,
+            endFrame: cueEndFrame,
+          });
+        } else {
+          // Distribute words smoothly across the cue duration
+          const framesPerWord = cueDuration / lineWords.length;
+          lineWords.forEach((lw, wIdx) => {
+            words.push({
+              text: lw,
+              startFrame: Math.round(cueStartFrame + wIdx * framesPerWord),
+              endFrame: Math.round(cueStartFrame + (wIdx + 1) * framesPerWord),
+            });
+          });
+        }
       }
     }
     i++;
   }
 
   if (words.length > 0) {
-    // Group words into segments of ~8 words each
-    const segmentSize = 8;
+    // Nhịp đọc chuẩn điện ảnh: Gom 4-6 từ/cụm (trung bình 5 từ) để phụ đề đứng yên, êm mắt
+    const segmentSize = 5;
     for (let j = 0; j < words.length; j += segmentSize) {
       const segmentWords = words.slice(j, j + segmentSize);
       segments.push({
@@ -95,14 +112,22 @@ export function parseVttToCaptions(vttContent: string, fps: number = 30): Captio
         endFrame: segmentWords[segmentWords.length - 1].endFrame,
       });
     }
+
+    // Giữ phụ đề liên tục cho tới khi cụm tiếp theo xuất hiện (không chớp tắt sớm)
+    for (let s = 0; s < segments.length - 1; s++) {
+      segments[s].endFrame = segments[s + 1].startFrame;
+    }
+    if (segments.length > 0) {
+      segments[segments.length - 1].endFrame += 15;
+    }
   }
 
   return segments;
 }
 
 /**
- * Generate simple captions from voiceover text (no VTT needed).
- * Splits text into words and evenly distributes timing across the scene duration.
+ * Generate smart captions from voiceover text.
+ * Groups words into 4-6 word natural sentence fragments for stable, comfortable reading.
  */
 export function generateSimpleCaptions(
   voiceoverText: string,
@@ -113,23 +138,46 @@ export function generateSimpleCaptions(
   const allWords = voiceoverText.split(/\s+/).filter((w) => w.length > 0);
   if (allWords.length === 0) return [];
 
-  const framesPerWord = Math.max(4, Math.floor(sceneDurationFrames / allWords.length));
+  // Phân bổ thời lượng nói đều đặn
+  const spokenDurationFrames = Math.max(sceneDurationFrames - 15, Math.floor(sceneDurationFrames * 0.9));
+  const framesPerWord = Math.max(5, Math.floor(spokenDurationFrames / allWords.length));
+
   const words: CaptionWord[] = allWords.map((text, idx) => ({
     text,
     startFrame: sceneStartFrame + idx * framesPerWord,
     endFrame: sceneStartFrame + (idx + 1) * framesPerWord,
   }));
 
-  // Group into segments
-  const segmentSize = 6;
+  // Gom từ tự nhiên 4-6 từ mỗi cụm để người xem đọc dễ chịu
   const segments: CaptionSegment[] = [];
-  for (let j = 0; j < words.length; j += segmentSize) {
-    const segmentWords = words.slice(j, j + segmentSize);
-    segments.push({
-      words: segmentWords,
-      startFrame: segmentWords[0].startFrame,
-      endFrame: segmentWords[segmentWords.length - 1].endFrame,
-    });
+  const targetSegmentSize = 5;
+
+  let currentChunk: CaptionWord[] = [];
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    currentChunk.push(w);
+
+    const hasPunctuation = /[.,!?;:]$/.test(w.text);
+    const reachedTarget = currentChunk.length >= targetSegmentSize;
+    const isLastWord = (i === words.length - 1);
+
+    if ((hasPunctuation && currentChunk.length >= 3) || reachedTarget || isLastWord) {
+      segments.push({
+        words: currentChunk,
+        startFrame: currentChunk[0].startFrame,
+        endFrame: currentChunk[currentChunk.length - 1].endFrame,
+      });
+      currentChunk = [];
+    }
+  }
+
+  // Kéo dài thời gian lưu phụ đề liền mạch
+  for (let s = 0; s < segments.length; s++) {
+    if (s < segments.length - 1) {
+      segments[s].endFrame = segments[s + 1].startFrame;
+    } else {
+      segments[s].endFrame = Math.max(segments[s].endFrame + 20, sceneStartFrame + sceneDurationFrames - 4);
+    }
   }
 
   return segments;
@@ -137,87 +185,90 @@ export function generateSimpleCaptions(
 
 export const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({
   segments,
-  color = '#38BDF8',
+  color = '#FACC15', // Vàng neon rực rỡ
   position = 'bottom',
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Find the currently active segment
+  // Tìm cụm phụ đề đang kích hoạt
   const activeSegment = segments.find(
-    (seg) => frame >= seg.startFrame - 5 && frame <= seg.endFrame + 10
+    (seg) => frame >= seg.startFrame - 1 && frame <= seg.endFrame
   );
 
   if (!activeSegment) return null;
 
-  // Container entrance animation
+  // Hiệu ứng Fade-in êm ái, đứng yên vững chãi (Tuyệt đối không scale nảy nén gây chóng mặt)
   const enterProgress = spring({
-    frame: frame - activeSegment.startFrame + 5,
+    frame: frame - activeSegment.startFrame + 1,
     fps,
-    config: { damping: 15, stiffness: 120, mass: 0.8 },
+    config: { damping: 20, stiffness: 120, mass: 0.8 },
   });
-  const containerY = interpolate(enterProgress, [0, 1], [30, 0]);
   const containerOpacity = interpolate(enterProgress, [0, 1], [0, 1]);
-
-  // Exit fade
-  const framesUntilEnd = activeSegment.endFrame - frame;
-  const exitOpacity = framesUntilEnd < 10
-    ? interpolate(framesUntilEnd, [0, 10], [0, 1], { extrapolateRight: 'clamp' })
-    : 1;
 
   return (
     <div
       style={{
         position: 'absolute',
-        [position === 'top' ? 'top' : 'bottom']: position === 'top' ? '15%' : '24%',
+        top: position === 'top' ? '15%' : '71%', // Safe zone chuẩn: nằm dưới biểu đồ/nội dung chính
         left: '50%',
-        transform: `translateX(-50%) translateY(${containerY}px)`,
-        width: '88%',
-        zIndex: 200,
+        transform: 'translateX(-50%)', // Đứng yên vững chãi, không zoom co giật
+        width: '94%',
+        zIndex: 250,
         display: 'flex',
         justifyContent: 'center',
-        opacity: containerOpacity * exitOpacity,
+        alignItems: 'center',
+        opacity: containerOpacity,
         pointerEvents: 'none',
       }}
     >
       <div
         style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          backdropFilter: 'blur(12px)',
-          padding: '14px 28px',
-          borderRadius: '16px',
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          gap: '6px 10px',
-          maxWidth: '100%',
-          boxShadow: `0 8px 30px rgba(0,0,0,0.5)`,
+          alignItems: 'center',
+          gap: '12px 16px',
+          maxWidth: '92%',
+          padding: '12px 28px',
+          backgroundColor: 'rgba(5, 10, 24, 0.78)',
+          backdropFilter: 'blur(16px)',
+          borderRadius: '24px',
+          border: '1.5px solid rgba(255, 255, 255, 0.16)',
+          boxShadow: '0 12px 36px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
         }}
       >
         {activeSegment.words.map((word, idx) => {
           const isActive = frame >= word.startFrame && frame <= word.endFrame;
-          const isPast = frame > word.endFrame;
-          const wordEnter = spring({
-            frame: frame - word.startFrame,
-            fps,
-            config: { damping: 20, stiffness: 200, mass: 0.5 },
-          });
-          const scale = isActive ? 1 + interpolate(wordEnter, [0, 1], [0, 0.08]) : 1;
+          
+          // Kiểm tra từ khóa đặc biệt (số liệu, tiền tệ, cảnh báo)
+          const isNumberOrMoney = /[\d$%€£₫]/.test(word.text);
+          const isWarning = /(cảnh báo|nguy hiểm|bốc hơi|sụp đổ|chấn động|shock|danger|warning|collapse|alien)/i.test(word.text);
+
+          // Bảng màu siêu tương phản chuẩn CapCut / Alex Hormozi (Không dùng màu tối)
+          let highlightColor = '#FFE600'; // Vàng điện quang rực rỡ
+          if (isNumberOrMoney) highlightColor = '#00F2FE'; // Xanh ngọc điện cho con số
+          else if (isWarning) highlightColor = '#FF9F0A'; // Cam rực rỡ cho cảnh báo
 
           return (
             <span
               key={idx}
               style={{
-                fontSize: '36px',
-                fontWeight: isActive ? 900 : 600,
-                color: isActive ? color : isPast ? '#E2E8F0' : 'rgba(226, 232, 240, 0.6)',
-                transform: `scale(${scale})`,
-                transition: 'color 0.1s',
+                fontSize: '48px', // Cố định kích cỡ chữ 100% để không làm xô lệch các từ bên cạnh
+                fontWeight: 900,
+                textTransform: 'uppercase',
+                color: isActive ? highlightColor : '#FFFFFF',
+                // Loại bỏ hoàn toàn transform rotate & scale giật mắt
+                paintOrder: 'stroke fill',
+                WebkitTextStroke: '4px #000000',
                 textShadow: isActive
-                  ? `0 0 20px ${color}88, 0 2px 8px rgba(0,0,0,0.8)`
-                  : '0 2px 4px rgba(0,0,0,0.5)',
-                fontFamily: '"Be Vietnam Pro", "Roboto", sans-serif',
-                lineHeight: 1.5,
+                  ? `0 0 20px ${highlightColor}, 0 4px 14px rgba(0,0,0,0.95)`
+                  : '0 4px 14px rgba(0,0,0,0.9)',
+                fontFamily: '"Montserrat", "Be Vietnam Pro", Impact, sans-serif',
+                letterSpacing: '1px',
+                lineHeight: 1.25,
+                display: 'inline-block',
+                transition: 'color 0.08s ease',
               }}
             >
               {word.text}

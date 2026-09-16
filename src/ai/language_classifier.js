@@ -5,20 +5,41 @@ const { getModelsForTask, blockModel, getModelBlockTimeRemaining } = require('./
  * Used by the Language Classifier to determine video language.
  */
 const SOURCE_METADATA = {
+  // --- International sources → English ---
   'news.ycombinator.com':    { region: 'international', defaultLang: 'en', name: 'Hacker News' },
   'hnrss.org':               { region: 'international', defaultLang: 'en', name: 'Hacker News' },
   'techcrunch.com':          { region: 'international', defaultLang: 'en', name: 'TechCrunch' },
   'theverge.com':            { region: 'international', defaultLang: 'en', name: 'The Verge' },
   'venturebeat.com':         { region: 'international', defaultLang: 'en', name: 'VentureBeat' },
+  'wired.com':               { region: 'international', defaultLang: 'en', name: 'Wired' },
+  'arstechnica.com':         { region: 'international', defaultLang: 'en', name: 'Ars Technica' },
+  'engadget.com':            { region: 'international', defaultLang: 'en', name: 'Engadget' },
+  'technologyreview.com':    { region: 'international', defaultLang: 'en', name: 'MIT Tech Review' },
   'arxiv.org':               { region: 'international', defaultLang: 'en', name: 'ArXiv' },
   'reuters.com':             { region: 'international', defaultLang: 'en', name: 'Reuters' },
+  'reutersagency.com':       { region: 'international', defaultLang: 'en', name: 'Reuters' },
   'bbc.com':                 { region: 'international', defaultLang: 'en', name: 'BBC' },
+  'bbci.co.uk':              { region: 'international', defaultLang: 'en', name: 'BBC' },
+  'finance.yahoo.com':       { region: 'international', defaultLang: 'en', name: 'Yahoo Finance' },
+  'cnn.com':                 { region: 'international', defaultLang: 'en', name: 'CNN' },
+  'rss.cnn.com':             { region: 'international', defaultLang: 'en', name: 'CNN' },
+  'cnbc.com':                { region: 'international', defaultLang: 'en', name: 'CNBC' },
+  'science.org':             { region: 'international', defaultLang: 'en', name: 'Science' },
+  'mullvad.net':             { region: 'international', defaultLang: 'en', name: 'Mullvad' },
+  'claymath.org':            { region: 'international', defaultLang: 'en', name: 'Clay Math' },
+  'calif.io':                { region: 'international', defaultLang: 'en', name: 'Calif Research' },
+
+  // --- Vietnamese sources → Tiếng Việt ---
   'news.google.com':         { region: 'vietnam',       defaultLang: 'vi', name: 'Google News VN' },
   'vnexpress.net':           { region: 'vietnam',       defaultLang: 'vi', name: 'VnExpress' },
   'tuoitre.vn':              { region: 'vietnam',       defaultLang: 'vi', name: 'Tuổi Trẻ' },
   'thanhnien.vn':            { region: 'vietnam',       defaultLang: 'vi', name: 'Thanh Niên' },
   'dantri.com.vn':           { region: 'vietnam',       defaultLang: 'vi', name: 'Dân Trí' },
   'vietnamnet.vn':           { region: 'vietnam',       defaultLang: 'vi', name: 'VietnamNet' },
+  'znews.vn':                { region: 'vietnam',       defaultLang: 'vi', name: 'Znews' },
+  'cafef.vn':                { region: 'vietnam',       defaultLang: 'vi', name: 'CafeF' },
+  'genk.vn':                 { region: 'vietnam',       defaultLang: 'vi', name: 'GenK' },
+  'kenh14.vn':               { region: 'vietnam',       defaultLang: 'vi', name: 'Kênh 14' },
 };
 
 /**
@@ -63,6 +84,24 @@ function getSourceMetadata(url) {
 async function classifyLanguage(genAI, { sourceUrl, facts, rawText, logFn = console.log }) {
   logFn(`\n🌐 LANGUAGE CLASSIFIER: Đang phân tích ngôn ngữ phù hợp cho video...`);
 
+  // Kiểm tra cấu hình: nếu đặt LANGUAGE = 'vi' thì 100% xuất bản Tiếng Việt cho khán giả nội địa
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const confPath = path.join(process.cwd(), 'config.json');
+    if (fs.existsSync(confPath)) {
+      const conf = JSON.parse(fs.readFileSync(confPath, 'utf-8'));
+      if (conf.LANGUAGE === 'vi') {
+        logFn(`  🇻🇳 Định hướng nội địa: Xuất bản 100% bằng Tiếng Việt (Thuyết minh & phụ đề).`);
+        return {
+          language: 'vi',
+          confidence: 1.0,
+          reasoning: 'Hệ thống định hướng 100% nội dung bằng Tiếng Việt cho khán giả nội địa.'
+        };
+      }
+    }
+  } catch (e) {}
+
   const sourceMeta = getSourceMetadata(sourceUrl);
   const sourceRegion = sourceMeta ? sourceMeta.region : 'unknown';
   const sourceDefaultLang = sourceMeta ? sourceMeta.defaultLang : 'vi';
@@ -70,13 +109,13 @@ async function classifyLanguage(genAI, { sourceUrl, facts, rawText, logFn = cons
 
   logFn(`  📡 Nguồn: ${sourceName} (${sourceRegion}, default: ${sourceDefaultLang})`);
 
-  // Fast path: International sources → English (no AI call needed)
+  // Nguồn quốc tế: nếu không ép tiếng Việt thì mới dùng tiếng Anh
   if (sourceRegion === 'international') {
-    logFn(`  ⚡ Fast path: Nguồn quốc tế → English`);
+    logFn(`  ⚡ Fast path: Nguồn quốc tế → Tiếng Việt (biên dịch nội địa)`);
     return {
-      language: 'en',
+      language: 'vi',
       confidence: 0.95,
-      reasoning: `Source "${sourceName}" is an international publication. Defaulting to English for global audience reach.`
+      reasoning: `Source "${sourceName}" is an international publication. Translated to Vietnamese for domestic audience reach.`
     };
   }
 

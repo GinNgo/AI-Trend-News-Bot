@@ -228,6 +228,8 @@ CREATE TABLE IF NOT EXISTS publications (
   url TEXT,
   title TEXT,
   caption TEXT,
+  language TEXT DEFAULT 'vi',
+  channelId TEXT DEFAULT 'channel_domestic',
   metadataVersion INTEGER DEFAULT 1,
   attempt INTEGER DEFAULT 0,
   lastError TEXT,
@@ -249,3 +251,21 @@ CREATE TABLE IF NOT EXISTS cost_events (
   estimatedCost REAL DEFAULT 0,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- VIDEO ANALYTICS SNAPSHOTS
+CREATE TABLE IF NOT EXISTS video_snapshots (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  publicationId TEXT NOT NULL,
+  channelId TEXT DEFAULT 'channel_domestic',
+  platformVideoId TEXT NOT NULL,
+  title TEXT,
+  viewCount INTEGER DEFAULT 0,
+  likeCount INTEGER DEFAULT 0,
+  commentCount INTEGER DEFAULT 0,
+  viewsPerHour REAL DEFAULT 0,
+  engagementRate REAL DEFAULT 0,
+  performanceGrade TEXT DEFAULT 'B',
+  recordedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_snapshots_vid_time ON video_snapshots(platformVideoId, recordedAt);
+

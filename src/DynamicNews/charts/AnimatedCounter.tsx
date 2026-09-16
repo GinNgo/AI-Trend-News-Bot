@@ -1,6 +1,6 @@
 import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
-import { DynamicSceneItem } from '../types';
+import { DynamicSceneItem, resolveSceneTag } from '../types';
 import { tokens } from '../../design/tokens';
 import { SafeArea } from '../../design/components/SafeArea';
 
@@ -78,19 +78,18 @@ const formatLargeNumber = (value: number, language?: string): string => {
 const ProgressBar: React.FC<{ duration: number; color: string }> = ({ duration, color }) => {
   const frame = useCurrentFrame();
   const width = interpolate(frame, [0, duration], [0, 100], { extrapolateRight: 'clamp' });
-  const pulse = 0.7 + Math.sin(frame * 0.1) * 0.3;
   return (
     <div
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
-        height: '10px',
+        height: '8px',
         width: `${width}%`,
         backgroundColor: color,
-        boxShadow: `0 0 20px ${color}`,
+        boxShadow: `0 0 12px ${color}`,
         zIndex: 10,
-        opacity: pulse,
+        opacity: 0.9,
       }}
     />
   );
@@ -99,18 +98,18 @@ const ProgressBar: React.FC<{ duration: number; color: string }> = ({ duration, 
 const AudioVisualizer: React.FC<{ color: string }> = ({ color }) => {
   const frame = useCurrentFrame();
   return (
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', height: '40px', marginTop: '10px' }}>
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const height = 12 + Math.abs(Math.sin(frame * 0.25 + i * 1.2)) * 25;
+    <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-end', height: '24px', opacity: 0.8 }}>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const height = 6 + Math.abs(Math.sin(frame * 0.08 + i * 0.8)) * 12;
         return (
           <div
             key={i}
             style={{
-              width: '8px',
+              width: '5px',
               height: `${height}px`,
               backgroundColor: color,
-              borderRadius: '4px',
-              boxShadow: `0 0 10px ${color}`,
+              borderRadius: '3px',
+              boxShadow: `0 0 6px ${color}88`,
             }}
           />
         );
@@ -214,9 +213,8 @@ export const LayoutAnimatedCounter: React.FC<{ data: DynamicSceneItem; color: st
   const showBurst = frame >= burstFrame && burstFrame > 0;
 
   // ---- Spring entrance -------------------------------------------------------
-  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.stiff });
-  const titleY = interpolate(titleProgress, [0, 1], [60, 0]);
-  const floatY = Math.sin(frame * 0.04) * 6;
+  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.smooth });
+  const titleY = interpolate(titleProgress, [0, 1], [30, 0]);
 
   // ---- Formatted display value -----------------------------------------------
   const displayValue = `${prefix}${formatLargeNumber(currentValue, language)}${suffix}`;
@@ -267,7 +265,7 @@ export const LayoutAnimatedCounter: React.FC<{ data: DynamicSceneItem; color: st
             alignItems: 'center',
             gap: '20px',
             opacity: titleProgress,
-            transform: `translateY(${titleY + floatY}px)`,
+            transform: `translateY(${titleY}px)`,
           }}
         >
           <div
@@ -283,7 +281,7 @@ export const LayoutAnimatedCounter: React.FC<{ data: DynamicSceneItem; color: st
               border: `2px solid ${color}66`,
             }}
           >
-            📊 {data.tag || 'CHỈ SỐ'}
+            📊 {resolveSceneTag(data.tag, 'CHỈ SỐ', data.language)}
           </div>
           <div
             style={{
@@ -308,7 +306,6 @@ export const LayoutAnimatedCounter: React.FC<{ data: DynamicSceneItem; color: st
               lineHeight: 1,
               textAlign: 'center',
               textShadow: `0 0 ${glowRadius}px ${color}, 0 0 ${glowRadius * 2}px ${color}88, 0 20px 40px rgba(0,0,0,0.5)`,
-              transform: `scale(${1 + Math.sin(frame * 0.08) * 0.03})`,
             }}
           >
             {displayValue}
@@ -324,7 +321,6 @@ export const LayoutAnimatedCounter: React.FC<{ data: DynamicSceneItem; color: st
           <div
             style={{
               opacity: titleProgress,
-              transform: `translateY(${Math.sin(frame * 0.04) * 8}px)`,
               backgroundColor: 'rgba(15,23,42,0.95)',
               padding: '32px 48px',
               borderRadius: '32px',

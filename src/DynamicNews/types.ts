@@ -1,3 +1,5 @@
+import { CaptionSegment } from './Subtitles';
+
 // ============================================
 // Chart Data Types
 // ============================================
@@ -23,7 +25,7 @@ export interface DynamicSceneItem {
   headline: string;
   keyTakeaways: string[];
   layoutType?:
-    | 'list' | 'stat' | 'quote' | 'spotlight' | 'image'
+    | 'intro' | 'list' | 'stat' | 'quote' | 'spotlight' | 'image'
     | 'animated_counter' | 'bar_chart' | 'progress_ring' | 'line_chart' | 'comparison';
   statNumber?: string;
   statLabel?: string;
@@ -38,6 +40,7 @@ export interface DynamicSceneItem {
   color?: string;
   takeawayStarts?: number[];
   language?: 'vi' | 'en';
+  captions?: CaptionSegment[];
 
   // Data Visualization fields
   chartData?: ChartDataPoint[];
@@ -65,6 +68,19 @@ export interface DynamicNewsData {
   totalDurationInFrames: number;
   scenes: DynamicSceneItem[];
   language?: 'vi' | 'en';
+  channelId?: string;
+  bgmFile?: string;
+  bgmVolume?: number;
   outro?: DynamicOutroData;
   [key: string]: unknown;
 }
+
+// Hàm làm sạch và gán nhãn chuyên nghiệp, triệt tiêu hoàn toàn chữ "CẢNH 1", "CẢNH 2", "SCENE 1"
+export const resolveSceneTag = (tag: string | undefined, defaultTag: string, language: string = 'vi'): string => {
+  const clean = (tag || '').trim();
+  if (!clean || /^(cảnh|scene)\s*\d*$/i.test(clean)) {
+    return defaultTag;
+  }
+  return clean.toUpperCase();
+};
+

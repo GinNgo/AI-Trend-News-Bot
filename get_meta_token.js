@@ -31,25 +31,29 @@ rl.question('👉 Hãy dán Access Token mới (lấy từ Graph API Explorer) v
 
   console.log('\n🔍 Đang kiểm tra token với Meta Graph API...');
   try {
-    const res = await fetch(`https://graph.facebook.com/v19.0/me?access_token=${newToken}`);
-    const data = await res.json();
+    const { inspectAndResolvePageToken } = require('./src/publishing/providers/meta_token_helper');
+    const result = await inspectAndResolvePageToken(newToken, config.META_PAGE_ID);
 
-    if (data.error) {
-      console.log(`❌ Token không hợp lệ: ${data.error.message}`);
+    if (!result.ok) {
+      console.log(`❌ ${result.message || result.error}`);
       rl.close();
       return;
     }
 
-    console.log(`✅ Token hợp lệ! Xin chào: ${data.name || data.id}`);
+    console.log(`\n${result.message}`);
 
-    // Cập nhật vào config.json
-    config.META_ACCESS_TOKEN = newToken;
+    // Cập nhật vào config.json với token đã được trích xuất (Page token vĩnh viễn)
+    config.META_ACCESS_TOKEN = result.token;
+    if (result.pageId && !config.META_PAGE_ID) {
+      config.META_PAGE_ID = result.pageId;
+    }
+    config.ENABLE_FACEBOOK = true;
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
 
-    console.log('💾 Đã lưu META_ACCESS_TOKEN mới vào config.json thành công!');
-    console.log('🎉 Bạn có thể quay lại Dashboard và bấm nút [🔌 Test] để kiểm tra!');
+    console.log('💾 Đã lưu META_ACCESS_TOKEN (Vĩnh viễn) vào config.json thành công!');
+    console.log('🎉 Hệ thống đã sẵn sàng tự động xuất bản Facebook Reels & Fanpage!');
   } catch (err) {
-    console.error('❌ Lỗi kết nối:', err.message);
+    console.error('❌ Lỗi xử lý token:', err.message);
   } finally {
     rl.close();
   }

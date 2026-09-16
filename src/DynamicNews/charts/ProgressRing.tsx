@@ -1,6 +1,6 @@
 import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
-import { DynamicSceneItem } from '../types';
+import { DynamicSceneItem, resolveSceneTag } from '../types';
 import { tokens } from '../../design/tokens';
 import { SafeArea } from '../../design/components/SafeArea';
 
@@ -39,19 +39,18 @@ const parsePercentage = (raw?: string): number | null => {
 const ProgressBar: React.FC<{ duration: number; color: string }> = ({ duration, color }) => {
   const frame = useCurrentFrame();
   const width = interpolate(frame, [0, duration], [0, 100], { extrapolateRight: 'clamp' });
-  const pulse = 0.7 + Math.sin(frame * 0.1) * 0.3;
   return (
     <div
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
-        height: '10px',
+        height: '8px',
         width: `${width}%`,
         backgroundColor: color,
-        boxShadow: `0 0 20px ${color}`,
+        boxShadow: `0 0 12px ${color}`,
         zIndex: 10,
-        opacity: pulse,
+        opacity: 0.9,
       }}
     />
   );
@@ -60,18 +59,18 @@ const ProgressBar: React.FC<{ duration: number; color: string }> = ({ duration, 
 const AudioVisualizer: React.FC<{ color: string }> = ({ color }) => {
   const frame = useCurrentFrame();
   return (
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', height: '40px', marginTop: '10px' }}>
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const height = 12 + Math.abs(Math.sin(frame * 0.25 + i * 1.2)) * 25;
+    <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-end', height: '24px', opacity: 0.8 }}>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const height = 6 + Math.abs(Math.sin(frame * 0.08 + i * 0.8)) * 12;
         return (
           <div
             key={i}
             style={{
-              width: '8px',
+              width: '5px',
               height: `${height}px`,
               backgroundColor: color,
-              borderRadius: '4px',
-              boxShadow: `0 0 10px ${color}`,
+              borderRadius: '3px',
+              boxShadow: `0 0 6px ${color}88`,
             }}
           />
         );
@@ -128,12 +127,8 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
   const tipGlow = interpolate(animatedValue, [0, 100], [8, 28], { extrapolateRight: 'clamp' });
 
   // ---- Spring entrance -------------------------------------------------------
-  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.stiff });
-  const titleY = interpolate(titleProgress, [0, 1], [60, 0]);
-  const floatY = Math.sin(frame * 0.04) * 6;
-
-  // ---- Pulse on the counter number ------------------------------------------
-  const pulse = 1 + Math.sin(frame * 0.08) * 0.03;
+  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.smooth });
+  const titleY = interpolate(titleProgress, [0, 1], [30, 0]);
 
   return (
     <SafeArea>
@@ -150,11 +145,11 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
           position: 'relative',
         }}
       >
-        {/* Ambient glow */}
+        {/* Glow behind the ring */}
         <div
           style={{
             position: 'absolute',
-            top: '45%',
+            top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: '400px',
@@ -174,7 +169,7 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
             alignItems: 'center',
             gap: '16px',
             opacity: titleProgress,
-            transform: `translateY(${titleY + floatY}px)`,
+            transform: `translateY(${titleY}px)`,
           }}
         >
           <div
@@ -190,7 +185,7 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
               border: `2px solid ${color}66`,
             }}
           >
-            📈 {data.tag || 'TIẾN ĐỘ'}
+            📈 {resolveSceneTag(data.tag, 'TIẾN ĐỘ', data.language)}
           </div>
           <div
             style={{
@@ -274,7 +269,6 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
                 fontWeight: 900,
                 color: '#fff',
                 lineHeight: 1,
-                transform: `scale(${pulse})`,
                 textShadow: `0 0 30px ${color}88, 0 10px 30px rgba(0,0,0,0.5)`,
               }}
             >
@@ -294,7 +288,6 @@ export const LayoutProgressRing: React.FC<{ data: DynamicSceneItem; color: strin
           <div
             style={{
               opacity: titleProgress,
-              transform: `translateY(${Math.sin(frame * 0.04) * 6}px)`,
               backgroundColor: 'rgba(15,23,42,0.95)',
               padding: '28px 48px',
               borderRadius: '28px',

@@ -140,6 +140,29 @@ export const BrandedIntro: React.FC<{
             zIndex: 2,
           }}
         >
+          {/* ── Hook 0-2s: High-Impact Urgent Badge for Engaged Views ── */}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: '#dc2626',
+              color: '#ffffff',
+              padding: '6px 18px',
+              borderRadius: '999px',
+              fontWeight: 900,
+              fontSize: '18px',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              boxShadow: `0 0 ${15 + Math.sin(frame * 0.3) * 10}px rgba(220, 38, 38, 0.8)`,
+              transform: `scale(${1 + Math.sin(frame * 0.25) * 0.05})`,
+              marginBottom: '4px',
+            }}
+          >
+            <span style={{ fontSize: '14px', animation: 'spin 1s linear infinite' }}>🔴</span>
+            {isEn ? 'BREAKING UPDATE' : 'TIN NÓNG KHẨN CẤP'}
+          </div>
+
           {/* ── Logo emoji ── */}
           <div
             style={{

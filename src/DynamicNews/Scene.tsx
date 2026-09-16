@@ -1,6 +1,6 @@
 import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig, interpolate, Img, staticFile } from 'remotion';
-import { DynamicSceneItem } from './types';
+import { DynamicSceneItem, resolveSceneTag } from './types';
 import { tokens } from '../design/tokens';
 import { SafeArea } from '../design/components/SafeArea';
 import { ScrimOverlay } from '../design/components/ScrimOverlay';
@@ -20,7 +20,21 @@ const HighlightText: React.FC<{ text: string; color: string }> = ({ text, color 
       {parts.map((part, i) => {
         if (part.startsWith('**') && part.endsWith('**')) {
           return (
-            <span key={i} style={{ color, fontWeight: 900 }}>
+            <span
+              key={i}
+              style={{
+                color: '#fff',
+                backgroundColor: color,
+                padding: '0 12px',
+                borderRadius: '8px',
+                fontWeight: 900,
+                display: 'inline-block',
+                margin: '0 8px',
+                textTransform: 'uppercase',
+                boxShadow: `0 8px 24px ${color}88`,
+                transform: 'rotate(-2deg) scale(1.05)',
+              }}
+            >
               {part.slice(2, -2)}
             </span>
           );
@@ -31,22 +45,22 @@ const HighlightText: React.FC<{ text: string; color: string }> = ({ text, color 
   );
 };
 
-// Sóng âm thanh Audio Visualizer sinh động mô phỏng giọng đọc
+// Sóng âm thanh Audio Visualizer êm dịu, tinh tế (không nhảy chồm chồm)
 const AudioVisualizer: React.FC<{ color: string }> = ({ color }) => {
   const frame = useCurrentFrame();
   return (
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', height: '40px', marginTop: '10px' }}>
-      {[0, 1, 2, 3, 4, 5].map((i) => {
-        const height = 12 + Math.abs(Math.sin(frame * 0.25 + i * 1.2)) * 25;
+    <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-end', height: '24px', opacity: 0.8 }}>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const height = 6 + Math.abs(Math.sin(frame * 0.08 + i * 0.8)) * 12;
         return (
           <div
             key={i}
             style={{
-              width: '8px',
+              width: '5px',
               height: `${height}px`,
               backgroundColor: color,
-              borderRadius: '4px',
-              boxShadow: `0 0 10px ${color}`,
+              borderRadius: '3px',
+              boxShadow: `0 0 6px ${color}88`,
             }}
           />
         );
@@ -55,96 +69,151 @@ const AudioVisualizer: React.FC<{ color: string }> = ({ color }) => {
   );
 };
 
-// Thanh tiến trình chạy mượt mà ở đầu khung hình
+// Thanh tiến trình chạy mượt mà ở đầu khung hình (không nhấp nháy pulse)
 const ProgressBar: React.FC<{ duration: number; color: string }> = ({ duration, color }) => {
   const frame = useCurrentFrame();
   const width = interpolate(frame, [0, duration], [0, 100], { extrapolateRight: 'clamp' });
-  const pulse = 0.7 + Math.sin(frame * 0.1) * 0.3;
   return (
     <div
       style={{
         position: 'absolute',
         top: 0,
         left: 0,
-        height: '10px',
+        height: '8px',
         width: `${width}%`,
         backgroundColor: color,
-        boxShadow: `0 0 20px ${color}`,
+        boxShadow: `0 0 12px ${color}`,
         zIndex: 10,
-        opacity: pulse,
+        opacity: 0.9,
       }}
     />
   );
 };
 
 // ============================================
-// TEMPLATE: INTRO (Mở đầu cuốn hút)
+// TEMPLATE: INTRO (Mở đầu cuốn hút - Zero-Bumper Hook 0s)
 // ============================================
 const LayoutIntro: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data, color }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.stiff });
-  const titleY = interpolate(titleProgress, [0, 1], [80, 0]);
-  const floatY = Math.sin(frame * 0.04) * 8; // Chuyển động nổi hữu cơ
+  // SPEC-07: Hook Anchor 0-1s: Nhẹ nhàng 1.05x -> 1.0x rồi đứng yên hoàn toàn
+  const punchProgress = spring({ frame, fps, config: { damping: 18, stiffness: 180, mass: 0.6 } });
+  const punchScale = interpolate(punchProgress, [0, 1], [1.05, 1.0]);
+  const cardProgress = spring({ frame: Math.max(0, frame - 12), fps, config: tokens.animation.spring.smooth });
+  const cardY = interpolate(cardProgress, [0, 1], [20, 0]);
+
+  const currentTag = resolveSceneTag(data.tag, data.language === 'en' ? 'BREAKING' : 'TIN NÓNG', data.language);
+  const hasImage = data.imageFile && data.imageFile.trim() !== '';
 
   return (
     <SafeArea>
       <ProgressBar duration={data.seqDuration || 300} color={color} />
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', gap: '40px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', gap: hasImage ? '24px' : '36px' }}>
         <div
           style={{
             alignSelf: 'flex-start',
-            transform: `translateY(${titleY + floatY}px)`,
-            opacity: titleProgress,
+            opacity: 1, // Đứng yên vững chãi, không nhấp nhô/dập dềnh
             backgroundColor: color,
             color: '#000',
             fontWeight: 900,
             fontSize: tokens.typography.size.caption,
-            padding: '16px 40px',
+            padding: '14px 36px',
             borderRadius: '16px',
             textTransform: 'uppercase',
-            boxShadow: `0 20px 40px ${color}66`,
+            boxShadow: `0 10px 25px ${color}66`,
           }}
         >
-          {data.tag ? (
-            data.tag.toUpperCase().includes('NÓNG') || data.tag.toUpperCase().includes('HOT')
-              ? `🔥 ${data.tag.toUpperCase()}`
-              : data.tag.toUpperCase().includes('CÔNG NGHỆ') || data.tag.toUpperCase().includes('AI')
-              ? `⚡ ${data.tag.toUpperCase()}`
-              : data.tag.toUpperCase().includes('KINH TẾ') || data.tag.toUpperCase().includes('TÀI CHÍNH')
-              ? `📈 ${data.tag.toUpperCase()}`
-              : data.tag.toUpperCase().includes('GIÁO DỤC') || data.tag.toUpperCase().includes('MỤC TIÊU')
-              ? `🎯 ${data.tag.toUpperCase()}`
-              : `📊 ${data.tag.toUpperCase()}`
-          ) : '📊 CẬP NHẬT'}
+          {(() => {
+            if (currentTag.includes('TAI NẠN') || currentTag.includes('TỘI PHẠM') || currentTag.includes('CẢNH BÁO') || currentTag.includes('NGUY HIỂM')) return `🚨 ${currentTag}`;
+            if (currentTag.includes('NÓNG') || currentTag.includes('HOT') || currentTag.includes('BREAKING')) return `🔥 ${currentTag}`;
+            if (currentTag.includes('CÔNG NGHỆ') || /(^|\s)AI(\s|$)/.test(currentTag)) return `⚡ ${currentTag}`;
+            if (currentTag.includes('KINH TẾ') || currentTag.includes('TÀI CHÍNH') || currentTag.includes('THỊ TRƯỜNG')) return `📈 ${currentTag}`;
+            if (currentTag.includes('GIÁO DỤC') || currentTag.includes('MỤC TIÊU')) return `🎯 ${currentTag}`;
+            if (currentTag.includes('THỂ THAO') || currentTag.includes('BÓNG ĐÁ')) return `⚽ ${currentTag}`;
+            return `📊 ${currentTag}`;
+          })()}
         </div>
         <div
           style={{
-            transform: `translateY(${titleY + floatY * 0.8}px)`,
-            opacity: titleProgress,
-            fontSize: '80px',
+            transform: `scale(${punchScale})`,
+            opacity: 1, // Tiêu đề xuất hiện vững chãi, không dập dềnh
+            fontSize: hasImage ? '64px' : '80px',
             fontWeight: 900,
             color: tokens.colors.text.headline,
             lineHeight: tokens.typography.lineHeight.tight,
-            textShadow: '0 10px 40px rgba(0,0,0,0.5)',
+            textShadow: '0 10px 40px rgba(0,0,0,0.85)',
+            textAlign: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(12px)',
+            padding: '18px 36px',
+            borderRadius: '24px',
+            border: `2px solid ${color}88`,
+            boxShadow: `0 20px 50px rgba(0,0,0,0.8), 0 0 30px ${color}44`,
           }}
         >
           <HighlightText text={data.headline} color={color} />
         </div>
-        <AudioVisualizer color={color} />
+
+        {/* Dynamic B-roll Card tại Hook 0-3s nếu có ảnh báo chí */}
+        {hasImage ? (
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '520px',
+              borderRadius: '24px',
+              overflow: 'hidden',
+              backgroundColor: 'rgba(15, 23, 42, 0.85)',
+              border: `2px solid ${color}55`,
+              boxShadow: `0 25px 50px rgba(0,0,0,0.85), 0 0 35px ${color}33`,
+              transform: `scale(${interpolate(frame, [0, data.seqDuration || 300], [1.0, 1.05], { extrapolateRight: 'clamp' })})`,
+            }}
+          >
+            <Img
+              src={staticFile(data.imageFile!)}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '16px',
+                left: '16px',
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                color: '#fff',
+                padding: '6px 18px',
+                borderRadius: '10px',
+                fontSize: '22px',
+                fontWeight: 700,
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              }}
+            >
+              📷 {data.language === 'en' ? 'Evidence / News Photo' : 'Hình ảnh hiện trường / Báo chí'}
+            </div>
+          </div>
+        ) : (
+          <AudioVisualizer color={color} />
+        )}
 
         {data.keyTakeaways && data.keyTakeaways.length > 0 && (
           <div
             style={{
-              transform: `translateY(${titleY + floatY * 0.5}px)`,
-              opacity: titleProgress,
-              fontSize: tokens.typography.size.body,
+              transform: `translateY(${cardY}px)`,
+              opacity: cardProgress,
+              fontSize: hasImage ? '34px' : tokens.typography.size.body,
               color: tokens.colors.text.body,
               lineHeight: tokens.typography.lineHeight.normal,
-              backgroundColor: 'rgba(15,23,42,0.85)',
-              padding: '32px',
-              borderRadius: '24px',
+              backgroundColor: 'rgba(15,23,42,0.88)',
+              backdropFilter: 'blur(16px)',
+              padding: hasImage ? '20px 28px' : '32px',
+              borderRadius: '20px',
               borderLeft: `8px solid ${color}`,
               boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
             }}
@@ -168,9 +237,8 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.stiff });
-  const titleY = interpolate(titleProgress, [0, 1], [60, 0]);
-  const headerFloat = Math.sin(frame * 0.04) * 6;
+  const titleProgress = spring({ frame: frame - 5, fps, config: tokens.animation.spring.smooth });
+  const titleY = interpolate(titleProgress, [0, 1], [30, 0]);
 
   return (
     <SafeArea>
@@ -178,7 +246,7 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '40px', paddingTop: '40px' }}>
         <div
           style={{
-            transform: `translateY(${titleY + headerFloat}px)`,
+            transform: `translateY(${titleY}px)`,
             opacity: titleProgress,
             display: 'flex',
             flexDirection: 'column',
@@ -199,7 +267,7 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
                 border: `1px solid ${color}44`,
               }}
             >
-              🎯 {data.tag || (data.language === 'en' ? 'NEWS' : 'TIN TỨC')}
+              🎯 {resolveSceneTag(data.tag, data.language === 'en' ? 'KEY FACTS' : 'DIỄN BIẾN CHÍNH', data.language)}
             </div>
             <AudioVisualizer color={color} />
           </div>
@@ -218,20 +286,19 @@ const LayoutList: React.FC<{ data: DynamicSceneItem; color: string; takeawayStar
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
           {(data.keyTakeaways || []).map((takeaway, idx) => {
-            // Hiệu ứng nảy lò xo (Bouncy spring) và trượt lên từng thẻ
+            // Trượt vào êm ái, vào vị trí rồi đứng yên vững chãi (không dập dềnh say sóng)
             const startTime = takeawayStarts[idx] !== undefined ? takeawayStarts[idx] : 30 + idx * 45;
-            const progress = spring({ frame: frame - startTime, fps, config: { damping: 12, stiffness: 90 } });
-            const cardY = interpolate(progress, [0, 1], [80, 0]);
-            const cardScale = interpolate(progress, [0, 1], [0.85, 1]);
+            const progress = spring({ frame: frame - startTime, fps, config: tokens.animation.spring.smooth });
+            const cardY = interpolate(progress, [0, 1], [40, 0]);
+            const cardScale = interpolate(progress, [0, 1], [0.95, 1]);
             const cardOpacity = interpolate(progress, [0, 1], [0, 1]);
-            const float = Math.sin(frame * 0.05 + idx) * 5;
 
             return (
               <div
                 key={idx}
                 style={{
                   opacity: cardOpacity,
-                  transform: `translateY(${cardY + float}px) scale(${cardScale})`,
+                  transform: `translateY(${cardY}px) scale(${cardScale})`,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '24px',
@@ -277,10 +344,9 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const statProgress = spring({ frame: frame - 10, fps, config: tokens.animation.spring.stiff });
+  const statProgress = spring({ frame: frame - 10, fps, config: tokens.animation.spring.smooth });
   const statText = data.statNumber || 'HOT';
   const statFontSize = statText.length > 10 ? '90px' : statText.length > 6 ? '120px' : '160px';
-  const statPulse = 1 + Math.sin(frame * 0.08) * 0.04; // Nhịp đập liên tục không đứng yên
 
   return (
     <SafeArea>
@@ -307,7 +373,7 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
             height: '300px',
             backgroundColor: color,
             filter: 'blur(150px)',
-            opacity: 0.35 + Math.sin(frame * 0.05) * 0.15,
+            opacity: 0.35,
             zIndex: -1,
           }}
         />
@@ -319,7 +385,7 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
             alignItems: 'center',
             gap: '20px',
             opacity: statProgress,
-            transform: `translateY(${interpolate(statProgress, [0, 1], [40, 0])}px)`,
+            transform: `translateY(${interpolate(statProgress, [0, 1], [30, 0])}px)`,
           }}
         >
           <div
@@ -335,7 +401,7 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
               border: `2px solid ${color}66`,
             }}
           >
-            ✨ {data.tag || (data.language === 'en' ? 'STATS' : 'CHỈ SỐ')}
+            ✨ {resolveSceneTag(data.tag, data.language === 'en' ? 'STATS' : 'CON SỐ BIẾT NÓI', data.language)}
           </div>
           <div
             style={{
@@ -352,7 +418,7 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
 
         <div
           style={{
-            transform: `scale(${statProgress * statPulse})`,
+            transform: `scale(${statProgress})`,
             fontSize: statFontSize,
             fontWeight: 900,
             color: '#fff',
@@ -369,7 +435,6 @@ const LayoutStat: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data,
         <div
           style={{
             opacity: statProgress,
-            transform: `translateY(${Math.sin(frame * 0.04) * 8}px)`,
             backgroundColor: 'rgba(15,23,42,0.95)',
             padding: '32px 48px',
             borderRadius: '32px',
@@ -396,18 +461,41 @@ const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const imagePan = interpolate(frame, [0, data.seqDuration || 300], [1, 1.15], { extrapolateRight: 'clamp' });
-  const opacity = spring({ frame: frame - 5, fps, config: tokens.animation.spring.smooth });
-  const contentY = interpolate(opacity, [0, 1], [60, 0]);
+  // Hiệu ứng zoom ambient background chậm rãi tạo chiều sâu
+  const bgPan = interpolate(frame, [0, data.seqDuration || 300], [1.05, 1.15], { extrapolateRight: 'clamp' });
+  
+  // Hiệu ứng zoom siêu nhẹ cho ảnh chính (1.0 -> 1.03) để ảnh luôn sắc nét 100%, không bao giờ bị vỡ hạt hay crop méo
+  const cardScale = interpolate(frame, [0, data.seqDuration || 300], [1.0, 1.03], { extrapolateRight: 'clamp' });
+  const cardEntrance = spring({ frame: frame - 4, fps, config: tokens.animation.spring.smooth });
+  const cardY = interpolate(cardEntrance, [0, 1], [30, 0]);
+
+  const opacity = spring({ frame: frame - 2, fps, config: tokens.animation.spring.smooth });
+  const contentY = interpolate(opacity, [0, 1], [40, 0]);
   const scanLineY = (frame * 6) % 1920;
 
   return (
     <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+      {/* 1. Ambient Blurred Backdrop: Phủ kín 100% khung hình 9:16 bằng màu sắc bức ảnh được làm mờ nghệ thuật */}
       {data.imageFile ? (
-        <Img
-          src={staticFile(data.imageFile)}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${imagePan})` }}
-        />
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+          <Img
+            src={staticFile(data.imageFile)}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transform: `scale(${bgPan})`,
+              filter: 'blur(45px) brightness(0.35) saturate(1.2)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'radial-gradient(circle at 50% 45%, rgba(0,0,0,0.1) 0%, rgba(2,6,23,0.85) 100%)',
+            }}
+          />
+        </div>
       ) : (
         <div style={{ width: '100%', height: '100%', backgroundColor: '#020617', position: 'relative', overflow: 'hidden' }}>
           <div
@@ -416,7 +504,7 @@ const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
               inset: 0,
               backgroundImage: `linear-gradient(${color}33 2px, transparent 2px), linear-gradient(90deg, ${color}33 2px, transparent 2px)`,
               backgroundSize: '60px 60px',
-              transform: `scale(${imagePan})`,
+              transform: `scale(${bgPan})`,
               opacity: 0.5,
             }}
           />
@@ -446,11 +534,12 @@ const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
             flexDirection: 'column',
             gap: '24px',
             zIndex: 2,
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
+            paddingTop: '40px',
             height: '100%',
-            paddingBottom: '28%',
           }}
         >
+          {/* Header Tag + Audio Visualizer */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div
               style={{
@@ -464,34 +553,70 @@ const LayoutImage: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
                 boxShadow: `0 10px 30px ${color}88`,
               }}
             >
-              📸 {data.tag || (data.language === 'en' ? 'EVIDENCE' : 'BẰNG CHỨNG')}
+              📸 {resolveSceneTag(data.tag, data.language === 'en' ? 'EVIDENCE' : 'BẰNG CHỨNG', data.language)}
             </div>
             <AudioVisualizer color={color} />
           </div>
 
+          {/* Headline */}
           <div
             style={{
-              fontSize: '70px',
+              fontSize: '56px',
               fontWeight: 900,
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               color: '#fff',
-              textShadow: '0 10px 30px rgba(0,0,0,0.9)',
+              textShadow: '0 8px 24px rgba(0,0,0,0.9)',
             }}
           >
             <HighlightText text={data.headline} color={color} />
           </div>
 
+          {/* 2. Floating High-Definition Image Card: Giữ nguyên 100% tỉ lệ và độ nét gốc của ảnh báo chí */}
+          {data.imageFile && (
+            <div
+              style={{
+                opacity: cardEntrance,
+                transform: `scale(${cardScale}) translateY(${cardY}px)`,
+                width: '100%',
+                maxHeight: '740px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                backgroundColor: 'rgba(15, 23, 42, 0.75)',
+                border: `2px solid rgba(255, 255, 255, 0.2)`,
+                boxShadow: `0 25px 60px rgba(0,0,0,0.85), 0 0 35px ${color}33`,
+              }}
+            >
+              <Img
+                src={staticFile(data.imageFile)}
+                style={{
+                  width: '100%',
+                  maxHeight: '740px',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
+              />
+            </div>
+          )}
+
+          {/* Key Takeaways Card */}
           {data.keyTakeaways && data.keyTakeaways.length > 0 && (
             <div
               style={{
-                fontSize: '40px',
+                fontSize: '36px',
                 color: '#f1f5f9',
-                lineHeight: 1.4,
+                lineHeight: 1.35,
                 backgroundColor: 'rgba(15,23,42,0.9)',
-                padding: '32px',
-                borderRadius: '24px',
+                backdropFilter: 'blur(16px)',
+                padding: '24px 32px',
+                borderRadius: '20px',
                 borderLeft: `8px solid ${color}`,
-                boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+                border: `1px solid rgba(255,255,255,0.12)`,
+                borderLeftWidth: '8px',
+                borderLeftColor: color,
+                boxShadow: '0 15px 35px rgba(0,0,0,0.6)',
               }}
             >
               <HighlightText text={data.keyTakeaways[0]} color={color} />
@@ -510,9 +635,8 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleProgress = spring({ frame: frame - 10, fps, config: tokens.animation.spring.stiff });
-  const contentY = interpolate(titleProgress, [0, 1], [60, 0]);
-  const float = Math.sin(frame * 0.03) * 8;
+  const titleProgress = spring({ frame: frame - 10, fps, config: tokens.animation.spring.smooth });
+  const contentY = interpolate(titleProgress, [0, 1], [30, 0]);
 
   return (
     <SafeArea>
@@ -521,7 +645,7 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
         <div
           style={{
             opacity: titleProgress,
-            transform: `translateY(${contentY + float}px)`,
+            transform: `translateY(${contentY}px)`,
             alignSelf: 'center',
             backgroundColor: 'rgba(255,255,255,0.1)',
             padding: '12px 32px',
@@ -533,13 +657,13 @@ const LayoutQuote: React.FC<{ data: DynamicSceneItem; color: string }> = ({ data
             border: `2px solid ${color}66`,
           }}
         >
-          💬 {data.tag || (data.language === 'en' ? 'QUOTE' : 'PHÁT BIỂU')}
+          💬 {resolveSceneTag(data.tag, data.language === 'en' ? 'QUOTE' : 'PHÁT BIỂU', data.language)}
         </div>
 
         <div
           style={{
             opacity: titleProgress,
-            transform: `translateY(${contentY + float * 1.5}px)`,
+            transform: `translateY(${contentY}px)`,
             position: 'relative',
             backgroundColor: 'rgba(15, 23, 42, 0.95)',
             padding: '60px 50px',
@@ -599,33 +723,44 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
       : [30, 75, 120, 165, 210];
 
   let LayoutComponent = LayoutList as React.ElementType;
+  const tagUpper = (data.tag || '').toUpperCase();
   if (
-    data.tag &&
-    (data.tag.toUpperCase().includes('NÓNG') ||
-      data.tag.toUpperCase().includes('HOT') ||
-      data.tag.toUpperCase().includes('ĐIỀU TRA') ||
-      data.tag.toUpperCase().includes('BREAKING'))
+    tagUpper.includes('NÓNG') ||
+    tagUpper.includes('HOT') ||
+    tagUpper.includes('ĐIỀU TRA') ||
+    tagUpper.includes('BREAKING') ||
+    tagUpper.includes('CẢNH BÁO') ||
+    tagUpper.includes('KHẨN')
   ) {
     LayoutComponent = LayoutIntro;
   }
 
-  // Explicit layout types override the default/tag-based layout
-  if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
-  if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
-  if (data.layoutType === 'image') LayoutComponent = LayoutImage;
-
-  // Data Visualization chart layouts (NEW)
-  if (data.layoutType === 'animated_counter') LayoutComponent = LayoutAnimatedCounter;
-  if (data.layoutType === 'bar_chart') LayoutComponent = LayoutBarChart;
-  if (data.layoutType === 'progress_ring') LayoutComponent = LayoutProgressRing;
-  if (data.layoutType === 'line_chart') LayoutComponent = LayoutLineChart;
-  if (data.layoutType === 'comparison') LayoutComponent = LayoutComparison;
+  // SPEC-05: Strict Layout Type Precedence (Đảm bảo luân phiên phong phú, không đè layout list/chart thành image)
+  if (data.layoutType === 'intro') LayoutComponent = LayoutIntro;
+  else if (data.layoutType === 'stat') LayoutComponent = LayoutStat;
+  else if (data.layoutType === 'quote') LayoutComponent = LayoutQuote;
+  else if (data.layoutType === 'image') LayoutComponent = LayoutImage;
+  else if (data.layoutType === 'list') LayoutComponent = LayoutList;
+  else if (data.layoutType === 'animated_counter') LayoutComponent = LayoutAnimatedCounter;
+  else if (data.layoutType === 'bar_chart') LayoutComponent = LayoutBarChart;
+  else if (data.layoutType === 'progress_ring') LayoutComponent = LayoutProgressRing;
+  else if (data.layoutType === 'line_chart') LayoutComponent = LayoutLineChart;
+  else if (data.layoutType === 'comparison') LayoutComponent = LayoutComparison;
+  else if (data.imageFile && !data.layoutType) {
+    LayoutComponent = LayoutImage;
+  }
 
 
   // Handle Background Image inside the Scene to prevent bleeding and show scraped images
   const frame = useCurrentFrame();
   const imagePan = interpolate(frame, [0, data.seqDuration || 300], [1, 1.15], { extrapolateRight: 'clamp' });
   const hasImage = data.imageFile && data.imageFile.trim() !== '';
+
+  // SPEC-03: Attention Reset Punch-Zoom (Chu kỳ 66 frames ~ 2.2s để mắt người xem luôn có kích thích mới)
+  const resetCycle = 66;
+  const cycleFrame = frame % resetCycle;
+  const punchScale = 1 + Math.sin((cycleFrame / resetCycle) * Math.PI) * 0.032;
+  const microPanX = Math.sin(frame * 0.04) * 4;
 
   return (
     <div
@@ -645,7 +780,14 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
           <>
             <Img
               src={staticFile(data.imageFile!)}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${imagePan})`, opacity: 0.4 }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transform: `scale(${imagePan})`,
+                opacity: 0.35,
+                filter: 'blur(30px) brightness(0.6)',
+              }}
             />
             {/* Dark gradient to ensure text readability */}
             <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(to right, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.7) 50%, rgba(15,23,42,0.9) 100%)' }} />
@@ -668,44 +810,17 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
 
       <ScrimOverlay />
 
-      <div style={{ position: 'absolute', inset: 0, zIndex: 2 }}>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 2,
+          transform: `scale(${punchScale}) translateX(${microPanX}px)`,
+          transformOrigin: 'center center',
+        }}
+      >
         <LayoutComponent data={data} color={color} takeawayStarts={takeawayStarts} />
       </div>
-
-      {/* Subtitle / Voiceover Caption Box */}
-      {data.voiceover && (
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '10%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '90%',
-            zIndex: 100,
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: 'rgba(15, 23, 42, 0.92)',
-              backdropFilter: 'blur(12px)',
-              padding: '18px 32px',
-              borderRadius: '20px',
-              border: `1.5px solid ${color}88`,
-              boxShadow: `0 15px 35px rgba(0,0,0,0.7), 0 0 25px ${color}22`,
-              color: '#ffffff',
-              fontSize: '34px',
-              fontWeight: 700,
-              textAlign: 'center',
-              lineHeight: 1.35,
-              textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-            }}
-          >
-            <HighlightText text={data.voiceover} color={color} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

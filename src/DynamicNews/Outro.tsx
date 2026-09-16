@@ -12,8 +12,8 @@ export const DynamicOutro: React.FC<{
   const { fps } = useVideoConfig();
   const isEn = language === 'en';
 
-  const title = data?.title || (isEn ? 'DIGITAL ERA' : 'KỶ NGUYÊN SỐ VIỆT NAM');
-  const subtitle = data?.subtitle || (isEn ? 'Stay updated with the latest tech & digital transformation' : 'Cập nhật thông tin công nghệ & chuyển đổi số quốc gia');
+  const title = data?.title || (isEn ? 'TRENDING NEWS' : 'BẢN TIN XU HƯỚNG');
+  const subtitle = data?.subtitle || (isEn ? 'Stay updated with the latest news daily' : 'Cập nhật tin tức đa chiều & sự kiện nóng hàng ngày');
 
   // Hero moment: Reveal logo/title
   const scale = spring({

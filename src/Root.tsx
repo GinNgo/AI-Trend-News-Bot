@@ -7,6 +7,7 @@ import { BusinessNewsComp } from "./BusinessNews";
 import { TrafficNewsComp } from "./TrafficNews";
 import { TechNewsComp } from "./TechNews";
 import { DynamicNewsComp } from "./DynamicNews";
+import { ShortsThumbnailComp } from "./DynamicNews/ShortsThumbnail";
 import { DynamicNewsData } from "./DynamicNews/types";
 import dynamicNewsDefault from "./dynamic_news.json";
 
@@ -100,6 +101,23 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+      />
+
+      <Composition
+        id="ShortsThumbnail"
+        component={ShortsThumbnailComp as any}
+        durationInFrames={1}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          title: "Bản Tin Nóng 24H: Cập Nhật Nhanh Sự Kiện",
+          category: "Thời Sự & Xã Hội",
+          themeColor: "#f59e0b",
+          tag: "🔴 ĐỘC QUYỀN",
+          channelName: "AN NEWS 24/7",
+          language: "vi"
+        }}
       />
     </>
   );

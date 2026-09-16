@@ -66,9 +66,14 @@ class JobRepository {
   findPendingJobs(limit = 10) {
     const rows = this.db.prepare(`
       SELECT * FROM jobs
-      WHERE status IN ('PENDING', 'RETRYING')
-      AND (scheduledAt IS NULL OR scheduledAt <= CURRENT_TIMESTAMP)
-      AND (lockedAt IS NULL OR lockedAt < datetime('now', '-10 minutes'))
+      WHERE (
+        status IN ('PENDING', 'RETRYING')
+        AND (scheduledAt IS NULL OR datetime(scheduledAt) <= datetime('now'))
+        AND (lockedAt IS NULL OR datetime(lockedAt) < datetime('now', '-10 minutes'))
+      ) OR (
+        status = 'PROCESSING' 
+        AND lockedAt < datetime('now', '-30 minutes')
+      )
       ORDER BY priority DESC, scheduledAt ASC, createdAt ASC
       LIMIT ?
     `).all(limit);

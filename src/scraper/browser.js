@@ -11,18 +11,14 @@ const { isSafeUrl } = require('../security/url_validator');
 
 async function downloadImage(url, dest) {
   if (!isSafeUrl(url)) return Promise.reject(new Error(`SSRF blocked: Unsafe image URL: ${url}`));
-  return new Promise((resolve, reject) => {
-    const client = url.startsWith('https') ? https : http;
-    const file = fs.createWriteStream(dest);
-    client.get(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' } }, (response) => {
-      response.pipe(file);
-      file.on('finish', () => {
-        file.close(resolve);
-      });
-    }).on('error', (err) => {
-      fs.unlink(dest, () => reject(err));
-    });
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+    signal: AbortSignal.timeout(8000),
+    redirect: 'follow'
   });
+  if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+  const arrayBuffer = await res.arrayBuffer();
+  fs.writeFileSync(dest, Buffer.from(arrayBuffer));
 }
 
 /**
@@ -94,37 +90,90 @@ async function scrapeArticleDeep(url, publicDir) {
       textContent = $('body').text().replace(/\s+/g, ' ').trim();
     }
 
-    // Image scraping logic from original code, improved with context
+    // GUARD-RAIL CHẶNG 1: Chống cào trang lỗi 403 / Access Denied / Cloudflare / Bot Challenge
+    const blockPatterns = [
+      /access to .* was denied/i,
+      /http error 403/i,
+      /403 forbidden/i,
+      /you don't have authorization/i,
+      /verify you are human/i,
+      /cloudflare/i,
+      /please enable cookies/i,
+      /before you continue to google/i,
+      /bot detection/i,
+      /checking your browser/i,
+      /ray id:/i,
+      /access denied/i,
+      /enable javascript and cookies to continue/i
+    ];
+
+    const isBlocked = blockPatterns.some(pat => pat.test(textContent));
+    if (isBlocked || textContent.length < 350) {
+      throw new Error(`[Scraper Blocked] Bài viết bị chặn truy cập hoặc không đủ nội dung (${textContent.length} ký tự). Chi tiết: "${textContent.substring(0, 120)}...". Huỷ xử lý để tránh sinh video lỗi!`);
+    }
+
+    // Image scraping logic: Ưu tiên ảnh chất lượng cao (High-Res)
     const images = [];
     const $ = cheerio.load(html);
     const ogImage = $('meta[property="og:image"]').attr('content') || $('meta[name="twitter:image"]').attr('content');
-    if (ogImage) images.push(ogImage);
+    if (ogImage && ogImage.startsWith('http')) images.push(ogImage);
 
-    $('img').each((i, el) => {
-      let src = $(el).attr('src') || $(el).attr('data-src') || $(el).attr('srcset');
+    function extractBestImage(el) {
+      let src = $(el).attr('data-original') || $(el).attr('data-src') || $(el).attr('data-highres') || $(el).attr('data-url');
+      const srcset = $(el).attr('srcset') || $(el).attr('data-srcset');
+
+      if (srcset) {
+        // Trong srcset, lấy URL có độ phân giải lớn nhất (thường ở cuối danh sách)
+        const parts = srcset.split(',').map(s => s.trim()).filter(Boolean);
+        if (parts.length > 0) {
+          const largest = parts[parts.length - 1].split(/\s+/)[0];
+          if (largest) src = largest;
+        }
+      }
+
+      if (!src) src = $(el).attr('src');
       if (!src) return;
-      // if srcset, just take the first url
       if (src.includes(' ')) src = src.split(' ')[0];
-      if (src.includes('logo') || src.includes('icon') || src.includes('avatar') || src.includes('.svg') || src.includes('base64')) return;
+
+      const lower = src.toLowerCase();
+      // Bỏ qua icon, logo, avatar, ảnh đại diện nhỏ, pixel tracker
+      if (lower.includes('logo') || lower.includes('icon') || lower.includes('avatar') ||
+          lower.includes('.svg') || lower.includes('base64') || lower.includes('1x1') ||
+          lower.includes('thumb_') || lower.includes('/80x') || lower.includes('/100x') ||
+          lower.includes('/150x') || lower.includes('/120x') || lower.includes('placeholder')) {
+        return;
+      }
+
       try {
         if (src.startsWith('//')) src = 'https:' + src;
         else if (src.startsWith('/')) src = new URL(url).origin + src;
         else if (!src.startsWith('http')) return;
         images.push(src);
       } catch(e) {}
+    }
+
+    // Quét ưu tiên các thẻ ảnh trong phần thân bài viết trước
+    const contentContainers = ['article', '.article-body', '.fck_detail', '.detail-content', '.content', '.post-content', 'main'];
+    contentContainers.forEach(sel => {
+      $(sel).find('img').each((i, el) => extractBestImage(el));
     });
 
-    const uniqueImages = [...new Set(images)].slice(0, 4);
+    // Sau đó quét toàn bộ ảnh trên trang
+    $('img').each((i, el) => extractBestImage(el));
+
+    const uniqueImages = [...new Set(images)].slice(0, 5);
     const downloadedImages = [];
 
     for (let i = 0; i < uniqueImages.length; i++) {
-      const filename = `crawled_img_${i+1}.jpg`;
+      const filename = `crawled_img_${downloadedImages.length + 1}.jpg`;
       const dest = path.join(publicDir, filename);
-      console.log(`  📸 Đang tải ảnh thực tế ${i+1}: ${uniqueImages[i].substring(0, 60)}...`);
+      console.log(`  📸 Đang tải ảnh thực tế ${downloadedImages.length + 1}: ${uniqueImages[i].substring(0, 65)}...`);
       try {
         await downloadImage(uniqueImages[i], dest);
-        if (fs.existsSync(dest) && fs.statSync(dest).size > 2000) {
+        // Chỉ chấp nhận file ảnh thực tế có kích thước > 10KB (tránh ảnh thumbnail nhỏ vỡ hạt)
+        if (fs.existsSync(dest) && fs.statSync(dest).size > 10000) {
           downloadedImages.push(filename);
+          if (downloadedImages.length >= 4) break;
         }
       } catch(err) {}
     }
@@ -167,11 +216,11 @@ async function scrapeArticleDeep(url, publicDir) {
       
       let textContent = '';
       if (article && article.textContent && article.textContent.trim().length > 200) {
-        textContent = article.textContent.replace(/s+/g, ' ').trim();
+        textContent = article.textContent.replace(/\s+/g, ' ').trim();
       } else {
         const $ = cheerio.load(html);
         $('script, style, nav, footer, aside, header').remove();
-        textContent = $('body').text().replace(/s+/g, ' ').trim();
+        textContent = $('body').text().replace(/\s+/g, ' ').trim();
       }
       
       return {

@@ -31,9 +31,31 @@ class VideoFactoryPipeline {
 
     switch (stage) {
       case 'COLLECTING': {
-        // Collect raw article content
+        // If article already exists in payload or artifacts, skip collecting
+        const existingArticle = payload.article || (payload.artifacts && payload.artifacts.article) || (payload.data && payload.data.article);
+        if (existingArticle) {
+          payload.article = existingArticle;
+          logger.info(`[Pipeline] Article đã có sẵn trong payload cho Job ${jobId}`);
+          return 'RESEARCHING';
+        }
+
+        // Support manual content directly without sourceUrl
         const url = payload.sourceUrl;
-        if (!url) throw new Error('Missing sourceUrl in payload');
+        if (!url && payload.content) {
+          payload.sourceMeta = { region: 'vn', defaultLang: 'vi', name: 'Manual' };
+          payload.article = {
+            sourceId: `manual-${Date.now()}`,
+            sourceName: 'Manual Input',
+            url: '',
+            title: payload.title || 'Bản tin nhanh',
+            content: payload.content,
+            author: 'Editor',
+            publishedAt: new Date().toISOString()
+          };
+          return 'RESEARCHING';
+        }
+
+        if (!url) throw new Error('Missing sourceUrl or content in payload');
 
         const publicDir = path.join(__dirname, '../../public');
         const scraped = await scrapeArticleDeep(url, publicDir);
@@ -56,7 +78,14 @@ class VideoFactoryPipeline {
       }
 
       case 'RESEARCHING': {
-        const article = payload.article || (payload.artifacts && payload.artifacts.article);
+        let article = payload.article || (payload.artifacts && payload.artifacts.article) || (payload.data && payload.data.article);
+        if (!article) {
+          if (payload.sourceUrl || payload.content) {
+            logger.warn(`[Pipeline] Article thiếu trong RESEARCHING payload cho Job ${jobId}. Đang tự động crawl phục hồi...`);
+            await this.executeStage(jobId, 'COLLECTING', payload);
+            article = payload.article;
+          }
+        }
         if (!article) throw new Error('Missing article in payload');
         payload.article = article;
 
@@ -145,7 +174,9 @@ class VideoFactoryPipeline {
       }
 
       case 'FINAL_FACT_CHECK': {
-        const storyPackage = payload.storyPackage;
+        const storyPackage = payload.storyPackage || (payload.artifacts && payload.artifacts.storyPackage);
+        if (!storyPackage) throw new Error('Missing storyPackage in payload');
+        payload.storyPackage = storyPackage;
         const timeline = [{ timestamp: new Date().toISOString(), description: 'Event published' }];
 
         const factCheckResult = await this.verifier.verify(storyPackage, payload.verifiedClaims, timeline);
@@ -159,7 +190,9 @@ class VideoFactoryPipeline {
       }
 
       case 'RENDERING': {
-        const storyPackage = payload.storyPackage;
+        const storyPackage = payload.storyPackage || (payload.artifacts && payload.artifacts.storyPackage);
+        if (!storyPackage) throw new Error('Missing storyPackage in payload');
+        payload.storyPackage = storyPackage;
         const outDir = path.join(__dirname, '../../out');
         if (!fs.existsSync(outDir)) {
           fs.mkdirSync(outDir, { recursive: true });
@@ -173,7 +206,9 @@ class VideoFactoryPipeline {
       }
 
       case 'QC': {
-        const storyPackage = payload.storyPackage;
+        const storyPackage = payload.storyPackage || (payload.artifacts && payload.artifacts.storyPackage);
+        if (!storyPackage) throw new Error('Missing storyPackage in payload');
+        payload.storyPackage = storyPackage;
         const qcResult = await this.qc.evaluate(storyPackage);
         payload.qc = qcResult;
 

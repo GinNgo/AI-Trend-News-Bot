@@ -74,9 +74,9 @@ async function main() {
   const fileSize = fs.statSync(VIDEO_PATH).size;
 
   // Đọc meta do người dùng nhập từ dashboard (nếu có)
-  let videoTitle = 'Bản Tin Công Nghệ & Chuyển Đổi Số Việt Nam 2026 #shorts';
-  let videoDesc = 'Bản Tin Công Nghệ & Chuyển Đổi Số Việt Nam\n#shorts #congnghe #chuyendoiso #ai #vietnam';
-  let videoTags = ['shorts', 'công nghệ', 'chuyển đổi số', 'ai', 'việt nam'];
+  let videoTitle = 'Bản Tin Thời Sự & Xu Hướng Việt Nam #shorts';
+  let videoDesc = 'Bản Tin Thời Sự & Xu Hướng Mới Nhất\n#shorts #tintuc #thoisu #xuhuong #vietnam';
+  let videoTags = ['shorts', 'tin tức', 'thời sự', 'xu hướng', 'việt nam'];
   let privacyStatus = 'public';
   let videoLanguage = 'vi'; // Default language
 

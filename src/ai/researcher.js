@@ -185,19 +185,20 @@ Yêu cầu Schema JSON:
   /**
    * 4. STORY PACKAGE
    */
-  async packageStory(factCheckedData, impactData) {
-    logger.info(`[PIPELINE] Đang đóng gói Kịch bản cuối (Story Package)...`);
+  async packageStory(factCheckedData, impactData, language = 'vi') {
+    logger.info(`[PIPELINE] Đang đóng gói Kịch bản cuối (Story Package) cho ngôn ngữ: ${language}...`);
 
-    const scriptPrompt = `
-DỰA HOÀN TOÀN TRÊN SỰ THẬT ĐÃ KIỂM CHỨNG dưới đây, hãy lên kịch bản video mang phong cách: professional documentary / newsroom / technology journalism.
+    let scriptPrompt = '';
+    if (language === 'en') {
+      scriptPrompt = `
+DỰA HOÀN TOÀN TRÊN SỰ THẬT ĐÃ KIỂM CHỨNG dưới đây, hãy lên kịch bản video mang phong cách: professional documentary / newsroom / technology journalism BẰNG TIẾNG ANH (ENGLISH).
 
 QUY TẮC RETENTION & STORYTELLING:
-1. KHÔNG dùng generic AI narration (Tuyệt đối KHÔNG bắt đầu bằng "Xin chào mọi người", "Hôm nay chúng ta sẽ...").
-2. KHÔNG dùng clickbait giả, fake urgency, exaggerated claims, hoặc generic conclusion.
-3. Mỗi 15-30 giây PHẢI có ít nhất một thông tin mới (new fact/visual/question/implication/context).
-4. Xây dựng cốt truyện theo đúng cấu trúc Narrative Arc:
-   HOOK -> CONTEXT -> EVENT -> EVIDENCE -> WHY IT MATTERS -> SURPRISING IMPLICATION -> IMPACT -> VIETNAM ANGLE (nếu có) -> FUTURE -> CONCLUSION.
-5. Voiceover phải mang tính phân tích chuyên sâu, tránh lặp từ (repetitive wording).
+1. Bạn là một "Native American Scriptwriter". Sử dụng tiếng Anh tự nhiên, hiện đại (modern American English), sắc sảo, dồn dập.
+2. CẢNH 1 BẮT BUỘC là "3-SECOND RETENTION HOOK" (14-20 words). Chọn 1 trong 5 Hook Archetypes (Contrarian/Myth-Bust, High-Stakes Urgency, Curiosity Gap, Data Shock, hoặc In Media Res). Tuyệt đối KHÔNG bắt đầu bằng lời chào ("Hello everyone", "Today we will...").
+3. Nhịp độ dồn dập (Relentless Pacing): Mỗi 2 giây phải có kích thích hoặc thông tin mới. Câu thoại ngắn gọn, dùng động từ mạnh.
+4. CẢNH CUỐI CÙNG (THE ENDLESS LOOP): Câu cuối cùng phải là một vế câu nối lửng dẫn tự nhiên về lại câu mở đầu của Cảnh 1 để tạo tỷ lệ xem lặp >100%. Tuyệt đối không chào tạm biệt hay nói câu exit sign ("Thanks for watching", "Goodbye").
+5. Voiceover phải mang tính phân tích chuyên sâu, nhịp độ nhanh (fast pace), câu chữ siêu ngắn gọn (punchy sentences).
 6. Tự đánh giá MẬT ĐỘ THÔNG TIN:
    - Nếu chủ đề đơn giản: Chọn thời lượng 30s hoặc 60s.
    - Nếu chủ đề phức tạp: Tự động chọn 90s, 3m, 5m, 8m hoặc 10m.
@@ -206,6 +207,60 @@ QUY TẮC RETENTION & STORYTELLING:
 9. KHÔNG ĐƯỢC BỊA THÊM SỐ LIỆU, THỜI GIAN, GIÁ TIỀN.
 10. Mỗi cảnh (scene) phải có "durationSec" (số giây) hợp lý.
 11. Tạo một "retentionPlan" giải thích chiến lược giữ chân khán giả.
+
+SỰ THẬT KIỂM CHỨNG:
+${JSON.stringify(factCheckedData.verifiedClaims, null, 2)}
+
+ĐÁNH GIÁ TÁC ĐỘNG:
+${JSON.stringify(impactData, null, 2)}
+
+Yêu cầu Schema JSON:
+{
+  "title": "English Video Title",
+  "themeColor": "#ef4444",
+  "bgStyle": "grid",
+  "targetDurationSec": 90,
+  "storyAngle": "Angle",
+  "retentionPlan": {
+    "hookStrategy": "First 3s strategy",
+    "pacingSeconds": 15,
+    "visualStrategy": "Visual strategy",
+    "vietnamAngleIncluded": false
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "narrativeArc": "HOOK",
+      "layoutType": "list",
+      "headline": "Scene Headline (English)",
+      "keyTakeaways": ["Takeaway 1 (English)"],
+      "statNumber": "Number if any",
+      "statLabel": "Number description (English)",
+      "quoteText": "Quote (English)",
+      "quoteAuthor": "Source",
+      "voiceover": "Voiceover line (English)...",
+      "durationSec": 15
+    }
+  ]
+}
+      `;
+    } else {
+      scriptPrompt = `
+DỰA HOÀN TOÀN TRÊN SỰ THẬT ĐÃ KIỂM CHỨNG dưới đây, hãy lên kịch bản video mang phong cách: professional documentary / newsroom / technology journalism.
+
+QUY TẮC RETENTION & STORYTELLING (CHUẨN VIRAL 2026):
+1. CẢNH 1 BẮT BUỘC là "3-SECOND RETENTION HOOK" (14-20 từ). Chọn 1 trong 5 Hook Archetypes: Phản trực giác, Cấp bách giật mình, Lỗ hổng tò mò, Sốc số liệu, hoặc In Media Res. Tuyệt đối KHÔNG bắt đầu bằng lời chào ("Xin chào mọi người", "Hôm nay chúng ta sẽ...").
+2. Nhịp độ dồn dập (Relentless Pacing): Mỗi 2 giây phải có kích thích hoặc thông tin mới. Không dùng từ thừa sáo rỗng.
+3. CẢNH CUỐI CÙNG (THE ENDLESS LOOP): Câu cuối cùng phải là một vế câu nối lửng dẫn tự nhiên về lại câu mở đầu của Cảnh 1 để tạo tỷ lệ xem lặp >100%. Tuyệt đối không chào tạm biệt hay nói câu exit sign ("Cảm ơn các bạn", "Hẹn gặp lại").
+4. Voiceover phải mang tính phân tích chuyên sâu, sắc bén, câu chữ siêu ngắn gọn (punchy sentences).
+5. Tự đánh giá MẬT ĐỘ THÔNG TIN:
+   - Nếu chủ đề đơn giản: Chọn thời lượng 30s hoặc 60s.
+   - Nếu chủ đề phức tạp: Tự động chọn 90s, 3m, 5m, 8m hoặc 10m.
+6. KHÔNG cắt facts quan trọng chỉ để vừa 60 giây. Nới rộng thời lượng tương ứng.
+7. BẤT KỲ CÂU VOICE-OVER NÀO CHỨA SỐ LIỆU ĐỀU PHẢI NẰM TRONG DANH SÁCH SỰ THẬT.
+8. KHÔNG ĐƯỢC BỊA THÊM SỐ LIỆU, THỜI GIAN, GIÁ TIỀN.
+9. Mỗi cảnh (scene) phải có "durationSec" (số giây) hợp lý.
+10. Tạo một "retentionPlan" giải thích chiến lược giữ chân khán giả.
 
 SỰ THẬT KIỂM CHỨNG:
 ${JSON.stringify(factCheckedData.verifiedClaims, null, 2)}
@@ -242,7 +297,8 @@ Yêu cầu Schema JSON:
     }
   ]
 }
-    `;
+      `;
+    }
 
     const rawStory = await callGeminiWithRetry(this.genAI, scriptPrompt);
 
@@ -266,7 +322,7 @@ Yêu cầu Schema JSON:
   /**
    * ENTRY POINT: Run Full Pipeline
    */
-  async runPipeline(normalizedArticles) {
+  async runPipeline(normalizedArticles, language = 'vi') {
     if (!normalizedArticles || normalizedArticles.length === 0) {
       throw new Error("Không có bài viết đầu vào.");
     }
@@ -281,7 +337,7 @@ Yêu cầu Schema JSON:
     const impactData = await this.analyzeImpact(factCheckedData);
 
     // 4. Lên kịch bản dựa trên Fact
-    const storyPackage = await this.packageStory(factCheckedData, impactData);
+    const storyPackage = await this.packageStory(factCheckedData, impactData, language);
 
     logger.info(`[PIPELINE] Thành công! Story Package có ${storyPackage.verifiedClaims.length} verified claims và ${storyPackage.scenes.length} scenes.`);
     return storyPackage;

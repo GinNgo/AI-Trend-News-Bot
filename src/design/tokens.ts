@@ -36,8 +36,8 @@ export const tokens = {
   },
   layout: {
     safeArea: {
-      top: '12%', // Chừa chỗ cho UI phía trên (tài khoản, following)
-      bottom: '22%', // Chừa chỗ cho Caption, Tên kênh, Thanh thời gian
+      top: '12%', // Chừa chỗ cho UI phía trên (NewsTicker, status bar)
+      bottom: '30%', // Chừa chỗ an toàn cho YouTube Shorts/TikTok UI (Channel name, Title, Audio pill)
       horizontal: '8%', // Tránh lẹm viền và nút tương tác bên phải
     },
     radius: '24px', // Bo góc tiêu chuẩn cho các thẻ card

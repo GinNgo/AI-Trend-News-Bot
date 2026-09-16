@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { PlatformAdapter } = require('../adapters/platform_adapter.js');
 const logger = require('../../collector/utils/logger.js');
+const { uploadToTikTokViaEdge, checkTikTokLoginStatus } = require('./tiktok_edge_publisher.js');
 
 class TikTokProvider extends PlatformAdapter {
   constructor() {
@@ -23,7 +24,8 @@ class TikTokProvider extends PlatformAdapter {
   }
 
   async validateAccount() {
-    return true;
+    const status = await checkTikTokLoginStatus();
+    return status.loggedIn;
   }
 
   async validateMedia(mediaPath) {
@@ -31,41 +33,36 @@ class TikTokProvider extends PlatformAdapter {
   }
 
   async publish(publicationRecord) {
+    logger.info(`[TikTokProvider] Bắt đầu xuất bản video lên TikTok qua Trình duyệt: ${publicationRecord.title}`);
+
     const conf = this.getConfig();
-    const clientKey = conf.TIKTOK_CLIENT_KEY || process.env.TIKTOK_CLIENT_KEY;
-
-    logger.info(`[TikTokProvider] Bắt đầu xuất bản video: ${publicationRecord.title}`);
-
-    
-    if (!clientKey) {
-      throw new Error("Missing TIKTOK_CLIENT_KEY for real API integration.");
-    }
-    
-    logger.info("[TikTokProvider] Calling real TikTok Direct Post API...");
-    
-    // Simulate real fetch to TikTok API (assuming access_token is available in tokens.json)
-    const tokenPath = path.join(process.cwd(), 'tokens.json');
-    let accessToken = null;
-    if (fs.existsSync(tokenPath)) {
-      try {
-        const tokens = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
-        accessToken = tokens.tiktok?.access_token;
-      } catch(e) {}
-    }
-    
-    if (!accessToken && process.env.NODE_ENV !== 'development') {
-        throw new Error("Missing TikTok access token.");
+    if (conf.ENABLE_TIKTOK === false) {
+      throw new Error("TikTok publishing is disabled in config.json. Bật ENABLE_TIKTOK=true để tiếp tục.");
     }
 
-    // Pseudo-fetch for real integration:
-    // const res = await fetch('https://open.tiktokapis.com/v2/post/publish/video/init/', { ... });
-    // if (!res.ok) throw new Error("TikTok API failed");
+    // Lọc tags từ caption
+    const cleanCaption = (publicationRecord.caption || '').replace(/__lang:[a-z]+__/gi, '').trim();
+    const rawTags = (cleanCaption.match(/#[\p{L}\p{N}_]+/gu) || []).map(t => t.slice(1));
+    const autoTags = rawTags.filter(t => !t.toLowerCase().includes('lang') && !t.startsWith('_'));
     
-    // We strictly throw if not authorized, NO fake published IDs
-    logger.info("[TikTokProvider] Validating real token via API...");
+    // Lấy defaultTags theo kênh (channel_domestic, channel_tech, channel_global)
+    let channelTags = ['xuhuong', 'tiktoknews', 'trending', 'shorts'];
+    const channelId = publicationRecord.channelId;
+    if (conf.CHANNELS && channelId && conf.CHANNELS[channelId] && Array.isArray(conf.CHANNELS[channelId].defaultTags)) {
+      channelTags = conf.CHANNELS[channelId].defaultTags;
+    }
+    const mergedTags = [...new Set([...autoTags, ...channelTags])];
+
+    const result = await uploadToTikTokViaEdge({
+      videoPath: publicationRecord.mediaPath,
+      title: publicationRecord.title,
+      tags: mergedTags
+    });
+
+    const postUrl = result.url || 'https://www.tiktok.com/@me';
     return {
-      platformVideoId: `tiktok-${Date.now()}`,
-      url: `https://tiktok.com/sandbox/video-${Date.now()}`
+      platformVideoId: result.postId || `tiktok-${Date.now()}`,
+      url: postUrl
     };
   }
 }
