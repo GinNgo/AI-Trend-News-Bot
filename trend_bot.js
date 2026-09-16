@@ -401,8 +401,10 @@ function getDailyPublishStatus(targetChannelId = null) {
       return isThisChannel && getEffectiveDate(r) === todayVN;
     });
     const count = chRows.length;
-    const remaining = Math.max(0, maxPerDay - count);
-    const reached = maxPerDay > 0 && count >= maxPerDay;
+    const maxVn = chMeta.maxVideosDomestic || (chId === 'channel_domestic' ? 6 : maxPerDay);
+    const maxEn = chMeta.maxVideosInternational || (chId === 'channel_domestic' ? 4 : maxPerDay);
+    const vnCount = chRows.filter(r => (r.language || 'vi') !== 'en').length;
+    const enCount = chRows.filter(r => r.language === 'en').length;
 
     byChannel[chId] = {
       channelId: chId,
@@ -410,8 +412,14 @@ function getDailyPublishStatus(targetChannelId = null) {
       badge: chMeta.badge || chId,
       todayCount: count,
       maxVideos: maxPerDay,
+      todayVnCount: vnCount,
+      maxVideosDomestic: maxVn,
+      todayEnCount: enCount,
+      maxVideosInternational: maxEn,
       remainingSlots: remaining,
-      limitReached: reached
+      limitReached: reached,
+      limitVnReached: vnCount >= maxVn,
+      limitEnReached: enCount >= maxEn
     };
 
     totalToday += count;
@@ -766,15 +774,17 @@ NHIỆM VỤ CỦA BẠN:
 Bạn là Tổng biên tập AI chọn lọc tin tức xu hướng HOT nhất để sản xuất video Shorts/Reels cho 3 KÊNH ĐỘC LẬP:
 
 NGUYÊN TẮC CÂN BẰNG 3 KÊNH BẮT BUỘC (TỔNG CỘNG 9 - 12 TIN, MỖI KÊNH 3-4 TIN):
-1. KÊNH THỜI SỰ & ĐỜI SỐNG VN ("channelId": "channel_domestic", "scope": "domestic", "language": "vi"):
-   - Đời sống nóng, tai nạn, pháp luật, cảnh báo người dân, con số sốc, người thật việc thật tại Việt Nam.
-   - 100% tiếng Việt. Tiêu đề hấp dẫn, giật tít, cảnh báo an toàn sinh mạng/tài sản.
+1. KÊNH 1 - FACTLOOP (Thời Sự VN & Khám Phá Song Ngữ) ("channelId": "channel_domestic"):
+   - Có thể chọn cả 2 định dạng:
+     a) Tin Thời Sự & Đời Sống VN ("language": "vi", "scope": "domestic"): Tai nạn, pháp luật, cảnh báo người dân, đời sống giật gân, người thật việc thật trong nước.
+     b) Tin FactLoop Khám Phá Toàn Cầu ("language": "en", "scope": "international"): Vũ trụ, SpaceX, Starship, NASA, khoa học kỳ thú, bí ẩn khảo cổ dành cho khán giả quốc tế.
+   - Tiêu đề hấp dẫn, giật tít, kích thích tò mò cao.
 
 2. KÊNH KAI VIET TECH & TOÀN CẦU ("channelId": "channel_tech", "scope": "international", "language": "vi"):
    - Đột phá công nghệ người dùng (Apple, OpenAI, Google, NVIDIA, ChatGPT, robot, xe điện, bảo mật smartphone, cảnh báo mã độc).
    - 100% tiếng Việt. Tiêu đề nêu bật sản phẩm đại chúng hoặc chiêu trò lừa đảo công nghệ.
 
-3. KÊNH VIEW NGOẠI FACTLOOP / CURIOUS GLOBE ("channelId": "channel_global", "scope": "international", "language": "en"):
+3. KÊNH VIEW NGOẠI CURIOUS GLOBE ("channelId": "channel_global", "scope": "international", "language": "en"):
    - Khai thác ngách Viral Space & Science: Tên lửa & Thám hiểm vũ trụ (SpaceX, Starship, NASA, thám hiểm sao Hỏa, Mặt Trăng, James Webb, hố đen, thiên thạch), Khoa học kỳ thú (Mind-Blowing Science, lượng tử, tự nhiên kỳ dị), Bí ẩn khảo cổ (Ancient Mysteries & Odd Phenomena).
    - "language": "en" (100% tiếng Anh tự nhiên, kịch tính, kích thích tò mò tột độ).
    - Tiêu đề tiếng Anh tò mò giật tít gây sốc (Curiosity Gap) chuẩn H2Dev (Ví dụ: "SpaceX Starship Just Did The IMPOSSIBLE In Orbit! 🚀", "Astronomers Detect Massive Signal From Edge Of Universe! 🌌", "Archaeologists Shocked By Ancient Discovery Not From Earth! 🗿").

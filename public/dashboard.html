@@ -1454,7 +1454,7 @@
         <div style="padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
             <span style="font-size: 12px; color: var(--muted); margin-right: 2px;">Kênh:</span>
-            <button id="an-chan-channel_domestic" onclick="switchAnalyticsChannel('channel_domestic')" style="background: rgba(0, 242, 254, 0.2); border: 1px solid var(--cyan); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">🇻🇳 Kênh 1: Thời Sự VN</button>
+            <button id="an-chan-channel_domestic" onclick="switchAnalyticsChannel('channel_domestic')" style="background: rgba(0, 242, 254, 0.2); border: 1px solid var(--cyan); color: #fff; padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">🇻🇳 Kênh 1: FactLoop (VN &amp; Global)</button>
             <button id="an-chan-channel_tech" onclick="switchAnalyticsChannel('channel_tech')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">🚀 Kênh 2: Kai Viet (Tech)</button>
             <button id="an-chan-channel_global" onclick="switchAnalyticsChannel('channel_global')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">🇺🇸 Kênh 3: Curious Globe</button>
             <button id="an-chan-all" onclick="switchAnalyticsChannel('all')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--muted); padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer;">🌐 Tất Cả Kênh</button>
@@ -1505,6 +1505,19 @@
             <ul id="analyticsInsightsList" style="margin: 0; padding-left: 20px; font-size: 12px; color: #e2e8f0; line-height: 1.6;">
               <li>Đang tải phân tích...</li>
             </ul>
+          </div>
+
+          <!-- CATEGORY EVALUATION BREAKDOWN (ĐÁNH GIÁ THEO TỪNG HẠNG MỤC) -->
+          <div id="categoryStatsContainer" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div style="font-size: 13px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+                <span>📊</span> ĐÁNH GIÁ HIỆU QUẢ THEO TỪNG HẠNG MỤC NỘI DUNG
+              </div>
+              <span style="font-size: 11px; color: var(--muted);">So sánh hiệu suất Thời Sự VN vs FactLoop Toàn Cầu</span>
+            </div>
+            <div id="categoryStatsCards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+              <!-- Dynamic Category Cards -->
+            </div>
           </div>
 
           <!-- VIDEO PERFORMANCE TABLE -->
@@ -3355,6 +3368,45 @@
         const ul = document.getElementById('analyticsInsightsList');
         if (ul && data.insights) {
           ul.innerHTML = data.insights.map(item => `<li style="margin-bottom: 4px;">${escapeHtml(item)}</li>`).join('');
+        }
+
+        // Category performance cards (Đánh giá theo từng hạng mục)
+        const catCardsEl = document.getElementById('categoryStatsCards');
+        const catBoxEl = document.getElementById('categoryStatsContainer');
+        if (catCardsEl && catBoxEl) {
+          if (data.categoryStats && Object.keys(data.categoryStats).length > 0) {
+            catBoxEl.style.display = 'block';
+            catCardsEl.innerHTML = Object.values(data.categoryStats).map(c => {
+              const isVn = c.key === 'domestic_vn';
+              const borderColor = isVn ? 'rgba(239, 68, 68, 0.35)' : 'rgba(56, 189, 248, 0.35)';
+              const bgGrad = isVn ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(15, 23, 42, 0.6))' : 'linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(15, 23, 42, 0.6))';
+              const tagColor = isVn ? '#f87171' : '#38bdf8';
+              return `
+                <div style="background: ${bgGrad}; border: 1px solid ${borderColor}; border-radius: 10px; padding: 12px 14px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 12px; font-weight: 700; color: ${tagColor};">${escapeHtml(c.label)}</span>
+                    <span style="font-size: 11px; background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 4px; color: #cbd5e1; font-weight: 600;">${c.count} video</span>
+                  </div>
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; text-align: center; margin-top: 6px;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 6px 4px; border-radius: 6px;">
+                      <div style="font-size: 10px; color: var(--muted);">Tổng Lượt Xem</div>
+                      <div style="font-size: 14px; font-weight: 700; color: #fff;">${(c.totalViews || 0).toLocaleString()}</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 6px 4px; border-radius: 6px;">
+                      <div style="font-size: 10px; color: var(--muted);">View TB / Video</div>
+                      <div style="font-size: 14px; font-weight: 700; color: #a3e635;">${(c.avgViews || 0).toLocaleString()}</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 6px 4px; border-radius: 6px;">
+                      <div style="font-size: 10px; color: var(--muted);">Tương Tác</div>
+                      <div style="font-size: 14px; font-weight: 700; color: #f472b6;">${c.avgEngagement || 0}%</div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          } else {
+            catBoxEl.style.display = 'none';
+          }
         }
 
         // Table body

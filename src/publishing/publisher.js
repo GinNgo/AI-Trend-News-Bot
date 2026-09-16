@@ -90,9 +90,9 @@ class Publisher {
 
     const now = new Date();
 
-    // Lấy danh sách các slot đã lên lịch trong tương lai CHO KÊNH NÀY
+    // Lấy danh sách các slot đã lên lịch trong tương lai CHO KÊNH NÀY (kèm thông tin ngôn ngữ)
     const existingRows = this.db.prepare(`
-      SELECT scheduledAt FROM publications 
+      SELECT scheduledAt, language FROM publications 
       WHERE status IN ('PENDING', 'PUBLISHING', 'RETRYING') 
         AND scheduledAt IS NOT NULL 
         AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
@@ -102,7 +102,7 @@ class Publisher {
 
     // Kiểm tra video vừa đăng trong vòng minIntervalMinutes của kênh này
     const recentPublished = this.db.prepare(`
-      SELECT publishedAt FROM publications 
+      SELECT publishedAt as scheduledAt, language FROM publications 
       WHERE publishedAt IS NOT NULL 
         AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
         AND datetime(publishedAt) > datetime('now', '-${minIntervalMinutes} minutes')
@@ -110,10 +110,10 @@ class Publisher {
       LIMIT 1
     `).all(channelId, channelId);
 
-    const existingTimes = existingRows.map(r => new Date(r.scheduledAt).getTime());
-    if (recentPublished.length > 0 && recentPublished[0].publishedAt) {
-      existingTimes.push(new Date(recentPublished[0].publishedAt).getTime());
-    }
+    const existingItems = [...existingRows, ...recentPublished].map(r => ({
+      time: new Date(r.scheduledAt).getTime(),
+      language: r.language || 'vi'
+    }));
 
     // 1. CHẾ ĐỘ FAST-TRACK (Nếu người dùng cố ý bật)
     if ((mode === 'fast_track' || mode === 'rolling') && !forceTomorrow) {
@@ -131,7 +131,7 @@ class Publisher {
       while (iterations < 200) {
         iterations++;
         const cTime = candidate.getTime();
-        const hasConflict = existingTimes.some(t => Math.abs(t - cTime) < minIntervalMs);
+        const hasConflict = existingItems.some(item => Math.abs(item.time - cTime) < minIntervalMs);
         if (!hasConflict) {
           return candidate.toISOString();
         }
@@ -146,8 +146,6 @@ class Publisher {
 
     // 2. CHẾ ĐỘ GOM KHUNG GIỜ VÀNG (peak_hours) - DỨT ĐIỂM TRONG NGÀY
     const startDayOffset = forceTomorrow ? 1 : 0;
-    // Cho phép phân bổ đều đặn các video vào các khung giờ vàng trong 14 ngày tới
-    // Tránh tình trạng hàng đợi nhiều bài bị dồn cục vào cùng một giây fallback
     const maxDaysAhead = (mode === 'fast_track') ? 1 : 14;
     const getLocalDayStr = (d) => {
       const dateObj = (d instanceof Date) ? d : new Date(d);
@@ -160,10 +158,23 @@ class Publisher {
       const dayStr = getLocalDayStr(targetDay);
 
       // Kiểm tra giới hạn số video trong ngày lịch theo múi giờ Việt Nam
-      if (maxPerDay > 0) {
-        const videosOnDay = existingTimes.filter(t => getLocalDayStr(t) === dayStr);
-        if (videosOnDay.length >= maxPerDay) {
-          continue;
+      const videosOnDay = existingItems.filter(item => getLocalDayStr(item.time) === dayStr);
+      if (maxPerDay > 0 && videosOnDay.length >= maxPerDay) {
+        continue;
+      }
+
+      // Kiểm tra hạn ngạch phân nhánh riêng cho Kênh 1 (FactLoop: tối đa 6 VN + 4 Global)
+      if (channelId === 'channel_domestic') {
+        const isCurrentVn = (language !== 'en');
+        const maxVn = conf.CHANNELS?.channel_domestic?.maxVideosDomestic || 6;
+        const maxEn = conf.CHANNELS?.channel_domestic?.maxVideosInternational || 4;
+        
+        if (isCurrentVn) {
+          const vnCount = videosOnDay.filter(i => i.language !== 'en').length;
+          if (vnCount >= maxVn) continue;
+        } else {
+          const enCount = videosOnDay.filter(i => i.language === 'en').length;
+          if (enCount >= maxEn) continue;
         }
       }
 
@@ -179,7 +190,7 @@ class Publisher {
           continue;
         }
 
-        const inWindow = existingTimes.filter(t => t >= wStart.getTime() && t <= wEnd.getTime());
+        const inWindow = existingItems.filter(item => item.time >= wStart.getTime() && item.time <= wEnd.getTime());
         if (inWindow.length >= win.maxVideos) {
           continue;
         }
@@ -191,20 +202,45 @@ class Publisher {
 
         while (candidate.getTime() <= wEnd.getTime()) {
           if (candidate.getTime() >= now.getTime() + 2 * 60 * 1000) {
-            const hasConflict = existingTimes.some(t => Math.abs(t - candidate.getTime()) < minIntervalMs);
+            const cTime = candidate.getTime();
+            const isCurrentEn = (language === 'en');
+
+            // Kiểm tra xung đột & chống trùng giờ:
+            // - Cùng ngôn ngữ: Cách nhau tối thiểu minIntervalMs (45 phút)
+            // - Khác ngôn ngữ trên Kênh 1 (VN vs EN): Nếu cách nhau < 15 phút, tự động lệch +15 phút
+            let hasConflict = false;
+            for (const item of existingItems) {
+              const diffMs = Math.abs(item.time - cTime);
+              const isSameLang = (item.language === 'en') === isCurrentEn;
+
+              if (isSameLang) {
+                if (diffMs < minIntervalMs) {
+                  hasConflict = true;
+                  break;
+                }
+              } else {
+                // Khác ngôn ngữ: cách nhau tối thiểu 15 phút (chống trùng giờ vàng, cộng thêm 15p)
+                if (diffMs < 15 * 60 * 1000) {
+                  hasConflict = true;
+                  break;
+                }
+              }
+            }
+
             if (!hasConflict) {
               return candidate.toISOString();
             }
           }
-          candidate = new Date(candidate.getTime() + win.stepMinutes * 60 * 1000);
+          // Bước nhảy 15 phút để linh hoạt điều chỉnh lệch slot +15p
+          candidate = new Date(candidate.getTime() + 15 * 60 * 1000);
         }
       }
     }
 
     // Fallback: Nếu tất cả các ngày trong 14 ngày tới đều kín slot, hẹn sau video cuối cùng một khoảng giãn cách an toàn
-    if (existingTimes.length > 0) {
-      const maxExisting = Math.max(...existingTimes);
-      let fallbackCandidate = new Date(maxExisting + minIntervalMs);
+    if (existingItems.length > 0) {
+      const maxExisting = Math.max(...existingItems.map(i => i.time));
+      let fallbackCandidate = new Date(maxExisting + 15 * 60 * 1000);
       const ch = fallbackCandidate.getHours();
       if (ch >= 23) {
         fallbackCandidate.setDate(fallbackCandidate.getDate() + 1);

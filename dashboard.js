@@ -998,7 +998,7 @@ app.get('/api/check-youtube', (req, res) => {
     channelId: reqChan,
     targetFile,
     channels: {
-      channel_domestic: { authorized: ch1, file: 'tokens.json', name: 'Thời Sự VN' },
+      channel_domestic: { authorized: ch1, file: 'tokens.json', name: 'FactLoop (VN & Global)' },
       channel_tech: { authorized: ch2, file: 'tokens_channel2.json', name: 'Kai Viet Tech' },
       channel_global: { authorized: ch3, file: 'tokens_channel3.json', name: 'Curious Globe' }
     }
@@ -1998,36 +1998,53 @@ setInterval(() => {
       const uncreated = suggestions.filter(s => !s.isAlreadyCreated);
       const pool = uncreated.length > 0 ? uncreated : suggestions;
 
-      // 1. Tự động chọn bài Tiếng Việt xuất sắc nhất (Thời Sự hoặc Công Nghệ)
-      const vnPool = pool.filter(s => s.channelId !== 'channel_global' && s.language !== 'en');
+      // 1. Tự động chọn bài Tiếng Việt xuất sắc nhất (Thời Sự VN hoặc Kai Viet Tech)
+      const vnPool = pool.filter(s => s.language !== 'en');
       if (vnPool.length > 0) {
         const sortedVn = [...vnPool].sort((a, b) => (b.impactScore || 0) - (a.impactScore || 0));
         const topVn = sortedVn[0];
         const vnChannel = topVn.channelId || 'channel_domestic';
         const vnStatus = getDailyPublishStatus(vnChannel);
-        if (!vnStatus.limitReached) {
+        const vnLimitReached = (vnChannel === 'channel_domestic') ? (vnStatus.limitVnReached || vnStatus.limitReached) : vnStatus.limitReached;
+
+        if (!vnLimitReached) {
           const scoreVn = topVn.impactScore || 8;
           const isPriorityVn = scoreVn >= 9.0;
           console.log(`\n⚡ [TREND-ENGINE] Tự động chọn bài Tiếng Việt (${scoreVn}/10đ): "${topVn.title}" [${vnChannel}]`);
-          addToVideoQueue(topVn.link, topVn.title, topVn.source, topVn.category, scoreVn, isPriorityVn, vnChannel, topVn.scope, topVn.language);
+          addToVideoQueue(topVn.link, topVn.title, topVn.source, topVn.category, scoreVn, isPriorityVn, vnChannel, topVn.scope, topVn.language || 'vi');
         } else {
-          console.log(`\n🛡️ [CHỐNG SPAM] Kênh Tiếng Việt [${vnChannel}] đã đạt giới hạn hôm nay (${vnStatus.todayCount}/${vnStatus.maxVideos}). Bỏ qua tự chọn bài VN.`);
+          console.log(`\n🛡️ [CHỐNG SPAM] Kênh Tiếng Việt [${vnChannel}] đã đạt giới hạn hôm nay (${vnStatus.todayVnCount || vnStatus.todayCount}/${vnStatus.maxVideosDomestic || vnStatus.maxVideos}). Bỏ qua tự chọn bài VN.`);
         }
       }
 
-      // 2. Tự động chọn bài Tiếng Anh xuất sắc nhất cho Kênh Factloop (Vũ trụ, SpaceX, Khoa học, Khám phá kỳ thú)
+      // 2. Tự động chọn bài Tiếng Anh FactLoop cho Kênh 1 (Vũ trụ, SpaceX, Khoa học kỳ thú quốc tế, tối đa 4 bài/ngày)
+      const domesticStatus = getDailyPublishStatus('channel_domestic');
+      if (!domesticStatus.limitEnReached && !domesticStatus.limitReached) {
+        const enPoolForDomestic = pool.filter(s => (s.channelId === 'channel_domestic' && s.language === 'en') || (s.language === 'en' && !s.isAlreadyCreated));
+        if (enPoolForDomestic.length > 0) {
+          const sortedEnDom = [...enPoolForDomestic].sort((a, b) => (b.impactScore || 0) - (a.impactScore || 0));
+          const topEnDom = sortedEnDom[0];
+          const scoreEnDom = topEnDom.impactScore || 8;
+          const isPriorityEnDom = scoreEnDom >= 9.0;
+          console.log(`\n🚀 [TREND-ENGINE] Tự động chọn bài FactLoop Tiếng Anh cho KÊNH 1 (${scoreEnDom}/10đ): "${topEnDom.title}" [SpaceX / Science]`);
+          addToVideoQueue(topEnDom.link, topEnDom.title, topEnDom.source, topEnDom.category, scoreEnDom, isPriorityEnDom, 'channel_domestic', 'international', 'en');
+        }
+      }
+
+      // 3. Tự động chọn bài Tiếng Anh xuất sắc nhất cho Kênh 3 (Curious Globe US/Global)
       const globalPool = pool.filter(s => s.channelId === 'channel_global' || s.language === 'en');
       if (globalPool.length > 0) {
         const globalStatus = getDailyPublishStatus('channel_global');
         if (!globalStatus.limitReached) {
           const sortedGlobal = [...globalPool].sort((a, b) => (b.impactScore || 0) - (a.impactScore || 0));
-          const topGlobal = sortedGlobal[0];
+          // Chọn bài khác bài Kênh 1 vừa chọn (nếu có thể)
+          const topGlobal = sortedGlobal.find(g => !videoGenerationQueue.some(q => q.target === g.link)) || sortedGlobal[0];
           const scoreGlobal = topGlobal.impactScore || 8;
           const isPriorityGlobal = scoreGlobal >= 9.0;
-          console.log(`\n🚀 [TREND-ENGINE] Tự động chọn bài Factloop Tiếng Anh (${scoreGlobal}/10đ): "${topGlobal.title}" [SpaceX / Science / Space]`);
+          console.log(`\n🌍 [TREND-ENGINE] Tự động chọn bài Tiếng Anh cho KÊNH 3 (${scoreGlobal}/10đ): "${topGlobal.title}" [Curious Globe]`);
           addToVideoQueue(topGlobal.link, topGlobal.title, topGlobal.source, topGlobal.category, scoreGlobal, isPriorityGlobal, 'channel_global', 'international', 'en');
         } else {
-          console.log(`\n🛡️ [CHỐNG SPAM] Kênh Factloop (Global) đã đạt giới hạn hôm nay (${globalStatus.todayCount}/${globalStatus.maxVideos}). Bỏ qua tự chọn bài Factloop.`);
+          console.log(`\n🛡️ [CHỐNG SPAM] Kênh 3 (Curious Globe) đã đạt giới hạn hôm nay (${globalStatus.todayCount}/${globalStatus.maxVideos}). Bỏ qua tự chọn.`);
         }
       }
     } else {

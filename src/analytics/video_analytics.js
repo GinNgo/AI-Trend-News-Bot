@@ -180,7 +180,8 @@ class VideoAnalytics {
              COALESCE(p.publishedAt, p.scheduledAt, p.createdAt) as publishedAt,
              p.scheduledAt,
              p.renderId,
-             p.caption
+             p.caption,
+             p.language
       FROM video_snapshots s
       INNER JOIN (
         SELECT platformVideoId, MAX(id) as maxId
@@ -254,6 +255,55 @@ class VideoAnalytics {
       }
     }
 
+    // Thống kê hiệu suất theo Từng Hạng Mục (Đánh giá từng hạng mục)
+    const categoryStats = {
+      domestic_vn: {
+        key: 'domestic_vn',
+        label: '🇻🇳 Thời Sự & Đời Sống VN',
+        language: 'vi',
+        count: 0,
+        totalViews: 0,
+        avgViews: 0,
+        totalLikes: 0,
+        totalComments: 0,
+        avgEngagement: 0,
+        gradeCounts: { A: 0, B: 0, C: 0, D: 0 }
+      },
+      global_factloop: {
+        key: 'global_factloop',
+        label: '🚀 FactLoop & Khám Phá Quốc Tế',
+        language: 'en',
+        count: 0,
+        totalViews: 0,
+        avgViews: 0,
+        totalLikes: 0,
+        totalComments: 0,
+        avgEngagement: 0,
+        gradeCounts: { A: 0, B: 0, C: 0, D: 0 }
+      }
+    };
+
+    videos.forEach(v => {
+      const isEn = (v.language === 'en' || (!v.language && channelId === 'channel_global'));
+      const catKey = isEn ? 'global_factloop' : 'domestic_vn';
+      const targetCat = categoryStats[catKey];
+      targetCat.count++;
+      targetCat.totalViews += v.viewCount;
+      targetCat.totalLikes += v.likeCount;
+      targetCat.totalComments += v.commentCount;
+      if (targetCat.gradeCounts[v.performanceGrade] !== undefined) {
+        targetCat.gradeCounts[v.performanceGrade]++;
+      }
+    });
+
+    for (const key in categoryStats) {
+      const c = categoryStats[key];
+      if (c.count > 0) {
+        c.avgViews = Math.round(c.totalViews / c.count);
+        c.avgEngagement = Number(((c.totalLikes + c.totalComments) / Math.max(1, c.totalViews) * 100).toFixed(2));
+      }
+    }
+
     // Tính điểm đánh giá hiệu suất kênh (thang 1-10, nén về khoảng trung tâm 5.2 - 7.2)
     const goodRatio = (gradeCounts.A * 1.0 + gradeCounts.B * 0.7) / Math.max(1, totalVideos);
     const rawScore = 4.5 + goodRatio * 3.5;
@@ -264,6 +314,10 @@ class VideoAnalytics {
     const topVideo = videos[0];
     if (topVideo) {
       insights.push(`Nội dung dẫn đầu: "${topVideo.title.substring(0, 45)}..." đạt ${topVideo.viewCount.toLocaleString()} lượt xem.`);
+    }
+
+    if (categoryStats.global_factloop.count > 0 && categoryStats.domestic_vn.count > 0) {
+      insights.push(`🌍 Đánh giá hạng mục song ngữ: Video Khám Phá FactLoop (Tiếng Anh) đạt TB ${categoryStats.global_factloop.avgViews.toLocaleString()} views/video; Video Thời Sự VN đạt TB ${categoryStats.domestic_vn.avgViews.toLocaleString()} views/video.`);
     }
 
     if (layoutStats['v2.0-narrative-5-7s'] && layoutStats['v2.0-narrative-5-7s'].count > 0) {
@@ -292,6 +346,7 @@ class VideoAnalytics {
       channelScore,
       gradeCounts,
       layoutStats,
+      categoryStats,
       topVideos: videos.slice(0, 5),
       videos,
       insights
