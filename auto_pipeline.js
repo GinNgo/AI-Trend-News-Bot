@@ -185,8 +185,10 @@ function generateAudioSafe(text, outputPath, voice, rate, pitch, vttPath = null)
   for (let attempt = 1; attempt <= 3; attempt++) {
     // Giữ nguyên giọng đã chọn của kênh/video
     const currentVoice = voice;
-    // Microsoft Edge TTS không hỗ trợ --pitch cho giọng tiếng Việt (gây lỗi NoAudioReceived)
-    const pitchArg = (pitch && pitch !== '+0Hz' && !currentVoice.startsWith('vi-')) ? `--pitch="${pitch}"` : '';
+    // Hỗ trợ tinh chỉnh cao độ --pitch cho cả tiếng Việt và tiếng Anh (+4Hz, -8Hz,...)
+    const isPitchDefault = !pitch || pitch === '+0Hz' || pitch === '-0Hz' || pitch === '0Hz' || pitch === '0';
+    // Ở lần thử 2-3 nếu gặp lỗi máy chủ, tự động bỏ qua pitch để bảo đảm 100% sinh được file audio
+    const pitchArg = (isPitchDefault || attempt > 1) ? '' : `--pitch="${pitch}"`;
 
     try {
       execSync(`edge-tts --voice ${currentVoice} -f "${tempFile}" --write-media "${outputPath}" ${subArg} ${rateArg} ${pitchArg}`.replace(/\s+/g, ' '), { 
@@ -380,11 +382,21 @@ async function main() {
   const channelMeta = channelRouter.getChannelMeta(targetChannelId);
   console.log(`📌 Kênh mục tiêu: [${channelMeta.badge}] ${channelMeta.name} (${targetChannelId})`);
 
-  const ttsVoice = channelMeta.ttsVoice || (isEnglish ? 'en-US-ChristopherNeural' : (config.TTS_VOICE || 'vi-VN-NamMinhNeural'));
-  // Chuẩn viral: Tốc độ đọc tự nhiên, dứt khoát (+10% đến +12% tiếng Việt, +8% tiếng Anh)
-  const ttsRate = channelMeta.ttsRate || (isEnglish ? '+8%' : (config.TTS_RATE || '+10%'));
-  const ttsPitch = channelMeta.ttsPitch || config.TTS_PITCH || '+0Hz';
-  console.log(`  🎙️ Cấu hình TTS: Giọng [${ttsVoice}], Tốc độ [${ttsRate}], Cao độ [${ttsPitch}]`);
+  // SPEC-07: AI VOICE PERSONAS & DUAL-VOICE ENGINE
+  const { detectVoicePreset, resolveSceneVoice, VOICE_PERSONAS } = require('./src/audio/voice_presets.js');
+  const detectedVoicePresetKey = (aiData.voicePreset && VOICE_PERSONAS[aiData.voicePreset.toUpperCase()])
+    ? aiData.voicePreset.toUpperCase()
+    : detectVoicePreset({
+        title: aiData.title,
+        category: (facts && facts.category) || aiData.category || '',
+        tags: aiData.youtubeTags || [],
+        language: detectedLanguage,
+        channelId: targetChannelId
+      });
+
+  const isDualVoiceEnabled = (process.env.ENABLE_DUAL_VOICE === 'true' || aiData.enableDualVoice === true);
+  const activePersona = VOICE_PERSONAS[detectedVoicePresetKey] || VOICE_PERSONAS.NEWS_ANCHOR;
+  console.log(`  🎙️ AI Voice Persona: [${detectedVoicePresetKey}] - ${activePersona.name} (Dual-Voice: ${isDualVoiceEnabled ? 'ON' : 'OFF'})`);
   const FPS = 30;
   const padding = 15; // Giảm padding giữa các cảnh từ 20 xuống 15 frames để nhịp video liên tục
   let globalStart = 0;
@@ -398,9 +410,20 @@ async function main() {
     const audioPath = path.join(publicDir, audioName);
     const vttPath = path.join(publicDir, vttName);
 
-    console.log(`  Đang sinh audio & phụ đề VTT cảnh ${i+1}...`);
+    // Xác định giọng đọc và nhịp độ tối ưu cho cảnh này (Single Persona hoặc Dual-Voice)
+    const sceneVoiceConfig = resolveSceneVoice({
+      presetKey: detectedVoicePresetKey,
+      sceneIndex: i,
+      totalScenes: aiData.scenes.length,
+      sceneSpeaker: s.speaker,
+      language: detectedLanguage,
+      channelMeta: channelMeta,
+      enableDualVoice: isDualVoiceEnabled
+    });
+
+    console.log(`  Đang sinh audio & phụ đề VTT cảnh ${i+1}/${aiData.scenes.length} [${sceneVoiceConfig.speakerRole}] (${sceneVoiceConfig.voice}, rate: ${sceneVoiceConfig.rate}, pitch: ${sceneVoiceConfig.pitch})...`);
     const voiceText = s.voiceover || s.voiceoverScript || s.headline;
-    generateAudioSafe(voiceText, audioPath, ttsVoice, ttsRate, ttsPitch, vttPath);
+    generateAudioSafe(voiceText, audioPath, sceneVoiceConfig.voice, sceneVoiceConfig.rate, sceneVoiceConfig.pitch, vttPath);
 
     let durSec = getAudioDurationPython(audioPath);
     // GUARD-RAIL: Mỗi cảnh Shorts chỉ được phép dài từ 3s đến 14s tối đa!
@@ -499,8 +522,14 @@ async function main() {
       ? "Don't forget to like and subscribe for daily news! See you next time!"
       : "Bấm theo dõi kênh để cập nhật tin nóng mỗi ngày nhé! Hẹn gặp lại các bạn!";
     const outroAudio = 'dynamic_outro.mp3';
-    const outroPath = path.join(publicDir, outroAudio);
-    generateAudioSafe(outroVoiceover, outroPath, ttsVoice, ttsRate, ttsPitch);
+    const outroVoiceConfig = resolveSceneVoice({
+      presetKey: detectedVoicePresetKey,
+      sceneIndex: 0,
+      totalScenes: 1,
+      language: detectedLanguage,
+      channelMeta: channelMeta
+    });
+    generateAudioSafe(outroVoiceover, outroPath, outroVoiceConfig.voice, outroVoiceConfig.rate, outroVoiceConfig.pitch);
 
     const outroDur = getAudioDurationPython(outroPath);
     const outroFrames = Math.round(outroDur * FPS);

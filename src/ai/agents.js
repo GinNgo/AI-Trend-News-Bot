@@ -162,9 +162,11 @@ JSON FORMAT:
   "youtubeTags": ["shorts", "science", "mystery", "discovery", "history", "curiosity"],
   "themeColor": "#00f2fe",
   "bgStyle": "grid",
+  "voicePreset": "NEWS_ANCHOR" | "MYSTERY" | "BREAKING_ALERT" | "TECH_HYPE" | "FINANCE_EXPERT" | "STORYTELLING" | "SATIRICAL_MEME" | "CINEMATIC_DOC",
   "scenes": [
     {
       "tag": "THE DISCOVERY",
+      "speaker": "anchor" | "reporter",
       "layoutType": "image" | "list" | "stat" | "quote",
       "imageFile": "${images[0] || ''}",
       "headline": "Punchy scene headline under 7 words",
@@ -234,9 +236,11 @@ YÊU CẦU JSON HỢP LỆ:
   "youtubeTags": ["thoisu", "tintuc", "xuhuong"],
   "themeColor": "#ef4444",
   "bgStyle": "grid",
+  "voicePreset": "NEWS_ANCHOR" | "MYSTERY" | "BREAKING_ALERT" | "TECH_HYPE" | "FINANCE_EXPERT" | "STORYTELLING" | "SATIRICAL_MEME" | "CINEMATIC_DOC",
   "scenes": [
     {
       "tag": "THẺ PHÂN LOẠI",
+      "speaker": "anchor" | "reporter",
       "layoutType": "image" | "list" | "stat" | "quote",
       "imageFile": "${images[0] || ''}",
       "headline": "Tiêu đề cô đọng của cảnh (dưới 8 từ)",
