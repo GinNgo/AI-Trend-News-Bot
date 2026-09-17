@@ -178,15 +178,15 @@ function generateAudioSafe(text, outputPath, voice, rate, pitch, vttPath = null)
   fs.writeFileSync(tempFile, safeText, 'utf-8');
 
   const subArg = vttPath ? `--write-subtitles "${vttPath}"` : '';
-  const fallbackVoice = voice.startsWith('vi-') ? (voice.includes('HoaiMy') ? 'vi-VN-NamMinhNeural' : 'vi-VN-HoaiMyNeural') : 'en-US-JennyNeural';
+  // Đảm bảo 100% video đồng nhất 1 giọng (không tự động nhảy sang giọng nam/nữ khác khi retry)
+  const isRateDefault = !rate || rate === '+0%' || rate === '0%';
+  const rateArg = isRateDefault ? '' : `--rate="${rate}"`;
 
   for (let attempt = 1; attempt <= 3; attempt++) {
-    const currentVoice = (attempt === 1) ? voice : fallbackVoice;
+    // Giữ nguyên giọng đã chọn của kênh/video
+    const currentVoice = voice;
     // Microsoft Edge TTS không hỗ trợ --pitch cho giọng tiếng Việt (gây lỗi NoAudioReceived)
     const pitchArg = (pitch && pitch !== '+0Hz' && !currentVoice.startsWith('vi-')) ? `--pitch="${pitch}"` : '';
-    // Nếu rate là +0% hoặc rỗng, không truyền cờ --rate để Edge-TTS chạy ở tốc độ chuẩn ổn định nhất
-    const isRateDefault = !rate || rate === '+0%' || rate === '0%';
-    const rateArg = (!isRateDefault && !(attempt >= 2 && currentVoice.includes('NamMinh'))) ? `--rate="${rate}"` : '';
 
     try {
       execSync(`edge-tts --voice ${currentVoice} -f "${tempFile}" --write-media "${outputPath}" ${subArg} ${rateArg} ${pitchArg}`.replace(/\s+/g, ' '), { 
@@ -199,8 +199,8 @@ function generateAudioSafe(text, outputPath, voice, rate, pitch, vttPath = null)
         return; // Success
       }
     } catch (e) {
-      console.warn(`    ⚠️ Thử lại lần ${attempt}/3 do lỗi TTS (${currentVoice}): ${e.message ? e.message.substring(0, 50) : e}...`);
-      try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, attempt * 2000); } catch (_) {}
+      console.warn(`    ⚠️ Thử lại lần ${attempt}/3 do lỗi kết nối TTS (${currentVoice}): ${e.message ? e.message.substring(0, 50) : e}...`);
+      try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, attempt * 1500); } catch (_) {}
     }
   }
   if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);

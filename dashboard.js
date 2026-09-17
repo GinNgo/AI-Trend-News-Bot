@@ -184,6 +184,20 @@ function addToVideoQueue(target, title = null, source = '', category = '', score
     return { ok: false, alreadyQueued: true, position: existingIdx + 1, message: `Bài này đã có trong hàng đợi ở vị trí #${existingIdx + 1}.` };
   }
 
+  // Kiểm tra chống trùng sự kiện / chủ đề theo NLP với toàn bộ lịch sử (Database + Hàng đợi)
+  try {
+    const { checkIsAlreadyCreated, getAllCreatedHistory } = require('./trend_bot.js');
+    const fullHistory = getAllCreatedHistory();
+    for (const qItem of videoGenerationQueue) {
+      if (qItem.title) fullHistory.push({ title: qItem.title, link: qItem.target || '' });
+    }
+    const dupCheck = checkIsAlreadyCreated({ title: title || cleanTarget, link: cleanTarget }, fullHistory);
+    if (dupCheck.isCreated) {
+      console.warn(`[Queue] 🛑 Từ chối thêm vào hàng đợi do trùng sự kiện: ${dupCheck.warning}`);
+      return { ok: false, alreadyCreated: true, message: dupCheck.warning };
+    }
+  } catch(e) {}
+
   const numScore = parseFloat(score) || 0;
   const shouldPreempt = isPriority || (numScore >= 9.0);
 
@@ -1996,7 +2010,11 @@ setInterval(() => {
       const { getDailyPublishStatus } = require('./trend_bot.js');
       const suggestions = cachedTrends.data.suggestions;
       const uncreated = suggestions.filter(s => !s.isAlreadyCreated);
-      const pool = uncreated.length > 0 ? uncreated : suggestions;
+      if (uncreated.length === 0) {
+        console.log("\n🛡️ [TREND-ENGINE] Toàn bộ tin tức HOT trong chu kỳ này đều đã được làm video trước đó. Dừng tự chọn để chống trùng lặp!");
+        return;
+      }
+      const pool = uncreated;
 
       // 1. Tự động chọn bài Tiếng Việt xuất sắc nhất (Thời Sự VN hoặc Kai Viet Tech)
       const vnPool = pool.filter(s => s.language !== 'en');

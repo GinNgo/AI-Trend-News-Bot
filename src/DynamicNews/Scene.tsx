@@ -756,11 +756,8 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
   const imagePan = interpolate(frame, [0, data.seqDuration || 300], [1, 1.15], { extrapolateRight: 'clamp' });
   const hasImage = data.imageFile && data.imageFile.trim() !== '';
 
-  // SPEC-03: Attention Reset Punch-Zoom (Chu kỳ 66 frames ~ 2.2s để mắt người xem luôn có kích thích mới)
-  const resetCycle = 66;
-  const cycleFrame = frame % resetCycle;
-  const punchScale = 1 + Math.sin((cycleFrame / resetCycle) * Math.PI) * 0.032;
-  const microPanX = Math.sin(frame * 0.04) * 4;
+  // Giữ khung layout tiền cảnh ổn định, vững chãi, chống co giãn phập phồng gây mỏi mắt
+  // Hiệu ứng chuyển động điện ảnh (Ken Burns) đã được áp dụng mượt mà ở lớp nền (imagePan)
 
   return (
     <div
@@ -815,7 +812,6 @@ export const DynamicScene: React.FC<{ data: DynamicSceneItem }> = ({ data }) => 
           position: 'absolute',
           inset: 0,
           zIndex: 2,
-          transform: `scale(${punchScale}) translateX(${microPanX}px)`,
           transformOrigin: 'center center',
         }}
       >
