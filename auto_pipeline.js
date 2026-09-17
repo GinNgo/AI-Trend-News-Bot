@@ -833,11 +833,13 @@ async function main() {
       priorityScore: priorityScore
     };
 
+    let commonSlot = null;
     const hasYouTube = fs.existsSync(path.join(__dirname, 'tokens.json')) || fs.existsSync(path.join(__dirname, 'client_secret.json'));
     if (hasYouTube && enableYouTube) {
       console.log(`- Lên lịch đăng YouTube Shorts (${detectedLanguage === 'en' ? 'Giờ vàng US' : 'Giờ vàng VN'}) cho [${channelMeta.badge}]...`);
       const pubRes = publisher.createPublication(storyId, renderId, 'youtube', ytTitle, ytCaption, [], detectedLanguage, null, targetChannelId, extraPubMeta);
       if (pubRes && pubRes.scheduledAt) {
+        commonSlot = pubRes.scheduledAt;
         const schedD = new Date(pubRes.scheduledAt);
         const schedStr = schedD.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ngày ' + schedD.toLocaleDateString('vi-VN');
         console.log(`  ⏰ ĐÃ HẸN GIỜ VÀNG: ${schedStr} (${detectedLanguage === 'en' ? 'Thị trường Mỹ/Quốc tế' : 'Thị trường Việt Nam'}) [${channelMeta.badge}]`);
@@ -849,8 +851,8 @@ async function main() {
 
     if (enableTikTok) {
       if (isVietnamese) {
-        console.log(`- Lên lịch đăng TikTok (qua Microsoft Edge Automation / Token)...`);
-        publisher.createPublication(storyId, renderId, 'tiktok', ytTitle, ytCaption, [], detectedLanguage, null, targetChannelId, extraPubMeta);
+        console.log(`- Lên lịch đăng TikTok (đồng bộ giờ vàng với video: ${commonSlot ? 'Cùng giờ' : 'Độc lập'})...`);
+        publisher.createPublication(storyId, renderId, 'tiktok', ytTitle, ytCaption, [], detectedLanguage, commonSlot, targetChannelId, extraPubMeta);
         scheduledCount++;
       } else {
         console.log(`- Bỏ qua TikTok: Video tiếng Anh (${targetChannelId}) chỉ đăng riêng cho YouTube Kênh 3 (Curious Globe).`);
@@ -860,7 +862,7 @@ async function main() {
     if (config.IG_ACCOUNT_ID && config.META_ACCESS_TOKEN && enableInstagram) {
       if (isVietnamese) {
         console.log(`- Lên lịch đăng Instagram Reels...`);
-        publisher.createPublication(storyId, renderId, 'instagram', ytTitle, ytCaption, [], detectedLanguage, null, targetChannelId, extraPubMeta);
+        publisher.createPublication(storyId, renderId, 'instagram', ytTitle, ytCaption, [], detectedLanguage, commonSlot, targetChannelId, extraPubMeta);
         scheduledCount++;
       } else {
         console.log(`- Bỏ qua Instagram Reels: Video tiếng Anh chỉ đăng riêng cho YouTube Kênh 3.`);
@@ -870,7 +872,7 @@ async function main() {
     if (config.META_PAGE_ID && config.META_ACCESS_TOKEN && enableFacebook) {
       if (isVietnamese) {
         console.log(`- Lên lịch đăng Facebook Reels...`);
-        publisher.createPublication(storyId, renderId, 'facebook', ytTitle, ytCaption, [], detectedLanguage, null, targetChannelId, extraPubMeta);
+        publisher.createPublication(storyId, renderId, 'facebook', ytTitle, ytCaption, [], detectedLanguage, commonSlot, targetChannelId, extraPubMeta);
         scheduledCount++;
       } else {
         console.log(`- Bỏ qua Facebook Reels: Video tiếng Anh (${targetChannelId}) chỉ đăng riêng cho YouTube Kênh 3 (Curious Globe).`);

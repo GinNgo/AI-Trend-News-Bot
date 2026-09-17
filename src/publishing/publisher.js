@@ -74,7 +74,7 @@ class Publisher {
    * - Bảo vệ kênh chống spam: Giới hạn tối đa MAX_VIDEOS_PER_DAY (mặc định 3 video/ngày)
    * - Khoảng cách tối thiểu giữa các video là 120 phút (2 tiếng)
    */
-  calculateNextPeakSlot(forceTomorrow = false, language = 'vi', channelId = 'channel_domestic') {
+  calculateNextPeakSlot(forceTomorrow = false, language = 'vi', channelId = 'channel_domestic', platform = 'youtube') {
     const conf = getBotConfig();
     const mode = conf.SCHEDULE_MODE || 'peak_hours'; // Mặc định chế độ Khung Giờ Vàng chống spam
     const minIntervalMinutes = parseInt(conf.MIN_PUBLISH_INTERVAL_MINUTES, 10) || 120; // Giãn cách 2 tiếng
@@ -90,25 +90,27 @@ class Publisher {
 
     const now = new Date();
 
-    // Lấy danh sách các slot đã lên lịch trong tương lai CHO KÊNH NÀY (kèm thông tin ngôn ngữ)
+    // Lấy danh sách các slot đã lên lịch trong tương lai CHO KÊNH NÀY VÀ NỀN TẢNG NÀY (kèm thông tin ngôn ngữ)
     const existingRows = this.db.prepare(`
       SELECT scheduledAt, language FROM publications 
       WHERE status IN ('PENDING', 'PUBLISHING', 'RETRYING') 
         AND scheduledAt IS NOT NULL 
         AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
+        AND (platform = ? OR ? IS NULL)
         AND datetime(scheduledAt) > datetime('now')
       ORDER BY datetime(scheduledAt) ASC
-    `).all(channelId, channelId);
+    `).all(channelId, channelId, platform, platform);
 
-    // Kiểm tra video vừa đăng trong vòng minIntervalMinutes của kênh này
+    // Kiểm tra video vừa đăng trong vòng minIntervalMinutes của kênh này và nền tảng này
     const recentPublished = this.db.prepare(`
       SELECT publishedAt as scheduledAt, language FROM publications 
       WHERE publishedAt IS NOT NULL 
         AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
+        AND (platform = ? OR ? IS NULL)
         AND datetime(publishedAt) > datetime('now', '-${minIntervalMinutes} minutes')
       ORDER BY datetime(publishedAt) DESC
       LIMIT 1
-    `).all(channelId, channelId);
+    `).all(channelId, channelId, platform, platform);
 
     const existingItems = [...existingRows, ...recentPublished].map(r => ({
       time: new Date(r.scheduledAt).getTime(),
@@ -295,8 +297,8 @@ class Publisher {
       } catch (e) {}
     }
 
-    // Tự động phân phối vào khung giờ vàng theo kênh và ngôn ngữ
-    const targetScheduledAt = scheduledAt || this.calculateNextPeakSlot(false, language, targetChannelId);
+    // Tự động phân phối vào khung giờ vàng theo kênh, ngôn ngữ và nền tảng độc lập
+    const targetScheduledAt = scheduledAt || this.calculateNextPeakSlot(false, language, targetChannelId, platform);
 
     // Tự động dọn dẹp các tin quá hạn / nguội trước khi xếp lịch mới
     this.evictStalePublications(24);
@@ -395,7 +397,7 @@ class Publisher {
           const rawCreated = item.createdAt ? (item.createdAt.includes('T') ? item.createdAt : item.createdAt.replace(' ', 'T') + 'Z') : new Date().toISOString();
           const isCreatedWithin7Days = (new Date(rawCreated).getTime() >= (Date.now() - 7 * 24 * 3600 * 1000));
           if (isCreatedWithin7Days) {
-            const nextSlot = this.calculateNextPeakSlot(false, item.language || 'vi', item.channelId || 'channel_domestic');
+            const nextSlot = this.calculateNextPeakSlot(false, item.language || 'vi', item.channelId || 'channel_domestic', item.platform || 'youtube');
             rolloverStmt.run(nextSlot, item.publicationId);
             rolledOverCount++;
             logger.info(`[Publisher] 🌟 DỜI LỊCH TỰ ĐỘNG (Điểm cao ${score}): Bài "${item.title || item.publicationId}" được dời sang khung giờ vàng mới: ${nextSlot}`);
@@ -427,43 +429,50 @@ class Publisher {
    * Tự động dồn lịch lấp đầy các khung giờ vàng bị trống (Auto Compact Schedule):
    * Quét toàn bộ video PENDING và tái phân bổ vào các slot giờ vàng sớm nhất còn trống.
    */
-  compactSchedule(channelId = null) {
+  compactSchedule(channelId = null, targetPlatform = null) {
     try {
       const channelsToProcess = (channelId && channelId !== 'all')
         ? [channelId]
         : ['channel_domestic', 'channel_tech', 'channel_global'];
 
+      const platformsToProcess = (targetPlatform && targetPlatform !== 'all')
+        ? [targetPlatform]
+        : ['youtube', 'tiktok', 'facebook'];
+
       let totalUpdated = 0;
       const allResults = [];
 
       for (const ch of channelsToProcess) {
-        const query = `
-          SELECT publicationId, channelId, language, title, createdAt, scheduledAt, priorityScore
-          FROM publications
-          WHERE status IN ('PENDING', 'RETRYING')
-            AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
-          ORDER BY COALESCE(priorityScore, 7.5) DESC, datetime(createdAt) ASC
-        `;
-        const pending = this.db.prepare(query).all(ch, ch);
-        if (!pending || pending.length === 0) continue;
+        for (const plat of platformsToProcess) {
+          const query = `
+            SELECT publicationId, channelId, language, platform, title, createdAt, scheduledAt, priorityScore
+            FROM publications
+            WHERE status IN ('PENDING', 'RETRYING')
+              AND (channelId = ? OR (channelId IS NULL AND ? = 'channel_domestic'))
+              AND platform = ?
+            ORDER BY COALESCE(priorityScore, 7.5) DESC, datetime(createdAt) ASC
+          `;
+          const pending = this.db.prepare(query).all(ch, ch, plat);
+          if (!pending || pending.length === 0) continue;
 
-        // Tạm thời set scheduledAt = NULL để giải phóng các slot cho kênh này
-        const clearStmt = this.db.prepare(`UPDATE publications SET scheduledAt = NULL WHERE publicationId = ?`);
-        const updateStmt = this.db.prepare(`UPDATE publications SET scheduledAt = ? WHERE publicationId = ?`);
+          // Tạm thời set scheduledAt = NULL để giải phóng các slot cho nền tảng này trên kênh này
+          const clearStmt = this.db.prepare(`UPDATE publications SET scheduledAt = NULL WHERE publicationId = ?`);
+          const updateStmt = this.db.prepare(`UPDATE publications SET scheduledAt = ? WHERE publicationId = ?`);
 
-        for (const item of pending) {
-          clearStmt.run(item.publicationId);
-        }
+          for (const item of pending) {
+            clearStmt.run(item.publicationId);
+          }
 
-        for (const item of pending) {
-          const nextSlot = this.calculateNextPeakSlot(false, item.language || 'vi', ch);
-          updateStmt.run(nextSlot, item.publicationId);
-          allResults.push({ publicationId: item.publicationId, title: item.title, channelId: ch, newSlot: nextSlot });
-          totalUpdated++;
+          for (const item of pending) {
+            const nextSlot = this.calculateNextPeakSlot(false, item.language || 'vi', ch, plat);
+            updateStmt.run(nextSlot, item.publicationId);
+            allResults.push({ publicationId: item.publicationId, title: item.title, channelId: ch, platform: plat, newSlot: nextSlot });
+            totalUpdated++;
+          }
         }
       }
 
-      logger.info(`[Publisher] ⚡ Đã tự động dồn lịch lấp đầy các khung giờ vàng cho ${totalUpdated} video.`);
+      logger.info(`[Publisher] ⚡ Đã tự động dồn lịch lấp đầy các khung giờ vàng cho ${totalUpdated} video (phân luồng độc lập theo từng nền tảng).`);
       return { ok: true, updatedCount: totalUpdated, items: allResults };
     } catch(e) {
       logger.error(`[Publisher] Lỗi dồn lịch: ${e.message}`);

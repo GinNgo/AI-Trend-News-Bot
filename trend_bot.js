@@ -405,6 +405,8 @@ function getDailyPublishStatus(targetChannelId = null) {
     const maxEn = chMeta.maxVideosInternational || (chId === 'channel_domestic' ? 4 : maxPerDay);
     const vnCount = chRows.filter(r => (r.language || 'vi') !== 'en').length;
     const enCount = chRows.filter(r => r.language === 'en').length;
+    const remaining = Math.max(0, maxPerDay - count);
+    const reached = (count >= maxPerDay);
 
     byChannel[chId] = {
       channelId: chId,
