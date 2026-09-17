@@ -222,30 +222,96 @@ async function findCaptionEditor(frame) {
 }
 
 /**
+ * Dọn dẹp triệt để các cảnh báo/bản nháp chưa lưu (Banner và Modal xác nhận 2 bước)
+ */
+async function clearDraftDialogs(page) {
+  for (let step = 1; step <= 3; step++) {
+    try {
+      const action = await page.evaluate(() => {
+        // 1. Modal xác nhận ("Discard this post?")
+        const dialog = document.querySelector('[role="dialog"], div[class*="modal"], div[class*="Modal"], div[class*="TUXModal"]');
+        if (dialog) {
+          const dialogText = (dialog.textContent || '').toLowerCase();
+          if (dialogText.includes('discard this post') || dialogText.includes('bỏ bài viết này') || dialogText.includes("wasn't saved")) {
+            const btn = Array.from(dialog.querySelectorAll('button')).find(b => {
+              const txt = (b.textContent || '').trim().toLowerCase();
+              return txt.includes('discard') || txt.includes('bỏ');
+            });
+            if (btn) { btn.click(); return 'modal_discard'; }
+          }
+        }
+
+        // 2. Banner cảnh báo bản nháp cũ ("A video you were editing wasn't saved")
+        const bannerContainers = Array.from(document.querySelectorAll('div, section')).filter(el => {
+          const txt = (el.textContent || '').toLowerCase();
+          return (txt.includes("wasn't saved") || txt.includes('chưa được lưu')) && 
+                 (txt.includes('continue editing') || txt.includes('tiếp tục chỉnh sửa'));
+        });
+
+        for (const banner of bannerContainers) {
+          const discardBtn = Array.from(banner.querySelectorAll('button')).find(b => {
+            const txt = (b.textContent || '').trim().toLowerCase();
+            return txt === 'discard' || txt === 'bỏ';
+          });
+          if (discardBtn) {
+            discardBtn.click();
+            return 'banner_discard';
+          }
+        }
+
+        return null;
+      });
+
+      if (!action) break;
+      await new Promise(r => setTimeout(r, 2000));
+    } catch (e) {
+      break;
+    }
+  }
+}
+
+/**
  * Tìm nút Đăng / Post trên frame hoặc page
  */
 async function findPostButton(frame) {
   return await frame.evaluateHandle(() => {
     const buttons = Array.from(document.querySelectorAll('button'));
-    // Ưu tiên nút có text chính xác 'Post' hoặc 'Đăng'
-    let target = buttons.find(b => {
-      const txt = (b.textContent || '').trim().toLowerCase();
-      return (txt === 'post' || txt === 'đăng' || txt === 'publish') && !b.disabled && b.offsetParent !== null;
+
+    // Bỏ qua tất cả các nút ở thanh điều hướng bên trái (sidebar left < 90)
+    const contentButtons = buttons.filter(b => {
+      const rect = b.getBoundingClientRect();
+      return rect.left > 90 && !b.disabled && b.offsetParent !== null;
     });
 
+    // Ưu tiên 1: Nút Type Primary (màu đỏ TikTok) có text chính xác 'Post' hoặc 'Đăng'
+    let target = contentButtons.find(b => {
+      const txt = (b.textContent || '').trim().toLowerCase();
+      const isPrimary = (b.className || '').includes('Button__root--type-primary') || 
+                        (b.className || '').includes('TUXButton--primary') ||
+                        (b.className || '').includes('btn-post');
+      return (txt === 'post' || txt === 'đăng' || txt === 'publish') && isPrimary;
+    });
+
+    // Ưu tiên 2: Nút có chữ chính xác 'Post' hoặc 'Đăng' nằm cùng hàng với 'Save draft' hoặc 'Discard'
     if (!target) {
-      // Tìm nút có class btn-post
-      target = buttons.find(b => {
-        const cls = (b.className || '').toString().toLowerCase();
-        return (cls.includes('btn-post') || cls.includes('post-btn')) && !b.disabled && b.offsetParent !== null;
+      const draftBtn = contentButtons.find(b => {
+        const txt = (b.textContent || '').trim().toLowerCase();
+        return txt.includes('save draft') || txt.includes('lưu nháp') || txt === 'discard';
       });
+      if (draftBtn && draftBtn.parentElement) {
+        const container = draftBtn.closest('div[class*="footer"], div[class*="btn"], div[class*="action"], div[class*="operation"]') || draftBtn.parentElement;
+        target = Array.from(container.querySelectorAll('button')).find(b => {
+          const txt = (b.textContent || '').trim().toLowerCase();
+          return (txt === 'post' || txt === 'đăng' || txt === 'publish') && !b.disabled && b.offsetParent !== null;
+        });
+      }
     }
 
+    // Ưu tiên 3: Bất kỳ nút nào ngoài sidebar có text chính xác 'Post' hoặc 'Đăng' (không nhận 'Posts')
     if (!target) {
-      // Tìm nút chứa từ đăng / post
-      target = buttons.find(b => {
+      target = contentButtons.find(b => {
         const txt = (b.textContent || '').trim().toLowerCase();
-        return (txt.includes('đăng') || txt.includes('post')) && !b.disabled && b.offsetParent !== null;
+        return (txt === 'post' || txt === 'đăng' || txt === 'publish');
       });
     }
 
@@ -354,28 +420,10 @@ async function uploadToTikTokViaEdge({
     }
 
     // 2.1 Dọn dẹp bản nháp chưa lưu từ phiên trước (nếu có cảnh báo)
-    try {
-      const discardBtn = await page.evaluateHandle(() => {
-        const btns = Array.from(document.querySelectorAll('button'));
-        return btns.find(b => (b.textContent || '').trim().toLowerCase() === 'discard' && b.offsetParent !== null) || null;
-      });
-      const hasDiscard = await discardBtn.evaluate(b => b !== null);
-      if (hasDiscard) {
-        logger.info('[TikTokPublisher] Phát hiện cảnh báo bản nháp cũ. Đang bấm Discard...');
-        await discardBtn.evaluate(b => b.click());
-        await new Promise(r => setTimeout(r, 1000));
-
-        const modalDiscard = await page.evaluateHandle(() => {
-          const btns = Array.from(document.querySelectorAll('[role="dialog"] button, div[class*="modal"] button, div[class*="Modal"] button'));
-          return btns.find(b => (b.textContent || '').trim().toLowerCase() === 'discard') || null;
-        });
-        const hasModalDiscard = await modalDiscard.evaluate(b => b !== null);
-        if (hasModalDiscard) {
-          await modalDiscard.evaluate(b => b.click());
-          await new Promise(r => setTimeout(r, 1000));
-        }
-      }
-    } catch(e) {}
+    await new Promise(r => setTimeout(r, 5000));
+    logger.info('[TikTokPublisher] Đang kiểm tra và dọn dẹp bản nháp cũ/cảnh báo...');
+    await clearDraftDialogs(page);
+    await new Promise(r => setTimeout(r, 1000));
 
     // 3. Tìm ô input file
     logger.info(`[TikTokPublisher] Đang dò tìm khung tải video...`);
@@ -455,45 +503,55 @@ async function uploadToTikTokViaEdge({
     });
     await new Promise(r => setTimeout(r, 1000));
 
-    // 6. Chờ nút Post / Đăng sẵn sàng và click
-    logger.info(`[TikTokPublisher] Đang tìm và chờ nút Post/Đăng sẵn sàng...`);
-    let postBtnHandle = null;
-    const startWaitPost = Date.now();
+    // 6. Chờ TikTok xử lý checks và sẵn sàng xuất bản (15 giây)
+    logger.info(`[TikTokPublisher] Đang chờ TikTok hoàn tất kiểm tra bản quyền và nội dung video...`);
+    await new Promise(r => setTimeout(r, 15000));
 
-    while (Date.now() - startWaitPost < 60000) {
-      const btn = await findPostButton(uploadFrame);
-      const isReady = await btn.evaluate(b => b !== null && !b.disabled && b.offsetParent !== null);
-      if (isReady) {
-        postBtnHandle = btn;
+    // Cuộn xuống cuối để nút Post hiển thị trong viewport
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await new Promise(r => setTimeout(r, 1000));
+
+    // 7. Chu kỳ bấm nút Post và chờ xác nhận xuất bản (tối đa 90 giây)
+    logger.info(`[TikTokPublisher] 🚀 Bắt đầu chu trình bấm nút Post và chờ xuất bản TikTok...`);
+    let isSuccess = false;
+    const startPostWait = Date.now();
+
+    while (Date.now() - startPostWait < 90000) {
+      // A. Kiểm tra URL chuyển hướng sang danh sách bài đăng
+      const currentUrl = page.url();
+      if (currentUrl.includes('/content') || currentUrl.includes('/manage')) {
+        logger.info(`[TikTokPublisher] 🎉 Đã chuyển hướng tới trang quản lý nội dung: ${currentUrl}`);
+        isSuccess = true;
         break;
       }
-      await new Promise(r => setTimeout(r, 1500));
-    }
 
-    if (!postBtnHandle) {
-      throw new Error('Không tìm thấy nút Post / Đăng hoặc nút bị vô hiệu hóa quá 60 giây.');
-    }
+      // B. Kiểm tra Modal / Toast thông báo thành công thực sự
+      const hasSuccessText = await uploadFrame.evaluate(() => {
+        const txt = (document.body ? document.body.innerText : '').toLowerCase();
+        return txt.includes('video published') ||
+               txt.includes('video đã được xuất bản') ||
+               txt.includes('video đã đăng') ||
+               txt.includes('manage your posts') ||
+               txt.includes('quản lý bài đăng') ||
+               txt.includes('upload another video') ||
+               txt.includes('tải lên video khác') ||
+               txt.includes('your video has been uploaded') ||
+               txt.includes('video của bạn đã được tải lên');
+      });
 
-    logger.info(`[TikTokPublisher] 🚀 Đang bấm nút Post / Đăng video...`);
-    await postBtnHandle.evaluate(b => {
-      b.scrollIntoView({ behavior: 'instant', block: 'center' });
-      b.click();
-    });
-    try {
-      await postBtnHandle.click();
-    } catch (e) {}
+      if (hasSuccessText) {
+        logger.info(`[TikTokPublisher] 🎉 Phát hiện thông báo xuất bản video thành công!`);
+        isSuccess = true;
+        break;
+      }
 
-    // 7. Chờ xác nhận đăng thành công (modal thông báo hoặc chuyển trang sang /content)
-    logger.info(`[TikTokPublisher] Đang chờ xác nhận xuất bản từ TikTok Studio...`);
-    let isSuccess = false;
-    const startWaitSuccess = Date.now();
-
-    while (Date.now() - startWaitSuccess < 60000) {
-      // A. Kiểm tra và tự động bấm nút xác nhận nếu có Modal/Popup phụ (Ví dụ: 'Post anyway', 'Post now', 'Vẫn đăng', 'Xác nhận bản quyền')
+      // C. Tự động xác nhận Modal phụ nếu có ('Post now', 'Post anyway', 'Confirm', 'Xác nhận')
       try {
         const modalConfirmed = await uploadFrame.evaluate(() => {
-          const dialog = document.querySelector('[role="dialog"], div[class*="modal"], div[class*="Modal"]');
-          if (!dialog) return false;
+          const dialog = document.querySelector('[role="dialog"], div[class*="modal"], div[class*="Modal"], div[class*="TUXModal"]');
+          if (!dialog) return null;
           const btns = Array.from(dialog.querySelectorAll('button'));
           const target = btns.find(b => {
             const txt = (b.textContent || '').trim().toLowerCase();
@@ -509,43 +567,48 @@ async function uploadToTikTokViaEdge({
           });
           if (target) {
             target.click();
+            return target.textContent.trim();
+          }
+          return null;
+        });
+        if (modalConfirmed) {
+          logger.info(`[TikTokPublisher] ⚠️ Đã bấm xác nhận trong Modal popup: "${modalConfirmed}"`);
+          await new Promise(r => setTimeout(r, 2000));
+          continue;
+        }
+      } catch (e) {}
+
+      // D. Tìm và bấm nút Post / Đăng
+      try {
+        const postClicked = await uploadFrame.evaluate(() => {
+          const buttons = Array.from(document.querySelectorAll('button')).filter(b => {
+            const rect = b.getBoundingClientRect();
+            return rect.left > 90 && !b.disabled && b.offsetParent !== null;
+          });
+
+          const target = buttons.find(b => {
+            const txt = (b.textContent || '').trim().toLowerCase();
+            const isPrimary = (b.className || '').includes('Button__root--type-primary') || 
+                              (b.className || '').includes('TUXButton--primary') ||
+                              (b.className || '').includes('btn-post');
+            return (txt === 'post' || txt === 'đăng' || txt === 'publish') && isPrimary;
+          });
+
+          if (target) {
+            target.scrollIntoView({ behavior: 'instant', block: 'center' });
+            target.focus();
+            target.click();
             return true;
           }
           return false;
         });
-        if (modalConfirmed) {
-          logger.info('[TikTokPublisher] ⚠️ Đã phát hiện và bấm nút xác nhận trong Modal popup TikTok...');
-          await new Promise(r => setTimeout(r, 2000));
+
+        if (postClicked) {
+          logger.info(`[TikTokPublisher] Đã kích hoạt click nút Post/Đăng...`);
         }
       } catch (e) {}
 
-      // B. Kiểm tra URL chuyển hướng sang danh sách bài đăng
-      const currentUrl = page.url();
-      if (currentUrl.includes('/content') || currentUrl.includes('/manage')) {
-        isSuccess = true;
-        break;
-      }
-
-      // C. Kiểm tra Modal / Toast thông báo thành công thực sự (chính xác hơn)
-      const hasSuccessText = await uploadFrame.evaluate(() => {
-        const txt = (document.body ? document.body.innerText : '').toLowerCase();
-        return txt.includes('video published') ||
-               txt.includes('video đã được xuất bản') ||
-               txt.includes('video đã đăng') ||
-               txt.includes('manage your posts') ||
-               txt.includes('quản lý bài đăng') ||
-               txt.includes('upload another video') ||
-               txt.includes('tải lên video khác') ||
-               txt.includes('your video has been uploaded') ||
-               txt.includes('video của bạn đã được tải lên');
-      });
-
-      if (hasSuccessText) {
-        isSuccess = true;
-        break;
-      }
-
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 4000));
     }
 
     if (!isSuccess) {
@@ -554,7 +617,7 @@ async function uploadToTikTokViaEdge({
         await page.screenshot({ path: failPic });
         logger.warn(`[TikTokPublisher] Đã lưu ảnh chụp chẩn đoán tại ${failPic}`);
       } catch(e) {}
-      throw new Error('Đã bấm Post trên TikTok Studio nhưng không nhận được xác nhận xuất bản sau 60 giây. Vui lòng kiểm tra lại trạng thái tài khoản.');
+      throw new Error('Đã bấm Post trên TikTok Studio nhưng không nhận được xác nhận xuất bản sau 90 giây. Vui lòng kiểm tra lại trạng thái tài khoản.');
     } else {
       logger.info(`[TikTokPublisher] 🎉 ĐÃ XUẤT BẢN THÀNH CÔNG LÊN TIKTOK!`);
       // Đợi 5 giây để TikTok hoàn tất các request ngầm trước khi đóng trình duyệt
