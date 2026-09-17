@@ -353,6 +353,30 @@ async function uploadToTikTokViaEdge({
       );
     }
 
+    // 2.1 Dọn dẹp bản nháp chưa lưu từ phiên trước (nếu có cảnh báo)
+    try {
+      const discardBtn = await page.evaluateHandle(() => {
+        const btns = Array.from(document.querySelectorAll('button'));
+        return btns.find(b => (b.textContent || '').trim().toLowerCase() === 'discard' && b.offsetParent !== null) || null;
+      });
+      const hasDiscard = await discardBtn.evaluate(b => b !== null);
+      if (hasDiscard) {
+        logger.info('[TikTokPublisher] Phát hiện cảnh báo bản nháp cũ. Đang bấm Discard...');
+        await discardBtn.evaluate(b => b.click());
+        await new Promise(r => setTimeout(r, 1000));
+
+        const modalDiscard = await page.evaluateHandle(() => {
+          const btns = Array.from(document.querySelectorAll('[role="dialog"] button, div[class*="modal"] button, div[class*="Modal"] button'));
+          return btns.find(b => (b.textContent || '').trim().toLowerCase() === 'discard') || null;
+        });
+        const hasModalDiscard = await modalDiscard.evaluate(b => b !== null);
+        if (hasModalDiscard) {
+          await modalDiscard.evaluate(b => b.click());
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      }
+    } catch(e) {}
+
     // 3. Tìm ô input file
     logger.info(`[TikTokPublisher] Đang dò tìm khung tải video...`);
     let foundInput = null;
@@ -401,7 +425,7 @@ async function uploadToTikTokViaEdge({
     const editor = await findCaptionEditor(uploadFrame);
     if (editor) {
       await editor.click();
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise(r => setTimeout(r, 500));
 
       // Xóa nội dung mặc định (thường là tên file .mp4)
       await page.keyboard.down('Control');
@@ -413,7 +437,23 @@ async function uploadToTikTokViaEdge({
       // Gõ nội dung mới
       await page.keyboard.type(fullCaption, { delay: 25 });
       await new Promise(r => setTimeout(r, 1000));
+
+      // Kiểm tra nếu chưa nhận đủ chữ thì focus gõ bổ sung
+      const typedLen = await uploadFrame.evaluate(() => {
+        const el = document.querySelector('.notranslate.public-DraftEditor-content, div[contenteditable="true"]');
+        return el ? (el.innerText || el.textContent || '').trim().length : 0;
+      });
+      if (typedLen < 5) {
+        await editor.click();
+        await page.keyboard.type(fullCaption, { delay: 15 });
+      }
     }
+
+    // Cuộn xuống cuối để nút Post hiển thị rõ
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await new Promise(r => setTimeout(r, 1000));
 
     // 6. Chờ nút Post / Đăng sẵn sàng và click
     logger.info(`[TikTokPublisher] Đang tìm và chờ nút Post/Đăng sẵn sàng...`);
@@ -435,32 +475,39 @@ async function uploadToTikTokViaEdge({
     }
 
     logger.info(`[TikTokPublisher] 🚀 Đang bấm nút Post / Đăng video...`);
-    await postBtnHandle.click();
+    await postBtnHandle.evaluate(b => {
+      b.scrollIntoView({ behavior: 'instant', block: 'center' });
+      b.click();
+    });
+    try {
+      await postBtnHandle.click();
+    } catch (e) {}
 
-    // 7. Chờ xác nhận đăng thành công (modal thông báo hoặc chuyển trang)
+    // 7. Chờ xác nhận đăng thành công (modal thông báo hoặc chuyển trang sang /content)
     logger.info(`[TikTokPublisher] Đang chờ xác nhận xuất bản từ TikTok Studio...`);
     let isSuccess = false;
     const startWaitSuccess = Date.now();
 
     while (Date.now() - startWaitSuccess < 60000) {
-      // A. Kiểm tra URL chuyển hướng
+      // A. Kiểm tra URL chuyển hướng sang danh sách bài đăng
       const currentUrl = page.url();
       if (currentUrl.includes('/content') || currentUrl.includes('/manage')) {
         isSuccess = true;
         break;
       }
 
-      // B. Kiểm tra Modal thông báo thành công
+      // B. Kiểm tra Modal / Toast thông báo thành công thực sự (chính xác hơn)
       const hasSuccessText = await uploadFrame.evaluate(() => {
         const txt = (document.body ? document.body.innerText : '').toLowerCase();
-        return txt.includes('manage your posts') ||
+        return txt.includes('video published') ||
+               txt.includes('video đã được xuất bản') ||
+               txt.includes('video đã đăng') ||
+               txt.includes('manage your posts') ||
                txt.includes('quản lý bài đăng') ||
-               txt.includes('uploaded') ||
-               txt.includes('đã được tải lên') ||
                txt.includes('upload another video') ||
                txt.includes('tải lên video khác') ||
-               txt.includes('video is being uploaded') ||
-               txt.includes('video đang được xử lý');
+               txt.includes('your video has been uploaded') ||
+               txt.includes('video của bạn đã được tải lên');
       });
 
       if (hasSuccessText) {
@@ -475,6 +522,8 @@ async function uploadToTikTokViaEdge({
       logger.warn(`[TikTokPublisher] Đã bấm Post nhưng chưa thấy thông báo xác nhận. Vẫn ghi nhận trạng thái để người dùng kiểm tra lại.`);
     } else {
       logger.info(`[TikTokPublisher] 🎉 ĐÃ XUẤT BẢN THÀNH CÔNG LÊN TIKTOK!`);
+      // Đợi 5 giây để TikTok hoàn tất các request ngầm trước khi đóng trình duyệt
+      await new Promise(r => setTimeout(r, 5000));
     }
 
     const postId = `tiktok_${Date.now()}`;
