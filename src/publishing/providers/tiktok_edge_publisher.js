@@ -489,14 +489,44 @@ async function uploadToTikTokViaEdge({
     const startWaitSuccess = Date.now();
 
     while (Date.now() - startWaitSuccess < 60000) {
-      // A. Kiểm tra URL chuyển hướng sang danh sách bài đăng
+      // A. Kiểm tra và tự động bấm nút xác nhận nếu có Modal/Popup phụ (Ví dụ: 'Post anyway', 'Post now', 'Vẫn đăng', 'Xác nhận bản quyền')
+      try {
+        const modalConfirmed = await uploadFrame.evaluate(() => {
+          const dialog = document.querySelector('[role="dialog"], div[class*="modal"], div[class*="Modal"]');
+          if (!dialog) return false;
+          const btns = Array.from(dialog.querySelectorAll('button'));
+          const target = btns.find(b => {
+            const txt = (b.textContent || '').trim().toLowerCase();
+            return (
+              txt === 'post now' ||
+              txt === 'post anyway' ||
+              txt === 'post' ||
+              txt === 'đăng ngay' ||
+              txt === 'vẫn đăng' ||
+              txt === 'xác nhận' ||
+              txt === 'confirm'
+            ) && !b.disabled && b.offsetParent !== null;
+          });
+          if (target) {
+            target.click();
+            return true;
+          }
+          return false;
+        });
+        if (modalConfirmed) {
+          logger.info('[TikTokPublisher] ⚠️ Đã phát hiện và bấm nút xác nhận trong Modal popup TikTok...');
+          await new Promise(r => setTimeout(r, 2000));
+        }
+      } catch (e) {}
+
+      // B. Kiểm tra URL chuyển hướng sang danh sách bài đăng
       const currentUrl = page.url();
       if (currentUrl.includes('/content') || currentUrl.includes('/manage')) {
         isSuccess = true;
         break;
       }
 
-      // B. Kiểm tra Modal / Toast thông báo thành công thực sự (chính xác hơn)
+      // C. Kiểm tra Modal / Toast thông báo thành công thực sự (chính xác hơn)
       const hasSuccessText = await uploadFrame.evaluate(() => {
         const txt = (document.body ? document.body.innerText : '').toLowerCase();
         return txt.includes('video published') ||
@@ -519,7 +549,12 @@ async function uploadToTikTokViaEdge({
     }
 
     if (!isSuccess) {
-      logger.warn(`[TikTokPublisher] Đã bấm Post nhưng chưa thấy thông báo xác nhận. Vẫn ghi nhận trạng thái để người dùng kiểm tra lại.`);
+      try {
+        const failPic = path.join(process.cwd(), 'data', 'tiktok_post_failure.png');
+        await page.screenshot({ path: failPic });
+        logger.warn(`[TikTokPublisher] Đã lưu ảnh chụp chẩn đoán tại ${failPic}`);
+      } catch(e) {}
+      throw new Error('Đã bấm Post trên TikTok Studio nhưng không nhận được xác nhận xuất bản sau 60 giây. Vui lòng kiểm tra lại trạng thái tài khoản.');
     } else {
       logger.info(`[TikTokPublisher] 🎉 ĐÃ XUẤT BẢN THÀNH CÔNG LÊN TIKTOK!`);
       // Đợi 5 giây để TikTok hoàn tất các request ngầm trước khi đóng trình duyệt
